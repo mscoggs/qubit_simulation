@@ -694,8 +694,7 @@ x = y | ((((y & -y) / (x & -x)) >> 1) - 1);
 
 
 int find(int dimension,int k, int *v, int *T, unsigned long long int *b)
-// find the position of a given combination v (vector of length k) in
-the table of all combinations T (array of length C(n,k)*k)
+// find the position of a given combination v (vector of length k) in the table of all combinations T (array of length C(n,k)*k)
 {
      int i, first, last, mid;
      unsigned long long int element;
@@ -725,10 +724,8 @@ the table of all combinations T (array of length C(n,k)*k)
 
 
 
-int hop(int k, int *v1, int *v2,int n, int j) //given a state v1 (a
-combination corresponding to k occupied sites) generates the state v2
-obtained by hopping from site v1[n] to site j (which should not be in
-v1), and outputs the fermionic sign
+int hop(int k, int *v1, int *v2,int n, int j) //given a state v1 (a combination corresponding to k occupied sites) generates the state v2
+//obtained by hopping from site v1[n] to site j (which should not be in v1), and outputs the fermionic sign
 {
      int i,d;
 
