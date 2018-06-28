@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <complex>
 
 #define COORD 14
 #define CANT acos(1.0/3.0)/2.0
@@ -12,11 +13,30 @@
 #define T2 -0.02
 #define T3 0.05
 
+'''TODO
+Understand:
+  combinations
+  construction
+  main
+
+'''
 
 
+using namespace std;
 
+typedef complex<double> dcmplx;
+typedef struct
+{
+     int neighbors[COORD];
+     dcmplx t[COORD];
+     double V[COORD];
 
-
+} Site;
+typedef struct {
+   int i, j;
+   dcmplx v;
+} Telt;
+const dcmplx I(0,1);
 
 unsigned long long int choose(int n, int k) //the number of combination of k out of n
 {
@@ -178,7 +198,7 @@ int main (int argc, char *argv[])
      dimension=C(sites,electrons);
 
      b=new unsigned long long int[dimension];
-     T = (Telt *) malloc (dimension*(electrons*COORD+1)*sizeof (Telt));
+     T = (Telt *) malloc (dimension*(electrons*COORD+1)*sizeof (Telt)); // malloc:Allocates a block of size bytes of memory, returning a pointer to the beginning of the block.
      ising=(int*) malloc(sites*sizeof(int));
      table=(int*) malloc(electrons*dimension*sizeof(int));
      v=(int*) malloc(electrons*sizeof(int));
