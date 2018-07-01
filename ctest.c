@@ -12,12 +12,19 @@ int main(){
   electrons = 2;
   dimension=choose(sites,electrons);
   printf("dim = %d\n", dimension);
-  table=(int*) malloc(electrons*dimension*sizeof(int));
-  b = (unsigned long long int*) malloc(dimension);
+  //table=(int*) malloc(electrons*dimension*sizeof(int));
+  printf("malloc input = %d\n", (electrons*dimension*sizeof(int)));
+
+  table= malloc(electrons*dimension*sizeof(int));
+  b = malloc(dimension);
   printf("3left is : %d\n", (1ULL<<10));
   combinations (sites,electrons,b,table);
-  for (i=0;i<dimension;i++) printf((unsigned long long int*)b[i]);
+  for (i=0;i<dimension;i++) printf("p    = %p\n", b[i]);
+  printf("TABLEINCOMING\n");
+  for (i=0;i<(dimension+30);i++) printf("p    = %p\n", table[i]);
 
+
+  //printf("p    = %p\n", (void *) b);
 
 }
 
