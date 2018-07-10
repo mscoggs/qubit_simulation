@@ -21,7 +21,7 @@ int main(){
   combinations (sites,electrons,b,table);
   for (i=0;i<dimension;i++) printf("p    = %p\n", b[i]);
   printf("TABLEINCOMING\n");
-  for (i=0;i<(dimension+30);i++) printf("p    = %p\n", table[i]);
+  for (i=0;i<(dimension+1);i++) printf("p    = %p\n", table[i]);
 
 
   //printf("p    = %p\n", (void *) b);
