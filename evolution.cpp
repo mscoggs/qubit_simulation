@@ -6,7 +6,7 @@
 #define COORD 14
 #define CANT acos(1.0/3.0)/2.0
 #define INTERACTION 0.35
-#define nu 2/9
+#define nu 1/9
 #define DISCRET 0
 #define EIGENVALUES 40
 #define T1 -0.13
@@ -38,6 +38,20 @@ typedef struct
 const dcmplx I(0,1);
 
 
+
+
+int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev);
+int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod);
+int hop(int k, int *v1, int *v2,int n, int j);
+int find(int dimension,int k, int *v, int *T, unsigned long long int *b);
+unsigned long long int choose(int n, int k);
+int combinations ( int n, int k, unsigned long long int *b,int *tab);
+
+
+
+
+
+
 int main (int argc, char *argv[])
 {
    int *table,*v, *v2,i,j,k,sign, nev,tlen,Nx,Ny,sites, electrons, dimension;
@@ -65,18 +79,18 @@ int main (int argc, char *argv[])
    Evecs = new dcmplx*[dimension];
    for (i=0; i<dimension; i++) Evecs[i] = new dcmplx[nev];
 */
-   printf("%i\n", dimension);
    combinations (sites,electrons,b,table);
    construct_device_hamiltonian(table, b, electrons, dimension, Tdev);
    construct_model_hamiltonian(table, b, electrons, dimension, Tmod);
    ///tlen=construct_hamiltonian(table,b, electrons, dimension, T);
+   printf("Missions success: dimnesion = %i", dimension);
    exit (0);
 }
 
 
 
 
-construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev)
+int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev)
 /*
 Constructing the hamiltonian matrix for the device hamiltonian
 
@@ -100,8 +114,8 @@ Tdev : array-pointer
     Stores the values of the model-hamiltonian matrix
 */
 {
-  sign=hop(electrons, v1, v2,j, neighbor+1);
-  state=find(dimension,electrons,v2, table, b);
+  //sign=hop(electrons, v1, v2,j, neighbor+1);
+  //state=find(dimension,electrons,v2, table, b);
 
 
 }
@@ -109,7 +123,7 @@ Tdev : array-pointer
 
 
 
-construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod)
+int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod)
 /*
 Constructing the hamiltonian matrix for the model hamiltonian
 
@@ -133,10 +147,8 @@ Tmod : array-pointer
     Stores the values of the model-hamiltonian matrix
 */
 {
-  printf("mod\n");
 
 }
-
 
 
 

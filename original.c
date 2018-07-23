@@ -1,8 +1,8 @@
-#include <iostream>
+//#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <complex>
+#include <complex.h>
 
 
 
@@ -22,7 +22,7 @@
 
 
 
-using namespace std;
+//using namespace std;
 
 typedef complex<double> dcmplx;
 typedef struct
@@ -65,7 +65,7 @@ int main (int argc, char *argv[])
      dcmplx **Evecs, *Evals;
      double phi;
 
-         Nx = atoi (argv[1]);
+     Nx = atoi (argv[1]);
      Ny = atoi (argv[2]);
      phi=atof(argv[3]);
 
@@ -182,56 +182,56 @@ int *b,int electrons,int dimension, Telt *T)
      for (i=0;i<dimension;i++)
      {
      interaction=0;
-     for (j=0;j<electrons;j++)
-     {
+       for (j=0;j<electrons;j++)
+       {
 
-         site=table[i*electrons+j]-1;
-         for (k=0;k<COORD;k++)
-         {
-             neighbor=lattice[site].neighbors[k];
+           site=table[i*electrons+j]-1;
+           for (k=0;k<COORD;k++)
+           {
+               neighbor=lattice[site].neighbors[k];
 
-             ok=1;
-             m=0;
-             while (ok && (m<electrons))
-             {
-                 if ((table[i*electrons+m]-1)==neighbor) ok=0;
-                 m++;
-             }
+               ok=1;
+               m=0;
+               while (ok && (m<electrons))
+               {
+                   if ((table[i*electrons+m]-1)==neighbor) ok=0;
+                   m++;
+               }
 
-             if (ok)
-             {
-                 memcpy(v1,&table[i*electrons], electrons*sizeof(int));
-
-
-
-                 sign=hop(electrons, v1, v2,j, neighbor+1);
-                 if (sign==0) sign=1; else sign=-1;
-
-                 state=find(dimension,electrons,v2, table, b);
-
-                 T[tlen].i=i;
-                 T[tlen].j=state;
-                 T[tlen].v=lattice[site].t[k];
-                 T[tlen].v=T[tlen].v*(double)sign;
-                 tlen++;
+               if (ok)
+               {
+                   memcpy(v1,&table[i*electrons], electrons*sizeof(int));
 
 
-             }
-             else
-             {
-             interaction=interaction+lattice[site].V[k];
 
-             }
-         }
-     }
-     if (interaction !=0)
-     {
-         T[tlen].i=i;
-         T[tlen].j=i;
-         T[tlen].v=interaction;
-         tlen++;
+                   sign=hop(electrons, v1, v2,j, neighbor+1);
+                   if (sign==0) sign=1; else sign=-1;
 
-     }
+                   state=find(dimension,electrons,v2, table, b);
+
+                   T[tlen].i=i;
+                   T[tlen].j=state;
+                   T[tlen].v=lattice[site].t[k];
+                   T[tlen].v=T[tlen].v*(double)sign;
+                   tlen++;
+
+
+               }
+               else
+               {
+               interaction=interaction+lattice[site].V[k];
+
+               }
+           }
+       }
+       if (interaction !=0)
+       {
+           T[tlen].i=i;
+           T[tlen].j=i;
+           T[tlen].v=interaction;
+           tlen++;
+
+       }
      }
      return tlen;
 
