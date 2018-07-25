@@ -4,26 +4,26 @@
 #include <complex>
 
 #define COORD 14
+#define NEIGHBORS 4
 #define CANT acos(1.0/3.0)/2.0
-#define INTERACTION 0.35
 #define nu 1/9
-#define DISCRET 0
 #define EIGENVALUES 40
-#define T1 -0.13
-#define T2 -0.02
-#define T3 0.05
+#define nx 3
 
 /*todo:
   H-device function
   H-model function
-  Add hop function
-      What is j and n?
 */
 
 
 using namespace std;
 
 typedef complex <double> dcmplx;
+typedef struct
+{
+    int coordX;
+    int coordY;
+} Coordinates;
 typedef struct
 {
      int neighbors[COORD];
@@ -40,30 +40,28 @@ const dcmplx I(0,1);
 
 
 
-int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev);
-int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod);
+int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev, int sites);
+int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod, int sites);
 int hop(int k, int *v1, int *v2,int n, int j);
 int find(int dimension,int k, int *v, int *T, unsigned long long int *b);
 unsigned long long int choose(int n, int k);
 int combinations ( int n, int k, unsigned long long int *b,int *tab);
-
-
+void construct_lattice(int lattice[][nx]);
+Coordinates find_coordinates(int site_num, int lattice[][nx]);
 
 
 
 
 int main (int argc, char *argv[])
 {
-   int *table,*v, *v2,i,j,k,sign, nev,tlen,Nx,Ny,sites, electrons, dimension;
+   int *table,*v, *v2,i,j,k,sign, nev,tlen,sites, electrons, dimension;
    unsigned long long int *b;
+   int lattice[nx][nx];
    FILE *fp;
    Telt *Tdev, *Tmod;
    dcmplx **Evecs, *Evals;
-   Nx = atoi(argv[1]);
-   Ny = atoi(argv[2]);
-   sites=Nx*Ny;
-   //sites = 9;
-   electrons=sites*nu; // 2
+   sites=nx*nx;
+   electrons=sites*nu; // 1
    dimension=choose(sites,electrons);
 
    b=new unsigned long long int[dimension];
@@ -79,18 +77,31 @@ int main (int argc, char *argv[])
    Evecs = new dcmplx*[dimension];
    for (i=0; i<dimension; i++) Evecs[i] = new dcmplx[nev];
 */
+   construct_lattice(lattice);
    combinations (sites,electrons,b,table);
-   construct_device_hamiltonian(table, b, electrons, dimension, Tdev);
-   construct_model_hamiltonian(table, b, electrons, dimension, Tmod);
+   construct_device_hamiltonian(table, b, electrons, dimension, Tdev, sites);
+   construct_model_hamiltonian(table, b, electrons, dimension, Tmod, sites);
    ///tlen=construct_hamiltonian(table,b, electrons, dimension, T);
-   printf("Missions success: dimnesion = %i", dimension);
+   int x;
+   for (i=0;i<nx;i++)
+   {
+     for (x=0;x<nx;x++)
+     {
+       printf("%i\n", lattice[i][x]);
+     }
+   }
+
+   Coordinates location = find_coordinates(2, lattice);
+   printf("%i\n", location.coordX);
+   printf("%i\n", location.coordY);
+
    exit (0);
 }
 
 
 
 
-int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev)
+int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev, int sites)
 /*
 Constructing the hamiltonian matrix for the device hamiltonian
 
@@ -107,23 +118,88 @@ electron : integer
 dimension : integer
       total number of states, n-choose-k where n is total # of electrons, and k is total number of sites.
 Tdev : array-pointer (empty)
+sites : integer
+      total number of sites in the lattice (nx^2)
 
 Updates
 -------
 Tdev : array-pointer
     Stores the values of the model-hamiltonian matrix
 */
-{
+{/*
+  int i,state,j, k,l,m,n ,site,neighbor,ok,tlen,sign,*v1,*v2;
+  //double interaction;
+  //tlen=0;
+  v1=(int*) malloc(electrons*sizeof(int));
+  v2=(int*) malloc(electrons*sizeof(int));
+
+
+  for (i=0;i<dimension;i++)
+  {
+    //interaction=0;
+    for (j=0;j<electrons;j++)
+    {
+        site=table[i*electrons+j]-1;
+        for (k=0;k<sites;k++)
+        {
+            //neighbor=lattice[site].neighbors[k];
+            if (k != site)
+            {
+              ok=1;
+              m=0;
+              while (ok && (m<electrons))
+              {
+                  if ((table[i*electrons+m]-1)==neighbor) ok=0;
+                  m++;
+              }
+
+              if (ok)
+              {
+                  memcpy(v1,&table[i*electrons], electrons*sizeof(int));
+
+
+
+                  sign=hop(electrons, v1, v2,j, neighbor+1);
+                  if (sign==0) sign=1; else sign=-1;
+
+                  state=find(dimension,electrons,v2, table, b);
+
+                  T[tlen].i=i;
+                  T[tlen].j=state;
+                  T[tlen].v=lattice[site].t[k];
+                  T[tlen].v=T[tlen].v*(double)sign;
+                  tlen++;
+
+
+              }
+              else
+              {
+              interaction=interaction+lattice[site].V[k];
+
+              }
+            }
+        }
+    }
+    if (interaction !=0)
+    {
+        T[tlen].i=i;
+        T[tlen].j=i;
+        T[tlen].v=interaction;
+        tlen++;
+
+    }
+  }
+  return tlen;
   //sign=hop(electrons, v1, v2,j, neighbor+1);
   //state=find(dimension,electrons,v2, table, b);
 
-
+*/
 }
 
 
 
 
-int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod)
+int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod, int sites)
 /*
 Constructing the hamiltonian matrix for the model hamiltonian
 
@@ -140,6 +216,8 @@ electron : integer
 dimension : integer
       total number of states, n-choose-k where n is total # of electrons, and k is total number of sites.
 Tmod : array-pointer (empty)
+sites : integer
+      total number of sites in the lattice (nx^2)
 
 Updates
 -------
@@ -154,7 +232,8 @@ Tmod : array-pointer
 
 int hop(int k, int *v1, int *v2,int n, int j)
 /*
-given a state v1 (a combination corresponding to k occupied sites) generates the state v2 obtained by hopping from site v1[n] to site j (which should not be in v1), and outputs the fermionic sign
+given a state v1 (a combination corresponding to k occupied sites) generates the state
+v2 obtained by hopping from site v1[n] to site j (which should not be in v1), and outputs the fermionic sign
 
 Parameters
 ----------
@@ -165,9 +244,9 @@ v1 : array-pointer (vector)
 v2 : array-pointer (vector)
     The new resulting state after the hop
 n : integer
-    TO BE DETERMINED
+    the hop from site
 j : integer
-    TO BE DETERMINED
+    the hop-to site
 
 Updates
 -------
@@ -335,4 +414,66 @@ tab : array
            c++;
        }
    }
+}
+
+void construct_lattice(int lattice[][nx])
+/*
+Constructing the lattice of dimension nx*nx
+
+Parameters
+----------
+lattice[][nx] : array
+    an empty array containing each site, which gets filled with a site number
+*/
+{
+  int x,i;
+  for (x=0;x<nx;x++)
+  {
+    if (x%2 ==1)
+    {
+      for (i=0;i<nx;i++)
+      {
+        lattice[x][i] = (nx*x)+i+1;
+      }
+    }
+    else
+    {
+      for (i=0;i<nx;i++)
+      {
+        lattice[x][nx-1-i] = nx*x+i+1;
+      }
+    }
+  }
+}
+
+Coordinates find_coordinates(int site_num, int lattice[][nx])
+/*
+Finding the coordinates of a given site
+
+Parameters
+----------
+site_num : integer
+    the site number of the site we're looking for
+lattice[][nx] : array
+    an array containing each site
+
+Returns
+-------
+coords : Coordinates
+    the x and y coordinates of the site on the lattice
+*/
+{
+  int x,i;
+  for (i=0;i<nx;i++)
+  {
+    for (x=0;x<nx;x++)
+    {
+
+      if(site_num == lattice[i][x])
+      {
+        Coordinates coords = { i,x };
+        return coords;
+      }
+    }
+  }
 }

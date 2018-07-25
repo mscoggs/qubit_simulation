@@ -8,7 +8,7 @@
 
 
 
-#define COORD 14
+#define COORD 4
 #define CANT acos(1.0/3.0)/2.0
 #define INTERACTION 0.35
 #define nu 1/9
