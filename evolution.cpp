@@ -3,7 +3,7 @@
 #include <string.h>
 #include <complex>
 
-#define COORD 14
+#define COORD 4
 #define NEIGHBORS 4
 #define CANT acos(1.0/3.0)/2.0
 #define nu 1/9
@@ -14,7 +14,6 @@
   H-device function
   H-model function
 */
-
 
 using namespace std;
 
@@ -40,14 +39,15 @@ const dcmplx I(0,1);
 
 
 
-int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev, int sites);
-int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod, int sites);
+int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev, int sites, int lattice[][nx]);
+int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod, int sites, int lattice[][nx]);
 int hop(int k, int *v1, int *v2,int n, int j);
-int find(int dimension,int k, int *v, int *T, unsigned long long int *b);
+int find(int dimension,int k, unsigned long long int *v, int *T, unsigned long long int *b);
 unsigned long long int choose(int n, int k);
 int combinations ( int n, int k, unsigned long long int *b,int *tab);
 void construct_lattice(int lattice[][nx]);
 Coordinates find_coordinates(int site_num, int lattice[][nx]);
+unsigned long long int* hopp(int k, unsigned long long int *v1, unsigned long long int *v2,int n, int j);
 
 
 
@@ -79,21 +79,9 @@ int main (int argc, char *argv[])
 */
    construct_lattice(lattice);
    combinations (sites,electrons,b,table);
-   construct_device_hamiltonian(table, b, electrons, dimension, Tdev, sites);
-   construct_model_hamiltonian(table, b, electrons, dimension, Tmod, sites);
-   ///tlen=construct_hamiltonian(table,b, electrons, dimension, T);
-   int x;
-   for (i=0;i<nx;i++)
-   {
-     for (x=0;x<nx;x++)
-     {
-       printf("%i\n", lattice[i][x]);
-     }
-   }
-
-   Coordinates location = find_coordinates(2, lattice);
-   printf("%i\n", location.coordX);
-   printf("%i\n", location.coordY);
+   construct_device_hamiltonian(table, b, electrons, dimension, Tdev, sites,lattice);
+   construct_model_hamiltonian(table, b, electrons, dimension, Tmod, sites, lattice);
+   //tlen=construct_hamiltonian(table,b, electrons, dimension, T);
 
    exit (0);
 }
@@ -101,9 +89,8 @@ int main (int argc, char *argv[])
 
 
 
-int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev, int sites)
-/*
-Constructing the hamiltonian matrix for the device hamiltonian
+int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tdev, int sites, int lattice[][nx])
+/*Constructing the hamiltonian matrix for the device hamiltonian
 
 Parameters
 ----------
@@ -124,84 +111,17 @@ sites : integer
 Updates
 -------
 Tdev : array-pointer
-    Stores the values of the model-hamiltonian matrix
-*/
-{/*
-  int i,state,j, k,l,m,n ,site,neighbor,ok,tlen,sign,*v1,*v2;
-  //double interaction;
-  //tlen=0;
-  v1=(int*) malloc(electrons*sizeof(int));
-  v2=(int*) malloc(electrons*sizeof(int));
-
-
-  for (i=0;i<dimension;i++)
-  {
-    //interaction=0;
-    for (j=0;j<electrons;j++)
-    {
-        site=table[i*electrons+j]-1;
-        for (k=0;k<sites;k++)
-        {
-            //neighbor=lattice[site].neighbors[k];
-            if (k != site)
-            {
-              ok=1;
-              m=0;
-              while (ok && (m<electrons))
-              {
-                  if ((table[i*electrons+m]-1)==neighbor) ok=0;
-                  m++;
-              }
-
-              if (ok)
-              {
-                  memcpy(v1,&table[i*electrons], electrons*sizeof(int));
-
-
-
-                  sign=hop(electrons, v1, v2,j, neighbor+1);
-                  if (sign==0) sign=1; else sign=-1;
-
-                  state=find(dimension,electrons,v2, table, b);
-
-                  T[tlen].i=i;
-                  T[tlen].j=state;
-                  T[tlen].v=lattice[site].t[k];
-                  T[tlen].v=T[tlen].v*(double)sign;
-                  tlen++;
-
-
-              }
-              else
-              {
-              interaction=interaction+lattice[site].V[k];
-
-              }
-            }
-        }
-    }
-    if (interaction !=0)
-    {
-        T[tlen].i=i;
-        T[tlen].j=i;
-        T[tlen].v=interaction;
-        tlen++;
-
-    }
-  }
-  return tlen;
+    Stores the values of the model-hamiltonian matrix*/
+{
   //sign=hop(electrons, v1, v2,j, neighbor+1);
   //state=find(dimension,electrons,v2, table, b);
-
-*/
 }
 
 
 
 
-int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod, int sites)
-/*
-Constructing the hamiltonian matrix for the model hamiltonian
+int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, Telt *Tmod, int sites,  int lattice[][nx])
+/*Constructing the hamiltonian matrix for the model hamiltonian
 
 Parameters
 ----------
@@ -222,17 +142,100 @@ sites : integer
 Updates
 -------
 Tmod : array-pointer
-    Stores the values of the model-hamiltonian matrix
-*/
+    Stores the values of the model-hamiltonian matrix*/
 {
+  /*int i,state,j, k,l,m,n,x,y,z ,site,neighbor,ok,tlen,sign,*v1,*v2, neighbor1, neighbor2, neighbor3, neighbor4;
+  Coordinates coord;
+  tlen=0;
+  v1=(int*) malloc(electrons*sizeof(int));
+  v2=(int*) malloc(electrons*sizeof(int));*/
 
+  int i,state,j, k,l,m,n,x,y,z ,site,neighbor,ok,tlen,sign, neighbor1, neighbor2, neighbor3, neighbor4;
+  unsigned long long int *v1,*v2;
+  Coordinates coord;
+  tlen=0;
+  v1=(unsigned long long int*) malloc(sizeof(unsigned long long int));
+  v2=(unsigned long long int*) malloc(sizeof(unsigned long long int));
+
+  for (i=0;i<dimension;i++)
+  {
+    for (j=0;j<electrons;j++)
+    {
+        site=table[i*electrons+j];
+        coord = find_coordinates(site, lattice);
+        x = coord.coordX;
+        y = coord.coordY;
+        int neighbors[COORD] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
+        printf("\n");
+        printf("Starting in site: %i\n", site);
+        for (z=0; z<COORD; z++)
+        {
+          ok=1;
+          m=0;
+          while (ok && (m<electrons))
+          {
+              //printf("elec %i", electrons);
+              if ((table[i*electrons+m])==neighbors[z])
+                {
+                ok=0;
+                printf("tab %i\n", table[i*electrons+m]-1);
+                printf("neigh %i\n", neighbors[z]);
+
+                }
+              m++;
+          }
+
+          if (ok)
+          {
+
+              memcpy(&v1,&b[i], sizeof(unsigned long long int));
+
+              //memcpy(v1,&table[i*electrons], electrons*sizeof(int));
+              v2 = hopp(electrons, v1, v2,site, neighbors[z]);
+              sign = ((neighbors[z]-site)+1)%2;
+              if (sign==0) sign=1; else sign=-1;
+              state=find(dimension,electrons,v2, table, b);
+              printf("state: %i\n", state);
+
+              //printf("%i\n", &state);
+
+              Tmod[tlen].i=i;
+              Tmod[tlen].j=state;
+              //T[tlen].v=lattice[site].t[k]; WHAT IS THIS??
+              //T[tlen].v=T[tlen].v*(double)sign;
+              tlen++;
+          }
+          else
+          {
+            //WHAT TO DO??
+          }
+        }
+
+/*
+
+
+            else
+            {
+            interaction=interaction+lattice[site].V[k];
+            }
+        //}
+    }
+    if (interaction !=0)
+    {
+        T[tlen].i=i;
+        T[tlen].j=i;
+        T[tlen].v=interaction;
+        tlen++;
+
+    */}
+  }
+  //return tlen;
 }
 
 
 
 int hop(int k, int *v1, int *v2,int n, int j)
-/*
-given a state v1 (a combination corresponding to k occupied sites) generates the state
+/*given a state v1 (a combination corresponding to k occupied sites) generates the state
 v2 obtained by hopping from site v1[n] to site j (which should not be in v1), and outputs the fermionic sign
 
 Parameters
@@ -256,8 +259,7 @@ v2 : array-pointer (vector)
 Returns
 -------
 i%2 : integer
-    The fermionic sign from the resulting hop
-*/
+    The fermionic sign from the resulting hop*/
 {
    int i,d;
 
@@ -272,12 +274,49 @@ i%2 : integer
    return i%2;
 }
 
+unsigned long long int* hopp(int k, unsigned long long int *v1, unsigned long long int *v2,int n, int j)
+/*given a state v1 (a combination corresponding to k occupied sites) generates the state
+v2 obtained by hopping from site v1[n] to site j (which should not be in v1), and outputs the fermionic sign
+
+Parameters
+----------
+k : integer
+    The total number of electrons per state
+v1 : array-pointer (vector)
+    A state, a combination corresponding to k occupied sites
+v2 : array-pointer (vector)
+    The new resulting state after the hop
+n : integer
+    the hop from site
+j : integer
+    the hop-to site
+
+Updates
+-------
+v2 : array-pointer (vector)
+    The new resulting state after the hop
+
+Returns
+-------
+i%2 : integer
+    The fermionic sign from the resulting hop*/
+{
+    unsigned long long int p, *a;
+    unsigned long long int vtemp;
+    vtemp = (uintptr_t) v1;
+    p = (1ULL << (n-1)) + (1ULL << (j-1));
+    a = (unsigned long long int*) (p ^ vtemp);
+    return a;
+    //memcpy(v2, &a, sizeof(unsigned long long int*));
+    //ASHDALSHDAKJSHD THIS IS IT
+    //printf("FROM HOPP a %i\n", a);
+    //printf("FROM HOPP v2 which should equal a?? %i\n", (uintptr_t)v2);
+
+}
 
 
-
-int find(int dimension,int k, int *v, int *T, unsigned long long int *b)
-/*
-find the position of a given combination v (vector of length k) in the table of all combinations T (array of length C(n,k)*k)
+int find(int dimension,int k, unsigned long long int *v, int *T, unsigned long long int *b)
+/*find the position of a given combination v (vector of length k) in the table of all combinations T (array of length C(n,k)*k)
 
 Parameters
 ----------
@@ -297,30 +336,36 @@ b : array-pointer
 Returns
 -------
 mid : integer
-    the location of the state in the table
-*/
+    the location of the state in the table*/
 {
    int i, first, last, mid;
-   unsigned long long int element;
-   element=0ULL;
-
-   for (i=0;i<k;i++) element=element+(1ULL << (v[i]-1));
-   //for (i=0;i<k;i++) cout<<v[i]<<" ";
-   //cout<<element<<"\n";
+   unsigned long long int vtemp;
+   //element=0ULL;
+   vtemp = (uintptr_t) v;
+   //printf("bmid: %i\n", b[mid]);
+   //printf("vtemp: %i\n", vtemp);
+   //printf("v: %i\n", v);
+   //for (i=0;i<k;i++) element=element+(1ULL << (v[i]-1));
    first=0;
    last=dimension-1;
 
 
    while (first <= last)
    {
-           mid = (int) ((first + last) / 2.0);
-           if (element > b[mid])
-               first = mid + 1;
-           else if (element < b[mid])
-               last = mid - 1;
-              else
-              {
-        return mid;}
+      mid = (int) ((first + last) / 2.0);
+
+      if (vtemp > b[mid])
+      {
+        first = mid + 1;
+      }
+      else if (vtemp < b[mid])
+      {
+        last = mid - 1;
+      }
+      else
+      {
+        return mid+1;
+      }
 
    }
 }
@@ -328,8 +373,7 @@ mid : integer
 
 
 unsigned long long int choose(int n, int k)
-/*
-Returning the number of combinations of k out of n. (n-choose-k), finding number of unordered combinations with n electrons in k sites.
+/*Returning the number of combinations of k out of n. (n-choose-k), finding number of unordered combinations with n electrons in k sites.
 
 Parameters
 ----------
@@ -341,8 +385,7 @@ k : integer
 Returns
 -------
 c : integer
-    The number of ways n electron can be arranged in k sites
-*/
+    The number of ways n electron can be arranged in k sites*/
 {
    int i;
    unsigned long long int c;
@@ -355,8 +398,7 @@ c : integer
 
 
 int combinations ( int n, int k, unsigned long long int *b,int *tab)
-/*
-Returning the number of combinations of k out of n. (n-choose-k), finding number of unordered combinations with n electrons in k sites.
+/*Returning the number of combinations of k out of n. (n-choose-k), finding number of unordered combinations with n electrons in k sites.
 
 Parameters
 ----------
@@ -374,8 +416,7 @@ b : array
     sites 2 and 4, this would be repesented by 010100000. b contains a total of n-choose-k elements.
 tab : array
     An array containing the location of the occupied sites. Ex: if the first two states = 110000000 and 000000011, the first 4
-    entries of the table read: 1, 2, 8, 9.
-*/
+    entries of the table read: 1, 2, 8, 9.*/
 {
    unsigned long long int x,y;
    int i,c,d;
@@ -417,14 +458,12 @@ tab : array
 }
 
 void construct_lattice(int lattice[][nx])
-/*
-Constructing the lattice of dimension nx*nx
+/*Constructing the lattice of dimension nx*nx
 
 Parameters
 ----------
 lattice[][nx] : array
-    an empty array containing each site, which gets filled with a site number
-*/
+    an empty array containing each site, which gets filled with a site number*/
 {
   int x,i;
   for (x=0;x<nx;x++)
@@ -447,8 +486,7 @@ lattice[][nx] : array
 }
 
 Coordinates find_coordinates(int site_num, int lattice[][nx])
-/*
-Finding the coordinates of a given site
+/*Finding the coordinates of a given site
 
 Parameters
 ----------
@@ -460,8 +498,7 @@ lattice[][nx] : array
 Returns
 -------
 coords : Coordinates
-    the x and y coordinates of the site on the lattice
-*/
+    the x and y coordinates of the site on the lattice*/
 {
   int x,i;
   for (i=0;i<nx;i++)
