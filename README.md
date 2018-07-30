@@ -1,6 +1,6 @@
 # quantum_computing
 
-Modeling the evolution of a superconducting chip
+Simulating the evolution of a superconducting chip
 
 ## Who
 
