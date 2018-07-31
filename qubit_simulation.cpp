@@ -7,21 +7,18 @@
 #define COORD 4
 #define NEIGHBORS 4
 #define CANT acos(1.0/3.0)/2.0
-#define nu 1/9
 #define EIGENVALUES 40
-//#define nx atoi(argv[1])
 #define nx 3
-
+#define TotalV
 #define V 10/4
 #define T 40
+#define nu 1/(nx*nx)
 
 /*todo:
-  define nx as an atoi argv?
   V as /4 or not?
   H-device function
   H-model function
     account for V
-    dropbox
 */
 
 using namespace std;
@@ -140,7 +137,7 @@ Updates
 Tmod : array-pointer
     Stores the values of the model-hamiltonian matrix*/
 {
-  int i,state,j, k,l,m,n,x,y,z ,site,neighbor,ok,tlen,sign, neighbor1, neighbor2, neighbor3, neighbor4;
+  int i,state,j, k,l,m,n,x,y,z ,site,neighbor,ok,tlen,sign,counter, neighbor1, neighbor2, neighbor3, neighbor4;
   unsigned long long int *v1,*v2;
   Coordinates coord;
   v1=(unsigned long long int*) malloc(sizeof(unsigned long long int));
@@ -148,6 +145,7 @@ Tmod : array-pointer
 
   for (i=0;i<dimension;i++)
   {
+    counter = 0;
     for (j=0;j<electrons;j++)
     {
         site=table[i*electrons+j];
@@ -155,49 +153,50 @@ Tmod : array-pointer
         x = coord.coordX;
         y = coord.coordY;
         int neighbors[COORD] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
-        printf("\n");
-        printf("Starting in site: %i\n", site);
+        //printf("\n");
+        //printf("Starting in site: %i\n", site);
         for (z=0; z<COORD; z++)
         {
           ok=1;
           m=0;
           while (ok && (m<electrons))
           {
-              if ((table[i*electrons+m])==neighbors[z])
-                {
-                ok=0;/*
-                if(first)
-                {
-                  //PROBABLY NOT THIS
-                  ham_mod[(dimension*i)+i] += V;//state.V
-                  first == 0;
-                }*/
-
-                printf("tab %i\n", table[i*electrons+m]-1);
-                printf("neigh %i\n", neighbors[z]);
-                }
-              m++;
+            if ((table[i*electrons+m])==neighbors[z])
+            {
+              ok=0;
+              printf("tab %i\n", table[i*electrons+m]);
+              printf("neigh %i\n", neighbors[z]);
+            }
+            m++;
           }
           if (ok)
           {
               memcpy(&v1,&b[i], sizeof(unsigned long long int));
               sign = hop(electrons, v1, v2,site, neighbors[z]);
               if (sign==0) sign=1;
-              else
-              {
-                sign=-1;
-                printf("NEGATIVE SIGN IN HOP FROM NEIGHZ %i\n", neighbors[z]);
-              }
-              //printf("v2 %i\n", &v2)
-              //printf("v2 %i\n", v2);
-              state=find(dimension,electrons,v2, table, b);
-              ham_mod[dimension*i+state] -= (T*sign);//state.T
-              ham_mod[(dimension*i)+i] -= V;//state.T
+              else sign=-1;
 
-              //printf("state %i\n", state);
+              state=find(dimension,electrons,v2, table, b);
+              ham_mod[dimension*i+state-1] -= (T*sign);
+
+              if(neighbors[z]>site)
+              {
+                counter += 1;
+                ham_mod[(dimension*i)+i] -= V;
+              }
+          }
+          else
+          {
+            if(neighbors[z]>site)
+            {
+              counter += 1;
+              ham_mod[(dimension*i)+i] += V;
+            }
           }
         }
       }
+      //printf("%i\n", counter);
+      //Calculate the V term for all neighbors or just the occupied pairs???
   }
 }
 
@@ -229,16 +228,14 @@ Returns
 i%2 : integer
     The fermionic sign from the resulting hop*/
 {
-    unsigned long long int p,i,a,vtemp;
+    unsigned long long int p,i,a,vtemp,*z;
     int z_count = 0;
     vtemp = (uintptr_t) v1;
     p = (1ULL << (n-1)) + (1ULL << (j-1));
     for (i=n;i<j-1;i++)  if((1ULL<<i) & (vtemp)) z_count++;
     if((1ULL<<4) & (1ULL<<4));
     a = (p ^ vtemp);
-    //printf("A %i\n", a);
-    //HOW TO USE MEMCPY TO COPY AN ULL TO ANOTHER LOCATION
-    //memcpy(v2, &a, sizeof(unsigned long long int));
+    memcpy(v2, &a, sizeof(unsigned long long int));
     return z_count%2;
 }
 
@@ -268,33 +265,16 @@ mid : integer
 {
    int i, first, last, mid;
    unsigned long long int vtemp;
-   //element=0ULL;
-   vtemp = (uintptr_t) v;
-   //printf("bmid: %i\n", b[mid]);
-   //printf("vtemp: %i\n", vtemp);
-   //printf("v: %i\n", v);
-   //for (i=0;i<k;i++) element=element+(1ULL << (v[i]-1));
+   vtemp = *v;
    first=0;
    last=dimension-1;
-
 
    while (first <= last)
    {
       mid = (int) ((first + last) / 2.0);
-
-      if (vtemp > b[mid])
-      {
-        first = mid + 1;
-      }
-      else if (vtemp < b[mid])
-      {
-        last = mid - 1;
-      }
-      else
-      {
-        return mid+1;
-      }
-
+      if (vtemp > b[mid]) first = mid + 1;
+      else if (vtemp < b[mid]) last = mid - 1;
+      else return mid+1;
    }
 }
 
