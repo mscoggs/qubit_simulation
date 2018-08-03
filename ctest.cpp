@@ -6,13 +6,13 @@
 
 
 int main(){
-  unsigned long long int p,i, z_mask,*a;
-  unsigned long long int vtemp;
-  int z_count = 0;
-  if((1ULL<<4) & (1ULL<<4))
-    z_count += 7;
-  if((1ULL<<3) & (1ULL<<4))
-    z_count += 5;
-  printf("%i", z_count);
-
+  printf(   "%i"     ,!((1ULL<<2)&4));
+  printf(   "%i"     ,!((1ULL<<3)&4));
+  printf(   "%i"     ,!((1ULL<<1)&4));
+  printf(   "%i"     ,((1ULL<<1)&4));
+  printf(   "%i\n"     ,((1ULL<<2)&4));
+  printf(   "%i"     ,(1ULL<<6));
+  if(1) printf("True");
+  if(0) printf("construct_model_hamiltonian");
+  if(7) printf("Truen");
 }

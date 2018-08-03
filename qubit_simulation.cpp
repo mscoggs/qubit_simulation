@@ -3,22 +3,23 @@
 #include <string.h>
 #include <complex>
 
-
-#define COORD 4
 #define NEIGHBORS 4
+#define constant 2
 #define CANT acos(1.0/3.0)/2.0
 #define EIGENVALUES 40
 #define nx 3
-#define TotalV
+#define ny 3
+#define nu 1/(nx*ny)
 #define V 10/4
 #define T 40
-#define nu 1/(nx*nx)
+#define K 20
+#define J constant*10
+#define B 20
+
 
 /*todo:
-  V as /4 or not?
-  H-device function
-  H-model function
-    account for V
+  V for each neighbor?
+  make code more flexible (nonuniform variables,no boundary)
 */
 
 using namespace std;
@@ -41,19 +42,21 @@ const dcmplx I(0,1);
 
 int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, int *ham_dev, int sites, int lattice[][nx]);
 int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, int *ham_mod, int sites,  int lattice[][nx]);
-int find(int dimension,int k, unsigned long long int *v, int *tab, unsigned long long int *b);
+int find(int dimension,int k,unsigned long long int *v, unsigned long long int *b);
 unsigned long long int choose(int n, int k);
 int combinations ( int n, int k, unsigned long long int *b,int *tab);
 void construct_lattice(int lattice[][nx]);
 Coordinates find_coordinates(int site_num, int lattice[][nx]);
 int hop(int k, unsigned long long int *v1, unsigned long long int *v2,int n, int j);
+void calc_sigma_z(unsigned long long int b, int *ham_mod, int lattice[][nx], int dimension, int i, bool v);
+void calc_B(unsigned long long int state, int* ham_dev, int dimension, int i);
 
 
 
 
 int main (int argc, char *argv[])
 {
-   int *table,*v, *v2,i,j,k,sign, *ham_mod, *ham_dev,nev,tlen,sites, electrons, dimension;
+   int *table,*v, *v2,i,j,k, *ham_mod, *ham_dev,nev,sites, electrons, dimension;
    unsigned long long int *b;
    int lattice[nx][nx];
    FILE *fp;
@@ -66,8 +69,6 @@ int main (int argc, char *argv[])
    ham_mod = (int *) malloc (dimension*dimension*sizeof (int));
    ham_dev = (int *) malloc (dimension*dimension*sizeof (int));
    table=(int*) malloc(electrons*dimension*sizeof(int));
-   v=(int*) malloc(electrons*sizeof(int));
-   v2=(int*) malloc(electrons*sizeof(int));
 
 /* nev=EIGENVALUES;
    Evals = new dcmplx[nev];
@@ -107,8 +108,46 @@ Updates
 -------
 Tdev : array-pointer
     Stores the values of the model-hamiltonian matrix*/
-{
-}
+    {
+      int i,state,j, k,l,n,x,y,z,p ,site,neighbor,sign;
+      unsigned long long int *v1,*v2;
+      Coordinates coord;
+      v1=(unsigned long long int*) malloc(sizeof(unsigned long long int));
+      v2=(unsigned long long int*) malloc(sizeof(unsigned long long int));
+
+      for (i=0;i<dimension;i++)
+      {
+
+        for (j=0;j<electrons;j++)
+        {
+          site=table[i*electrons+j];
+          coord = find_coordinates(site, lattice);
+          x = coord.coordX;
+          y = coord.coordY;
+          int neighbors[NEIGHBORS] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
+
+          for (z=0; z<NEIGHBORS; z++)
+          {
+
+            if (((1ULL<<(neighbors[z]-1))&b[i])==0)//checking if the neighbor is occupied
+            {
+
+              memcpy(&v1,&b[i], sizeof(unsigned long long int));
+              //sign = hop(electrons, v1, v2,site, neighbors[z]);
+              hop(electrons, v1, v2,site, neighbors[z]);
+              state=find(dimension,electrons,v2, b);
+              ham_dev[dimension*i+state-1] += J;
+            }
+          }
+        }
+        calc_sigma_z(b[i], ham_dev,lattice,dimension, i, false);
+        for (p=0; p<dimension;p++)//The B term calculation
+        {
+          if((1ULL<<p)&b[i]) ham_dev[(dimension*i)+i]+=B;
+          else ham_dev[(dimension*i)+i]-=B;
+        }
+      }
+    }
 
 
 
@@ -137,7 +176,7 @@ Updates
 Tmod : array-pointer
     Stores the values of the model-hamiltonian matrix*/
 {
-  int i,state,j, k,l,m,n,x,y,z ,site,neighbor,ok,tlen,sign,counter, neighbor1, neighbor2, neighbor3, neighbor4;
+  int i,state,j, k,l,n,x,y,z ,site,neighbor,sign;
   unsigned long long int *v1,*v2;
   Coordinates coord;
   v1=(unsigned long long int*) malloc(sizeof(unsigned long long int));
@@ -145,60 +184,69 @@ Tmod : array-pointer
 
   for (i=0;i<dimension;i++)
   {
-    counter = 0;
+
     for (j=0;j<electrons;j++)
     {
-        site=table[i*electrons+j];
-        coord = find_coordinates(site, lattice);
-        x = coord.coordX;
-        y = coord.coordY;
-        int neighbors[COORD] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
-        //printf("\n");
-        //printf("Starting in site: %i\n", site);
-        for (z=0; z<COORD; z++)
+      site=table[i*electrons+j];
+      coord = find_coordinates(site, lattice);
+      x = coord.coordX;
+      y = coord.coordY;
+      int neighbors[NEIGHBORS] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
+
+      for (z=0; z<NEIGHBORS; z++)
+      {
+
+        if (((1ULL<<(neighbors[z]-1))&b[i])==0)//checking if the neighbor is occupied
         {
-          ok=1;
-          m=0;
-          while (ok && (m<electrons))
-          {
-            if ((table[i*electrons+m])==neighbors[z])
-            {
-              ok=0;
-              printf("tab %i\n", table[i*electrons+m]);
-              printf("neigh %i\n", neighbors[z]);
-            }
-            m++;
-          }
-          if (ok)
-          {
-              memcpy(&v1,&b[i], sizeof(unsigned long long int));
-              sign = hop(electrons, v1, v2,site, neighbors[z]);
-              if (sign==0) sign=1;
-              else sign=-1;
 
-              state=find(dimension,electrons,v2, table, b);
-              ham_mod[dimension*i+state-1] -= (T*sign);
-
-              if(neighbors[z]>site)
-              {
-                counter += 1;
-                ham_mod[(dimension*i)+i] -= V;
-              }
-          }
-          else
-          {
-            if(neighbors[z]>site)
-            {
-              counter += 1;
-              ham_mod[(dimension*i)+i] += V;
-            }
-          }
+          memcpy(&v1,&b[i], sizeof(unsigned long long int));
+          sign = hop(electrons, v1, v2,site, neighbors[z]);
+          if (sign==0) sign=1;
+          else sign=-1;
+          state=find(dimension,electrons,v2, b);
+          ham_mod[dimension*i+state-1] -= (T*sign);
         }
       }
-      //printf("%i\n", counter);
-      //Calculate the V term for all neighbors or just the occupied pairs???
+    }
+    calc_sigma_z(b[i], ham_mod,lattice,dimension, i,true);
   }
 }
+
+
+void calc_sigma_z(unsigned long long int state, int *hamiltonian, int lattice[][nx], int dimension, int i, bool v)
+{
+  int p,n,sign,x,y,site,term;
+  unsigned long long int comparison;
+  Coordinates coord;
+  term = K;
+  if (v) term = V;
+
+  for (n=1;n<(nx*ny);n++)//Only need nx*ny-1 comparisons, the last site has already had all neighbors compared
+  {
+    site=n;
+    coord = find_coordinates(site, lattice);
+    x = coord.coordX;
+    y = coord.coordY;
+    int neighbors[NEIGHBORS] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
+
+    for (p=0; p<4;p++)
+    {
+      if (neighbors[p] > site)
+      {
+        sign = -1;
+        comparison = (1ULL<<(neighbors[p]-1))+(1ULL<<(site-1));
+        if((comparison&state)==comparison || (comparison&state)==0) sign = 1;
+        hamiltonian[(dimension*i)+i] += sign*term;
+      }
+    }
+  }
+}
+
+
+
+
+
+
 
 
 int hop(int k, unsigned long long int *v1, unsigned long long int *v2,int n, int j)
@@ -228,7 +276,7 @@ Returns
 i%2 : integer
     The fermionic sign from the resulting hop*/
 {
-    unsigned long long int p,i,a,vtemp,*z;
+    unsigned long long int p,i,a,vtemp;
     int z_count = 0;
     vtemp = (uintptr_t) v1;
     p = (1ULL << (n-1)) + (1ULL << (j-1));
@@ -239,8 +287,7 @@ i%2 : integer
     return z_count%2;
 }
 
-
-int find(int dimension,int k, unsigned long long int *v, int *tab, unsigned long long int *b)
+int find(int dimension,int k, unsigned long long int *v,unsigned long long int *b)
 /*find the position of a given combination v (vector of length k) in the table of all combinations tab (array of length C(n,k)*k)
 
 Parameters
