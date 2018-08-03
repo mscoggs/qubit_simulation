@@ -9,17 +9,22 @@
 #define EIGENVALUES 40
 #define nx 3
 #define ny 3
-#define nu 1/(nx*ny)
-#define V 10/4
-#define T 40
-#define K 20
-#define J constant*10
-#define B 20
+#define nu 2/(nx*ny)
+#define V 1.87
+#define T 1.1
+#define K 1.1
+#define J constant*1
+#define B 1
 
 
 /*todo:
+  make code more flexible (nonuniform variables,non-periodic boundary)
+  figure out what's going on w/ first entry in hamiltonian
+  documentation
+
+  questions:
   V for each neighbor?
-  make code more flexible (nonuniform variables,no boundary)
+  eigen-stuff
 */
 
 using namespace std;
@@ -50,7 +55,7 @@ Coordinates find_coordinates(int site_num, int lattice[][nx]);
 int hop(int k, unsigned long long int *v1, unsigned long long int *v2,int n, int j);
 void calc_sigma_z(unsigned long long int b, int *ham_mod, int lattice[][nx], int dimension, int i, bool v);
 void calc_B(unsigned long long int state, int* ham_dev, int dimension, int i);
-
+void print_hamiltonian(int* hamiltonian, int dimension);
 
 
 
@@ -74,15 +79,27 @@ int main (int argc, char *argv[])
    Evals = new dcmplx[nev];
    Evecs = new dcmplx*[dimension];
    for (i=0; i<dimension; i++) Evecs[i] = new dcmplx[nev];*/
-
+   print_hamiltonian(ham_mod, dimension);
    construct_lattice(lattice);
    combinations (sites,electrons,b,table);
    construct_device_hamiltonian(table, b, electrons, dimension, ham_dev, sites,lattice);
    construct_model_hamiltonian(table, b, electrons, dimension, ham_mod, sites, lattice);
+   print_hamiltonian(ham_mod, dimension);
+   print_hamiltonian(ham_dev, dimension);
    exit (0);
 }
 
 
+void print_hamiltonian(int* hamiltonian, int dimension)
+{
+  int i,j;
+  printf("\n");
+  for (i=0;i<dimension;i++){
+    for (j=0;j<dimension;j++) printf("%2i",(hamiltonian[j*dimension+i]));
+    printf("\n");
+
+  }
+}
 
 
 int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, int *ham_dev, int sites, int lattice[][nx])
@@ -425,17 +442,11 @@ lattice[][nx] : array
   {
     if (x%2 ==1)
     {
-      for (i=0;i<nx;i++)
-      {
-        lattice[x][i] = (nx*x)+i+1;
-      }
+      for (i=0;i<nx;i++) lattice[x][i] = (nx*x)+i+1;
     }
     else
     {
-      for (i=0;i<nx;i++)
-      {
-        lattice[x][nx-1-i] = nx*x+i+1;
-      }
+      for (i=0;i<nx;i++) lattice[x][nx-1-i] = nx*x+i+1;
     }
   }
 }
