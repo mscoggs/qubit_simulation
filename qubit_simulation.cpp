@@ -9,7 +9,7 @@
 #define EIGENVALUES 40
 #define nx 3
 #define ny 3
-#define nu 1/(nx*ny)
+#define nu 2/(nx*ny)
 #define V 1.1
 #define T 4.1
 #define K 3
@@ -20,16 +20,14 @@
 #define N Tao/dT
 /*todo:
   evolution function
-  cost function
   get matrix in float form
-  diagonalize
-  functionalize
-  evolve a single basis state
-  compute the cost of that
-    -complex conjugate
+  evolution function
+    -diagonalize
+    -functionalize
+  cost function
+    -complex conjugate, should I have complex numbers?
     -hYdotY?
   documentation
-  get J,B,K lists to work
 */
 
 using namespace std;
@@ -46,55 +44,80 @@ typedef struct
 } Telt;
 const dcmplx I(0,1);
 
-int JList[][nx*ny*2]=
-{{0,0,1,2,3,4,5,6,7},{1,1,2,3,4,5,6,7,8},{2,2,3,4,5,6,7,8,9},{3,3,4,5,6,7,8,9,10},
-{4,4,5,6,7,8,9,10,11},{5,5,6,7,8,9,10,11,12},{6,6,7,8,9,10,11,12,13},{7,7,8,9,10,11,12,13,14},
-{8,8,9,10,11,12,13,14,15},{9,9,10,11,12,13,14,15,16},{10,10,11,12,13,14,15,16,17},{11,11,12,13,14,15,16,17,18},
-{12,12,13,14,15,16,17,18,19},{13,13,14,15,16,17,18,19,20},{14,14,15,16,17,18,19,20,21},{15,15,16,17,18,19,20,21,22},
-{16,16,17,18,19,20,21,22,23},{17,17,18,19,20,21,22,23,24},{18,18,19,20,21,22,23,24,25},{19,19,20,21,22,23,24,25,26},
-{20,20,21,22,23,24,25,26,27},{21,21,22,23,24,25,26,27,28},{22,22,23,24,25,26,27,28,29},{23,23,24,25,26,27,28,29,30},
-{24,24,25,26,27,28,29,30,31},{25,25,26,27,28,29,30,31,32},{26,26,27,28,29,30,31,32,33},{27,27,28,29,30,31,32,33,34},
-{28,28,29,30,31,32,33,34,35},{29,29,30,31,32,33,34,35,36},{30,30,31,32,33,34,35,36,37},{31,31,32,33,34,35,36,37,38},
-{32,32,33,34,35,36,37,38,39},{33,33,34,35,36,37,38,39,40},{34,34,35,36,37,38,39,40,41},{35,35,36,37,38,39,40,41,42},
-{36,36,37,38,39,40,41,42,43},{37,37,38,39,40,41,42,43,44},{38,38,39,40,41,42,43,44,45},{39,39,40,41,42,43,44,45,46}};
+float BList[][nx*ny]=
+{{0.0,1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8},{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9},{2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,11.0},{3.3,4.4,5.5,6.6,7.7,8.8,9.9,11.0,12.1},
+{4.4,5.5,6.6,7.7,8.8,9.9,11.0,12.1,13.2},{5.5,6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3},{6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4},{7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5},
+{8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6},{9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7},{11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8},{12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9},
+{13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0},{14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1},{15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2},{16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3},
+{17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4},{18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5},{19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6},{20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7}};
+
+float KList[][nx*ny*2]=
+{{0.0,1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7},{1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8},{2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9},{3.3,4.4,5.5,6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0},
+{4.4,5.5,6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1},{5.5,6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2},{6.6,7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3},{7.7,8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4},
+{8.8,9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5},{9.9,11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6},{11.0,12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7},{12.1,13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8},
+{13.2,14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8,31.9},{14.3,15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8,31.9,33.0},{15.4,16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8,31.9,33.0,34.1},{16.5,17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8,31.9,33.0,34.1,35.2},
+{17.6,18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8,31.9,33.0,34.1,35.2,36.3},{18.7,19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8,31.9,33.0,34.1,35.2,36.3,37.4},{19.8,20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8,31.9,33.0,34.1,35.2,36.3,37.4,38.5},{20.9,22.0,23.1,24.2,25.3,26.4,27.5,28.6,29.7,30.8,31.9,33.0,34.1,35.2,36.3,37.4,38.5,39.6}};
 
 
-void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_dev, int sites, int lattice[][nx], int index);
-void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_mod, int sites,  int lattice[][nx]);
+float JList[][nx*ny*2]=
+{{7.0,8.1,9.2,10.3,11.4,12.5,13.6,14.7,15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7},{8.1,9.2,10.3,11.4,12.5,13.6,14.7,15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8},{9.2,10.3,11.4,12.5,13.6,14.7,15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9},{10.3,11.4,12.5,13.6,14.7,15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0},
+{11.4,12.5,13.6,14.7,15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1},{12.5,13.6,14.7,15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2},{13.6,14.7,15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3},{14.7,15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4},
+{15.8,16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5},{16.9,18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6},{18.0,19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7},{19.1,20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8},
+{20.2,21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8,38.9},{21.3,22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8,38.9,40.0},{22.4,23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8,38.9,40.0,41.1},{23.5,24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8,38.9,40.0,41.1,42.2},
+{24.6,25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8,38.9,40.0,41.1,42.2,43.3},{25.7,26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8,38.9,40.0,41.1,42.2,43.3,44.4},{26.8,27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8,38.9,40.0,41.1,42.2,43.3,44.4,45.5},{27.9,29.0,30.1,31.2,32.3,33.4,34.5,35.6,36.7,37.8,38.9,40.0,41.1,42.2,43.3,44.4,45.5,46.6}};
+
+
+int find_bond[][nx*ny]=
+{{0,1,3,0,0,10,16,0,0},
+{1,0,2,0,11,0,0,17,0},
+{3,2,0,12,0,0,0,0,18},
+{0,0,12,0,5,6,0,0,15},
+{0,11,0,5,0,4,0,14,0},
+{10,0,0,6,4,0,13,0,0},
+{16,0,0,0,0,13,0,7,9},
+{0,17,0,0,14,0,7,0,8},
+{0,0,18,15,0,0,9,8,0}};
+
+
+
+void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, int *ham_dev, int sites, int lattice[][nx], int index);
+void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, int *ham_mod, int sites,  int lattice[][nx]);
 int find(int dimension,int k,unsigned long long int *v, unsigned long long int *b);
 unsigned long long int choose(int n, int k);
 int combinations ( int n, int k, unsigned long long int *b,int *tab);
 void construct_lattice(int lattice[][nx]);
 Coordinates find_coordinates(int site_num, int lattice[][nx]);
 int hop(int k, unsigned long long int *v1, unsigned long long int *v2,int n, int j);
-void calc_sigma_z(unsigned long long int b, float *ham_mod, int lattice[][nx], int dimension, int i, bool v);
-void calc_B(unsigned long long int state, float *ham_dev, int dimension, int i);
-void print_hamiltonian(float* hamiltonian, int dimension);
-float evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], float *ham_dev);
-float functionalize(int state, float *ham);
-float cost(int state, float *ham_mod);
-void printArray(int scalar);
+void calc_sigma_zK(unsigned long long int b, int *ham_mod, int lattice[][nx], int dimension, int i, int index);
+void calc_sigma_zV(unsigned long long int state, int *hamiltonian, int lattice[][nx], int dimension, int i);
+void calc_B(unsigned long long int state, int *ham_dev, int dimension, int i);
+void print_hamiltonian(int* hamiltonian, int dimension);
+float evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], int *ham_dev);
+float functionalize(int state, int *ham);
+float cost(int state, int *ham_mod);
+void printArray(int scalar, int offset);
+
+
 
 int main (int argc, char *argv[])
 {
-   int *table,*v, *v2,i,j,k,nev,sites, electrons, dimension,z,x;
+   int *table,*v, *v2,i,j,k,nev,sites, electrons, dimension,z,x,*ham_mod,*ham_dev;
    unsigned long long int *b;
-   float *ham_mod,*ham_dev,state;
+   float state;
    int lattice[nx][nx];
    int expectation = 0;
 
    sites=nx*nx;
    electrons=sites*nu; // 1
    dimension=choose(sites,electrons);
-   //printArray(1);
-   //printArray(1);
-   printArray(2);
+   //printArray(1,0);
+   //printArray(2,0);
+   //printArray(2,7);
 
    b=new unsigned long long int[dimension];
    table=(int*) malloc(electrons*dimension*sizeof(int));
-
-   ham_mod = (float *) malloc (dimension*dimension*sizeof (float));
-   ham_dev = (float *) malloc (dimension*dimension*sizeof (float));
+   ham_mod = (int *) malloc (dimension*dimension*sizeof (int));
+   ham_dev = (int *) malloc (dimension*dimension*sizeof (int));
    ham_mod[0]=0;
    ham_mod[1]=0;
    ham_dev[0]=0;
@@ -106,15 +129,15 @@ int main (int argc, char *argv[])
    state = evolve(table,b,electrons,dimension,sites,lattice, ham_dev);
    expectation = cost(state, ham_mod);
    //printf("%i\n",expectation);
-   printf("The Model Hamiltonian:\n");
-   print_hamiltonian(ham_mod, dimension);
-   /*printf("The Device Hamiltonian:\n");
-   print_hamiltonian(ham_dev, dimension);*/
+   //printf("The Model Hamiltonian:\n");
+   //print_hamiltonian(ham_mod, dimension);
+   //printf("The Device Hamiltonian:\n");
+   print_hamiltonian(ham_dev, dimension);
    exit (0);
 }
 
 
-float evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], float *ham_dev)
+float evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], int *ham_dev)
 {
   int i;
   float state;
@@ -124,14 +147,15 @@ float evolve(int *table, unsigned long long int *b,int electrons,int dimension, 
   {
     memset(ham_dev, 0, sizeof(ham_dev)); //This should get replaced when converting to flaot
     construct_device_hamiltonian(table, b, electrons, dimension, ham_dev, sites,lattice, i);
-    printf("%i", state); //checking the state
+    //printf("state before mult :%i\n", state); //checking the state
     state = functionalize(state, ham_dev);
+    //printf("state AFTER mult :%i\n\n", state); //checking the state
   }
   return state;
 }
 
 
-float functionalize(int state, float *ham)
+float functionalize(int state, int *ham)
 {
     //e^(i*dt*ham)*state
     //return state;
@@ -139,14 +163,14 @@ float functionalize(int state, float *ham)
 }
 
 
-float cost(int state, float *ham_mod)
+float cost(int state, int *ham_mod)
 {
   //(ham_mod*state)dot(state)
   return 0;
 }
 
 
-void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_dev, int sites, int lattice[][nx], int index)
+void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, int *ham_dev, int sites, int lattice[][nx], int index)
 /*Constructing the hamiltonian matrix for the device hamiltonian
 
 Parameters
@@ -170,7 +194,7 @@ Updates
 Tdev : array-pointer
     Stores the values of the model-hamiltonian matrix*/
 {
-  int i,state,j, k,l,n,x,y,z,p ,site,neighbor,sign;
+  int i,state,j, k,l,n,x,y,z,p ,site,neighbor,sign,bond;
   unsigned long long int *v1,*v2;
   Coordinates coord;
   v1=(unsigned long long int*) malloc(sizeof(unsigned long long int));
@@ -178,7 +202,6 @@ Tdev : array-pointer
 
   for (i=0;i<dimension;i++)
   {
-    int count = 0;
     for (j=0;j<electrons;j++)
     {
       site=table[i*electrons+j];
@@ -190,24 +213,26 @@ Tdev : array-pointer
       for (z=0; z<NEIGHBORS; z++)
       {
 
-        if (((1ULL<<(neighbors[z]-1))&b[i])==0)//checking if the neighbor is occupied
+        if (((1ULL<<(neighbors[z]-1))&b[i])==0)//making sure neighbor is not occupied, otherwise nothing happens
         {
 
           memcpy(&v1,&b[i], sizeof(unsigned long long int));
-          //sign = hop(electrons, v1, v2,site, neighbors[z]);
           hop(electrons, v1, v2,site, neighbors[z]);
           state=find(dimension,electrons,v2, b);
-          ham_dev[dimension*i+state-1] += J;
-          count++;
+          bond = find_bond[site-1][neighbors[z]-1];
+          if (bond<=0 || bond>18) printf("something bad is happening, bond = %i\n", bond);
+          //printf("pre = %.1f\n", JList[index][bond]);
+          ham_dev[dimension*i+state-1] += JList[index][bond];
+          //printf("post = %.1f\n\n", ham_dev[dimension*i+state-1]);
+
         }
       }
     }
-    printf("COUNT %i\n",count);
-    calc_sigma_z(b[i], ham_dev,lattice,dimension, i, false);
-    for (p=0; p<dimension;p++)//The B term calculation
+    calc_sigma_zK(b[i], ham_dev,lattice,dimension, i, index);//The K term calculation
+    for (p=0; p<nx*ny;p++)//The B term calculation
     {
-      if((1ULL<<p)&b[i]) ham_dev[(dimension*i)+i]+=B;
-      else ham_dev[(dimension*i)+i]-=B;
+      if((1ULL<<p)&b[i]) ham_dev[(dimension*i)+i]+=BList[index][p];
+      else ham_dev[(dimension*i)+i]-=BList[index][p];
     }
   }
 }
@@ -215,7 +240,7 @@ Tdev : array-pointer
 
 
 
-void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_mod, int sites,  int lattice[][nx])
+void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, int *ham_mod, int sites,  int lattice[][nx])
 /*Constructing the hamiltonian matrix for the model hamiltonian
 
 Parameters
@@ -271,18 +296,45 @@ Tmod : array-pointer
         }
       }
     }
-    calc_sigma_z(b[i], ham_mod,lattice,dimension, i,true);
+    calc_sigma_zV(b[i], ham_mod,lattice,dimension, i);
   }
 }
 
 
-void calc_sigma_z(unsigned long long int state, float *hamiltonian, int lattice[][nx], int dimension, int i, bool v)
+void calc_sigma_zK(unsigned long long int state, int *ham_dev, int lattice[][nx], int dimension, int i, int index)
+{
+  int p,n,sign,x,y,site,bond;
+  unsigned long long int comparison;
+  Coordinates coord;
+  for (n=1;n<(nx*ny);n++)//Only need nx*ny-1 comparisons, the last site has already had all neighbors compared
+  {
+    site=n;
+    coord = find_coordinates(site, lattice);
+    x = coord.coordX;
+    y = coord.coordY;
+    int neighbors[NEIGHBORS] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
+
+    for (p=0; p<4;p++)
+    {
+      if (neighbors[p] > site)
+      {
+        sign = -1;
+        comparison = (1ULL<<(neighbors[p]-1))+(1ULL<<(site-1));
+        if((comparison&state)==comparison || (comparison&state)==0) sign = 1;
+        bond = find_bond[site][neighbors[p]];
+        ham_dev[(dimension*i)+i] += sign*(KList[index][bond]);
+      }
+    }
+  }
+}
+
+
+
+void calc_sigma_zV(unsigned long long int state, int *ham_mod, int lattice[][nx], int dimension, int i)
 {
   int p,n,sign,x,y,site,term;
   unsigned long long int comparison;
   Coordinates coord;
-  term = K;
-  if (v) term = V;
 
   for (n=1;n<(nx*ny);n++)//Only need nx*ny-1 comparisons, the last site has already had all neighbors compared
   {
@@ -299,17 +351,11 @@ void calc_sigma_z(unsigned long long int state, float *hamiltonian, int lattice[
         sign = -1;
         comparison = (1ULL<<(neighbors[p]-1))+(1ULL<<(site-1));
         if((comparison&state)==comparison || (comparison&state)==0) sign = 1;
-        hamiltonian[(dimension*i)+i] += sign*term;
+        ham_mod[(dimension*i)+i] += sign*V;
       }
     }
   }
 }
-
-
-
-
-
-
 
 
 int hop(int k, unsigned long long int *v1, unsigned long long int *v2,int n, int j)
@@ -528,13 +574,12 @@ coords : Coordinates
 }
 
 
-void print_hamiltonian(float* hamiltonian, int dimension)
+void print_hamiltonian(int* hamiltonian, int dimension)
 {
   int i,j;
-  printf("%f", hamiltonian[0]);
 
   for (i=0;i<dimension;i++){
-    for (j=0;j<dimension;j++) printf("%3.0f",(hamiltonian[j*dimension+i]));
+    for (j=0;j<dimension;j++) printf("%i ",(hamiltonian[j*dimension+i]));
     printf("\n");
 
   }
@@ -542,19 +587,19 @@ void print_hamiltonian(float* hamiltonian, int dimension)
 
 }
 
-void printArray(int scalar)
+void printArray(int scalar, int offset)
 {
   int z,x;
   printf("{");
-  for (z=0;z<N*scalar;z++)
+  for (z=0;z<N;z++)
   {
-    printf("{%i",z);
-    for (x=0;x<nx*ny-1;x++)
+    printf("{%.1f",z*1.1+offset);
+    for (x=1;x<nx*ny*scalar;x++)
     {
-      printf(",%i",(z+x));
+      printf(",%.1f",((z+x)*1.1+offset));
 
     }
-    if (z<scalar*N-1)
+    if (z<N-1)
     {
       if ((z%4)==3)
       {
@@ -564,4 +609,5 @@ void printArray(int scalar)
     }
     else printf("}};\n\n");
   }
+
 }
