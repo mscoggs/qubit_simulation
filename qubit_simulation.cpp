@@ -9,14 +9,15 @@
 #define EIGENVALUES 40
 #define nx 3
 #define ny 3
-#define nu 2/(nx*ny)
+#define nu 1/(nx*ny)
 #define V 1.1
 #define T 4.1
 #define K 3
 #define J constant*2
 #define B 1
 #define dT 0.5
-
+#define Tao 10
+#define N Tao/dT
 /*todo:
   evolution function
   cost function
@@ -25,15 +26,10 @@
   functionalize
   evolve a single basis state
   compute the cost of that
-
-
-  make code more flexible (nonuniform variables,non-periodic boundary)
-  figure out what's going on w/ first entry in hamiltonian
+    -complex conjugate
+    -hYdotY?
   documentation
-
-  questions:
-  V for each neighbor?
-  eigen-stuff
+  get J,B,K lists to work
 */
 
 using namespace std;
@@ -50,11 +46,21 @@ typedef struct
 } Telt;
 const dcmplx I(0,1);
 
+int JList[][nx*ny*2]=
+{{0,0,1,2,3,4,5,6,7},{1,1,2,3,4,5,6,7,8},{2,2,3,4,5,6,7,8,9},{3,3,4,5,6,7,8,9,10},
+{4,4,5,6,7,8,9,10,11},{5,5,6,7,8,9,10,11,12},{6,6,7,8,9,10,11,12,13},{7,7,8,9,10,11,12,13,14},
+{8,8,9,10,11,12,13,14,15},{9,9,10,11,12,13,14,15,16},{10,10,11,12,13,14,15,16,17},{11,11,12,13,14,15,16,17,18},
+{12,12,13,14,15,16,17,18,19},{13,13,14,15,16,17,18,19,20},{14,14,15,16,17,18,19,20,21},{15,15,16,17,18,19,20,21,22},
+{16,16,17,18,19,20,21,22,23},{17,17,18,19,20,21,22,23,24},{18,18,19,20,21,22,23,24,25},{19,19,20,21,22,23,24,25,26},
+{20,20,21,22,23,24,25,26,27},{21,21,22,23,24,25,26,27,28},{22,22,23,24,25,26,27,28,29},{23,23,24,25,26,27,28,29,30},
+{24,24,25,26,27,28,29,30,31},{25,25,26,27,28,29,30,31,32},{26,26,27,28,29,30,31,32,33},{27,27,28,29,30,31,32,33,34},
+{28,28,29,30,31,32,33,34,35},{29,29,30,31,32,33,34,35,36},{30,30,31,32,33,34,35,36,37},{31,31,32,33,34,35,36,37,38},
+{32,32,33,34,35,36,37,38,39},{33,33,34,35,36,37,38,39,40},{34,34,35,36,37,38,39,40,41},{35,35,36,37,38,39,40,41,42},
+{36,36,37,38,39,40,41,42,43},{37,37,38,39,40,41,42,43,44},{38,38,39,40,41,42,43,44,45},{39,39,40,41,42,43,44,45,46}};
 
 
-
-int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_dev, int sites, int lattice[][nx]);
-int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_mod, int sites,  int lattice[][nx]);
+void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_dev, int sites, int lattice[][nx], int index);
+void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_mod, int sites,  int lattice[][nx]);
 int find(int dimension,int k,unsigned long long int *v, unsigned long long int *b);
 unsigned long long int choose(int n, int k);
 int combinations ( int n, int k, unsigned long long int *b,int *tab);
@@ -64,65 +70,83 @@ int hop(int k, unsigned long long int *v1, unsigned long long int *v2,int n, int
 void calc_sigma_z(unsigned long long int b, float *ham_mod, int lattice[][nx], int dimension, int i, bool v);
 void calc_B(unsigned long long int state, float *ham_dev, int dimension, int i);
 void print_hamiltonian(float* hamiltonian, int dimension);
-
-
+float evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], float *ham_dev);
+float functionalize(int state, float *ham);
+float cost(int state, float *ham_mod);
+void printArray(int scalar);
 
 int main (int argc, char *argv[])
 {
-   int *table,*v, *v2,i,j,k,nev,sites, electrons, dimension;
-   float  *ham_mod, *ham_dev;
+   int *table,*v, *v2,i,j,k,nev,sites, electrons, dimension,z,x;
    unsigned long long int *b;
+   float *ham_mod,*ham_dev,state;
    int lattice[nx][nx];
-   FILE *fp;
-   dcmplx **Evecs, *Evals;
+   int expectation = 0;
+
    sites=nx*nx;
    electrons=sites*nu; // 1
    dimension=choose(sites,electrons);
+   //printArray(1);
+   //printArray(1);
+   printArray(2);
 
    b=new unsigned long long int[dimension];
+   table=(int*) malloc(electrons*dimension*sizeof(int));
+
    ham_mod = (float *) malloc (dimension*dimension*sizeof (float));
    ham_dev = (float *) malloc (dimension*dimension*sizeof (float));
-   table=(int*) malloc(electrons*dimension*sizeof(int));
-   ham_dev[0]=0;
    ham_mod[0]=0;
-   ham_dev[1]=0;
    ham_mod[1]=0;
+   ham_dev[0]=0;
+   ham_dev[1]=0;
 
-/* nev=EIGENVALUES;
-   Evals = new dcmplx[nev];
-   Evecs = new dcmplx*[dimension];
-   for (i=0; i<dimension; i++) Evecs[i] = new dcmplx[nev];*/
-
-   //print_hamiltonian(ham_mod, dimension);
    construct_lattice(lattice);
    combinations (sites,electrons,b,table);
-   construct_device_hamiltonian(table, b, electrons, dimension, ham_dev, sites,lattice);
    construct_model_hamiltonian(table, b, electrons, dimension, ham_mod, sites, lattice);
-
+   state = evolve(table,b,electrons,dimension,sites,lattice, ham_dev);
+   expectation = cost(state, ham_mod);
+   //printf("%i\n",expectation);
    printf("The Model Hamiltonian:\n");
    print_hamiltonian(ham_mod, dimension);
-   printf("The Device Hamiltonian:\n");
-   print_hamiltonian(ham_dev, dimension);
+   /*printf("The Device Hamiltonian:\n");
+   print_hamiltonian(ham_dev, dimension);*/
    exit (0);
 }
 
 
-void print_hamiltonian(float* hamiltonian, int dimension)
+float evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], float *ham_dev)
 {
-  int i,j;
-  printf("%f", hamiltonian[0]);
+  int i;
+  float state;
+  state = 0; //starting state
 
-  for (i=0;i<dimension;i++){
-    for (j=0;j<dimension;j++) printf("%3.0f",(hamiltonian[j*dimension+i]));
-    printf("\n");
-
+  for (i=0; i<N;i++)
+  {
+    memset(ham_dev, 0, sizeof(ham_dev)); //This should get replaced when converting to flaot
+    construct_device_hamiltonian(table, b, electrons, dimension, ham_dev, sites,lattice, i);
+    printf("%i", state); //checking the state
+    state = functionalize(state, ham_dev);
   }
-  printf("\n");
-
+  return state;
 }
 
 
-int construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_dev, int sites, int lattice[][nx])
+float functionalize(int state, float *ham)
+{
+    //e^(i*dt*ham)*state
+    //return state;
+    return 0;
+}
+
+
+float cost(int state, float *ham_mod)
+{
+  //(ham_mod*state)dot(state)
+  return 0;
+}
+
+
+void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_dev, int sites, int lattice[][nx], int index)
 /*Constructing the hamiltonian matrix for the device hamiltonian
 
 Parameters
@@ -145,51 +169,53 @@ Updates
 -------
 Tdev : array-pointer
     Stores the values of the model-hamiltonian matrix*/
-    {
-      int i,state,j, k,l,n,x,y,z,p ,site,neighbor,sign;
-      unsigned long long int *v1,*v2;
-      Coordinates coord;
-      v1=(unsigned long long int*) malloc(sizeof(unsigned long long int));
-      v2=(unsigned long long int*) malloc(sizeof(unsigned long long int));
+{
+  int i,state,j, k,l,n,x,y,z,p ,site,neighbor,sign;
+  unsigned long long int *v1,*v2;
+  Coordinates coord;
+  v1=(unsigned long long int*) malloc(sizeof(unsigned long long int));
+  v2=(unsigned long long int*) malloc(sizeof(unsigned long long int));
 
-      for (i=0;i<dimension;i++)
+  for (i=0;i<dimension;i++)
+  {
+    int count = 0;
+    for (j=0;j<electrons;j++)
+    {
+      site=table[i*electrons+j];
+      coord = find_coordinates(site, lattice);
+      x = coord.coordX;
+      y = coord.coordY;
+      int neighbors[NEIGHBORS] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
+
+      for (z=0; z<NEIGHBORS; z++)
       {
 
-        for (j=0;j<electrons;j++)
+        if (((1ULL<<(neighbors[z]-1))&b[i])==0)//checking if the neighbor is occupied
         {
-          site=table[i*electrons+j];
-          coord = find_coordinates(site, lattice);
-          x = coord.coordX;
-          y = coord.coordY;
-          int neighbors[NEIGHBORS] = {lattice[(x+1)%nx][y], lattice[(x+(nx-1))%nx][y], lattice[x][(y+1)%nx], lattice[x][(y+(nx-1))%nx]};
 
-          for (z=0; z<NEIGHBORS; z++)
-          {
-
-            if (((1ULL<<(neighbors[z]-1))&b[i])==0)//checking if the neighbor is occupied
-            {
-
-              memcpy(&v1,&b[i], sizeof(unsigned long long int));
-              //sign = hop(electrons, v1, v2,site, neighbors[z]);
-              hop(electrons, v1, v2,site, neighbors[z]);
-              state=find(dimension,electrons,v2, b);
-              ham_dev[dimension*i+state-1] += J;
-            }
-          }
-        }
-        calc_sigma_z(b[i], ham_dev,lattice,dimension, i, false);
-        for (p=0; p<dimension;p++)//The B term calculation
-        {
-          if((1ULL<<p)&b[i]) ham_dev[(dimension*i)+i]+=B;
-          else ham_dev[(dimension*i)+i]-=B;
+          memcpy(&v1,&b[i], sizeof(unsigned long long int));
+          //sign = hop(electrons, v1, v2,site, neighbors[z]);
+          hop(electrons, v1, v2,site, neighbors[z]);
+          state=find(dimension,electrons,v2, b);
+          ham_dev[dimension*i+state-1] += J;
+          count++;
         }
       }
     }
+    printf("COUNT %i\n",count);
+    calc_sigma_z(b[i], ham_dev,lattice,dimension, i, false);
+    for (p=0; p<dimension;p++)//The B term calculation
+    {
+      if((1ULL<<p)&b[i]) ham_dev[(dimension*i)+i]+=B;
+      else ham_dev[(dimension*i)+i]-=B;
+    }
+  }
+}
 
 
 
 
-int construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_mod, int sites,  int lattice[][nx])
+void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, float *ham_mod, int sites,  int lattice[][nx])
 /*Constructing the hamiltonian matrix for the model hamiltonian
 
 Parameters
@@ -498,5 +524,44 @@ coords : Coordinates
         return coords;
       }
     }
+  }
+}
+
+
+void print_hamiltonian(float* hamiltonian, int dimension)
+{
+  int i,j;
+  printf("%f", hamiltonian[0]);
+
+  for (i=0;i<dimension;i++){
+    for (j=0;j<dimension;j++) printf("%3.0f",(hamiltonian[j*dimension+i]));
+    printf("\n");
+
+  }
+  printf("\n");
+
+}
+
+void printArray(int scalar)
+{
+  int z,x;
+  printf("{");
+  for (z=0;z<N*scalar;z++)
+  {
+    printf("{%i",z);
+    for (x=0;x<nx*ny-1;x++)
+    {
+      printf(",%i",(z+x));
+
+    }
+    if (z<scalar*N-1)
+    {
+      if ((z%4)==3)
+      {
+        printf("},\n");
+      }
+      else printf("},");
+    }
+    else printf("}};\n\n");
   }
 }
