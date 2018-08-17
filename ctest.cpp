@@ -5,6 +5,9 @@
 #include <complex>
 #include <math.h>
 
+void matrix_vector_mult_c(double *exp_matrix, double *psi, double *psi_result,int dimension);
+
+
 using namespace std;
 #define Ncount 20
 void printArray(int scalar, int offset);
@@ -40,4 +43,32 @@ double newList[2];
       }
       else printf("}};\n\n");
     }
+  }
+
+
+
+
+
+
+  void matrix_vector_mult_c(double *exp_matrix, double *psi,double *psi_result, int dimension)
+  {
+    int i,j;
+    double *psi_temp;
+    psi_temp = (double*) malloc (2*dimension*sizeof(double));
+    for(i=0; i<dimension; i++)
+    {
+      double resultR = 0.0;
+      double resultI = 0.0;
+
+      for (j=0; j<dimension; j++)
+      {
+        resultR += exp_matrix[2*j+i*dimension]*psi[2*j];
+        resultI += exp_matrix[2*j+i*dimension+1]*psi[2*j+1];
+      }
+      psi_temp[2*i] = resultR;
+      psi_temp[2*i+1] = resultI;
+    }
+    memcpy(psi_result, psi_temp, 2*dimension*sizeof(double));
+    for (i=0;i<dimension*2;i++) printf("%f\n", psi_result[i]);
+
   }

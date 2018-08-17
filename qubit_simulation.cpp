@@ -14,15 +14,18 @@
 #define JJ 2.6
 #define KK 2.7
 #define BB 2.8
-#define dT 0.5
+#define dT 1
 #define Tao 10
 #define PsiStartState 2
 #define Ncount Tao/dT
 
-/*todo:
-  evolution function
-    -exp needs to work w/ imaginary
-  cost function
+/*Questions:
+Alpha[1]=0, why are there still imaginary values?
+Double Check assumed matrix storage ham = [col1,col2,col3...]
+Imaginary Matrix*Imaginary Vectory mult with zgemm
+
+TODO:
+  double check diag_hermitian_real_double, should get same expectation value
 
   documentation
   algorithmic way to find bonds
@@ -49,8 +52,8 @@ int find_bond[][nx*ny]=
 
 
 
-double evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], double *ham_dev);
-double cost(int state, double *ham_mod);
+void evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], double *ham_dev,double *psi1, double *psi2);
+double cost(double *psi, double *ham_mod, int dimension);
 void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_dev, int sites, int lattice[][nx],double *k_list, double *j_list, double *b_list);
 void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_mod, int sites,  int lattice[][nx]);
 void diag_hermitian_real_double(int N,  double *A, double *Vdag,double *D);
@@ -64,19 +67,26 @@ void change_lists(double *k_list, double *j_list,double *b_list, int index);
 void construct_lattice(int lattice[][nx]);
 Coordinates find_coordinates(int site_num, int lattice[][nx]);
 void print_hamiltonian(double* hamiltonian, int dimension, char print_imaginary);
-extern "C" int dsyev_(char *JOBZ, char *UPLO, int *N, double *Vdag, int *LDA, double *D, double *WORK, int *LWORK, int *INFO);
 void print_hamiltonianR(double *hamiltonian, int dimension);
 void exp_diaganolized_mat(double *ham_real, double *Vdag, double* D, int dimension);
+void matrix_vector_mult(double *exp_matrix, double *psi, int dimension);
+double dot(double *v1, double *v2, int dimension);
 
-
-
+extern "C" int zgemm_(char *TRANSA, char *TRANSB, int *M, int *N, int *K, double *ALPHA, double *Z, int *LDA, double *X, int *LDB, double *BETA, double *Y, int *LDC); //matrix mult
+extern "C" int zgemv_(char *TRANS, int *M, int *N,double *ALPHA,double *A, int *LDA, double *X, int *INCX, double *BETA, double *Y, int *INCY); //matrix-vector mult
+extern "C" int dsyev_(char *JOBZ, char *UPLO, int *N, double *Vdag, int *LDA, double *D, double *WORK, int *LWORK, int *INFO);//diagonalization
+extern "C" int zgetrf_ (int *M, int *N, double *D, int *LDA, int *IPIV, int *INFO);
+extern "C" int zgetrs_( char *TRANS, int *N, int *NRHS,double *D, int *LDA, int *IPIV,double *E, int *LDB, int *INFO);
+extern "C" void dgetrf_(int* M, int *N, double* A, int* lda, int* IPIV, int* INFO);
+extern "C" void dgetri_(int* N, double* A, int* lda, int* IPIV, double* WORK, int* lwork, int* INFO);
+extern "C" int dgemm_(char *TRANSA, char *TRANSB, int *M, int *N, int *K, double *ALPHA, double *Z, int *LDA, double *X, int *LDB, double *BETA, double *Y, int *LDC); //matrix mult
 
 
 int main (int argc, char *argv[])
 {
-   int *table,*v,*v2,expectation,sites,electrons,dimension,lattice[nx][nx],*j_list,*b_list,*k_list;
+   int i,*table,*v,*v2,sites,electrons,dimension,lattice[nx][nx],*j_list,*b_list,*k_list;
    unsigned long long int *b;
-   double psi,*ham_mod,*ham_dev;
+   double *psi1,*psi2,*ham_mod,*ham_dev,expectation1, expectation2;
    sites=nx*ny;
    electrons=sites*nu;
    dimension=choose(sites,electrons);
@@ -85,13 +95,25 @@ int main (int argc, char *argv[])
    table=(int*) malloc(electrons*dimension*sizeof(int));
    ham_mod = (double *) malloc (2*dimension*dimension*sizeof (double));
    ham_dev = (double *) malloc (2*dimension*dimension*sizeof (double));
+   psi1 = (double *) malloc (2*dimension*sizeof(double));
+   psi2 = (double *) malloc (2*dimension*sizeof(double));
+
+
 
    construct_lattice(lattice);
    combinations (sites,electrons,b,table);
    construct_model_hamiltonian(table, b, electrons, dimension, ham_mod, sites, lattice);
-   psi = evolve(table,b,electrons,dimension,sites,lattice, ham_dev);
-   expectation = cost(psi, ham_mod);
-   printf("The Device Hamiltonian:\n");
+
+   for (i=0; i<dimension*2;i++) psi1[i] = 0.0, psi2[i] =0.0;//converting the starting state of b into an array
+   for (i=0; i<dimension;i++) if(b[PsiStartState]&(1ULL<<i)) psi1[i*2] = 1, psi2[i*2] = 1;
+
+   evolve(table,b,electrons,dimension,sites,lattice, ham_dev, psi1, psi2);
+   expectation1 = cost(psi1, ham_mod, dimension);
+   expectation2 = cost(psi2, ham_mod, dimension);
+   printf("Expectation1: %f\n", expectation1);
+   printf("Expectation2: %f\n", expectation2);
+
+   //printf("The Device Hamiltonian:\n");
    //print_hamiltonian(ham_dev, dimension, 'n');
    //printf("The Model Hamiltonian:\n");
    //print_hamiltonian(ham_mod, dimension, 'n');
@@ -99,11 +121,11 @@ int main (int argc, char *argv[])
 }
 
 
-double evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], double *ham_dev)
+void evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], double *ham_dev, double *psi1, double *psi2)
 
 {
   int i,j;
-  double *psi1,*psi2,*ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag,*b_list,*k_list,*j_list;
+  double *ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag,*b_list,*k_list,*j_list;
   k_list = (double *) malloc(2*nx*ny*sizeof(double));
   j_list = (double *) malloc(2*nx*ny*sizeof(double));
   b_list = (double *) malloc(2*nx*ny*sizeof(double));
@@ -112,57 +134,131 @@ double evolve(int *table, unsigned long long int *b,int electrons,int dimension,
   Vdag = (double*) malloc(sizeof(double)*dimension*dimension);
   ham_t_i = (double *) malloc (2*dimension*dimension*sizeof (double));
   exp_matrix = (double *) malloc (2*dimension*dimension*sizeof (double));
-  psi1 = (double *) malloc (dimension*sizeof(double));
-  psi2 = (double *) malloc (dimension*sizeof(double));
-
-  for (i=0; i<dimension;i++) psi1[i] = 0, psi2[i] = 0;
-
-
-  psi1[PsiStartState] = 1; //arbitrary starting state, convert to vector
-  psi2[PsiStartState] = 1; //arbitrary starting state, convert to vector
 
   init_lists(k_list, j_list, b_list);
+
 
   for (i=Ncount-1; i<Ncount;i++)
   {
 
     change_lists(k_list,j_list,b_list,i);
     construct_device_hamiltonian(table, b, electrons, dimension, ham_dev, sites,lattice, k_list, j_list, b_list);
+    for (j=0; j<dimension*dimension*2; j++) exp_matrix[j] = 0.0;
+    for (j=0; j<dimension*dimension*2-1; j++) ham_t_i[(j+1)%(dimension*dimension)] = (ham_dev[j]*-dT)+0.0; //multiplying by -i*dt
+    for (j =0; j<dimension*dimension; j++) ham_diag[j] = ham_dev[2*j];//converting an all-real-valued complex matrix into just real matrix
 
-    for (j=0; j<dimension*dimension*2-1; j++)
-      exp_matrix[j+1] = 0;
-      ham_t_i[j+1] = (ham_dev[j]*-dT)+0.0; //multiplying by -i*dt
-    }
-    ham_t_i[0]=0;
-    exp_matrix[0] = 0;
-
-    for (j =0; j<dimension*dimension; j++)
-    {
-	    ham_diag[j] = ham_dev[2*j];
-    }
-
-
+    //The diagonalization method
     diag_hermitian_real_double(dimension, ham_diag,Vdag, D);
     exp_diaganolized_mat(ham_diag, Vdag, D, dimension);
-    psi1 = 0; //ham_real*psi1
-    //exp_general_complex_double(dimension, ham_t_i, exp_matrix) D_mat[i*dim+i=]exp(D[i]), all else 0
-    psi2 = 0; //exp_matrix*psi, in vector and matrix form
+    for (j=0; j<dimension;j++) ham_dev[j*2]=ham_diag[j];
+    for (j=0; j<dimension;j++) ham_dev[j*2+1]=0.0;
+
+    matrix_vector_mult(ham_dev,psi1, dimension);
+
+    //The Pade approximation
+    exp_general_complex_double(dimension, ham_t_i, exp_matrix);
+    matrix_vector_mult(exp_matrix, psi2, dimension);
 
   }
-  return 0;
 }
+
+
+double cost(double *psi, double *ham_mod, int dimension)
+{
+  int i;
+  double *psi_temp, result;
+  psi_temp = (double*) malloc (dimension*2*sizeof(double));
+  memcpy(psi_temp, psi, 2*dimension*sizeof(double));
+
+  matrix_vector_mult(ham_mod, psi, dimension);
+  result = dot(psi, psi_temp, dimension);
+  return result;
+}
+
+
+
+
+
+
+
+
+void matrix_vector_mult(double *matrix, double *psi, int dimension)
+{
+  int i;
+  double *result;
+  char TRANS = 'N';
+  int M = dimension;
+  int N = dimension;
+  int LDA = dimension;
+  int INCX = 1;
+  int INCY = 1;
+  double ALPHA[2];//www.netlib.org/lapack/explore-html/dc/d17/group__complex16__blas__level3_ga4ef748ade85e685b8b2241a7c56dd21c.html#ga4ef748ade85e685b8b2241a7c56dd21c
+  ALPHA[0]=1.0;
+  ALPHA[1]=0.0;
+  double BETA[2];
+  BETA[0]=0.0;
+  BETA[1]=0.0;
+  result = (double *) malloc (dimension*2*sizeof(double));
+  for (i=0;i<dimension*2;i++) result[i]=0.0;
+
+  //for (i=0;i<dimension*dimension;i++) matrix[2*i+1]=0.0;
+  //print_hamiltonian(matrix, dimension, 'y');
+
+  zgemv_(&TRANS, &M, &N,ALPHA,matrix, &LDA, psi, &INCX, BETA, result, &INCY);
+  //for (i=0;i<dimension*2;i++) printf("%f\n", result[i]);
+  memcpy(psi,result, 2*dimension*sizeof(double));
+
+}
+
+
+double dot(double *v1, double *v2, int dimension)
+{
+  int i;
+  double sum = 0;
+  for (i =0; i<2*dimension; i++) sum+= v1[i]*v2[i];
+  return sum;
+}
+
+
+
 
 void exp_diaganolized_mat(double *ham_diag, double *Vdag, double* D, int dimension)
 {
    int i;
-   double *exp_D;
+   double *exp_D, *temp_mat;
    exp_D = (double *) malloc (dimension*dimension*sizeof (double));
+   temp_mat = (double *) malloc (dimension*dimension*sizeof (double));
+
    for (i =0; i<dimension*dimension; i++) exp_D[i] = 0, ham_diag[i] = 0;
 
-   for (i =0; i<dimension; i++)
-   {
-    exp_D[i*dimension+i] = exp(D[i]*-dt*i);/////doesnt account for EXP to the imaginry
-   }
+   for (i =0; i<dimension; i++) exp_D[i*dimension+i] = cos(D[i]*dT);//e^i*-dtD, ignoring imaginary part which gets cancelled out
+
+   int N = dimension;
+   int *IPIV = new int[N];
+   int LWORK = N*N;
+   double *WORK = new double[LWORK];
+   int INFO;
+   char TRANSA = 'N';
+   char TRANSB = 'N';
+   int LDA=N;
+   int LDB=N;
+   int LDC=N;
+   /*double ALPHA[2];
+   ALPHA[0]=1.0;
+   ALPHA[1]=0.0;
+   double BETA[2];
+   BETA[0]=0.0;
+   BETA[1]=0.0;*/
+   double ALPHA = 1;
+   double BETA = 0;
+   //print_hamiltonianR(ham_diag, dimension);
+   dgemm_(&TRANSA, &TRANSB, &N, &N, &N, &ALPHA, Vdag, &LDA, exp_D, &LDB, &BETA, temp_mat, &LDC); //matrix mult
+   dgetrf_(&N,&N,Vdag,&N,IPIV,&INFO);https://stackoverflow.com/questions/3519959/computing-the-inverse-of-a-matrix-using-lapack-in-c
+   dgetri_(&N,Vdag,&N,IPIV,WORK,&LWORK,&INFO);//http:www.netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html#gaeda3cbd99c8fb834a60a6412878226e1
+   //print_hamiltonianR(ham_diag, dimension);
+   dgemm_(&TRANSA, &TRANSB, &N, &N, &N, &ALPHA, temp_mat, &LDA, Vdag, &LDB, &BETA, ham_diag, &LDC); //matrix mult
+   //print_hamiltonianR(ham_diag, dimension);
+
    //matrix mult hamreal= (vDAG*expD*vdag)
 
 }
@@ -215,6 +311,7 @@ void exp_general_complex_double(int N, double *A, double *B)
      int LDC=N;
      int NRHS=N;
      int INFO;
+     //zgemm_ (&TRANSA, &TRANSB, &M, &N, &K, ALPHA, Z, &LDA, X, &LDB, BETA, Y, &LDC); //matrix mult
 
      row_norm=(double*) malloc(N*sizeof(double));
      X=(double*) malloc(2*N*N*sizeof(double));
@@ -242,6 +339,7 @@ void exp_general_complex_double(int N, double *A, double *B)
      p=1;
      q=6;
 
+
      for(ii=0;ii<2*N*N;ii++) E[ii]=c*Z[ii];
      for(ii=0;ii<2*N*N;ii++) D[ii]=-c*Z[ii];
      for(ii=0;ii<N;ii++)E[2*(ii+N*ii)]=E[2*(ii+N*ii)]+1.0;
@@ -250,9 +348,8 @@ void exp_general_complex_double(int N, double *A, double *B)
      for (kk=2;kk<=q;kk++)
      {
          c = c * (q-kk+1) / (kk*(2*q-kk+1));
-         //zgemm_ (&TRANSA, &TRANSB, &M, &N, &K, ALPHA, Z, &LDA, X, &LDB, BETA, Y, &LDC); //matrix mult
+         zgemm_ (&TRANSA, &TRANSB, &M, &N, &K, ALPHA, Z, &LDA, X, &LDB, BETA, Y, &LDC); //matrix mult
          memcpy(X,Y,2*N*N*sizeof(double));
-
          for(ii=0;ii<2*N*N;ii++) Y[ii]=c*X[ii];
          for(ii=0;ii<2*N*N;ii++) E[ii]=E[ii]+Y[ii];
          if (p==1)for(ii=0;ii<2*N*N;ii++) D[ii]=D[ii]+Y[ii];
@@ -260,20 +357,22 @@ void exp_general_complex_double(int N, double *A, double *B)
          p=abs(1-p);
      }
 
-     //zgetrf_ (&M, &N, D, &LDA, IPIV, &INFO);http://www.netlib.org/lapack/explore-3.1.1-html/zgetrf.f.html
-     if (INFO !=0) printf("DIAGONALIZATION ERROR, INFO = %i\n", INFO);
-     //zgetrs_( &TRANS, &N, &NRHS,D,    &LDA, IPIV,E, &LDB, &INFO);//solves system of equations http://www.netlib.org/lapack/explore-3.1.1-html/zgetrs.f.html
-     if (INFO !=0) printf("DIAGONALIZATION ERROR, INFO = %i\n", INFO);
+     zgetrf_ (&M, &N, D, &LDA, IPIV, &INFO);//http:www.netlib.org/lapack/explore-3.1.1-html/zgetrf.f.html
+     if (INFO !=0) printf("ERROR, INFO = %i\n", INFO);
+     zgetrs_( &TRANS, &N, &NRHS,D,    &LDA, IPIV,E, &LDB, &INFO);//solves system of equations http://www.netlib.org/lapack/explore-3.1.1-html/zgetrs.f.html
+     if (INFO !=0) printf("ERROR, INFO = %i\n", INFO);
 
      for (kk=1;kk<=s;kk++)
      {
-         memcpy(X,E,2*N*N*sizeof(double));
 
-         //zgemm_ (&TRANSA, &TRANSB, &M, &N, &K, ALPHA, E, &LDA, X, &LDB, BETA, Y, &LDC);//matrixmultiplication
-         if (INFO !=0) printf("DIAGONALIZATION ERROR, INFO = %i\n", INFO);
+         memcpy(X,E,2*N*N*sizeof(double));
+         zgemm_ (&TRANSA, &TRANSB, &M, &N, &K, ALPHA, E, &LDA, X, &LDB, BETA, Y, &LDC);//matrixmultiplication
+         if (INFO !=0) printf("ERROR, INFO = %i\n", INFO);
          memcpy(E,Y,2*N*N*sizeof(double));
 
      }
+     print_hamiltonian(E,N,'y');
+
      memcpy(B,E,2*N*N*sizeof(double));
      free(row_norm);
      free(X);
@@ -283,16 +382,6 @@ void exp_general_complex_double(int N, double *A, double *B)
      free(IPIV);
 }
 
-
-
-
-
-
-double cost(int state, double *ham_mod)
-{
-  //(ham_mod*state)dot(state)
-  return 0;
-}
 
 
 void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_dev, int sites, int lattice[][nx],double *k_list, double *j_list, double *b_list)
