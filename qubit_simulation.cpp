@@ -9,23 +9,21 @@
 #define nx 3
 #define ny 3
 #define nu 2/(nx*ny)
-#define V 1.1
-#define T 4.1
-#define JJ 2.6
-#define KK 2.7
-#define BB 2.8
+#define V .7
+#define T .5
 #define dT 1
 #define Tao 10
 #define PsiStartState 2
 #define Ncount Tao/dT
 
 /*Questions:
-Alpha[1]=0, why are there still imaginary values?
-Double Check assumed matrix storage ham = [col1,col2,col3...]
-Imaginary Matrix*Imaginary Vectory mult with zgemm
 
 TODO:
   double check diag_hermitian_real_double, should get same expectation value
+    -Matrix-vector-mult:working
+    -diag_hermitian_real_double:??
+    -exp_diaganolized_mat:??
+    -
 
   documentation
   algorithmic way to find bonds
@@ -37,7 +35,6 @@ typedef struct
 {
     int coordX, coordY;
 } Coordinates;
-
 
 int find_bond[][nx*ny]=
 {{0,1,3,0,0,10,16,0,0},
@@ -71,7 +68,6 @@ void print_hamiltonianR(double *hamiltonian, int dimension);
 void exp_diaganolized_mat(double *ham_real, double *Vdag, double* D, int dimension);
 void matrix_vector_mult(double *exp_matrix, double *psi, int dimension);
 double dot(double *v1, double *v2, int dimension);
-
 extern "C" int zgemm_(char *TRANSA, char *TRANSB, int *M, int *N, int *K, double *ALPHA, double *Z, int *LDA, double *X, int *LDB, double *BETA, double *Y, int *LDC); //matrix mult
 extern "C" int zgemv_(char *TRANS, int *M, int *N,double *ALPHA,double *A, int *LDA, double *X, int *INCX, double *BETA, double *Y, int *INCY); //matrix-vector mult
 extern "C" int dsyev_(char *JOBZ, char *UPLO, int *N, double *Vdag, int *LDA, double *D, double *WORK, int *LWORK, int *INFO);//diagonalization
@@ -80,6 +76,10 @@ extern "C" int zgetrs_( char *TRANS, int *N, int *NRHS,double *D, int *LDA, int 
 extern "C" void dgetrf_(int* M, int *N, double* A, int* lda, int* IPIV, int* INFO);
 extern "C" void dgetri_(int* N, double* A, int* lda, int* IPIV, double* WORK, int* lwork, int* INFO);
 extern "C" int dgemm_(char *TRANSA, char *TRANSB, int *M, int *N, int *K, double *ALPHA, double *Z, int *LDA, double *X, int *LDB, double *BETA, double *Y, int *LDC); //matrix mult
+
+
+
+
 
 
 int main (int argc, char *argv[])
@@ -97,26 +97,40 @@ int main (int argc, char *argv[])
    ham_dev = (double *) malloc (2*dimension*dimension*sizeof (double));
    psi1 = (double *) malloc (2*dimension*sizeof(double));
    psi2 = (double *) malloc (2*dimension*sizeof(double));
-
-
+   for (i=0; i<dimension*2;i++) psi1[i] = 0.0, psi2[i] =0.0;
+   psi1[PsiStartState] = 1, psi2[PsiStartState] = 1;
 
    construct_lattice(lattice);
    combinations (sites,electrons,b,table);
    construct_model_hamiltonian(table, b, electrons, dimension, ham_mod, sites, lattice);
 
-   for (i=0; i<dimension*2;i++) psi1[i] = 0.0, psi2[i] =0.0;//converting the starting state of b into an array
-   for (i=0; i<dimension;i++) if(b[PsiStartState]&(1ULL<<i)) psi1[i*2] = 1, psi2[i*2] = 1;
 
    evolve(table,b,electrons,dimension,sites,lattice, ham_dev, psi1, psi2);
    expectation1 = cost(psi1, ham_mod, dimension);
    expectation2 = cost(psi2, ham_mod, dimension);
-   printf("Expectation1: %f\n", expectation1);
-   printf("Expectation2: %f\n", expectation2);
+   printf("Expectation1 (diag method): %f\n", expectation1);
+   printf("Expectation2 (pade approx): %f\n", expectation2);
 
    //printf("The Device Hamiltonian:\n");
    //print_hamiltonian(ham_dev, dimension, 'n');
    //printf("The Model Hamiltonian:\n");
    //print_hamiltonian(ham_mod, dimension, 'n');
+
+
+
+
+/*   double *test,*psi;
+   test = (double*) malloc (4*4*2*sizeof(double));
+   psi = (double*) malloc (4*2*sizeof(double));
+   for (i=0; i<8;i++) psi[i] = 0.0;
+   for (i=0; i<4*4*2;i++) test[i] = 0.0;
+   for (i=0; i<8;i++) psi[i] = 1;
+   for (i=0; i<4*4;i++) test[i*2] = i,test[i*2+1] = i;
+   print_hamiltonian(test,4,'y');
+   matrix_vector_mult(test, psi, 4);
+   for (i=0; i<8;i++) printf("%f\n", psi[i]);
+*/
+
    exit (0);
 }
 
@@ -149,16 +163,25 @@ void evolve(int *table, unsigned long long int *b,int electrons,int dimension, i
 
     //The diagonalization method
     diag_hermitian_real_double(dimension, ham_diag,Vdag, D);
-    exp_diaganolized_mat(ham_diag, Vdag, D, dimension);
-    for (j=0; j<dimension;j++) ham_dev[j*2]=ham_diag[j];
-    for (j=0; j<dimension;j++) ham_dev[j*2+1]=0.0;
+    exp_diaganolized_mat(ham_dev, Vdag, D, dimension);
+
+    printf("e^M, The Diagonalized Matrix:\n");
+    print_hamiltonian(ham_dev, dimension, 'y');
 
     matrix_vector_mult(ham_dev,psi1, dimension);
 
+
     //The Pade approximation
     exp_general_complex_double(dimension, ham_t_i, exp_matrix);
+    printf("e^M, The Pade Matrix:\n");
+    print_hamiltonian(exp_matrix, dimension, 'y');
     matrix_vector_mult(exp_matrix, psi2, dimension);
 
+    /*printf("Diagonalize Method Psi:\n");
+    for (j=0; j<dimension*2;j++) printf("%f\n", psi1[j]);
+    printf("\n");
+    printf("Pade Appox Psi:\n");
+    for (j=0; j<dimension*2;j++) printf("%f\n", psi2[j]);*/
   }
 }
 
@@ -174,11 +197,6 @@ double cost(double *psi, double *ham_mod, int dimension)
   result = dot(psi, psi_temp, dimension);
   return result;
 }
-
-
-
-
-
 
 
 
@@ -222,17 +240,10 @@ double dot(double *v1, double *v2, int dimension)
 
 
 
-void exp_diaganolized_mat(double *ham_diag, double *Vdag, double* D, int dimension)
+void exp_diaganolized_mat(double *ham, double *Vdag, double* D, int dimension)
 {
    int i;
-   double *exp_D, *temp_mat;
-   exp_D = (double *) malloc (dimension*dimension*sizeof (double));
-   temp_mat = (double *) malloc (dimension*dimension*sizeof (double));
-
-   for (i =0; i<dimension*dimension; i++) exp_D[i] = 0, ham_diag[i] = 0;
-
-   for (i =0; i<dimension; i++) exp_D[i*dimension+i] = cos(D[i]*dT);//e^i*-dtD, ignoring imaginary part which gets cancelled out
-
+   double *exp_D, *temp_mat, *Vdag_z, *Vdag_z_inv;
    int N = dimension;
    int *IPIV = new int[N];
    int LWORK = N*N;
@@ -243,24 +254,29 @@ void exp_diaganolized_mat(double *ham_diag, double *Vdag, double* D, int dimensi
    int LDA=N;
    int LDB=N;
    int LDC=N;
-   /*double ALPHA[2];
+   double ALPHA[2];
    ALPHA[0]=1.0;
    ALPHA[1]=0.0;
    double BETA[2];
    BETA[0]=0.0;
-   BETA[1]=0.0;*/
-   double ALPHA = 1;
-   double BETA = 0;
-   //print_hamiltonianR(ham_diag, dimension);
-   dgemm_(&TRANSA, &TRANSB, &N, &N, &N, &ALPHA, Vdag, &LDA, exp_D, &LDB, &BETA, temp_mat, &LDC); //matrix mult
-   dgetrf_(&N,&N,Vdag,&N,IPIV,&INFO);https://stackoverflow.com/questions/3519959/computing-the-inverse-of-a-matrix-using-lapack-in-c
-   dgetri_(&N,Vdag,&N,IPIV,WORK,&LWORK,&INFO);//http:www.netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html#gaeda3cbd99c8fb834a60a6412878226e1
-   //print_hamiltonianR(ham_diag, dimension);
-   dgemm_(&TRANSA, &TRANSB, &N, &N, &N, &ALPHA, temp_mat, &LDA, Vdag, &LDB, &BETA, ham_diag, &LDC); //matrix mult
-   //print_hamiltonianR(ham_diag, dimension);
+   BETA[1]=0.0;
+   exp_D = (double *) malloc (2*dimension*dimension*sizeof (double));
+   temp_mat = (double *) malloc (2*dimension*dimension*sizeof (double));
+   Vdag_z = (double *) malloc (2*dimension*dimension*sizeof (double));
+   Vdag_z_inv = (double *) malloc (2*dimension*dimension*sizeof (double));
 
-   //matrix mult hamreal= (vDAG*expD*vdag)
+   for (i =0; i<dimension*dimension*2; i++) exp_D[i] = 0, temp_mat[i] = 0,Vdag_z[i]=0, Vdag_z_inv[i]=0, ham[i];
+   for (i =0; i<dimension*dimension; i++) Vdag_z[2*i] = Vdag[i];
+   for (i =0; i<dimension*2; i++) exp_D[2*(i*dimension+i)] = cos(-dT*D[i]), exp_D[2*(i*dimension+i)+1] = sin(-dT*D[i]);
+   dgetrf_(&N,&N,Vdag,&N,IPIV,&INFO);https:
+   dgetri_(&N,Vdag,&N,IPIV,WORK,&LWORK,&INFO);//inverting vdag
+   for (i =0; i<dimension*dimension; i++) Vdag_z_inv[2*i] = Vdag[i];
+   for (i =0; i<dimension*dimension*2; i++) ham[i] = 0;
 
+   //print_hamiltonianR(ham, dimension);
+   zgemm_(&TRANSA, &TRANSB, &N, &N, &N, ALPHA, Vdag_z, &LDA, exp_D, &LDB, BETA, temp_mat, &LDC); //matrix mult
+   zgemm_(&TRANSA, &TRANSB, &N, &N, &N, ALPHA, temp_mat, &LDA, Vdag_z_inv, &LDB, BETA, ham, &LDC); //matrix mult
+   //print_hamiltonianR(ham, dimension);
 }
 
 
@@ -371,7 +387,6 @@ void exp_general_complex_double(int N, double *A, double *B)
          memcpy(E,Y,2*N*N*sizeof(double));
 
      }
-     print_hamiltonian(E,N,'y');
 
      memcpy(B,E,2*N*N*sizeof(double));
      free(row_norm);
@@ -695,7 +710,7 @@ void print_hamiltonian(double* hamiltonian, int dimension, char print_imaginary)
   scalar=2;
   if(print_imaginary =='y') scalar =1;
   for (i=0;i<dimension*2;i+=scalar){
-    for (j=0;j<dimension*2;j+=2) printf("%.1f",(hamiltonian[j*dimension+i]));
+    for (j=0;j<dimension*2;j+=2) printf("%4.1f|",(hamiltonian[j*dimension+i]));
     printf("\n");
   }
   printf("\n");
