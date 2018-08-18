@@ -4,6 +4,7 @@
 #include <complex.h>
 #include <complex>
 #include <math.h>
+#include <time.h>
 
 #define NEIGHBORS 4
 #define nx 3
@@ -16,17 +17,19 @@
 #define PsiStartState 2
 #define Ncount Tao/dT
 
+
 /*Questions:
 
 TODO:
-  double check diag_hermitian_real_double, should get same expectation value
-    -Matrix-vector-mult:working
-    -diag_hermitian_real_double:??
-    -exp_diaganolized_mat:??
-    -
-
+ Check accurracy of the two matrices
+ get time difference
+ remote access
+ double check dot
+change j,k,b list
   documentation
   algorithmic way to find bonds
+  open boundary conditions
+  clean up
 */
 
 
@@ -115,22 +118,6 @@ int main (int argc, char *argv[])
    //print_hamiltonian(ham_dev, dimension, 'n');
    //printf("The Model Hamiltonian:\n");
    //print_hamiltonian(ham_mod, dimension, 'n');
-
-
-
-
-/*   double *test,*psi;
-   test = (double*) malloc (4*4*2*sizeof(double));
-   psi = (double*) malloc (4*2*sizeof(double));
-   for (i=0; i<8;i++) psi[i] = 0.0;
-   for (i=0; i<4*4*2;i++) test[i] = 0.0;
-   for (i=0; i<8;i++) psi[i] = 1;
-   for (i=0; i<4*4;i++) test[i*2] = i,test[i*2+1] = i;
-   print_hamiltonian(test,4,'y');
-   matrix_vector_mult(test, psi, 4);
-   for (i=0; i<8;i++) printf("%f\n", psi[i]);
-*/
-
    exit (0);
 }
 
@@ -138,8 +125,12 @@ int main (int argc, char *argv[])
 void evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], double *ham_dev, double *psi1, double *psi2)
 
 {
+	clock_t t1,t2;
+	double diag_sum,pade_sum;
+	diag_sum = 0, pade_sum=0;
   int i,j;
-  double *ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag,*b_list,*k_list,*j_list;
+  double *ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag,*b_list,*k_list,*j_list, *ham_dif;
+  ham_dif = (double*) malloc(2*nx*ny*sizeof(double));
   k_list = (double *) malloc(2*nx*ny*sizeof(double));
   j_list = (double *) malloc(2*nx*ny*sizeof(double));
   b_list = (double *) malloc(2*nx*ny*sizeof(double));
@@ -157,13 +148,16 @@ void evolve(int *table, unsigned long long int *b,int electrons,int dimension, i
 
     change_lists(k_list,j_list,b_list,i);
     construct_device_hamiltonian(table, b, electrons, dimension, ham_dev, sites,lattice, k_list, j_list, b_list);
-    for (j=0; j<dimension*dimension*2; j++) exp_matrix[j] = 0.0;
-    for (j=0; j<dimension*dimension*2-1; j++) ham_t_i[(j+1)%(dimension*dimension)] = (ham_dev[j]*-dT)+0.0; //multiplying by -i*dt
+    for (j=0; j<dimension*dimension*2; j++) exp_matrix[j] = 0.0, ham_dif[j]=0; ham_diag[j]=0,D[j]=0,Vdag[j]=0;exp_matrix[j]=0;
+    for (j=0; j<dimension*dimension*2; j++) ham_t_i[(j+1)%(dimension*dimension*2)] = (ham_dev[j]*-dT)+0.0; //multiplying by -i*dt
     for (j =0; j<dimension*dimension; j++) ham_diag[j] = ham_dev[2*j];//converting an all-real-valued complex matrix into just real matrix
 
+    t1=clock();
     //The diagonalization method
     diag_hermitian_real_double(dimension, ham_diag,Vdag, D);
     exp_diaganolized_mat(ham_dev, Vdag, D, dimension);
+    t2=clock();
+    diag_sum+= (double(t2)-double(t1));
 
     printf("e^M, The Diagonalized Matrix:\n");
     print_hamiltonian(ham_dev, dimension, 'y');
@@ -172,18 +166,34 @@ void evolve(int *table, unsigned long long int *b,int electrons,int dimension, i
 
 
     //The Pade approximation
+    t1=clock();
     exp_general_complex_double(dimension, ham_t_i, exp_matrix);
     printf("e^M, The Pade Matrix:\n");
     print_hamiltonian(exp_matrix, dimension, 'y');
     matrix_vector_mult(exp_matrix, psi2, dimension);
+    t2=clock();
+    pade_sum+= (double(t2)-double(t1));
 
-    /*printf("Diagonalize Method Psi:\n");
+
+  
+    printf("Diagonalize Method Psi:\n");
     for (j=0; j<dimension*2;j++) printf("%f\n", psi1[j]);
     printf("\n");
     printf("Pade Appox Psi:\n");
-    for (j=0; j<dimension*2;j++) printf("%f\n", psi2[j]);*/
+    for (j=0; j<dimension*2;j++) printf("%f\n", psi2[j]);
+    printf("Difference:\n");
+    for (j=0; j<dimension*2;j++) printf("%f\n", psi2[j]-psi1[j]);
+  for(j=0;j<dimension*dimension*2;j++) ham_dif[j]=(ham_dev[j]-exp_matrix[j]);
+  print_hamiltonian(ham_dif,dimension,'y');
+
   }
+  printf("Diag Time: %f\n",diag_sum);
+  printf("Pade Time: %f\n",pade_sum);
+  printf("Dimension: %i\n",dimension);
+  printf("ratop    : %f\n",diag_sum/pade_sum);
+  for(i=0; i<dimension*2;i++)printf(ham_dif[
 }
+
 
 
 double cost(double *psi, double *ham_mod, int dimension)
@@ -197,46 +207,6 @@ double cost(double *psi, double *ham_mod, int dimension)
   result = dot(psi, psi_temp, dimension);
   return result;
 }
-
-
-
-void matrix_vector_mult(double *matrix, double *psi, int dimension)
-{
-  int i;
-  double *result;
-  char TRANS = 'N';
-  int M = dimension;
-  int N = dimension;
-  int LDA = dimension;
-  int INCX = 1;
-  int INCY = 1;
-  double ALPHA[2];//www.netlib.org/lapack/explore-html/dc/d17/group__complex16__blas__level3_ga4ef748ade85e685b8b2241a7c56dd21c.html#ga4ef748ade85e685b8b2241a7c56dd21c
-  ALPHA[0]=1.0;
-  ALPHA[1]=0.0;
-  double BETA[2];
-  BETA[0]=0.0;
-  BETA[1]=0.0;
-  result = (double *) malloc (dimension*2*sizeof(double));
-  for (i=0;i<dimension*2;i++) result[i]=0.0;
-
-  //for (i=0;i<dimension*dimension;i++) matrix[2*i+1]=0.0;
-  //print_hamiltonian(matrix, dimension, 'y');
-
-  zgemv_(&TRANS, &M, &N,ALPHA,matrix, &LDA, psi, &INCX, BETA, result, &INCY);
-  //for (i=0;i<dimension*2;i++) printf("%f\n", result[i]);
-  memcpy(psi,result, 2*dimension*sizeof(double));
-
-}
-
-
-double dot(double *v1, double *v2, int dimension)
-{
-  int i;
-  double sum = 0;
-  for (i =0; i<2*dimension; i++) sum+= v1[i]*v2[i];
-  return sum;
-}
-
 
 
 
@@ -302,6 +272,46 @@ void diag_hermitian_real_double(int N,  double *A, double *Vdag,double *D)
      free(WORK);
 }
 
+
+
+void matrix_vector_mult(double *matrix, double *psi, int dimension)
+{
+  int i;
+  double *result;
+  char TRANS = 'N';
+  int M = dimension;
+  int N = dimension;
+  int LDA = dimension;
+  int INCX = 1;
+  int INCY = 1;
+  double ALPHA[2];
+  ALPHA[0]=1.0;
+  ALPHA[1]=0.0;
+  double BETA[2];
+  BETA[0]=0.0;
+  BETA[1]=0.0;
+  result = (double *) malloc (dimension*2*sizeof(double));
+  for (i=0;i<dimension*2;i++) result[i]=0.0;
+
+  //for (i=0;i<dimension*dimension;i++) matrix[2*i+1]=0.0;
+  //print_hamiltonian(matrix, dimension, 'y');
+
+  zgemv_(&TRANS, &M, &N,ALPHA,matrix, &LDA, psi, &INCX, BETA, result, &INCY);
+  //for (i=0;i<dimension*2;i++) printf("%f\n", result[i]);
+  memcpy(psi,result, 2*dimension*sizeof(double));
+
+}
+
+
+double dot(double *v1, double *v2, int dimension)
+{
+  int i;
+  double sum = 0;
+  double sum_i = 0;
+  for (i =0; i<dimension; i++) sum+= (v1[2*i]*v2[2*i]-(v1[2*i+1]*-v2[2*i+1])), sum_i += (v1[2*i+1]*v2[2*i]+v2[2*i+1]*v1[2*i]);
+  printf("Sum_i %f\n",sum_i);
+  return sum;
+}
 
 void exp_general_complex_double(int N, double *A, double *B)
 {
@@ -710,7 +720,9 @@ void print_hamiltonian(double* hamiltonian, int dimension, char print_imaginary)
   scalar=2;
   if(print_imaginary =='y') scalar =1;
   for (i=0;i<dimension*2;i+=scalar){
-    for (j=0;j<dimension*2;j+=2) printf("%4.1f|",(hamiltonian[j*dimension+i]));
+    if (i%2 == 0)printf("Real: ");
+    else printf("Imag: ");
+    for (j=0;j<dimension*2;j+=2) printf("%5.2f|",(hamiltonian[j*dimension+i]));
     printf("\n");
   }
   printf("\n");
