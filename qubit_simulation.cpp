@@ -14,7 +14,7 @@
 #define dT 0.5
 #define Tao 10
 #define PsiStartState 2
-#define Ncount Tao/dT
+#define NCOUNT Tao/dT
 
 
 /*Questions:
@@ -55,7 +55,7 @@ int find_bond[][nx*nx]=
 
 void evolve(int *table, unsigned long long int *b,int electrons,int dimension, int sites,  int lattice[][nx], double *ham_dev,double *psi);
 double cost(double *psi, double *ham_mod, int dimension);
-void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_dev, int sites, int lattice[][nx],double *k_list, double *j_list, double *b_list);
+void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_dev, int sites, int lattice[][nx],double *k_list, double *j_list, double *b_list, int index);
 void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_mod, int sites,  int lattice[][nx]);
 void diag_hermitian_real_double(int N,  double *A, double *Vdag,double *D);
 void exp_diaganolized_mat(double *ham_real, double *Vdag, double* D, int dimension);
@@ -121,9 +121,9 @@ void evolve(int *table, unsigned long long int *b,int electrons,int dimension, i
 {
   int i,j;
   double *ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag,*b_list,*k_list,*j_list;
-  k_list = (double *) malloc(2*nx*nx*sizeof(double));
-  j_list = (double *) malloc(2*nx*nx*sizeof(double));
-  b_list = (double *) malloc(2*nx*nx*sizeof(double));
+  k_list = (double *) malloc(2*nx*nx*NCOUNT*sizeof(double));
+  j_list = (double *) malloc(2*nx*nx*NCOUNT*sizeof(double));
+  b_list = (double *) malloc(nx*nx*NCOUNT*sizeof(double));
   ham_diag = (double *) malloc(dimension*dimension*sizeof(double));
   D = (double*) malloc(sizeof(double)*dimension);
   Vdag = (double*) malloc(sizeof(double)*dimension*dimension);
@@ -132,7 +132,7 @@ void evolve(int *table, unsigned long long int *b,int electrons,int dimension, i
 
   init_lists(k_list, j_list, b_list);
 
-  for (i=1; i<Ncount;i++)
+  for (i=1; i<NCOUNT;i++)
   {
 
     change_lists(k_list,j_list,b_list,i);
@@ -179,7 +179,7 @@ double cost(double *psi, double *ham_mod, int dimension)
 
 
 
-void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_dev, int sites, int lattice[][nx],double *k_list, double *j_list, double *b_list)
+void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_dev, int sites, int lattice[][nx],double *k_list, double *j_list, double *b_list, int index)
 /*Constructing the hamiltonian matrix for the device hamiltonian*/
 {
   int i,ii,j,x,y,state,site,neighbor,sign,bond;
@@ -212,7 +212,7 @@ void construct_device_hamiltonian(int *table, unsigned long long int *b,int elec
           hop(v1, v2,site, neighbors[ii]);
           state=find(dimension,v2, b);
           bond = find_bond[site-1][neighbors[ii]-1];
-          ham_dev[(dimension*i+state-1)*2] += j_list[bond];
+          ham_dev[(dimension*i+state-1)*2] += j_list[index*nx*nx*2+bond];
         }
       }
     }
@@ -236,15 +236,15 @@ void construct_device_hamiltonian(int *table, unsigned long long int *b,int elec
           comparison = (1ULL<<(neighbors[ii]-1))+(1ULL<<(site-1));
           if((comparison&b[i])==comparison || (comparison&b[i])==0) sign = 1;
           bond = find_bond[site][neighbors[ii]];
-          ham_dev[((dimension*i)+i)*2] += k_list[bond];
+          ham_dev[((dimension*i)+i)*2] += k_list[index*nx*nx*2+bond];
         }
       }
     }
 
     for (j=0; j<nx*nx;j++)//The B term calculation
     {
-      if((1ULL<<j)&b[i]) ham_dev[((dimension*i)+i)*2]+=b_list[j];
-      else ham_dev[((dimension*i)+i)*2]-=b_list[j];
+      if((1ULL<<j)&b[i]) ham_dev[((dimension*i)+i)*2]+=b_list[index*nx*nx+j];
+      else ham_dev[((dimension*i)+i)*2]-=b_list[index*nx*nx+j];
     }
   }
 }
@@ -595,17 +595,20 @@ int combinations ( int n, int k, unsigned long long int *b,int *tab)
 
 void init_lists(double *k_list,double *j_list,double *b_list)
 {
-	int i;
-	for (i=0; i<nx*nx*2; i++)
-	{
-		j_list[i] = 0.05*i*pow(-1,i);
-		k_list[i] = 0.03*i*pow(-1,i+1);
+	int j;
+	for (i=0; i<NCOUNT;i++){
+ 	{		
+		for (j=0; j<nx*nx*2; j++)
+		{
+			j_list[i*nx*nx*2+j] = 0.05*j*pow(-1,j)+i/20;
+			k_listt[i*nx*nx*2+j] = 0.03*j*pow(-1,j+1)+i/20;;
+		}
+		for (j=0; j<nx*nx; j++)
+		{
+			b_list[i*nx*nx+j]= 0.09*j*pow(-1,j)+i/20;
+		}
 	}
-	for (i=0; i<nx*nx; i++)
-	{
-		b_list[i] = 0.09*i*pow(-1,i);
-	}
-}
+}	
 
 
 
