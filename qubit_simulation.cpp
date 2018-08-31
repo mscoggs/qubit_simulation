@@ -8,20 +8,21 @@
 #include <gsl/gsl_rng.h>
 
 //g++ -o qubit_simulation qubit_simulation.cpp -llapack -lblas -lgsl
+//./qubit_simulation
 
 #define OPEN true
 #define NX 3 
 #define NY NX
-#define SITES NY*NX
-#define ELECTRONS 1
+#define NUM_SITES NY*NX
+#define ELECTRONS 2
 #define V 0.2
 #define T 0.2
 #define TIME_STEP 0.5
 #define TOTAL_TIME 10
 #define TOTAL_STEPS TOTAL_TIME/TIME_STEP
 #define START_STATE 1
-#define OPT_ITERATIONS 10
-#define CHANGE -0.10
+#define OPT_ITERATIONS 3
+#define CHANGE -0.03
 #define TEMP 1
 #define PROB_LIMIT 0.5
 
@@ -34,7 +35,6 @@ V and T values?
 TODO:
 - If >0, keep with prob e^(-deltaE/T)
 
--documentation
 -carefully check calculations
 -double check + vs - in calc
 */
@@ -43,19 +43,19 @@ TODO:
 using namespace std;
 
 
-void optimize(int *table, unsigned long long int *b, int electrons, int dimension, int lattice[][NX],double *ham_dev, double*ham_mod);
-void evolve(int *table, unsigned long long int *b,int electrons,int dimension,  int lattice[][NX], double *ham_dev, double *psi, double *k_list, double *j_list, double *b_list, int *bonds);
+void optimize(int *table, unsigned long long int *b, int num_electrons, int dimension, int lattice[][NX],double *ham_dev, double*ham_mod);
+void evolve(int *table, unsigned long long int *b,int num_electrons,int dimension,  int lattice[][NX], double *ham_dev, double *psi, double *k_list, double *j_list, double *b_list, int *bonds);
 double cost(double *psi, double *ham_mod, int dimension);
-void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_dev, int lattice[][NX],double *k_list, double *j_list, double *b_list, int *bonds, int index);
-void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_mod,  int lattice[][NX]);
+void construct_device_hamiltonian(int *table, unsigned long long int *b,int num_electrons,int dimension, double *ham_dev, int lattice[][NX],double *k_list, double *j_list, double *b_list, int *bonds, int index);
+void construct_model_hamiltonian(int *table, unsigned long long int *b,int num_electrons,int dimension, double *ham_mod,  int lattice[][NX]);
 void diag_hermitian_real_double(int N,  double *A, double *Vdag,double *D);
 void exp_diaganolized_mat(double *ham_real, double *Vdag, double* D, int dimension);
 void exp_general_complex_double(int N, double *A, double *B);
 void matrix_vector_mult(double *exp_matrix, double *psi, int dimension);
 int hop(unsigned long long int b, unsigned long long int *v,int n, int j);
 int find(int dimension,unsigned long long int *v, unsigned long long int *b);
-unsigned long long int choose(int electrons);
-int combinations ( int electrons, unsigned long long int *b,int *tab, int dimension);
+unsigned long long int choose(int num_electrons);
+int combinations ( int num_electrons, unsigned long long int *b,int *tab, int dimension);
 void assign_bonds(int *bonds, int lattice[][NX]);
 void init_lists(double *k_list, double *j_list,double *b_list);
 void change_lists(double *k_list, double *j_list,double *b_list, int index, double change);
@@ -80,22 +80,22 @@ extern "C" double zdotc_(int *N, double*ZX,int *INCX, double *ZY, int *INCY);//d
 
 int main (int argc, char *argv[])
 {
-	int *table,electrons,dimension,lattice[NY][NX];
+	int *table,num_electrons,dimension,lattice[NY][NX];
 	unsigned long long int *b;
 	double *ham_mod,*ham_dev;
-	electrons=ELECTRONS;
-	dimension=choose(electrons);
+	num_electrons=ELECTRONS;
+	dimension=choose(num_electrons);
 
 	b = (unsigned long long int*) malloc(dimension*sizeof(double));
-	table=(int*) malloc(electrons*dimension*sizeof(int));
+	table=(int*) malloc(num_electrons*dimension*sizeof(int));
 	ham_mod = (double *) malloc (2*dimension*dimension*sizeof (double));
 	ham_dev = (double *) malloc (2*dimension*dimension*sizeof (double));
 
 	construct_lattice(lattice);
-	combinations (electrons,b,table, dimension);
-	construct_model_hamiltonian(table, b, electrons, dimension, ham_mod, lattice);
+	combinations (num_electrons,b,table, dimension);
+	construct_model_hamiltonian(table, b, num_electrons, dimension, ham_mod, lattice);
 
-	optimize(table, b, electrons, dimension, lattice, ham_dev, ham_mod);
+	optimize(table, b, num_electrons, dimension, lattice, ham_dev, ham_mod);
 
 	free(b), free(table), free(ham_mod), free(ham_dev);
 	exit (0);
@@ -104,14 +104,16 @@ int main (int argc, char *argv[])
 
 
 
-void optimize(int *table, unsigned long long int *b, int electrons, int dimension, int lattice[][NX],double *ham_dev, double*ham_mod)
+
+void optimize(int *table, unsigned long long int *b, int num_electrons, int dimension, int lattice[][NX],double *ham_dev, double*ham_mod)
+/*Optimize the values in the j, b, and k list in order to produce the lowest energy (expectation value) between the final state (psi), produced by evolve, and the model hamiltonian. This is done by randomly selecting one row of each list, making a slight change, then determining if the new energy is lower than the old. If the new energy is greater than the old, keep with probability exp(delta_E/Temp)*/
 {
 	int i,j, random_int, *bonds;
 	double *psi,*psi_reset, E_old, E_new, delta_E,*k_list, *j_list,*b_list;
-	bonds = (int*) malloc(SITES*SITES*sizeof(int));
-	k_list = (double *) malloc(2*SITES*TOTAL_STEPS*sizeof(double));
-	j_list = (double *) malloc(2*SITES*TOTAL_STEPS*sizeof(double));
-	b_list = (double *) malloc(SITES*TOTAL_STEPS*sizeof(double));
+	bonds = (int*) malloc(NUM_SITES*NUM_SITES*sizeof(int));
+	k_list = (double *) malloc(2*NUM_SITES*TOTAL_STEPS*sizeof(double));
+	j_list = (double *) malloc(2*NUM_SITES*TOTAL_STEPS*sizeof(double));
+	b_list = (double *) malloc(NUM_SITES*TOTAL_STEPS*sizeof(double));
 	psi_reset = (double *) malloc (2*dimension*sizeof(double));
 	psi = (double *) malloc (2*dimension*sizeof(double));
 
@@ -122,7 +124,7 @@ void optimize(int *table, unsigned long long int *b, int electrons, int dimensio
 	assign_bonds(bonds, lattice);
 	init_lists(k_list, j_list, b_list);
 
-	evolve(table,b,electrons,dimension,lattice, ham_dev, psi, k_list,j_list,b_list, bonds);
+	evolve(table,b,num_electrons,dimension,lattice, ham_dev, psi, k_list,j_list,b_list, bonds);
 	E_old = cost(psi, ham_mod, dimension);
 	printf("\nExpectation: %f\n\n", E_old);
 
@@ -132,7 +134,7 @@ void optimize(int *table, unsigned long long int *b, int electrons, int dimensio
 		change_lists(k_list,j_list,b_list,random_int,CHANGE);
 		
 		memcpy(psi,psi_reset, 2*dimension*sizeof(double));//resetting psi
-		evolve(table,b,electrons,dimension,lattice, ham_dev, psi, k_list,j_list,b_list, bonds);
+		evolve(table,b,num_electrons,dimension,lattice, ham_dev, psi, k_list,j_list,b_list, bonds);
 		E_new = cost(psi, ham_mod, dimension);
 		delta_E = E_new-E_old;
 
@@ -147,7 +149,8 @@ void optimize(int *table, unsigned long long int *b, int electrons, int dimensio
 
 
 
-void evolve(int *table, unsigned long long int *b,int electrons,int dimension, int lattice[][NX], double *ham_dev, double *psi, double *k_list, double *j_list, double *b_list, int *bonds)
+void evolve(int *table, unsigned long long int *b,int num_electrons,int dimension, int lattice[][NX], double *ham_dev, double *psi, double *k_list, double *j_list, double *b_list, int *bonds)
+/*evolve a starting state, psi, by acting on it with exp(ham_dev*-i*time_step). The resulting state is updated as psi and the process repeats TOTAL_STEPS times (TOTAL_TIME/TOTAL_STEPS) until the final psi state is produced. The function contains two methods for calculating exp(ham_dev*-i+time_step), one is a diagonalization method, the other a Pade approximation*/
 {
 	int i,j;
 	double *ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag;
@@ -161,7 +164,7 @@ void evolve(int *table, unsigned long long int *b,int electrons,int dimension, i
 	for (i=0; i<TOTAL_STEPS;i++)
 	{
 
-		construct_device_hamiltonian(table, b, electrons, dimension, ham_dev, lattice, k_list, j_list, b_list, bonds,i); 
+		construct_device_hamiltonian(table, b, num_electrons, dimension, ham_dev, lattice, k_list, j_list, b_list, bonds,i); 
 
 		for (j=0; j<dimension*dimension*2; j++) exp_matrix[j] = 0.0,exp_matrix[j]=0.0;
 		for (j=0; j<dimension*dimension; j++) ham_diag[j]=0.0,Vdag[j]=0.0;
@@ -169,14 +172,14 @@ void evolve(int *table, unsigned long long int *b,int electrons,int dimension, i
 		for (j=0; j<dimension*dimension*2; j++) ham_t_i[(j+1)%(dimension*dimension*2)] = (ham_dev[j]*-TIME_STEP)+0.0; //multiplying by -i*dt for the Pade approximation
 		for (j =0; j<dimension*dimension; j++) ham_diag[j] = ham_dev[2*j];//converting an all-real-valued complex matrix into just real matrix
 
-
-		//diag_hermitian_real_double(dimension, ham_diag,Vdag, D);//The diagonalization method
+		//The diagonalization method
+		//diag_hermitian_real_double(dimension, ham_diag,Vdag, D);
 		//exp_diaganolized_mat(ham_dev, Vdag, D, dimension);//This function exponentiates D to e^(-iTIME_STEPD)
 		//matrix_vector_mult(ham_dev,psi, dimension);
 
 
-
-		exp_general_complex_double(dimension, ham_t_i, exp_matrix);//The Pade approximation
+		//The Pade approximation
+		exp_general_complex_double(dimension, ham_t_i, exp_matrix);
 		matrix_vector_mult(exp_matrix, psi, dimension);
 
 	}
@@ -187,6 +190,7 @@ void evolve(int *table, unsigned long long int *b,int electrons,int dimension, i
 
 
 double cost(double *psi, double *ham_mod, int dimension)
+/*Computing the expectation value between ham_mod and psi, <psi|ham_mod|psi>*/
 {
 	int i;
 	double *psi_conj, result;
@@ -204,8 +208,8 @@ double cost(double *psi, double *ham_mod, int dimension)
 
 
 
-void construct_device_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_dev, int lattice[][NX],double *k_list, double *j_list, double *b_list, int *bonds,  int index)
-/*Constructing the hamiltonian matrix for the device hamiltonian*/
+void construct_device_hamiltonian(int *table, unsigned long long int *b,int num_electrons,int dimension, double *ham_dev, int lattice[][NX],double *k_list, double *j_list, double *b_list, int *bonds,  int index)
+/*constructiing the hamiltonina matrix for the device hamiltonian, using the index-ith row of each j, b, and k array*/
 {
 	int i,ii,j,x,y,state,site,sign,bond,neighbor_count,*neighbors;
 	unsigned long long int *v,comparison;
@@ -215,9 +219,9 @@ void construct_device_hamiltonian(int *table, unsigned long long int *b,int elec
 
 	for (i=0;i<dimension;i++)
 	{
-		for (j=0;j<electrons;j++)//The J term calculation
+		for (j=0;j<num_electrons;j++)//The J term calculation
 		{
-			site=table[i*electrons+j];
+			site=table[i*num_electrons+j];
 			neighbor_count = get_neighbors(site, neighbors, lattice);
 			for (ii=0; ii<neighbor_count; ii++)
 			{
@@ -225,12 +229,12 @@ void construct_device_hamiltonian(int *table, unsigned long long int *b,int elec
 				{
 					hop(b[i], v,site, neighbors[ii]);
 					state=find(dimension,v, b);
-					bond = bonds[(site-1)*SITES+neighbors[ii]-1];
-					ham_dev[(dimension*i+state-1)*2] += j_list[index*SITES*2+bond];
+					bond = bonds[(site-1)*NUM_SITES+neighbors[ii]-1];
+					ham_dev[(dimension*i+state-1)*2] -= j_list[index*NUM_SITES*2+bond];
 				}
 			}
 		}
-		for (j=1;j<(SITES);j++)//The K term calculation
+		for (j=1;j<(NUM_SITES);j++)//The K term calculation
 		{
 			site=j;
 			neighbor_count = get_neighbors(site, neighbors, lattice);
@@ -241,16 +245,16 @@ void construct_device_hamiltonian(int *table, unsigned long long int *b,int elec
 					sign = -1;
 					comparison = (1ULL<<(neighbors[ii]-1))+(1ULL<<(site-1));
 					if((comparison&b[i])==comparison || (comparison&b[i])==0) sign = 1;
-					bond = bonds[(site-1)*SITES+neighbors[ii]-1];
-					ham_dev[((dimension*i)+i)*2] += k_list[index*SITES*2+bond]*sign;
+					bond = bonds[(site-1)*NUM_SITES+neighbors[ii]-1];
+					ham_dev[((dimension*i)+i)*2] += k_list[index*NUM_SITES*2+bond]*sign;
 				}
 			}
 		}
-		for (j=0; j<SITES;j++)//The B term calculation, DOUBLE CHECK THIS, changing eval of if changes result
+		for (j=0; j<NUM_SITES;j++)//The B term calculation, DOUBLE CHECK THIS, changing eval of if changes result
 		{
 			sign = -1;
 			if(((1ULL<<j)&b[i])>0) sign=1;
-			ham_dev[((dimension*i)+i)*2] += b_list[index*SITES+j]*sign;
+			ham_dev[((dimension*i)+i)*2] += b_list[index*NUM_SITES+j]*sign;
 		}
 	}
 	free(neighbors);
@@ -260,7 +264,7 @@ void construct_device_hamiltonian(int *table, unsigned long long int *b,int elec
 
 
 
-void construct_model_hamiltonian(int *table, unsigned long long int *b,int electrons,int dimension, double *ham_mod, int lattice[][NX])
+void construct_model_hamiltonian(int *table, unsigned long long int *b,int num_electrons,int dimension, double *ham_mod, int lattice[][NX])
 /*Constructing the hamiltonian matrix for the model hamiltonian*/
 {
 	int i,ii,j,x,y,state,site,neighbor,sign,neighbor_count, *neighbors;
@@ -271,9 +275,9 @@ void construct_model_hamiltonian(int *table, unsigned long long int *b,int elect
 
 	for (i=0;i<dimension;i++)
 	{
-		for (j=0;j<electrons;j++)//The T term calculation
+		for (j=0;j<num_electrons;j++)//The T term calculation
 		{
-			site=table[i*electrons+j];
+			site=table[i*num_electrons+j];
 
 			neighbor_count = get_neighbors(site, neighbors, lattice);
 			for (ii=0; ii<neighbor_count; ii++)
@@ -289,7 +293,7 @@ void construct_model_hamiltonian(int *table, unsigned long long int *b,int elect
 			}
 		}
 
-		for (j=1;j<(SITES);j++)//The V term calculation
+		for (j=1;j<(NUM_SITES);j++)//The V term calculation
 
 		{
 			site=j;
@@ -314,31 +318,32 @@ void construct_model_hamiltonian(int *table, unsigned long long int *b,int elect
 
 
 void diag_hermitian_real_double(int N,  double *A, double *Vdag,double *D)
+/*diagonalizing an real square matrix A. Stores the eigenvectors in Vdag and the eigenvalues in D*/
 {
 	char JOBZ,UPLO;
 	int LDA,LWORK, INFO;
 	double *WORK;
 	JOBZ='V';
-	UPLO='U';
-	LDA=N;
-	LWORK=-1;
-	WORK=(double*) malloc(sizeof(double));
-	memcpy(Vdag,A,N*N*sizeof(double));
-	dsyev_(&JOBZ, &UPLO, &N, Vdag, &LDA, D, WORK, &LWORK, &INFO );
+	UPLO='U'; 
+	LDA=N; 
+	LWORK=-1; 
+	WORK=(double*) malloc(sizeof(double)); 
+	memcpy(Vdag,A,N*N*sizeof(double)); 
+	dsyev_(&JOBZ, &UPLO, &N, Vdag, &LDA, D, WORK, &LWORK, &INFO ); 
 	if (INFO !=0) printf("DIAGONALIZATION ERROR, INFO = %i\n", INFO);
-
-	LWORK=WORK[0];
-	free(WORK);
-	WORK=(double*) malloc(LWORK*sizeof(double));
-	dsyev_(&JOBZ, &UPLO, &N, Vdag, &LDA, D, WORK, &LWORK, &INFO );
-	if (INFO !=0) printf("DIAGONALIZATION ERROR, INFO = %i\n", INFO);
-	free(WORK);
+       	LWORK=WORK[0];
+       	free(WORK);
+       	WORK=(double*) malloc(LWORK*sizeof(double));
+       	dsyev_(&JOBZ, &UPLO, &N, Vdag, &LDA, D, WORK, &LWORK, &INFO );
+       	if (INFO !=0) printf("DIAGONALIZATION ERROR, INFO = %i\n", INFO);
+       	free(WORK);
 }
 
 
 
 
 void exp_diaganolized_mat(double *ham, double *Vdag, double* D, int dimension)
+/*calculating the exponential of a diagonalized decomposition where the matrix A = Vdag*D*Vdag_inv. calculating Vdag*exp(D)*Vdag_inv =exp(A), storing the result in ham*/
 {
 	int i, *IPIV, N,LWORK, INFO, LDA, LDB, LDC;
 	double *exp_D, *temp_mat, *Vdag_z, *Vdag_z_inv, *WORK;
@@ -379,6 +384,7 @@ void exp_diaganolized_mat(double *ham, double *Vdag, double* D, int dimension)
 
 
 void exp_general_complex_double(int N, double *A, double *B)
+/*Using the Pade Approximation to calulate exp(A), where A is a complex matrix storing real values at even indices and their imaginary parts at index +1. Storing the result in B*/
 {
 	int M,K,ii,jj,kk,s,p,q,INFO,LDA,LDB,LDC,NRHS, *IPIV;
 	double *row_norm,*X,*Y,*Z,*E,*D;
@@ -464,6 +470,7 @@ void exp_general_complex_double(int N, double *A, double *B)
 
 
 void matrix_vector_mult(double *matrix, double *psi, int dimension)
+/*Matrix vector multiplication, psi=matrix*psi*/
 {
 	int i;
 	double *result;
@@ -492,7 +499,7 @@ void matrix_vector_mult(double *matrix, double *psi, int dimension)
 
 
 int hop(unsigned long long int b, unsigned long long int *v,int n, int j)
-/*given a state v1 generates the state v obtained by hopping from site v1[n] to site j (which should not be in v1), and outputs the fermionic sign*/
+/*given a state b generates the state v obtained by hopping from site b[n] to site j (which should not be in b), and outputs the fermionic sign*/
 {
 	unsigned long long int i,x,y;
 	int z_count = 0;
@@ -525,35 +532,37 @@ int find(int dimension,unsigned long long int *v,unsigned long long int *b)
 
 
 
-unsigned long long int choose(int electrons)
+unsigned long long int choose(int num_electrons)
+/*calculating (NUM_SITES choose num_electrons) = NUM_SITES!/((NUM_SITES-num_electrons)!*num_electrons!)*/
 {
 	int i;
 	unsigned long long int c;
 	c=1ULL;
-	for (i=0;i<electrons;i++) c=c*(SITES-i);
-	for (i=0;i<electrons;i++) c=c/(i+1);
+	for (i=0;i<num_electrons;i++) c=c*(NUM_SITES-i);
+	for (i=0;i<num_electrons;i++) c=c/(i+1);
 	return c;
 }
 
 
 
 
-int combinations ( int electrons,  unsigned long long int *b,int *tab, int dimension)
-/*Returning the number of combinations of k out of n. (n-choose-k), finding number of unordered combinations with n electrons in k SITES.*/
+int combinations ( int num_electrons,  unsigned long long int *b,int *tab, int dimension)
+/*Returning the combinations of NUM_SITES-choose-elctrons, each represented by NUM_SITES slots of a binary number, where the bit the furthest to the right is site 1, and 
+furthest to the left is site NUM_SITES. 1 respresents occupied, 0 empty. Finding number of unordered combinations of num_electrons in NUM_SITES.*/
 {
 	unsigned long long int x,y;
 	int i,c,d;
 	x=0ULL;
-	for (i=0;i<electrons;i++) x=x+(1ULL<<i);
+	for (i=0;i<num_electrons;i++) x=x+(1ULL<<i);
 	b[0]=x;
 	c=0;
 	d=0;
 	i=0;
-	while ((c<SITES)&& (d<electrons))
+	while ((c<NUM_SITES)&& (d<num_electrons))
 	{
 		if (x & (1ULL<<c))
 		{
-			tab[i*electrons+d]=c+1;
+			tab[i*num_electrons+d]=c+1;
 			d++;
 		}
 		c++;
@@ -565,11 +574,11 @@ int combinations ( int electrons,  unsigned long long int *b,int *tab, int dimen
 		b[i]=x;
 		c=0;
 		d=0;
-		while ((c<SITES)&& (d<electrons))
+		while ((c<NUM_SITES)&& (d<num_electrons))
 		{
 			if (x & (1ULL<<c))
 			{
-				tab[i*electrons+d]=c+1;
+				tab[i*num_electrons+d]=c+1;
 				d++;
 			}
 			c++;
@@ -581,13 +590,14 @@ int combinations ( int electrons,  unsigned long long int *b,int *tab, int dimen
 
 
 void assign_bonds(int *bonds, int lattice[][NX])
+/*Attaching a bond number for each bond, allowing assignment of a specific bond-value between two neighbors, where this value is stored in j and k lists*/
 {
 	int bond_num, site,site2, j, neighbor_count, *neighbors;
 	bond_num = 1;
 	neighbors = (int*) malloc(4*sizeof(int));
-	for(j=0;j<SITES*SITES;j++) bonds[j]=0;
+	for(j=0;j<NUM_SITES*NUM_SITES;j++) bonds[j]=0;
 
-	for(site=1; site<SITES+1;site++)
+	for(site=1; site<NUM_SITES+1;site++)
 	{
 		neighbor_count = get_neighbors(site, neighbors, lattice);
 		for(j=0;j<neighbor_count;j++)
@@ -595,8 +605,8 @@ void assign_bonds(int *bonds, int lattice[][NX])
 			site2 = neighbors[j];
 			if(site2>site)
 			{
-				bonds[(site-1)*SITES+site2-1]=bond_num;
-				bonds[(site2-1)*SITES+site-1]=bond_num;
+				bonds[(site-1)*NUM_SITES+site2-1]=bond_num;
+				bonds[(site2-1)*NUM_SITES+site-1]=bond_num;
 				bond_num++;
 			}
 		}
@@ -607,18 +617,19 @@ void assign_bonds(int *bonds, int lattice[][NX])
 
 
 void init_lists(double *k_list,double *j_list,double *b_list)
+/*Initializng the values of the k, j, and b lists which hold the values of the constants for each site (b_list) and between each bond (k_list and j_list)*/
 {
 	int i,j;
 	for (i=0; i<TOTAL_STEPS;i++)
 	{
-		for (j=0; j<SITES*2; j++)
+		for (j=0; j<NUM_SITES*2; j++)
 		{
-			j_list[i*SITES*2+j] = 0.05*j*pow(-1,j)+i/20;
-			k_list[i*SITES*2+j] = 0.03*j*pow(-1,j+1)+i/20;;
+			j_list[i*NUM_SITES*2+j] = 0.05*j*pow(-1,j)+i/20;
+			k_list[i*NUM_SITES*2+j] = 0.03*j*pow(-1,j+1)+i/20;;
 		}
-		for (j=0; j<SITES; j++)
+		for (j=0; j<NUM_SITES; j++)
 		{
-			b_list[i*SITES+j]= 0.09*j*pow(-1,j)+i/20;
+			b_list[i*NUM_SITES+j]= 0.09*j*pow(-1,j)+i/20;
 		}
 	}
 }
@@ -627,16 +638,18 @@ void init_lists(double *k_list,double *j_list,double *b_list)
 
 
 void change_lists(double *k_list,double *j_list,double *b_list, int index, double change)
+/*Changing all of the lists by a value change at row index. Used in the optimize function*/
 {
 	int i;
-	for (i=0; i<SITES*2; i++) j_list[SITES*2*index+i] += change, k_list[SITES*2*index+i] +=change;
-	for (i=0; i<SITES; i++) b_list[SITES*index+i] += change;
+	for (i=0; i<NUM_SITES*2; i++) j_list[NUM_SITES*2*index+i] += change, k_list[NUM_SITES*2*index+i] +=change;
+	for (i=0; i<NUM_SITES; i++) b_list[NUM_SITES*index+i] += change;
 }
 
 
 
 
 void construct_lattice(int lattice[][NX])
+/*Build a NX*NX lattice, with sites 1 through NX*NX listed in a snaking pattern*/
 {
 	int x,y;
 	for (x=0;x<NX;x++)
@@ -651,6 +664,7 @@ void construct_lattice(int lattice[][NX])
 
 
 int get_neighbors(int site, int *neighbors, int lattice[][NX])
+/*Gets the neighbors of a site, returning all 4 neighbors if open_boundry coditions are true, otherwise just closed-boudnary neighbors*/
 {
 	int x,y,i,count=0;
 	for (x=0;x<NX;x++) for (y=0;y<NX;y++) if(site == lattice[x][y]) goto end_loop;//Finding the coordinates
@@ -678,6 +692,7 @@ int get_neighbors(int site, int *neighbors, int lattice[][NX])
 
 
 int get_random(int lower, int upper)
+/*randomly generating a number in [lower, upper]*/
 {
 	const gsl_rng_type * TT;
 	gsl_rng * r;
@@ -702,6 +717,7 @@ int get_random(int lower, int upper)
 
 
 void print_hamiltonianR(double* hamiltonian, int dimension)
+/*prints a real-valued hamiltonian in matrix form*/
 {
 	int i,j;
 	for (i=0;i<dimension;i++)
@@ -716,6 +732,7 @@ void print_hamiltonianR(double* hamiltonian, int dimension)
 
 
 void print_hamiltonian(double* hamiltonian, int dimension, bool print_imaginary)
+/*prints a complex hamiltonian in matrix form, with the option to just print out the real values*/
 {
 	int i,j,scalar;
 	scalar=2;
