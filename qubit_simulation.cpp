@@ -102,7 +102,6 @@ extern "C" double zdotc_(int *N, double*ZX,int *INCX, double *ZY, int *INCY);//d
 
 int main (int argc, char *argv[])
 {
-	printf("%i\n\n\n", VARIATIONS);
 	int *table,num_electrons,N,lattice[NY][NX], i, j;
 	unsigned long long int *b;
 	double *ham_mod,initial_temp=1;
