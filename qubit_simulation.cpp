@@ -17,15 +17,15 @@
 #define DIAG false
 #define T 1
 #define V 2
-#define TIME_STEP 0.5
+#define TIME_STEP 1
 #define TOTAL_TIME 10
 #define TOTAL_STEPS TOTAL_TIME/TIME_STEP
-#define RANDOM_STATES 5
-#define SWEEPS 200
-#define CHANGE -0.005
+#define RANDOM_STATES 3
+#define SWEEPS 100
+#define CHANGE -0.6
 #define ACCEPTANCE_PROB 0.3
 #define EXP_DECAY 0.95
-#define TEMP_DECAY_ITERATIONS 110
+#define TEMP_DECAY_ITERATIONS 10
 
 
 /*Questions:
@@ -105,11 +105,11 @@ int main (int argc, char *argv[])
 
 		combinations (num_electrons,b,table, N);
 		construct_model_hamiltonian(table, b, num_electrons, N, ham_mod, lattice, 2);
-		printf("\n... Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
+		printf("\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
 		initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_mod);
-		printf("###############################################################################");
+		printf("#######################################################################");
 		printf("\nELECTRONS: %i\nN: %i\nINIT_TEMP: %f\n",num_electrons, N,initial_temp);
-		printf("###############################################################################\n");
+		printf("#######################################################################\n");
 		for(j=0;j<N;j++) optimize(table, b, num_electrons, N, lattice, ham_mod, j, initial_temp);
 
 		for(j=0;j<sizeof(start_states)/sizeof(start_states[0]);j++) optimize(table, b, num_electrons, N, lattice, ham_mod, start_states[j],initial_temp);
@@ -187,7 +187,7 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 		//printf("Temp = %f\n",temperature);
 	}
 	end_loop: printf("Expect_best:     %.10f\n", E_best);
-	print_best_arrays(N, k_best, j_best, b_best);
+	//print_best_arrays(N, k_best, j_best, b_best);
 	free(k_array), free(j_array), free(b_array),free(k_best), free(j_best), free(b_best), free(psi), free(psi_reset), free(bonds);
 }
 
