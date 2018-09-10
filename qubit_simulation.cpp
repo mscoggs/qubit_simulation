@@ -1,16 +1,10 @@
 /*Questions:
--what to do with 1d dev
 -What do to with mod same as ham, how to construct
--ground==smallest eigenvalue?
--does initial temp matter?
--j,k,b in [-1,1]?
 
 TODO:
+-double check annealing code
 -find how long it take to miniminze
--add more manipulations techniques
--construct mod same a dev
--should be starting with much higher temps, adjust step size and init temp so this is possible https://twiecki.github.io/blog/2015/11/10/mcmc-sampling/
--Look for different start values that end at the same values 
+-get MCMC to end at the same values for different start states
 */
 
 #include <stdio.h>
@@ -30,23 +24,24 @@ TODO:
 #define NX 3 
 #define NY NX
 #define NUM_SITES NY*NX
-#define DIAG true
+#define DEVICE_DIMENSION 2
+#define DIAG false
 #define T 1
 #define V 2
-#define LIMIT 6
+#define LIMIT 10
 #define TIME_STEP 1
 #define TOTAL_TIME 10
 #define TOTAL_STEPS TOTAL_TIME/TIME_STEP
 #define RANDOM_STATES 3
-#define SWEEPS 50
-#define CHANGE 0.1
-#define ACCEPTANCE_PROB 0.3
+#define SWEEPS 200
+#define CHANGE 0.02
+#define ACCEPTANCE_PROB 0.8
 #define EXP_DECAY 0.95
-#define TEMP_DECAY_ITERATIONS 10
+#define TEMP_DECAY_ITERATIONS 50
 /*The following are the change_array variables. 0 -> This method will not 
  * be used, #>0 -> use this method on every #th iteration of change_array*/
 #define ROW 1
-#define COL 2
+#define COL 0
 #define ALTROW 0
 #define ALTCOL 0
 #define ALTROW2 0
@@ -58,7 +53,7 @@ using namespace std;
 
 
 void optimize(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_mod, int start_state, double temp);
-void evolve(int *table, unsigned long long int *b,int num_electrons,int N,  int lattice[][NX], double *psi, double *k_array, double *j_array, double *b_array, int *bonds, bool ground);
+void evolve(int *table, unsigned long long int *b,int num_electrons,int N,  int lattice[][NX], double *psi, double *k_array, double *j_array, double *b_array, int *bonds);
 double cost(double *psi, double *ham_mod, int N);
 double calc_initial_temp(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_mod);
 void construct_device_hamiltonian(int *table, unsigned long long int *b,int num_electrons,int N, double *ham_dev, int lattice[][NX],double *k_array, double *j_array, double *b_array, int *bonds, int index, int D);
@@ -69,10 +64,11 @@ void exp_general_complex_double(int N, double *A, double *B);
 void matrix_vector_mult(double *exp_matrix, double *psi, int N);
 int hop(unsigned long long int b, unsigned long long int *v,int n, int j);
 int find(int N,unsigned long long int *v, unsigned long long int *b);
+double get_ground_E(int N, double *ham_mod);
 unsigned long long int choose(int num_electrons);
 int combinations ( int num_electrons, unsigned long long int *b,int *tab, int N);
 void assign_bonds(int *bonds, int lattice[][NX]);
-void copy_best_arrays(int N, double *k_array, double *j_array, double* b_array,  double* k_best,  double* j_best, double* b_best);
+void copy_arrays(int N, double *k_array, double *j_array, double* b_array,  double* k_best,  double* j_best, double* b_best);
 void init_arrays(double *k_array, double *j_array,double *b_array);
 void change_array(double *k_array, double *j_array, double *b_array, int random_row, int random_col, double change_pm, int i);
 void change_row(double *k_array, double *j_array,double *b_array, int row, double change, int jump, int offset);
@@ -103,7 +99,7 @@ int main (int argc, char *argv[])
 	int *table,num_electrons,N,lattice[NY][NX], i, j;
 	unsigned long long int *b;
 	double *ham_mod,initial_temp=1;
-	int electron_counts[] = {1,2};
+	int electron_counts[] = {1};
 	construct_lattice(lattice);
 	for(i=0;i<sizeof(electron_counts)/sizeof(int);i++)
 	{
@@ -115,6 +111,7 @@ int main (int argc, char *argv[])
 
 		combinations (num_electrons,b,table, N);
 		construct_model_hamiltonian(table, b, num_electrons, N, ham_mod, lattice, 2);
+		get_ground_E(N, ham_mod);
 		printf("\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
 		initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_mod);
 		printf("#######################################################################");
@@ -122,7 +119,7 @@ int main (int argc, char *argv[])
 		printf("#######################################################################\n");
 
 	//	for(j=0;j<N;j++) optimize(table, b, num_electrons, N, lattice, ham_mod, j, initial_temp);
-		int start_states[] = {1,N/3,2*N/3, N-1};
+		int start_states[] = {4,4,4};//{1,N/3,2*N/3, N-1};
 		for(j=0;j<sizeof(start_states)/sizeof(start_states[0]);j++) optimize(table, b, num_electrons, N, lattice, ham_mod, start_states[j],initial_temp);
 
 		free(b), free(table), free(ham_mod);
@@ -138,7 +135,7 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 /*Optimize the values in the j, b, and k list in order to produce the lowest energy (expectation value) between the final state (psi), produced by evolve, and the model hamiltonian. This is done by randomly selecting one row of each list, making a slight change, then determining if the new energy is lower than the old. If the new energy is greater than the old, keep with probability exp(delta_E/Temp)*/
 {
 	int i=0,j=0, random_row=0, random_col, change_accepted=0,bad_change=0, poor_acceptance_count=0,*bonds; 
-	double *psi,*psi_reset, *k_array, *j_array,*b_array,*k_best, *j_best, *b_best, acceptance_rate=0, E_old=0, E_new=0,E_best=0, sum=0, change_pm=0;
+	double *psi,*psi_reset, *k_array, *j_array,*b_array,*k_best, *j_best, *b_best, *k_temp, *j_temp, *b_temp, acceptance_rate=0, E_old=0, E_new=0,E_best=0, sum=0, change_pm=0;
 	bonds = (int*) malloc(NUM_SITES*NUM_SITES*sizeof(int));
 	k_array = (double *) malloc(2*NUM_SITES*TOTAL_STEPS*sizeof(double));
 	j_array = (double *) malloc(2*NUM_SITES*TOTAL_STEPS*sizeof(double));
@@ -146,6 +143,10 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 	k_best = (double *) malloc(2*NUM_SITES*TOTAL_STEPS*sizeof(double));
 	j_best = (double *) malloc(2*NUM_SITES*TOTAL_STEPS*sizeof(double));
 	b_best = (double *) malloc(NUM_SITES*TOTAL_STEPS*sizeof(double));
+	k_temp = (double *) malloc(2*NUM_SITES*TOTAL_STEPS*sizeof(double));
+	j_temp = (double *) malloc(2*NUM_SITES*TOTAL_STEPS*sizeof(double));
+	b_temp = (double *) malloc(NUM_SITES*TOTAL_STEPS*sizeof(double));
+
 	psi_reset = (double *) malloc (2*N*sizeof(double));
 	psi = (double *) malloc (2*N*sizeof(double));
 	assign_bonds(bonds, lattice);
@@ -155,9 +156,8 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 	memcpy(psi,psi_reset, 2*N*sizeof(double));
 
 	init_arrays(k_array, j_array, b_array);
-	copy_best_arrays(N, k_array, j_array, b_array, k_best, j_best,b_best);
-	
-	evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array,bonds,true);
+	copy_arrays(N, k_array, j_array, b_array, k_best, j_best,b_best);
+	evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array,bonds);
 	E_best = cost(psi, ham_mod, N);
 	E_old = E_best;
 	printf("\nExpectation:     %.10f\n", E_best);
@@ -169,24 +169,24 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 		sum=0;
 		for (j=0; j<SWEEPS;j++)
 		{
+			copy_arrays(N, k_array, j_array, b_array, k_temp, j_temp,b_temp);//a temporary array, used in the undoing of the changes
 			change_pm = pow(-1,(int)floor(get_random(0,10))) * CHANGE;
 			random_row = floor(get_random(0,TOTAL_STEPS));
 			random_col = floor(get_random(0,NUM_SITES*2));
 			change_array(k_array,j_array,b_array,random_row,random_col,change_pm,i);
-
 			memcpy(psi,psi_reset, 2*N*sizeof(double));//resetting psi
-			evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds, false);
+			evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds);
 			E_new = cost(psi, ham_mod, N);
-			if (E_new<E_best) E_best=E_new, copy_best_arrays(N, k_array, j_array, b_array, k_best, j_best,b_best);
+			if (E_new<E_best) E_best=E_new, copy_arrays(N, k_array, j_array, b_array, k_best, j_best,b_best);
 
 			if (E_new<E_old) E_old=E_new;
 			else if (get_random(0,1)<exp(-(E_new-E_old)/(temperature))) E_old=E_new, change_accepted++, bad_change++, sum += (E_new-E_old);
-			else change_array(k_array,j_array,b_array,random_row,random_col,change_pm,i),bad_change++, sum += (E_new-E_old);//undoing the change
+			else copy_arrays(N, k_temp, j_temp, b_temp, k_array, j_array, b_array),bad_change++, sum += (E_new-E_old);//undoing the change
 		}
 
 		acceptance_rate = (double)change_accepted/bad_change;
-		//printf("sum: %f  numerat: %i  denomin = %i  New Expectation: %f  AcceptanceRate = %f\n\n", sum, change_accepted, bad_change,E_old,acceptance_rate);		
-		if(acceptance_rate<0.01) poor_acceptance_count++;
+	//	printf("sum: %f  numerat: %i  denomin = %i  New Expectation: %f  AcceptanceRate = %f\n\n", sum, change_accepted, bad_change,E_old,acceptance_rate);		
+		if(acceptance_rate<0.005) poor_acceptance_count++;
 		else poor_acceptance_count = 0;
 		if(poor_acceptance_count>LIMIT)
 		{
@@ -197,18 +197,18 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 //		printf("Temp = %f\n",temperature);
 	}
 	end_loop: printf("Expect_best:     %.10f\n", E_best);
-	//print_best_arrays(N, k_best, j_best, b_best);
+	print_best_arrays(N, k_best, j_best, b_best);
 	free(k_array), free(j_array), free(b_array),free(k_best), free(j_best), free(b_best), free(psi), free(psi_reset), free(bonds);
 }
 
 
 
 
-void evolve(int *table, unsigned long long int *b,int num_electrons,int N, int lattice[][NX], double *psi, double *k_array, double *j_array, double *b_array, int *bonds, bool ground)
+void evolve(int *table, unsigned long long int *b,int num_electrons,int N, int lattice[][NX], double *psi, double *k_array, double *j_array, double *b_array, int *bonds)
 /*evolve a starting state, psi, by acting on it with exp(ham_dev*-i*time_step). The resulting state is updated as psi and the process repeats TOTAL_STEPS times (TOTAL_TIME/TOTAL_STEPS) until the final psi state is produced. The function contains two methods for calculating exp(ham_dev*-i+time_step), one is a diagonalization method, the other a Pade approximation*/
 {
 	int i,j;
-	double *ham_dev,*ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag, ground_E=100.0;
+	double *ham_dev,*ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag;
 	ham_dev = (double *) malloc (2*N*N*sizeof (double));
 	exp_matrix = (double *) malloc (2*N*N*sizeof (double));
 	ham_t_i = (double *) malloc (2*N*N*sizeof (double));
@@ -218,18 +218,13 @@ void evolve(int *table, unsigned long long int *b,int num_electrons,int N, int l
 
 	for (i=0; i<TOTAL_STEPS;i++)
 	{
-		construct_device_hamiltonian(table, b, num_electrons, N, ham_dev, lattice, k_array, j_array, b_array, bonds,i,2); 
+		construct_device_hamiltonian(table, b, num_electrons, N, ham_dev, lattice, k_array, j_array, b_array, bonds,i,DEVICE_DIMENSION); 
 		if(DIAG)
 		{
 			for (j=0; j<N*N; j++) ham_diag[j]=0.0,Vdag[j]=0.0;
 			for (j=0; j<N; j++) D[j]=0.0;
 			for (j=0; j<N*N; j++) ham_diag[j] = ham_dev[2*j];//converting an all-real-valued complex matrix into just real matrix
 			diag_hermitian_real_double(N, ham_diag,Vdag, D);
-			if(i==TOTAL_STEPS-1 && ground) 
-			{
-				for (j=0; j<N; j++) if(D[j]<ground_E) ground_E = D[j];
-				printf("%f\n",ground_E);
-			}
 			exp_diaganolized_mat(ham_dev, Vdag, D, N);//This function exponentiates D to e^(-iTIME_STEPD)
 			matrix_vector_mult(ham_dev,psi, N);
 		}
@@ -285,7 +280,7 @@ double calc_initial_temp(int *table, unsigned long long int *b, int num_electron
 		memcpy(psi,psi_reset, 2*N*sizeof(double));
 		init_arrays(k_array, j_array, b_array);
 
-		evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds, false);
+		evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds);
 		E_old = cost(psi, ham_mod, N);
 
 		for (i=0; i<SWEEPS;i++)
@@ -294,9 +289,8 @@ double calc_initial_temp(int *table, unsigned long long int *b, int num_electron
 			random_row = floor(get_random(0,TOTAL_STEPS));
 			random_col = floor(get_random(0,NUM_SITES*2));
 			change_array(k_array,j_array,b_array,random_row,random_col,change_pm,i);
-			
 			memcpy(psi,psi_reset, 2*N*sizeof(double));//resetting psi
-			evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds, false);
+			evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds);
 			E_new = cost(psi, ham_mod, N);
 			
 			if (E_new>E_old) sum += (E_new-E_old), count++;
@@ -594,6 +588,21 @@ int find(int N,unsigned long long int *v,unsigned long long int *b)
 
 
 
+double get_ground_E(int N, double *ham_mod)
+{
+	int i, min_i;
+	double *D, *Vdag, min_E=100;
+	Vdag = (double*) malloc(N*N*sizeof(double));
+	D = (double*) malloc(N*sizeof(double));
+	diag_hermitian_real_double(N, ham_mod,Vdag, D);
+	for(i=0; i<N; i++) if(D[i]<min_E) min_E = D[i], min_i = i;
+	printf("\n\nMODEL GROUND STATE ENERGY: %f\n", min_E);
+}
+
+
+
+
+
 unsigned long long int choose(int num_electrons)
 /*calculating (NUM_SITES choose num_electrons) = NUM_SITES!/((NUM_SITES-num_electrons)!*num_electrons!)*/
 {
@@ -674,12 +683,12 @@ void assign_bonds(int *bonds, int lattice[][NX])
 		}
 	}
 }
-void copy_best_arrays(int N, double *k_array, double *j_array, double* b_array,  double* k_best,  double* j_best, double* b_best)
-/*storing the best k, j, and b values*/
+void copy_arrays(int N, double *k_array, double *j_array, double* b_array,  double* k_to,  double* j_to, double* b_to)
+/*storing the updated k, j, and b values*/
 {
-	memcpy(k_best, k_array, 2*NUM_SITES*TOTAL_STEPS*sizeof(double));
-	memcpy(j_best, j_array, 2*NUM_SITES*TOTAL_STEPS*sizeof(double));
-	memcpy(b_best, b_array, NUM_SITES*TOTAL_STEPS*sizeof(double));
+	memcpy(k_to, k_array, 2*NUM_SITES*TOTAL_STEPS*sizeof(double));
+	memcpy(j_to, j_array, 2*NUM_SITES*TOTAL_STEPS*sizeof(double));
+	memcpy(b_to, b_array, NUM_SITES*TOTAL_STEPS*sizeof(double));
 }
 
 void init_arrays(double *k_array,double *j_array,double *b_array)
@@ -723,8 +732,15 @@ void change_row(double *k_array,double *j_array,double *b_array, int row, double
 /*Changing all of the lists by a value change at row row. Used in the optimize function*/
 {
 	int i;
-	for (i=offset; i<NUM_SITES*2; i+=jump) j_array[NUM_SITES*2*row+i] += change, k_array[NUM_SITES*2*row+i] +=change;
-	for (i=offset; i<NUM_SITES; i+=jump) b_array[NUM_SITES*row+i] += change;
+	for (i=offset; i<NUM_SITES*2; i+=jump) 
+	{
+		if ((-1 < k_array[NUM_SITES*2*row+i] + change) &&  (k_array[NUM_SITES*2*row+i] + change < 1)) k_array[NUM_SITES*2*row+i] += change;
+		if ((-1 < j_array[NUM_SITES*2*row+i] + change) && (j_array[NUM_SITES*2*row+i] + change < 1)) j_array[NUM_SITES*2*row+i] += change;
+	}
+	for (i=offset; i<NUM_SITES; i+=jump) 
+	{
+		if ((-1 < b_array[NUM_SITES*row+i] + change) && (b_array[NUM_SITES*row+i] + change < 1)) b_array[NUM_SITES*row+i] += change;
+	}
 }
 
 
@@ -734,8 +750,15 @@ void change_col(double *k_array,double *j_array,double *b_array, int col, double
 /*Changing all of the lists by a value change at col col. Used in the optimize function*/
 {
 	int i;
-	for (i=offset; i<TOTAL_STEPS; i+=jump) j_array[NUM_SITES*2*i+col] += change, k_array[NUM_SITES*2*i+col] +=change;
-	for (i=offset; i<TOTAL_STEPS; i+=jump) b_array[NUM_SITES*i+(int)floor(col/2.0)] += change;
+	for (i=offset; i<TOTAL_STEPS; i+=jump)
+	{	
+		if ((-1 < j_array[NUM_SITES*2*i+col] + change) && (j_array[NUM_SITES*2*i+col] + change < 1)) j_array[NUM_SITES*2*i+col] += change;
+		if ((-1 < k_array[NUM_SITES*2*i+col] + change) && (k_array[NUM_SITES*2*i+col] + change  < 1)) k_array[NUM_SITES*2*i+col] += change;
+	}
+	for (i=offset; i<TOTAL_STEPS; i+=jump) 
+	{
+		if ((-1 < b_array[NUM_SITES*i+(int)floor(col/2.0)] + change) && (b_array[NUM_SITES*i+(int)floor(col/2.0)] + change < 1)) b_array[NUM_SITES*i+(int)floor(col/2.0)] += change;
+	}
 }
 
 
@@ -744,9 +767,9 @@ void change_col(double *k_array,double *j_array,double *b_array, int col, double
 void change_single(double *k_array,double *j_array,double *b_array, int row,int col, double change)
 /*Changing a single element in each array, at column col, row row*/
 {
-	j_array[NUM_SITES*2*row+col] += change;
-       	k_array[NUM_SITES*2*row+col] += change;
-	b_array[NUM_SITES*row+(int)floor(col/2.0)] += change;
+	if ((-1 < j_array[NUM_SITES*2*row+col] + change) && (j_array[NUM_SITES*2*row+col] + change < 1)) j_array[NUM_SITES*2*row+col] += change;
+ 	if ((-1 < k_array[NUM_SITES*2*row+col] + change) && (k_array[NUM_SITES*2*row+col] + change < 1)) k_array[NUM_SITES*2*row+col] += change;
+	if ((-1 < b_array[NUM_SITES*row+(int)floor(col/2.0)] + change) && (b_array[NUM_SITES*row+(int)floor(col/2.0)] + change  < 1)) b_array[NUM_SITES*row+(int)floor(col/2.0)] += change;
 }
 
 
@@ -797,8 +820,8 @@ int get_neighbors(int site, int *neighbors, int lattice[][NX], int D)
 	{
 		if (OPEN)
 		{
-			neighbors[0] = (site+1)%(NX*NY);
-			neighbors[2] = (site+(NX*NY)-1)%(NX*NY);
+			neighbors[0] = (site%(NX*NY))+1;
+			neighbors[1] = ((site+(NX*NY)-2)%(NX*NY))+1;
 			count = 2;
 		}
 		else
@@ -848,6 +871,7 @@ void print_best_arrays(int N, double *k_array, double *j_array, double *b_array)
 		for(j=0;j<2*NUM_SITES;j++)
 		{
 			printf("%5.2f|",k_array[i*NUM_SITES+j]);
+//			if(k_array[i*NUM_SITES+j] > 1 || -1 > k_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
 		}
 	}
 /*	printf("\nJ_array:");
@@ -857,6 +881,7 @@ void print_best_arrays(int N, double *k_array, double *j_array, double *b_array)
 		for(j=0;j<2*NUM_SITES;j++)
 		{
 			printf("%5.2f|",j_array[i*NUM_SITES+j]);
+//			if(k_array[i*NUM_SITES+j] > 1 || -1 > k_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
 		}
 	}
 	printf("\nB_array:");
@@ -865,10 +890,11 @@ void print_best_arrays(int N, double *k_array, double *j_array, double *b_array)
 		printf("\n");
 		for(j=0;j<NUM_SITES;j++)
 		{
-			printf("%5.2f|",b_array[i*NUM_SITES+j]+0.0);
+			printf("%5.2f|",b_array[i*NUM_SITES+j]);
+//			if(b_array[i*NUM_SITES+j] > 1 || -1 > b_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
 		}
-	}
-	printf("\n");*/
+	}*/
+	printf("\n");
 }
 
 
