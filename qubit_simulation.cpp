@@ -1,11 +1,12 @@
 /*Questions:
--expectation overshot ground state, GS=-1.8, cost=-1.82
+-K and Bs should end up on diag?
+-expectation overshot ground state, GS=-1.8, cost=-1.82 
+-verify that acceptance prob shouldn't weigh in the -delta_e changes
 
 TODO:
+-clean
+-acceptance rate is way off
 -try a handful of different times
--verify that acceptance prob shouldn't weigh in the -delta_e changes
--double check annealing code
--find how long it take to miniminze
 */
 
 
@@ -26,38 +27,44 @@ TODO:
 #define PRINT true
 #define PRINTBEST false
 #define OPEN true
-#define NX 4
+#define NX 3
 #define NY NX
 #define NUM_SITES NY*NX
 #define DEVICE_DIMENSION 2
 #define DIAG false
 #define T 1
 #define V 2
-#define J1 -0.9
-#define K1 -0.7
-#define B1 -0.8
-#define J2 0.7
-#define K2 0.9
-#define B2 0.9
+#define J1 -0.7//-0.9
+#define K1 -0.5//-0.9
+#define B1 -0.6//-0.9
+#define J2 0.7//0.9
+#define K2 0.5//0.8
+#define B2 0.8//0.5
 #define LIMIT 30
-#define TIME_STEP .5
-#define TOTAL_TIME 10 
-#define TOTAL_STEPS TOTAL_TIME/TIME_STEP
-#define RANDOM_STATES 3
-#define SWEEPS 200
+#define TIME_STEP 0.1
+#define TOTAL_TIME 5
+#define TOTAL_STEPS floor(TOTAL_TIME/TIME_STEP)
+#define RANDOM_STATES 6
+#define SWEEPS 500
 #define CHANGE 0.02
-#define ACCEPTANCE_PROB 0.6
-#define EXP_DECAY 0.99
-#define TEMP_DECAY_ITERATIONS 600
+#define ACCEPTANCE_PROB 0.5
+#define EXP_DECAY 0.95
+#define TEMP_DECAY_ITERATIONS 5
 /*The following are the change_array variables. 0 -> This method will not be used, #>0 -> use this method on every #th iteration of change_array*/
-#define ROW 1
-#define COL 2
-#define ALTROW 3
-#define ALTCOL 4
-#define ALTROW2 5
-#define ALTCOL2 6
-#define SINGLE 7
-#define VARIATIONS (ROW && 1)+ (COL && 1) + (ALTROW && 1) + (ALTCOL && 1) + (ALTROW2 && 1) + (ALTCOL2 &&  1) + (SINGLE &&  1)
+#define ROW 0
+#define COL 0
+#define ALTROW 0
+#define ALTCOL 0
+#define ALTROW2 0
+#define ALTCOL2 0
+#define ROWK 1
+#define ROWJ 2
+#define ROWB 3
+#define COLK 4 
+#define COLJ 5
+#define COLB 6 
+#define SINGLE 0
+#define VARIATIONS (ROW && 1)+(COL && 1)+(ALTROW && 1)+(ALTCOL && 1)+(ALTROW2 && 1)+(ALTCOL2 &&  1)+(SINGLE &&  1)+(ROWK && 1)+(ROWJ && 1)+(ROWB && 1)+(COLK && 1)+(COLJ && 1)+(COLB && 1)
 
 
 
@@ -85,8 +92,8 @@ void assign_bonds(int *bonds, int lattice[][NX]);
 void copy_arrays(int N, double *k_array, double *j_array, double* b_array,  double* k_best,  double* j_best, double* b_best);
 void init_arrays(double *k_array, double *j_array,double *b_array, gsl_rng *r);
 void change_array(double *k_array, double *j_array, double *b_array, int random_row, int random_col, double change_pm, int i);
-void change_row(double *k_array, double *j_array,double *b_array, int row, double change, int jump, int offset);
-void change_col(double *k_array,double *j_array,double *b_array, int col, double change, int jump, int offset);
+void change_row(double *k_array, double *j_array,double *b_array, int row, double change, bool k, bool j, bool b, int jump, int offset);
+void change_col(double *k_array,double *j_array,double *b_array, int col, double change,bool k, bool j, bool b, int jump, int offset);
 void change_single(double *k_array,double *j_array,double *b_array, int row,int col, double change);
 void construct_lattice(int lattice[][NX]);
 int get_neighbors(int site, int *neighbors, int lattice[][NX], int D);
@@ -110,6 +117,7 @@ extern "C" double zdotc_(int *N, double*ZX,int *INCX, double *ZY, int *INCY);//d
 
 int main (int argc, char *argv[])
 {
+	printf("\nSeed: %i\n", SEED);
 //	test_function();
 	int *table,*bonds,lattice[NY][NX],num_electrons,N,i,j,iterations;
 	unsigned long long int *b;
@@ -167,7 +175,7 @@ int main (int argc, char *argv[])
 		}
 		else
 		{
-			int start_states[] = {N/3,N/3,N/3,N/3};//,2*N/3,2*N/3,2*N/3,2*N/3};
+			int start_states[] = {N/3,N/3,N/3,N/3,2*N/3,2*N/3,2*N/3,2*N/3};
 			iterations = sizeof(start_states)/sizeof(start_states[0]);
 			construct_model_hamiltonian(table, b, num_electrons, N, ham_mod, lattice, 2);
 			ground_E =get_ground_E(N, ham_mod);
@@ -237,9 +245,9 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 			memcpy(psi,psi_start, 2*N*sizeof(double));//resetting psi
 			evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds);
 			E_new = cost(psi, ham_mod, N);
-			if (E_new<E_best) E_best=E_new, copy_arrays(N, k_array, j_array, b_array, k_best, j_best,b_best);
+			if (E_new<E_best) E_best=E_new, E_old=E_new,  copy_arrays(N, k_array, j_array, b_array, k_best, j_best,b_best);
 
-			if (E_new<E_old) E_old=E_new;
+			else if (E_new<E_old) E_old=E_new;
 			else if (get_random(0,1,r)<exp(-(E_new-E_old)/(temperature))) E_old=E_new, change_accepted++, bad_change++;
 			else copy_arrays(N, k_temp, j_temp, b_temp, k_array, j_array, b_array),bad_change++;//undoing the change
 		}
@@ -257,7 +265,7 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 		temperature=temperature*EXP_DECAY;
 	}
 	end_loop: printf("Post-Optimized Expectation:  %f\n", E_best);
-	if(PRINTBEST) printf("End array"), print_best_arrays(k_array, j_array, b_array);
+	if(PRINTBEST) printf("End array"), print_best_arrays(k_best, j_best, b_best);//print_best_arrays(k_array, j_array, b_array);
 	free(k_array), free(j_array), free(b_array),free(k_best), free(j_best), free(b_best), free(k_temp), free(j_temp), free(b_temp),free(psi), free(bonds);
 }
 
@@ -279,6 +287,24 @@ void evolve(int *table, unsigned long long int *b,int num_electrons,int N, int l
 	for (i=0; i<TOTAL_STEPS;i++)
 	{
 		construct_device_hamiltonian(table, b, num_electrons, N, ham_dev, lattice, k_array, j_array, b_array, bonds,i,DEVICE_DIMENSION);
+
+		/*int p;
+		double *test;
+		test = (double *) malloc (2*N*N*sizeof (double));
+
+		for(j=0;j<N;j++){ 
+			for(p=0;p<N;p++)
+			{
+				test[2*(j*N+p)] = ham_dev[2*(p*N+j)];
+				test[2*(j*N+p)+1] = ham_dev[2*(p*N+j)+1];
+			}
+		}
+		for(j=0;j<N*N*2;j++)
+		{
+			if(test[j]-ham_dev[j]!=0) printf("ERROR");
+		}
+		*/
+
 		if(DIAG)
 		{
 			for (j=0; j<N*N; j++) ham_diag[j]=0.0,Vdag[j]=0.0;
@@ -291,7 +317,11 @@ void evolve(int *table, unsigned long long int *b,int num_electrons,int N, int l
 		else
 		{
 			for (j=0; j<N*N*2; j++) exp_matrix[j] = 0.0, ham_t_i[j]=0.0;
-			for (j=0; j<N*N*2; j++) ham_t_i[(j+1)%(N*N*2)] = (ham_dev[j]*-TIME_STEP); //multiplying by -i*dt for the Pade approximation
+			for (j=0; j<N*N; j++)
+			{
+				ham_t_i[2*j+1] = (ham_dev[2*j]*-TIME_STEP); //multiplying by -i*dt for the Pade approximation
+				ham_t_i[2*j] = (ham_dev[2*j+1]*TIME_STEP); 
+			}
 			exp_general_complex_double(N, ham_t_i, exp_matrix);
 			matrix_vector_mult(exp_matrix, psi, N);
 		}
@@ -310,8 +340,8 @@ double cost(double *psi, double *ham_mod, int N)
 	psi_conj = (double*) malloc (N*2*sizeof(double));
 	memcpy(psi_conj, psi, 2*N*sizeof(double));
 
-/*
-	double *test1, *test2, sum=0, sumi=0;
+
+/*	double *test1, *test2, sum=0, sumi=0;
 	test1 = (double*) malloc(2*N*sizeof(double));
 	test2 = (double*) malloc(2*N*sizeof(double));
 
@@ -334,6 +364,8 @@ double cost(double *psi, double *ham_mod, int N)
 	}
 	if(resulti > 0.00001) printf("  RESOULTTTII %f\n\n\n",resulti);
 */
+	
+	
 	result=0;
 	matrix_vector_mult(ham_mod, psi, N);//H*psi, the operator acting on the ket, storing in psi
 	result = zdotc_(&N, psi_conj, &INCX, psi, &INCY);//psi* * psi, the dot between the complex conj and the result of H*psi
@@ -542,7 +574,12 @@ void exp_diaganolized_mat(double *ham, double *Vdag, double* D, int N)
 
 	for (i =0; i<N*N*2; i++) exp_D[i] = 0, temp_mat[i] = 0,Vdag_z[i]=0, Vdag_z_inv[i]=0, ham[i]=0;
 	for (i =0; i<N*N; i++) Vdag_z[2*i] = Vdag[i];
-	for (i =0; i<N; i++) exp_D[2*(i*N+i)] = cos(-TIME_STEP*D[i]), exp_D[2*(i*N+i)+1] = sin(-TIME_STEP*D[i]);
+	for (i =0; i<N; i++) 
+	{
+		exp_D[2*(i*N+i)] = cos(-TIME_STEP*D[i]);
+	       	exp_D[2*(i*N+i)+1] = sin(-TIME_STEP*D[i]);
+	}
+
 	dgetrf_(&N,&N,Vdag,&N,IPIV,&INFO);
 	dgetri_(&N,Vdag,&N,IPIV,WORK,&LWORK,&INFO);//inverting vdag
 	for (i =0; i<N*N; i++) Vdag_z_inv[2*i] = Vdag[i];
@@ -633,10 +670,35 @@ void matrix_vector_mult(double *matrix, double *psi, int N)
 	ALPHA[0]=1.0,ALPHA[1]=0.0;
 	BETA[0]=0.0,BETA[1]=0.0;
 	result = (double *) malloc (N*2*sizeof(double));
-	for (i=0;i<N*2;i++) result[i]=0.0;
+
+
+
+
+/*
+	double sumi=0, sum=0, *tester;
+	tester = (double *) malloc (N*2*sizeof(double));
+	
+	for (i=0;i<N*2;i++) result[i]=0.0, tester[i] = 0.0;
+	int j;
+	for(i=0;i<N;i++){
+		for(j=0;j<N;j++)
+		{
+			sum += matrix[2*N*j+2*i]*psi[2*j]-matrix[2*(N*j+i)+1]*psi[2*j+1];
+			sumi += matrix[2*N*j+2*i+1]*psi[2*j]+matrix[2*(N*j+i)]*psi[2*j+1];
+		}
+		tester[2*i] = sum;
+		tester[2*i+1] = sumi;
+		sum=0;
+		sumi=0;
+	}
+*/
+
+
 
 	zgemv_(&TRANS, &M, &N,ALPHA,matrix, &LDA, psi, &INCX, BETA, result, &INCY);
 	memcpy(psi,result, 2*N*sizeof(double));
+//	memcpy(psi,tester, 2*N*sizeof(double));
+//	for(i=0;i<N*2;i++) printf("%f\n", psi[i]-tester[i]);
 	free(result);
 }
 
@@ -832,32 +894,40 @@ void change_array(double *k_array, double *j_array, double *b_array, int random_
 /*changing the j, k, and b arrays. Use the defines at start of program to determine which manipulation functions will be used, and in what order*/
 {
 	int mod = VARIATIONS;
-	if(i%mod==ROW-1) change_row(k_array,j_array,b_array,random_row,change_pm, 1, 0);
-	else if(i%mod==COL-1) change_col(k_array,j_array,b_array,random_col,change_pm, 1, 0);
-	else if(i%mod==ALTROW-1) change_row(k_array,j_array,b_array,random_row,change_pm, 2, 0);
-	else if(i%mod==ALTCOL-1) change_col(k_array,j_array,b_array,random_col,change_pm, 2, 0);
-	else if(i%mod==ALTROW2-1) change_row(k_array,j_array,b_array,random_row,change_pm, 2, 1);
-	else if(i%mod==ALTCOL2-1) change_col(k_array,j_array,b_array,random_col,change_pm, 2, 1);
+	if(i%mod==ROW-1) change_row(k_array,j_array,b_array,random_row,change_pm,true, true,true, 1, 0);
+	else if(i%mod==COL-1) change_col(k_array,j_array,b_array,random_col,change_pm, true, true, true, 1, 0);
+	else if(i%mod==ALTROW-1) change_row(k_array,j_array,b_array,random_row,change_pm, true, true, true ,2, 0);
+	else if(i%mod==ALTCOL-1) change_col(k_array,j_array,b_array,random_col,change_pm, true, true, true, 2, 0);
+	else if(i%mod==ALTROW2-1) change_row(k_array,j_array,b_array,random_row,change_pm, true, true, true, 2, 1);
+	else if(i%mod==ALTCOL2-1) change_col(k_array,j_array,b_array,random_col,change_pm, true, true, true, 2, 1);
+	else if(i%mod==ROWK-1) change_row(k_array,j_array,b_array,random_row,change_pm, true, false, false, 2, 1);
+	else if(i%mod==ROWJ-1) change_row(k_array,j_array,b_array,random_row,change_pm, false, true, false, 2, 1);
+	else if(i%mod==ROWB-1) change_row(k_array,j_array,b_array,random_row,change_pm, false, false, true, 2, 1);
+	else if(i%mod==COLK-1) change_col(k_array,j_array,b_array,random_col,change_pm, true, false, false, 2, 1);
+	else if(i%mod==COLJ-1) change_col(k_array,j_array,b_array,random_col,change_pm, false, true, false, 2, 1);
+	else if(i%mod==COLB-1) change_col(k_array,j_array,b_array,random_col,change_pm, false, false, true, 2, 1);
 	else if(i%mod==SINGLE-1) change_single(k_array,j_array,b_array,random_row,random_col,change_pm);
 	else printf("NOPE\n");
 }
 
 
 
-
-void change_row(double *k_array,double *j_array,double *b_array, int row, double change, int jump, int offset)
+void change_row(double *k_array,double *j_array,double *b_array, int row, double change, bool k, bool j, bool b, int jump, int offset)
 /*Changing all of the lists by a value change at row row. Used in the optimize function*/
 {
 	int i;
 	double upj=1.0,lowj=-1.0,upk=1.0,lowk=-1.0,upb=1.0,lowb=-1.0;
 	if(DEVICE_SAME_MODEL) upj=J2,lowj=J1,upk=K2,lowk=K1,upb=B2,lowb=B1;
 
-	for (i=offset; i<NUM_SITES*2; i+=jump)
+        if(k) for (i=offset; i<NUM_SITES*2; i+=jump)
 	{
 		if ((lowk < k_array[NUM_SITES*2*row+i] + change) &&  (k_array[NUM_SITES*2*row+i] + change < upk)) k_array[NUM_SITES*2*row+i] += change;
+	}
+	if(j) for (i=offset; i<NUM_SITES*2; i+=jump)
+	{
 		if ((lowj < j_array[NUM_SITES*2*row+i] + change) && (j_array[NUM_SITES*2*row+i] + change < upj)) j_array[NUM_SITES*2*row+i] += change;
 	}
-	for (i=offset; i<NUM_SITES; i+=jump)
+	if(b) for (i=offset; i<NUM_SITES; i+=jump)
 	{
 		if ((lowb < b_array[NUM_SITES*row+i] + change) && (b_array[NUM_SITES*row+i] + change < upb)) b_array[NUM_SITES*row+i] += change;
 	}
@@ -866,19 +936,22 @@ void change_row(double *k_array,double *j_array,double *b_array, int row, double
 
 
 
-void change_col(double *k_array,double *j_array,double *b_array, int col, double change, int jump, int offset)
+void change_col(double *k_array,double *j_array,double *b_array, int col, double change,bool k, bool j, bool b, int jump, int offset)
 /*Changing all of the lists by a value change at col col. Used in the optimize function*/
 {
 	int i;
 	double upj=1.0,lowj=-1.0,upk=1.0,lowk=-1.0,upb=1.0,lowb=-1.0;
 	if(DEVICE_SAME_MODEL) upj=J2,lowj=J1,upk=K2,lowk=K1,upb=B2,lowb=B1;
 
-	for (i=offset; i<TOTAL_STEPS; i+=jump)
+	if(k) for (i=offset; i<TOTAL_STEPS; i+=jump)
 	{
-		if ((lowj < j_array[NUM_SITES*2*i+col] + change) && (j_array[NUM_SITES*2*i+col] + change < upj)) j_array[NUM_SITES*2*i+col] += change;
 		if ((lowk < k_array[NUM_SITES*2*i+col] + change) && (k_array[NUM_SITES*2*i+col] + change  < upk)) k_array[NUM_SITES*2*i+col] += change;
 	}
-	for (i=offset; i<TOTAL_STEPS; i+=jump)
+	if(j) for (i=offset; i<TOTAL_STEPS; i+=jump)
+	{
+		if ((lowj < j_array[NUM_SITES*2*i+col] + change) && (j_array[NUM_SITES*2*i+col] + change < upj)) j_array[NUM_SITES*2*i+col] += change;
+	}
+	if(b) for (i=offset; i<TOTAL_STEPS; i+=jump)
 	{
 		if ((lowb < b_array[NUM_SITES*i+(int)floor(col/2.0)] + change) && (b_array[NUM_SITES*i+(int)floor(col/2.0)] + change < upb)) b_array[NUM_SITES*i+(int)floor(col/2.0)] += change;
 	}
@@ -1007,17 +1080,17 @@ void print_best_arrays(double *k_array, double *j_array, double *b_array)
 		for(j=0;j<2*NUM_SITES;j++)
 		{
 			printf("%5.2f|",k_array[i*NUM_SITES+j]);
-//			if(k_array[i*NUM_SITES+j] > 1 || -1 > k_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
+			if(k_array[i*NUM_SITES+j] > 1 || -1 > k_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
 		}
 	}
-/*	printf("\nJ_array:");
+	printf("\nJ_array:");
 	for(i=0;i<TOTAL_STEPS;i++)
 	{
 		printf("\n");
 		for(j=0;j<2*NUM_SITES;j++)
 		{
 			printf("%5.2f|",j_array[i*NUM_SITES+j]);
-//			if(k_array[i*NUM_SITES+j] > 1 || -1 > k_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
+			if(k_array[i*NUM_SITES+j] > 1 || -1 > k_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
 		}
 	}
 	printf("\nB_array:");
@@ -1027,9 +1100,9 @@ void print_best_arrays(double *k_array, double *j_array, double *b_array)
 		for(j=0;j<NUM_SITES;j++)
 		{
 			printf("%5.2f|",b_array[i*NUM_SITES+j]);
-//			if(b_array[i*NUM_SITES+j] > 1 || -1 > b_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
+			if(b_array[i*NUM_SITES+j] > 1 || -1 > b_array[i*NUM_SITES+j]) printf("\n\n\n AQJNHDASLJHDAS \n\n\n");
 		}
-	}*/
+	}
 	printf("\n");
 }
 
