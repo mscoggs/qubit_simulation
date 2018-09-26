@@ -48,7 +48,7 @@ TODO:
 #define CHANGE 0.02
 #define ACCEPTANCE_PROB 0.5
 #define EXP_DECAY 0.95
-#define TEMP_DECAY_ITERATIONS 5
+#define TEMP_DECAY_ITERATIONS 15
 /*The following are the change_array variables. 0 -> This method will not be used, #>0 -> use this method on every #th iteration of change_array*/
 #define ROW 0
 #define COL 0
@@ -100,7 +100,7 @@ double get_random(double lower, double upper, gsl_rng *r);
 void print_best_arrays(double *k_array, double *j_array, double *b_array);
 void print_hamiltonian(double* hamiltonian, int N, bool print_imaginary);
 void print_hamiltonianR(double *hamiltonian, int N);
-void test_function();
+void test_function(double *ham, int N);
 extern "C" int zgemm_(char *TRANSA, char *TRANSB, int *M, int *N, int *K, double *ALPHA, double *Z, int *LDA, double *X, int *LDB, double *BETA, double *Y, int *LDC); //complex matrix*matrix mult, odd indices hold imaginary values.
 extern "C" int zgemv_(char *TRANS, int *M, int *N,double *ALPHA,double *A, int *LDA, double *X, int *INCX, double *BETA, double *Y, int *INCY); //complex matrix-vector mult, odd indices hold imaginary values.
 extern "C" int dsyev_(char *JOBZ, char *UPLO, int *N, double *Vdag, int *LDA, double *D, double *WORK, int *LWORK, int *INFO);//diagonalization, returns the eigenvectors in Vdag and eigenvalues in D.
@@ -176,6 +176,9 @@ int main (int argc, char *argv[])
 			int start_states[] = {N/3,N/3,N/3,N/3,2*N/3,2*N/3,2*N/3,2*N/3};
 			iterations = sizeof(start_states)/sizeof(start_states[0]);
 			construct_model_hamiltonian(table, b, num_electrons, N, ham_mod, lattice, 2);
+
+			
+
 			ground_E =get_ground_E(N, ham_mod);
 			printf("\n\n#######################################################################\n");
 			printf("MODEL GROUND STATE ENERGY: %f\n",ground_E);
@@ -312,9 +315,15 @@ void evolve(int *table, unsigned long long int *b,int num_electrons,int N, int l
 				ham_t_i[2*j] = (ham_dev[2*j+1]*TIME_STEP); 
 			}
 			exp_general_complex_double(N, ham_t_i, exp_matrix);
+			test_function(exp_matrix, N);
 			matrix_vector_mult(exp_matrix, psi, N);
 		}
+
+
+
+
 	}
+
 	free(ham_dev), free(ham_t_i), free(exp_matrix), free(D), free(Vdag),free(ham_diag);
 }
 
@@ -694,6 +703,13 @@ void get_ground_state(int N, double *ham, double *ground_state)
 	for(i=0; i<2*N; i++) ground_state[i] = 0.0;
 	for(i=0; i<N; i++) if(D[i]<min_E) min_E = D[i], min_i = i;
 	for(i=0; i<N; i++) ground_state[i*2] = Vdag[min_i*N+i];
+
+
+	double sum=0;
+	for(i=0; i<N; i++) sum += pow(ground_state[i*2], 2);
+	printf("\n\n\n\n%f\n\n\n", sum);
+
+
 	free(Vdag), free(D);
 }
 
@@ -1091,28 +1107,48 @@ void print_hamiltonian(double* hamiltonian, int N, bool print_imaginary)
 
 
 
-void test_function()
+void test_function(double*ham, int N)
 {
-	double *matrix, *matrix2, *psi;
-	int i, N = 3;
-	matrix = (double*) malloc(2*N*N*sizeof(double));
-	matrix2 = (double*) malloc(2*N*N*sizeof(double));
-	psi = (double*) malloc(2*N*sizeof(double));
-	for(i=0;i<N*N*2;i++) matrix[i] = 0.0, matrix2[i] =0.0;
-	for(i=0;i<N*2;i++) psi[i] = 0.0;
-	matrix[0] = 1;
-	matrix[1] = 1;
-	matrix[6] = 1;
-	matrix[12] = 1;
-	matrix[14] = 1;
-	matrix[16] = 1;
-	psi[1] = 1;
-	psi[0] = 1;
-	psi[2] = 1;
-	psi[4] = 1;
-	exp_general_complex_double(N,matrix,matrix2);
-	for(i=0;i<2*N;i++) printf("%f\n", psi[i]);
-	print_hamiltonian(matrix2, N, true);
-	printf("%f\n", cost(psi, matrix, N));
-	free(matrix), free(psi);
+	int i, j;
+	double* ham_conj;
+	ham_conj = (double*) malloc(N*N*2*sizeof(double));
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			ham_conj[2*(i*N+j)] = ham[2*(j*N+i)];
+			ham_conj[2*(i*N+j)+1] = -ham[2*(j*N+i)+1];
+		}
+	}	
+	
+	char TRANSA = 'N', TRANSB = 'N';
+	int *IPIV, LWORK=N*N, INFO, LDA=N, LDB=N, LDC=N;
+	double *exp_D, *temp_mat, *Vdag_z, *Vdag_z_inv, *WORK,ALPHA[2], BETA[2];
+	ALPHA[0]=1.0, ALPHA[1]=0.0;
+	BETA[0]=0.0, BETA[1]=0.0;
+
+
+	temp_mat = (double *) malloc (2*N*N*sizeof (double));
+	for (i =0; i<N*N*2; i++) temp_mat[i] = 0;
+/*	printf("\nham\n");
+	print_hamiltonian(ham, N, false);
+	printf("\nham\n");
+	print_hamiltonian(ham_conj, N, false);*/
+	
+	zgemm_(&TRANSA, &TRANSB, &N, &N, &N, ALPHA, ham_conj, &LDA, ham, &LDB, BETA, temp_mat, &LDC); //matrix mult
+
+	print_hamiltonian(temp_mat, N, false);
+/*	double *test, *exp_matrix;
+	test = (double *) malloc (2*9*sizeof (double));
+	exp_matrix = (double *) malloc (9*2*sizeof (double));
+	test[0] = 1;
+	test[1] = 2;
+	test[5] = 1;
+	test[6] = 3;
+	test[9] = 4;
+	test[10] = 3;
+	print_hamiltonian(test, 3, true);
+	exp_general_complex_double(3, test, exp_matrix);
+	print_hamiltonian(exp_matrix, 3, true);
+	*/
 }
