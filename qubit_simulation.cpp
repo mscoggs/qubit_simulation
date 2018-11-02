@@ -10,14 +10,14 @@
 //g++ -o qubit_simulation qubit_simulation.cpp -llapack -lblas -lgsl
 //./qubit_simulation
 
-#define CHECK_EVOLVE true
+#define CHECK_EVOLVE false
 #define CHECK true
-#define DEVICE_SAME_MODEL true
+#define DEVICE_SAME_MODEL false
 #define SEED 1
-#define PRINT false
+#define PRINT true
 #define PRINTBEST false
 #define OPEN true
-#define NX 2
+#define NX 3
 #define NY NX
 #define NUM_SITES NY*NX
 #define DEVICE_DIMENSION 2
@@ -32,14 +32,14 @@
 #define B2 0.8//0.5
 #define LIMIT 30
 #define TIME_STEP 0.5
-#define TOTAL_TIME 5
+#define TOTAL_TIME 2
 #define TOTAL_STEPS floor(TOTAL_TIME/TIME_STEP)
 #define RANDOM_STATES 5
-#define SWEEPS 2
+#define SWEEPS 2000
 #define CHANGE 0.1
-#define ACCEPTANCE_PROB 0.5
+#define ACCEPTANCE_PROB 0.7
 #define EXP_DECAY 0.95
-#define TEMP_DECAY_ITERATIONS 1
+#define TEMP_DECAY_ITERATIONS 50
 /*The following are the change_array variables. 0 -> This method will not be used, #>0 -> use this method on every #th iteration of change_array*/
 #define ROW 1
 #define COL 2
@@ -178,11 +178,10 @@ int main (int argc, char *argv[])
 		}
 		else
 		{
-			int start_states[] = {N/3,N/3,N/3,N/3,2*N/3,2*N/3,2*N/3,2*N/3};
+			int start_states[] = {0,N/3,2*N/3};
 			iterations = sizeof(start_states)/sizeof(start_states[0]);
 			construct_model_hamiltonian(table, b, num_electrons, N, ham_mod, lattice, 2);
 
-			
 
 			ground_E =get_ground_E(N, ham_mod);
 			printf("\n\n#######################################################################\n");
@@ -232,7 +231,7 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 	init_arrays(k_array, j_array, b_array, r);
 	copy_arrays(N, k_array, j_array, b_array, k_best, j_best,b_best);
 	evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array,bonds);
-	//check_weights(psi, ham_mod, N);
+	check_weights(psi, ham_mod, N);
 	E_best = cost(psi, ham_mod, N);
 	E_old = E_best;
 	printf("Pre-Optimized Expectation:   %f\n", E_best);
@@ -355,9 +354,9 @@ double cost(double *psi, double *ham_mod, int N)
 	psi_conj = (double*) malloc (N*2*sizeof(double));
 	memcpy(psi_conj, psi, 2*N*sizeof(double));
 	if(CHECK) check_norm(psi, N);	
+	if(CHECK) check_weights(psi, ham_mod, N);
 
 	//printf("Pre matrix and vector:\n");
-	//print_hamiltonian(ham_mod, N);
 	//print_vector(psi_temp,N);
 
 	matrix_vector_mult(ham_mod, psi, N);//H*psi, the operator acting on the ket, storing in psi
@@ -365,7 +364,6 @@ double cost(double *psi, double *ham_mod, int N)
 	//print_vector(psi_temp,N);
 	result = zdotc_(&N, psi_conj, &INCX, psi, &INCY);//psi* * psi, the dot between the complex conj and the result of H*psi
 
-	//printf("cost: %f\n",result);
 	free(psi_conj);
 	return result;
 }
@@ -422,7 +420,7 @@ double calc_initial_temp(int *table, unsigned long long int *b, int num_electron
 	printf("\nELECTRONS: %i\nDIMENSION: %i\nINIT_TEMP: %f\n",num_electrons, N,initial_temp);
 	printf("#######################################################################\n");
 
-	return initial_temp;
+	return initial_temp*0.5;
 }
 
 
@@ -699,7 +697,6 @@ void matrix_vector_mult(double *matrix, double *psi, int N)
 	result = (double *) malloc (N*2*sizeof(double));
 //	printf("Pre matrix and vector:\n");
 //	print_hamiltonian(matrix, N);
-//	print_vector(psi,N);
 
 	zgemv_(&TRANS, &M, &N,ALPHA,matrix, &LDA, psi, &INCX, BETA, result, &INCY);
 	memcpy(psi,result, 2*N*sizeof(double));
@@ -750,7 +747,7 @@ int find(int N,unsigned long long int *v,unsigned long long int *b)
 void get_ground_state(int N, double *ham, double *ground_state)
 /*Get the ground state of a hamiltonian matrix by finding the smallest eigen_value, the getting the eigenvector associated with that eigenvalue. Copying the eigenvector the ground_state*/
 {
-	int i, min_i;
+	int i, min_i,j;
 	double *D, *Vdag, min_E=1000;
 	Vdag = (double*) malloc(N*N*sizeof(double));
 	D = (double*) malloc(N*sizeof(double));
@@ -761,6 +758,7 @@ void get_ground_state(int N, double *ham, double *ground_state)
 
 	for(i=0; i<N; i++) ground_state[i*2] = Vdag[min_i*N+i];
 	free(Vdag), free(D);
+
 }
 
 
@@ -770,29 +768,13 @@ double get_ground_E(int N, double *ham)
 /*Finding the ground energy, the smallest eigenvalue of the matrix*/
 {
 	int i,j;
-	double *D, *Vdag, min_E=1000;
+	double *D, *Vdag, *ham_diag,min_E=1000;
 	Vdag = (double*) malloc(N*N*sizeof(double));
 	D = (double*) malloc(N*sizeof(double));
-
-	diag_hermitian_real_double(N, ham,Vdag, D);
+	ham_diag = (double*) malloc(N*N*sizeof(double));
+	for(i=0;i<N*N;i++) ham_diag[i] = ham[2*i];
+	diag_hermitian_real_double(N, ham_diag,Vdag, D);
 	for(i=0; i<N; i++) if(D[i]<min_E) min_E = D[i];
-//	for(i=0; i<N; i++) printf("%f  ", D[i]);
-
-	double sum = 0;
-	double sumt = 0;
-	for(i=0; i<N; i++){
-		sum = 0;
-		for(j=0;j<N;j++)
-		{
-			sum += Vdag[i*N+j]*Vdag[i*N+j];
-
-		}
-		sumt += sum*sum;
-	}
-
-printf("C SUM = %f\n", sumt);
-	
-
 
 	free(Vdag), free(D);
 	
@@ -1206,11 +1188,13 @@ void check_weights(double* state, double* ham, int N)
 {
 	//zdot state with each basis of ham, square it, sum the squares. Should be 1
 	int i,j;
-	double *D, *Vdag;
+	double *D, *Vdag, *ham_diag;
 	Vdag = (double*) malloc(N*N*sizeof(double));
 	D = (double*) malloc(N*sizeof(double));
+	ham_diag = (double*) malloc(N*N*sizeof(double));
+	for (i=0;i<N*N;i++) ham_diag[i] = ham[2*i];
 
-	diag_hermitian_real_double(N, ham,Vdag, D);
+	diag_hermitian_real_double(N, ham_diag,Vdag, D);
 
 
 	double sum_real;
@@ -1222,34 +1206,15 @@ void check_weights(double* state, double* ham, int N)
 		sum_im=0;
 		for(i=0; i<N; i++)
 		{
-			sum_real = state[2*i]*Vdag[j*N+i];
-			sum_im = state[2*i+1]*Vdag[j*N+i];
+			sum_real += state[2*i]*Vdag[j*N+i];
+			sum_im += -state[2*i+1]*Vdag[j*N+i];
+//			printf("%f\n", sum_im);
 		}
 		c_squared_sum += sum_real*sum_real+sum_im*sum_im;
-		printf("%f\n",c_squared_sum);
+//		printf("%f\n",c_squared_sum);
 	}
-	printf("WEIGHTS SUM = %f\n\n\n", c_squared_sum);
-
-/*	double sum = 0;
-	double sumt = 0;
-		sum = 0;
-		for(j=0;j<N;j++)
-		{
-			sum += Vdag[i*N+j]*Vdag[i*N+j];
-
-		}
-		sumt += sum*sum;
-	}
-
-printf("C SUM = %f", sumt);*/
-	
-
 
 	free(Vdag), free(D);
-	
-
-
-
 }
 
 
