@@ -10,37 +10,51 @@
 //g++ -o qubit_simulation qubit_simulation.cpp -llapack -lblas -lgsl
 //./qubit_simulation
 
-#define CHECK_EVOLVE false
-#define CHECK true
-#define DEVICE_SAME_MODEL false
-#define SEED 1
-#define PRINT true
-#define PRINTBEST false
+//Physical Parameters
 #define OPEN true
 #define NX 3
 #define NY NX
 #define NUM_SITES NY*NX
 #define DEVICE_DIMENSION 2
-#define DIAG true
 #define T 1
 #define V 2
-#define J1 -0.7//-0.9
-#define K1 -0.5//-0.9
-#define B1 -0.6//-0.9
-#define J2 0.7//0.9
-#define K2 0.5//0.8
-#define B2 0.8//0.5
-#define LIMIT 30
+#define J_START -0.7 //Lower values
+#define K_START -0.5
+#define B_START -0.6
+#define J_GROUND 0.7
+#define K_GROUND 0.5
+#define B_GROUND 0.8
 #define TIME_STEP 0.5
 #define TOTAL_TIME 2
 #define TOTAL_STEPS floor(TOTAL_TIME/TIME_STEP)
+
+//Non-Physical Parameters
+#define SEED 1
+#define DEVICE_SAME_MODEL true
+#define DIAG true
+#define LIMIT 30
 #define RANDOM_STATES 5
 #define SWEEPS 2000
-#define CHANGE 0.1
+#define CHANGE 0.05
 #define ACCEPTANCE_PROB 0.7
-#define EXP_DECAY 0.95
-#define TEMP_DECAY_ITERATIONS 50
-/*The following are the change_array variables. 0 -> This method will not be used, #>0 -> use this method on every #th iteration of change_array*/
+#define EXP_DECAY 0.99
+#define TEMP_DECAY_ITERATIONS 15
+
+#ifdef DEVICE_SAME_MODEL 
+#define UPJ max(J_START, J_GROUND)
+#define UPK max(K_START, K_GROUND)
+#define UPB max(B_START, B_GROUND)
+#define LOWJ min(J_START, J_GROUND)
+#define LOWK min(J_START, J_GROUND)
+#define LOWB min(J_START, J_GROUND)
+#endif
+
+//Coding Aids
+#define CHECK true
+#define PRINT true
+#define PRINTBEST false
+
+//The change_array variables. 0 -> This method will not be used, #>0 -> use this method on every #th iteration of change_array
 #define ROW 1
 #define COL 2
 #define ALTROW 0
@@ -108,22 +122,19 @@ extern "C" int dgemm_(char *TRANSA, char *TRANSB, int *M, int *N, int *K, double
 extern "C" double zdotc_(int *N, double*ZX,int *INCX, double *ZY, int *INCY);//dots the complex conjugate of ZX with ZY
 
 
-/*
-int main (int argc, char *argv[])
-{
-test_function();
-}
-*/
 
 int main (int argc, char *argv[])
 {
-	printf("\nSeed: %i\n", SEED);
+	if(PRINT) printf("\nSeed: %i\n", SEED);
 	int *table,*bonds,lattice[NY][NX],num_electrons,N,i,j,iterations;
 	unsigned long long int *b;
-	double *ham_mod, *ham_ground, *k_ground, *j_ground, *b_ground, *psi_start, ground_E = 100, initial_temp=1;
-	int electron_counts[] = {1};
-	construct_lattice(lattice);
+	double *ham_ground, *ham_start, *k_ground, *j_ground, *b_ground, *psi_start, ground_E = 100, initial_temp=1;
 
+
+	int electron_counts[] = {1};
+
+
+	construct_lattice(lattice);
 	gsl_rng_env_setup();
 	double seed = SEED;
 	const gsl_rng_type * TT = gsl_rng_default;
@@ -136,7 +147,7 @@ int main (int argc, char *argv[])
 		N=choose(num_electrons);
 		b = (unsigned long long int*) malloc(N*sizeof(double));
 		table=(int*) malloc(num_electrons*N*sizeof(int));
-		ham_mod = (double *) malloc (2*N*N*sizeof (double));
+		ham_ground = (double *) malloc (2*N*N*sizeof (double));
 		psi_start = (double *) malloc(2*N*sizeof(double));
 
 		combinations (num_electrons,b,table, N);
@@ -149,58 +160,64 @@ int main (int argc, char *argv[])
 
 			bonds = (int*) malloc(NUM_SITES*NUM_SITES*sizeof(int));
 
-			ham_ground = (double *) malloc(2*N*N*sizeof(double));
+			ham_start = (double *) malloc(2*N*N*sizeof(double));
 
 			
 			for(j=0;j<NUM_SITES*NUM_SITES;j++) bonds[j]=1;
 
-			k_ground[0] = K1;
-			k_ground[NUM_SITES*2] = K2;
-			j_ground[0] = J1;
-			j_ground[NUM_SITES*2] = J2;
-			for(j=0;j<NUM_SITES;j++) b_ground[j] = B1;
-			for(j=0;j<NUM_SITES;j++) b_ground[NUM_SITES+j] = B2;
+			k_ground[0] = K_START;
+			k_ground[NUM_SITES*2] = K_GROUND;
+			j_ground[0] = J_START;
+			j_ground[NUM_SITES*2] = J_GROUND;
+			for(j=0;j<NUM_SITES;j++) b_ground[j] = B_START;
+			for(j=0;j<NUM_SITES;j++) b_ground[NUM_SITES+j] = B_GROUND;
 
-			construct_device_hamiltonian(table, b, num_electrons, N, ham_ground, lattice, k_ground, j_ground, b_ground, bonds, 0, DEVICE_DIMENSION);
+			construct_device_hamiltonian(table, b, num_electrons, N, ham_start, lattice, k_ground, j_ground, b_ground, bonds, 0, DEVICE_DIMENSION);
 
-			construct_device_hamiltonian(table, b, num_electrons, N, ham_mod, lattice, k_ground, j_ground, b_ground, bonds, 1, DEVICE_DIMENSION);
-			get_ground_state(N, ham_ground,psi_start);
+			construct_device_hamiltonian(table, b, num_electrons, N, ham_ground , lattice, k_ground, j_ground, b_ground, bonds, 1, DEVICE_DIMENSION);
+			get_ground_state(N, ham_start,psi_start);
 			if(CHECK) check_norm(psi_start, N);
-			
-			ground_E = get_ground_E(N, ham_mod);
+			ground_E = get_ground_E(N, ham_ground);
 
-			initial_temp = 0.01;//calc_initial_temp(table, b, num_electrons, N, lattice, ham_mod,r);
-			optimize(table, b, num_electrons, N, lattice, ham_mod, psi_start, initial_temp,r);
-			printf("\n#######################################################################\n");
-			printf("DEVICE AS MODEL GROUND STATE ENERGY: %f\n",ground_E);
-			printf("#######################################################################\n\n");
-			free(ham_ground), free(bonds), free(k_ground), free(j_ground), free(b_ground);
+			initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_start,r);
+			optimize(table, b, num_electrons, N, lattice, ham_ground, psi_start, initial_temp,r);
+			if(PRINT){
+				printf("\n\n#######################################################################\n");
+				printf("MODEL GROUND STATE ENERGY: %f\n",ground_E);
+				printf("#######################################################################\n");
+			}
+			free(ham_start), free(bonds), free(k_ground), free(j_ground), free(b_ground);
 		}
 		else
 		{
 			int start_states[] = {0,N/3,2*N/3};
 			iterations = sizeof(start_states)/sizeof(start_states[0]);
-			construct_model_hamiltonian(table, b, num_electrons, N, ham_mod, lattice, 2);
+			construct_model_hamiltonian(table, b, num_electrons, N, ham_ground, lattice, 2);
+			ground_E =get_ground_E(N, ham_ground);
 
-
-			ground_E =get_ground_E(N, ham_mod);
-			printf("\n\n#######################################################################\n");
-			printf("MODEL GROUND STATE ENERGY: %f\n",ground_E);
-			printf("#######################################################################\n");
-			initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_mod,r);
+			if(PRINT){
+				printf("\n\n#######################################################################\n");
+				printf("MODEL GROUND STATE ENERGY: %f\n",ground_E);
+				printf("#######################################################################\n");
+			}
+			initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_ground,r);
 
 			for(j=0;j<iterations;j++)
 			{
 				for (i=0; i<N*2;i++) psi_start[i] =0.0;
-				printf("\nStart State:                 %i\n", start_states[j]);
+				if(PRINT) printf("\nStart State:                 %i\n", start_states[j]);
 				psi_start[start_states[j]] = 1;
-				optimize(table, b, num_electrons, N, lattice, ham_mod, psi_start, initial_temp,r);
+
+				optimize(table, b, num_electrons, N, lattice, ham_ground, psi_start, initial_temp,r);
 			}			
-			printf("#######################################################################\n");
-			printf("MODEL GROUND STATE ENERGY: %f\n",ground_E);
-			printf("#######################################################################\n");
+
+			if(PRINT){
+				printf("#######################################################################\n");
+				printf("MODEL GROUND STATE ENERGY: %f\n",ground_E);
+				printf("#######################################################################\n");
+			}
 		}
-		free(b), free(table), free(ham_mod), free(psi_start);
+		free(b), free(table), free(ham_ground), free(psi_start);
 	}
 	exit (0);
 }
@@ -226,6 +243,7 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 
 	assign_bonds(bonds, lattice);
 	memcpy(psi,psi_start, 2*N*sizeof(double));
+
 	if(CHECK) check_norm(psi, N);
 
 	init_arrays(k_array, j_array, b_array, r);
@@ -234,8 +252,7 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 	check_weights(psi, ham_mod, N);
 	E_best = cost(psi, ham_mod, N);
 	E_old = E_best;
-	printf("Pre-Optimized Expectation:   %f\n", E_best);
-
+	if(PRINT) printf("Pre-Optimized Expectation:   %f\n", E_best);
 
 	for (i=0;i<TEMP_DECAY_ITERATIONS;i++)
 	{
@@ -277,8 +294,8 @@ void optimize(int *table, unsigned long long int *b, int num_electrons, int N, i
 		temperature=temperature*EXP_DECAY;
 	}
 	end_loop: 
-	printf("Post-Optimized Expectation:  %f\n", E_best);
-	if(PRINTBEST) printf("End array"), print_best_arrays(k_best, j_best, b_best);//print_best_arrays(k_array, j_array, b_array);
+	if(PRINT) printf("Post-Optimized Expectation:  %f\n", E_best);
+	if(PRINTBEST) printf("\nBest JKB array values:"), print_best_arrays(k_best, j_best, b_best);//print_best_arrays(k_array, j_array, b_array);
 
 	free(k_array), free(j_array), free(b_array),free(k_best), free(j_best), free(b_best), free(k_temp), free(j_temp), free(b_temp),free(psi), free(bonds);
 }
@@ -290,39 +307,30 @@ void evolve(int *table, unsigned long long int *b,int num_electrons,int N, int l
 /*evolve a starting state, psi, by acting on it with exp(ham_dev*-i*time_step). The resulting state is updated as psi and the process repeats TOTAL_STEPS times (TOTAL_TIME/TOTAL_STEPS) until the final psi state is produced. The function contains two methods for calculating exp(ham_dev*-i+time_step), one is a diagonalization method, the other a Pade approximation*/
 {
 	int i,j;
-	double *ham_dev,*ham_t_i, *ham_diag,*exp_matrix,*D, *Vdag;
+	double *ham_dev,*ham_t_i, *ham_real,*exp_matrix,*D, *Vdag;
 	ham_dev = (double *) malloc (2*N*N*sizeof (double));
 	exp_matrix = (double *) malloc (2*N*N*sizeof (double));
 	ham_t_i = (double *) malloc (2*N*N*sizeof (double));
-	ham_diag = (double *) malloc(N*N*sizeof(double));
+	ham_real = (double *) malloc(N*N*sizeof(double));
 	Vdag = (double*) malloc(N*N*sizeof(double));
 	D = (double*) malloc(N*sizeof(double));
 
-	if(CHECK_EVOLVE) printf("First vector in evolve:\n");
-	if(CHECK_EVOLVE) print_vector(psi,N);
 	for (i=0; i<TOTAL_STEPS;i++)
 	{
 		construct_device_hamiltonian(table, b, num_electrons, N, ham_dev, lattice, k_array, j_array, b_array, bonds,i,DEVICE_DIMENSION);
-
+		
 		if(CHECK) check_norm(psi, N);
+
 		if(DIAG)
 		{
-			for (j=0; j<N*N; j++) ham_diag[j]=0.0,Vdag[j]=0.0;
+			for (j=0; j<N*N; j++) ham_real[j]=0.0,Vdag[j]=0.0;
 			for (j=0; j<N; j++) D[j]=0.0;
-			for (j=0; j<N*N; j++) ham_diag[j] = ham_dev[2*j];//converting an all-real-valued complex matrix into just real matrix
-			if(CHECK_EVOLVE) printf("\n\n#########################\niteration %i of evolve.\nThe matrix that will be exponentiated:\n", i); 
-			if(CHECK_EVOLVE) print_hamiltonian(ham_dev, N);
-			diag_hermitian_real_double(N, ham_diag,Vdag, D);
+			for (j=0; j<N*N; j++) ham_real[j] = ham_dev[2*j];//converting an all-real-valued complex matrix into just real matrix
+			diag_hermitian_real_double(N, ham_real,Vdag, D);
 			exp_diaganolized_mat(ham_dev, Vdag, D, N);//This function exponentiates D to e^(-iTIME_STEPD)
 			
-			if(CHECK_EVOLVE) printf("Post-exp:\n");
-			if(CHECK_EVOLVE) print_hamiltonian(ham_dev, N);
-
 			if(CHECK) check_unitary(ham_dev, N);
 			matrix_vector_mult(ham_dev,psi, N);
-			
-			if(CHECK_EVOLVE) printf("result vector:\n");
-			if(CHECK_EVOLVE) print_vector(psi,N);
 		}
 		else
 		{
@@ -338,8 +346,7 @@ void evolve(int *table, unsigned long long int *b,int num_electrons,int N, int l
 		}
 		if(CHECK) check_norm(psi, N);
 	}
-
-	free(ham_dev), free(ham_t_i), free(exp_matrix), free(D), free(Vdag),free(ham_diag);
+	free(ham_dev), free(ham_t_i), free(exp_matrix), free(D), free(Vdag),free(ham_real);
 }
 
 
@@ -353,15 +360,11 @@ double cost(double *psi, double *ham_mod, int N)
 	double *psi_conj, result=0, resulti=0, norm;
 	psi_conj = (double*) malloc (N*2*sizeof(double));
 	memcpy(psi_conj, psi, 2*N*sizeof(double));
+
 	if(CHECK) check_norm(psi, N);	
 	if(CHECK) check_weights(psi, ham_mod, N);
 
-	//printf("Pre matrix and vector:\n");
-	//print_vector(psi_temp,N);
-
 	matrix_vector_mult(ham_mod, psi, N);//H*psi, the operator acting on the ket, storing in psi
-	//printf("result:\n");
-	//print_vector(psi_temp,N);
 	result = zdotc_(&N, psi_conj, &INCX, psi, &INCY);//psi* * psi, the dot between the complex conj and the result of H*psi
 
 	free(psi_conj);
@@ -371,10 +374,10 @@ double cost(double *psi, double *ham_mod, int N)
 
 
 
-double calc_initial_temp(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_mod, gsl_rng *r)
+double calc_initial_temp(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_ground, gsl_rng *r)
 /*Finding an good initial temp that allows an average increase acceptance probability of about ACCEPTANCE_PROB (typically 0.8). Choosing an initial temperature that allows the chance of accepting j,b, and k_array values which increase the expectation value to be ~80%, https://www.phy.ornl.gov/csep/mo/node32.html*/
 {
-	printf("\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
+	if(PRINT) printf("\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
 	int *bonds, i=0,j=0, random_row=0,random_col=0, start_state=0, count=0;
 	double *psi,*psi_start, *k_array, *j_array,*b_array, E_old=0, E_new=0,sum=0, change_pm=0, initial_temp=0;
 	bonds = (int*) malloc(NUM_SITES*NUM_SITES*sizeof(int));
@@ -397,30 +400,35 @@ double calc_initial_temp(int *table, unsigned long long int *b, int num_electron
 		init_arrays(k_array, j_array, b_array,r);
 
 		evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds);
-		E_old = cost(psi, ham_mod, N);
+		E_old = cost(psi, ham_ground, N);
 
 		for (i=0; i<SWEEPS;i++)
 		{
 			change_pm = pow(-1,(int)floor(get_random(0,10,r))) * CHANGE;
 			random_row = floor(get_random(0,TOTAL_STEPS,r));
 			random_col = floor(get_random(0,NUM_SITES*2,r));
+
 			change_array(k_array,j_array,b_array,random_row,random_col,change_pm,i);
 			memcpy(psi,psi_start, 2*N*sizeof(double));//resetting psi
 			evolve(table,b,num_electrons,N,lattice, psi, k_array,j_array,b_array, bonds);
-			E_new = cost(psi, ham_mod, N);
+			print_vector(psi,N);
+			E_new = cost(psi, ham_ground, N);
 
+			printf("%f\n",sum);
 			if (E_new>E_old) sum += (E_new-E_old), count++;
 			E_old=E_new;
 		}
 	}
 	free(k_array), free(j_array), free(b_array), free(psi), free(psi_start), free(bonds);
-
 	initial_temp = -(sum/(count*log(ACCEPTANCE_PROB)));
-	printf("#######################################################################");
-	printf("\nELECTRONS: %i\nDIMENSION: %i\nINIT_TEMP: %f\n",num_electrons, N,initial_temp);
-	printf("#######################################################################\n");
 
-	return initial_temp*0.5;
+	if(PRINT){
+		printf("#######################################################################");
+		printf("\nELECTRONS: %i\nDIMENSION: %i\nINIT_TEMP: %f\n",num_electrons, N,initial_temp);
+		printf("#######################################################################\n");
+	}
+
+	return initial_temp;
 }
 
 
@@ -545,22 +553,9 @@ void diag_hermitian_real_double(int N,  double *A, double *Vdag,double *D)
 	int LDA=N,LWORK=-1, INFO;
 	double *WORK;
 	WORK=(double*) malloc(sizeof(double));
-/*
-	int j, i;
-	double *vdag_t; 
-	vdag_t=(double*) malloc(N*N*sizeof(double));
-	for(i =0; i<N;i++)	
-	{
-		for(j = 0; j<N;j++)
-		{
-			vdag_t[N*j+i] = A[N*i+j];
-		}
-	}
-*/
-
 
 	memcpy(Vdag,A,N*N*sizeof(double));
-//	printf("ham: \n"), print_hamiltonianR(A, N);
+
 	dsyev_(&JOBZ, &UPLO, &N, Vdag, &LDA, D, WORK, &LWORK, &INFO );
 	if (INFO !=0) printf("DIAGONALIZATION ERROR, INFO = %i\n", INFO);
        	LWORK=WORK[0];
@@ -568,10 +563,6 @@ void diag_hermitian_real_double(int N,  double *A, double *Vdag,double *D)
        	WORK=(double*) malloc(LWORK*sizeof(double));
 
        	dsyev_(&JOBZ, &UPLO, &N, Vdag, &LDA, D, WORK, &LWORK, &INFO );
-//	printf("vdag: \n"), print_hamiltonianR(Vdag, N);
-//	printf("EVALS: ");
-//	for(int i=0;i<N;i++) printf("%f, ", D[i]);
-//	printf("\n");
        	if (INFO !=0) printf("DIAGONALIZATION ERROR, INFO = %i\n", INFO);
        	free(WORK);
 }
@@ -695,15 +686,10 @@ void matrix_vector_mult(double *matrix, double *psi, int N)
 	ALPHA[0]=1.0,ALPHA[1]=0.0;
 	BETA[0]=0.0,BETA[1]=0.0;
 	result = (double *) malloc (N*2*sizeof(double));
-//	printf("Pre matrix and vector:\n");
-//	print_hamiltonian(matrix, N);
 
 	zgemv_(&TRANS, &M, &N,ALPHA,matrix, &LDA, psi, &INCX, BETA, result, &INCY);
 	memcpy(psi,result, 2*N*sizeof(double));
 
-	
-//	printf("result:\n");
-//	print_vector(psi,N);
 	free(result);
 }
 
@@ -768,12 +754,12 @@ double get_ground_E(int N, double *ham)
 /*Finding the ground energy, the smallest eigenvalue of the matrix*/
 {
 	int i,j;
-	double *D, *Vdag, *ham_diag,min_E=1000;
+	double *D, *Vdag, *ham_real,min_E=1000;
 	Vdag = (double*) malloc(N*N*sizeof(double));
 	D = (double*) malloc(N*sizeof(double));
-	ham_diag = (double*) malloc(N*N*sizeof(double));
-	for(i=0;i<N*N;i++) ham_diag[i] = ham[2*i];
-	diag_hermitian_real_double(N, ham_diag,Vdag, D);
+	ham_real = (double*) malloc(N*N*sizeof(double));
+	for(i=0;i<N*N;i++) ham_real[i] = ham[2*i];
+	diag_hermitian_real_double(N, ham_real,Vdag, D);
 	for(i=0; i<N; i++) if(D[i]<min_E) min_E = D[i];
 
 	free(Vdag), free(D);
@@ -884,17 +870,17 @@ void init_arrays(double *k_array,double *j_array,double *b_array,gsl_rng * r)
 {
 	int i,j;
 	double upj=1.0,lowj=-1.0,upk=1.0,lowk=-1.0,upb=1.0,lowb=-1.0;
-	if(DEVICE_SAME_MODEL) upj=J2,lowj=J1,upk=K2,lowk=K1,upb=B2,lowb=B1;
+	if(DEVICE_SAME_MODEL) upj=UPJ,lowj=LOWJ,upk=UPK,lowk=LOWK,upb=UPB,lowb=LOWB;
 	for (i=0; i<TOTAL_STEPS;i++)
 	{
 		for (j=0; j<NUM_SITES*2; j++)
 		{
-			j_array[i*NUM_SITES*2+j] = fmod((0.25*j+i/0.69),min(abs(lowj),abs(upj)))*pow(-1,j);
-			k_array[i*NUM_SITES*2+j] = fmod((0.53*j+i/0.39),min(abs(lowk),abs(upk)))*pow(-1,j+1);
+			j_array[i*NUM_SITES*2+j] = get_random(lowj,upj,r);
+			k_array[i*NUM_SITES*2+j] = get_random(lowk,upk,r);
 		}
 		for (j=0; j<NUM_SITES; j++)
 		{
-			b_array[i*NUM_SITES+j]= fmod((0.29*j+i/0.69),min(abs(lowb),abs(upb)))*pow(-1,j);
+			b_array[i*NUM_SITES+j]= get_random(lowb,upb,r);
 		}
 	}
 }
@@ -930,7 +916,7 @@ void change_row(double *k_array,double *j_array,double *b_array, int row, double
 {
 	int i;
 	double upj=1.0,lowj=-1.0,upk=1.0,lowk=-1.0,upb=1.0,lowb=-1.0;
-	if(DEVICE_SAME_MODEL) upj=J2,lowj=J1,upk=K2,lowk=K1,upb=B2,lowb=B1;
+	if(DEVICE_SAME_MODEL) upj=UPJ,lowj=LOWJ,upk=UPK,lowk=LOWK,upb=UPB,lowb=LOWB;
 
         if(k) for (i=offset; i<NUM_SITES*2; i+=jump)
 	{
@@ -955,7 +941,7 @@ void change_col(double *k_array,double *j_array,double *b_array, int col, double
 {
 	int i;
 	double upj=1.0,lowj=-1.0,upk=1.0,lowk=-1.0,upb=1.0,lowb=-1.0;
-	if(DEVICE_SAME_MODEL) upj=J2,lowj=J1,upk=K2,lowk=K1,upb=B2,lowb=B1;
+	if(DEVICE_SAME_MODEL) upj=UPJ,lowj=LOWJ,upk=UPK,lowk=LOWK,upb=UPB,lowb=LOWB;
 
 	if(k) for (i=offset; i<TOTAL_STEPS; i+=jump)
 	{
@@ -978,7 +964,7 @@ void change_single(double *k_array,double *j_array,double *b_array, int row,int 
 /*Changing a single element in each array, at column col, row row*/
 {
 	double upj=1.0,lowj=-1.0,upk=1.0,lowk=-1.0,upb=1.0,lowb=-1.0;
-	if(DEVICE_SAME_MODEL) upj=J2,lowj=J1,upk=K2,lowk=K1,upb=B2,lowb=B1;
+	if(DEVICE_SAME_MODEL) upj=UPJ,lowj=LOWJ,upk=UPK,lowk=LOWK,upb=UPB,lowb=LOWB;
 
 	if ((lowj < j_array[NUM_SITES*2*row+col] + change) && (j_array[NUM_SITES*2*row+col] + change < upj)) j_array[NUM_SITES*2*row+col] += change;
  	if ((lowk < k_array[NUM_SITES*2*row+col] + change) && (k_array[NUM_SITES*2*row+col] + change < upk)) k_array[NUM_SITES*2*row+col] += change;
@@ -1186,16 +1172,14 @@ void check_hermicity(double* ham, int N)
 
 void check_weights(double* state, double* ham, int N)
 {
-	//zdot state with each basis of ham, square it, sum the squares. Should be 1
 	int i,j;
-	double *D, *Vdag, *ham_diag;
+	double *D, *Vdag, *ham_real;
 	Vdag = (double*) malloc(N*N*sizeof(double));
 	D = (double*) malloc(N*sizeof(double));
-	ham_diag = (double*) malloc(N*N*sizeof(double));
-	for (i=0;i<N*N;i++) ham_diag[i] = ham[2*i];
+	ham_real = (double*) malloc(N*N*sizeof(double));
+	for (i=0;i<N*N;i++) ham_real[i] = ham[2*i];
 
-	diag_hermitian_real_double(N, ham_diag,Vdag, D);
-
+	diag_hermitian_real_double(N, ham_real,Vdag, D);
 
 	double sum_real;
 	double sum_im;
@@ -1211,9 +1195,8 @@ void check_weights(double* state, double* ham, int N)
 //			printf("%f\n", sum_im);
 		}
 		c_squared_sum += sum_real*sum_real+sum_im*sum_im;
-//		printf("%f\n",c_squared_sum);
 	}
-
+	if(c_squared_sum>1.00001 or c_squared_sum <0.999999) printf("ERROR, BAD WEIGHTS\n");
 	free(Vdag), free(D);
 }
 
