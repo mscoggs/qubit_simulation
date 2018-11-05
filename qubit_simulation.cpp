@@ -1192,7 +1192,6 @@ void check_weights(double* state, double* ham, int N)
 		{
 			sum_real += state[2*i]*Vdag[j*N+i];
 			sum_im += -state[2*i+1]*Vdag[j*N+i];
-//			printf("%f\n", sum_im);
 		}
 		c_squared_sum += sum_real*sum_real+sum_im*sum_im;
 	}
@@ -1252,34 +1251,5 @@ void test_function()
 	double *D, *Vdag, *ham_mod, min_E=1000;
 	Vdag = (double*) malloc(N*N*sizeof(double));
 	D = (double*) malloc(N*sizeof(double));
-	ham_mod = (double*) malloc(N*N*sizeof(double));
-	for(i=0;i<N*N;i++){
-		ham_mod[i] = i+1;
-	}
-
-	diag_hermitian_real_double(N, ham_mod,Vdag, D);
-	for(i=0;i<N;i++)
-	{
-		printf("%f\n",D[i]);
-	}
-
-	ham_mod[0] = 1;
-	ham_mod[1] = 3;
-	ham_mod[2] = 3;
-	ham_mod[3] = 3;
-	ham_mod[4] = 5;
-	ham_mod[5] = 6;
-	ham_mod[6] = 3;
-	ham_mod[7] = 6;
-	ham_mod[8] = 9;
-	diag_hermitian_real_double(N, ham_mod,Vdag, D);
-	for(i=0;i<N;i++)
-	{
-		printf("%f\n",D[i]);
-	}
-//	print_hamiltonianR(Vdag, N);	
-
-	
-
 }
 
