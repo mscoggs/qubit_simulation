@@ -1,5 +1,5 @@
 # qubit_simulation
-Simulating the evolution of a superconducting chip
+Modeling the evolution of a superconducting chip
 
 ## Who
 
