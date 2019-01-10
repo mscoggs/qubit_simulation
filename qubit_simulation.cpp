@@ -18,9 +18,10 @@
 #define DEVICE_DIMENSION 2
 #define T 1
 #define V 2
-#define J_START 0
-#define K_START 0
-#define B_START 1
+#define J_START .77
+#define K_START 0.1
+#define B_START 0
+
 
 
 //Non-Physical Parameters
@@ -51,7 +52,7 @@
 //Debugging Help
 #define CHECK true
 #define PRINT true
-#define PRINTBEST true
+#define PRINTBEST false
 
 //The change_array variables. 0 -> This method will not be used, #>0 -> use this method on every #th iteration of change_array
 #define ROW 1
@@ -87,6 +88,7 @@ void exp_general_complex_double(int N, double *A, double *B);
 void matrix_vector_mult(double *exp_matrix, double *psi, int N);
 int hop(unsigned long long int b, unsigned long long int *v,int n, int j);
 int find(int N,unsigned long long int *v, unsigned long long int *b);
+void matrix_commutator(int N, double* A, double* B);
 void get_ground_state(int N, double *ham, double* ground_state);
 double get_ground_E(int N, double *ham);
 unsigned long long int choose(int num_electrons);
@@ -133,7 +135,7 @@ int main (int argc, char *argv[])
 	ofstream file;
 
 	int total_times[] = {2};//{1,2,4};
-	int total_steps_array[] = {1,2,4,8,16};
+	int total_steps_array[] = {4,8};//{1,2,4,8,16};
 
 
 	int max_steps = multiplier*total_steps_array[sizeof(total_steps_array)/sizeof(total_steps_array[0]) - 1]; //getting the last element
@@ -181,6 +183,8 @@ int main (int argc, char *argv[])
 					construct_device_hamiltonian(table, b, num_electrons, N, ham_start,  lattice, k_ground, j_ground, b_ground, bonds, 0, DEVICE_DIMENSION);
 					construct_device_hamiltonian(table, b, num_electrons, N, ham_target, lattice, k_ground, j_ground, b_ground, bonds, 1, DEVICE_DIMENSION);
 
+					printf("The commutator of the target_hamiltonain and the starting_hamiltonian:");
+					matrix_commutator(N, ham_start, ham_target);
 
 					get_ground_state(N, ham_start,psi_start);
 					ground_E = get_ground_E(N, ham_target);
@@ -382,7 +386,7 @@ double monte_carlo(int *table, unsigned long long int *b, int num_electrons, int
 
 		acceptance_rate = (double)proposal_accepted/proposal_count;
 
-		if(PRINT) printf("accepted_props:%3i |total_props:%3i |AcceptanceRate: %3.4f |New Expectation: %3.6f\n", proposal_accepted, proposal_count,acceptance_rate,E_old);
+		if(PRINT) printf("accepted_props:%3i |total_props:%3i |AcceptanceRate: %3.4f |New  Expectation: %3.6f\n", proposal_accepted, proposal_count,acceptance_rate,E_old);
 
 		if(acceptance_rate<0.011) poor_acceptance_count++;
 		else poor_acceptance_count = 0;
@@ -395,8 +399,7 @@ double monte_carlo(int *table, unsigned long long int *b, int num_electrons, int
 		temperature=temperature*EXP_DECAY;
 	}
 	end_loop:
-	if(PRINT) printf("Post-Monte_Carlo Expectation:  %f\n", E_best);
-	//if(PRINTBEST) printf("\nBest JKB array values:"), print_best_arrays(k_best, j_best, b_best, total_steps);//print_best_arrays(k_array, j_array, b_array);
+	if(PRINT) printf("Post-Monte_Carlo Expectation:  %f\n\n", E_best);
 
 	/*memcpy(psi,psi_start,N*2*sizeof(double));
 	evolve(table,b,num_electrons,N,lattice, psi, k_best,j_best,b_best,bonds, total_steps, time_step);
@@ -470,16 +473,33 @@ double cost(double *psi, double *ham_mod, int N)
 	memcpy(psi_conj, psi, 2*N*sizeof(double));
 	memcpy(psi_temp, psi, 2*N*sizeof(double));
 
+
+
+	//print_hamiltonian(ham_mod, N);
+	//print_vector(psi, N);
+
 	if(CHECK) check_norm(psi_temp, N);
 	if(CHECK) check_weights(psi_temp, ham_mod, N);
 
 	matrix_vector_mult(ham_mod, psi_temp, N);//H*psi, the operator acting on the ket, storing in psi
+	//printf("H*psi: "), print_vector(psi_temp, N);
+	//print_vector(psi_conj, N);
 	result = zdotc_(&N, psi_conj, &INCX, psi_temp, &INCY);//psi* * psi, the dot between the complex conj and the result of H*psi
 
-	free(psi_conj), free(psi_temp);
-//	print_hamiltonian(ham_mod, N);
-	//print_vector(psi, N);
 
+	//dot
+	/*double real = 0, imag = 0;
+	for(i=0;i<N;i++){
+		real += psi_temp[2*i]*psi_conj[2*i]+ psi_temp[2*i+1]*psi_conj[2*i+1];
+		imag += psi_temp[2*i+1]*(psi_conj[2*i])- psi_temp[2*i]*psi_conj[2*i+1];
+	}	
+	printf("REAL: %f\n IMAG: %f\n", real, imag);
+*/
+
+
+
+	free(psi_conj), free(psi_temp);
+	//printf("%f\n", result);
 	//if(result > -1.59) printf("%f\n", result);
 	return result;
 }
@@ -490,7 +510,7 @@ double cost(double *psi, double *ham_mod, int N)
 double calc_initial_temp(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_target, int total_steps, double time_step, double *psi_start, gsl_rng *r)
 /*Finding an good initial temp that allows an average increase acceptance probability of about ACCEPTANCE_PROB (typically 0.8). Choosing an initial temperature that allows the chance of accepting j,b, and k_array values which increase the expectation value to be ~80%, https://www.phy.ornl.gov/csep/mo/node32.html*/
 {
-	if(PRINT) printf("\n\n\n\n\n\n\n\n\n\n\n\n\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
+	if(PRINT) printf("\n\n\n\n\n\n\n\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
 	int *bonds, i=0,j=0, random_row=0,random_col=0, start_state=0, count=0;
 	double *psi,*psi_random, *k_array, *j_array,*b_array, E_old=0, E_new=0,sum=0, change_pm=0, initial_temp=0;
 	bonds = (int*) malloc(NUM_SITES*NUM_SITES*sizeof(int));
@@ -536,7 +556,7 @@ double calc_initial_temp(int *table, unsigned long long int *b, int num_electron
 	if(PRINT){
 		printf("#######################################################################");
 		printf("\nELECTRONS:   %i\nDIMENSION:   %i\nTOTAL_TIME:  %i\nTOTAL_STEPS: %i\nTIME_STEP:   %f\nINIT_TEMP:   %f\n",num_electrons, N,(int) time_step*total_steps,total_steps, time_step,initial_temp);
-		print_vector(psi_start, N);
+		printf("\nThe starting vector:"), print_vector(psi_start, N);
 		printf("#######################################################################\n");
 	}
 
@@ -842,6 +862,35 @@ int find(int N,unsigned long long int *v,unsigned long long int *b)
 
 
 
+
+void matrix_commutator(int N, double* A, double* B)
+{
+	char TRANSA = 'N', TRANSB = 'N';
+	int i, *IPIV, LWORK=N*N, INFO, LDA=N, LDB=N, LDC=N;
+	double *C, *AB, *BA ,ALPHA[2], BETA[2];
+	ALPHA[0]=1.0, ALPHA[1]=0.0;
+	BETA[0]=0.0, BETA[1]=0.0;
+
+
+	C = (double*) malloc(2*N*N*sizeof(double));
+	BA = (double*) malloc(2*N*N*sizeof(double));
+	AB = (double*) malloc(2*N*N*sizeof(double));
+	for (i =0; i<N*N*2; i++) C[i] = 0, AB[i] = 0, BA[i]=0;
+
+	zgemm_(&TRANSA, &TRANSB, &N, &N, &N, ALPHA, A, &LDA, B, &LDB, BETA, AB, &LDC); //matrix mult
+	zgemm_(&TRANSA, &TRANSB, &N, &N, &N, ALPHA, B, &LDA, A, &LDB, BETA, BA, &LDC); //matrix mult
+	for (i =0; i<N*N*2; i++) C[i] = AB[i] - BA[i];
+	print_hamiltonian(C, N);
+
+	//A*B
+	
+}
+
+
+
+
+
+
 void get_ground_state(int N, double *ham, double *ground_state)
 /*Get the ground state of a hamiltonian matrix by finding the smallest eigen_value, the getting the eigenvector associated with that eigenvalue. Copying the eigenvector the ground_state*/
 {
@@ -868,7 +917,6 @@ void get_ground_state(int N, double *ham, double *ground_state)
 double get_ground_E(int N, double *ham)
 /*Finding the ground energy, the smallest eigenvalue of the matrix*/
 {
-	print_hamiltonian(ham, N);
 	int i,j;
 	double *D, *Vdag, *ham_real,min_E=1000;
 	Vdag = (double*) malloc(N*N*sizeof(double));
@@ -1351,7 +1399,7 @@ void print_vector(double* psi,int N)
 	printf("\nPrinting the %i dimensional vector:\n[", N);
 	for(i=0;i<N;i++)
 	{
-		printf("%09.5f+%09.5fi  ", psi[2*i], psi[2*i+1]);
+		printf("%09.5f+%09.5fi;  ", psi[2*i], psi[2*i+1]);
 	}
 	printf("]\n");
 }
