@@ -34,16 +34,23 @@
 #define RANDOM_STATES 3
 #define TEMP_DECAY_LIMIT 20
 #define DIFFERENCE_LIMIT 0.0001
-
+/*
 #define TAU_MAX 1.5
 #define TAU_STEP 0.2
-#define MAX_TAU_STEPS (int) ceil(TAU_MAX/TAU_STEP)*TOTAL_STEPS_STEP
+#define MAX_STEPS (int) ceil(TAU_MAX/TAU_STEP)*TOTAL_STEPS_STEP
 #define TOTAL_STEPS_STEP 2
-#define SWEEPS 1000
+*/
+#define MAX_TAU 10
+#define TAU_INIT 0.2
+#define TOTAL_STEPS_INIT 5
+#define TAU_SCALAR 1.2
+#define MAX_STEPS (int) ceil((MAX_TAU*TOTAL_STEPS_INIT)/TAU_INIT)
+#define MAX_TAU_STEPS (int) ceil(log(MAX_TAU)/TAU_SCALAR)
+#define SWEEPS 20
 #define CHANGE 0.01
 #define ACCEPTANCE_PROB 0.5
 #define EXP_DECAY 0.9
-#define TEMP_DECAY_ITERATIONS 30
+#define TEMP_DECAY_ITERATIONS 20
 #define UNIFORM true
 #define ARRAY_SCALAR 2
 
@@ -150,7 +157,7 @@ int main (int argc, char *argv[])
 {
 	int *table,*bonds,lattice[NY][NX],num_electrons,N,i,j, z, t,x, total_steps, y, ts, p, index, seed=0;
 	unsigned long long int *b;
-	double *ham_target, *ham_initial, *k_best, *j_best, *b_best, *psi_start, ground_E, initial_temp=1, best_E, time_step, tau, *best_E_array, *tau_array, *jkb_initial, *jkb_target, g_initial, f_initial, g_target, f_target;
+	double *ham_target, *ham_initial, *k_best, *j_best, *b_best, *psi_start, ground_E, initial_temp=1, best_E, time_step, tau, *best_E_array, *tau_array, *jkb_initial, *jkb_target, g_initial, f_initial, g_target, f_target, difference, tau_min;
 
 
 	gsl_rng_env_setup();
@@ -163,11 +170,11 @@ int main (int argc, char *argv[])
 
 	jkb_initial = (double *) malloc(3*sizeof(double));
 	jkb_target = (double *) malloc(3*sizeof(double));
-	k_best = (double *) malloc(2*NUM_SITES*MAX_TAU_STEPS*sizeof(double));
-	j_best = (double *) malloc(2*NUM_SITES*MAX_TAU_STEPS*sizeof(double));
-	b_best = (double *) malloc(NUM_SITES*MAX_TAU_STEPS*sizeof(double));
-	tau_array = (double *) malloc(((int) ceil(TAU_MAX/TAU_STEP)+1)*sizeof(double));
-	best_E_array = (double *) malloc(((int)ceil(TAU_MAX/TAU_STEP)+1)*sizeof(double));
+	k_best = (double *) malloc(2*NUM_SITES*MAX_STEPS*sizeof(double));
+	j_best = (double *) malloc(2*NUM_SITES*MAX_STEPS*sizeof(double));
+	b_best = (double *) malloc(NUM_SITES*MAX_STEPS*sizeof(double));
+	tau_array = (double *) malloc(MAX_TAU_STEPS*sizeof(double));
+	best_E_array = (double *) malloc(MAX_TAU_STEPS*sizeof(double));
 
 
 
@@ -178,7 +185,7 @@ int main (int argc, char *argv[])
 		num_electrons=2;
 		N=choose(num_electrons);
 
-		b = (unsigned long long int*) malloc(N*sizeof(double));
+		b = (unsigned long long int*) malloc(N*sizeof(unsigned long long int));
 		table=(int*) malloc(num_electrons*N*sizeof(int));
 		ham_target = (double *) malloc (2*N*N*sizeof (double));
 		ham_initial = (double *) malloc(2*N*N*sizeof(double));
@@ -190,7 +197,7 @@ int main (int argc, char *argv[])
 		{
 			for(f_target=.3;f_target<1.1;f_target+=0.5)
 			{
-				for(seed=2; seed<4; seed++)
+				for(seed=1; seed<4; seed++)
 				{
 					gsl_rng_set(r, seed);
 
@@ -214,52 +221,82 @@ int main (int argc, char *argv[])
 					if(CHECK) check_norm(psi_start, N);
 
 
-					for (x=0;x<2*NUM_SITES*MAX_TAU_STEPS;x++) k_best[x] =0, j_best[x] = 0;
-					for (x=0;x<NUM_SITES*MAX_TAU_STEPS;x++) b_best[x] =0;
-					total_steps = TOTAL_STEPS_STEP;
-					time_step = TAU_STEP/((double) total_steps);
+					for (x=0;x<2*NUM_SITES*MAX_STEPS;x++) k_best[x] =0, j_best[x] = 0;
+					for (x=0;x<NUM_SITES*MAX_STEPS;x++) b_best[x] =0;
+
 					index = 1;
 					tau_array[0] = 0;
-					init_arrays(k_best, j_best, b_best, r, MAX_TAU_STEPS);
+					init_arrays(k_best, j_best, b_best, r, MAX_STEPS);
 
-
-					
-					/*NOTE: consider acceptance probability as a function of difference between goal and currrent, rather than temp
-					 Tau = Tau_init
-					 total_steps =total_steps init
-					time_step = tau/total_steps
-					   While(terminate == false)
-					   	do MC_stuff
-
-						if(GS){ #the binary search method, cutting off for arbitrary T.
-							differnce =
-							if(difference < differnce_limit) terminate == true
-						        tau_new = tau_old + 1/2(difference)
-						}
-						else{
-							tau_new=tau_old*tau_scalar
-							}
-						total_steps = floor(total_steps_old*tau_scalar)
-						time_step = tau/total_steps 
-					 
-					 */
-
-
-
-					for(tau = TAU_STEP; tau<TAU_MAX; tau+= TAU_STEP)
+					tau = TAU_INIT;
+					tau_min = TAU_INIT;
+					total_steps = TOTAL_STEPS_INIT;
+					time_step = tau/((double) total_steps);
+					bool ground_state = false;
+					bool binary_search = false;
+					double tau_max = tau;
+					int p;
+					while(tau<MAX_TAU)
 					{
+						for(p=0;p<N;p++) printf("B: %llu\n",b[p]);
+
+						combinations(num_electrons,b,table, N);
+
+
 						initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_target,total_steps, time_step, psi_start, r, seed, jkb_initial, jkb_target);
 						best_E = monte_carlo(table, b, num_electrons, N, lattice, ham_target, psi_start, initial_temp,tau, total_steps, time_step,r, k_best, j_best, b_best, ground_E, best_E_array);
 
-						tau_array[index] = tau;
-						best_E_array[index] = best_E;
-						total_steps += TOTAL_STEPS_STEP;
-						index ++;
+						difference = best_E-ground_E;
+						if(difference < 0.000001) ground_state =true;
 
-						if (best_E-ground_E <DIFFERENCE_LIMIT)
+						if(ground_state)//the ground state has been reached, performing binary search
+
 						{
-							printf("\nTERMINATING EARLY, GROUND STATE REACHED\n\n\n");
-						goto end_loop;
+
+							printf("\n\n\n\nSTARTING BINARY SEARCH METHOD\n\n\n\n");
+							if(difference < 0.000001)//still in the ground state, backtrack tau
+							{
+								printf("\n\nbacktracking\n\n");
+								if((tau-tau_min) < TAU_INIT/10) //Some arbitrary limit to stop the binary search
+								{
+									printf("\nGROUND STATE REACHED\n\n\n");
+									goto end_loop;
+								}
+
+								tau_max = tau;
+								tau = (tau_max+tau_min)/2;
+								time_step = tau/((double) total_steps);
+								printf("\n\nNEW TAU:%f\n\n", tau);
+							}
+							else
+							{
+
+								printf("\n\nTOo much backtracking\n\n");
+								tau_array[index] = tau;
+								best_E_array[index] = best_E;
+								index++;
+
+								tau_min = tau;
+								tau = (tau_min+tau_max)/2;
+								time_step = tau/((double) total_steps);
+
+								printf("\n\ntau_max:%f\n\n", tau_max);
+								printf("\n\ntau_min:%f\n\n", tau_min);
+
+								printf("\n\nNEW TAU:%f\n\n", tau);
+
+							}
+
+						}
+						else //operation as normal, pushing tau forward to look for the GS
+						{
+							tau_array[index] = tau;
+							best_E_array[index] = best_E;
+							index ++;
+							tau_min = tau;
+							tau = tau*TAU_SCALAR;
+							total_steps = floor(TOTAL_STEPS_INIT*(tau/TAU_INIT));
+							time_step = tau/((double) total_steps);
 						}
 					}
 					end_loop:
@@ -300,7 +337,7 @@ double monte_carlo(int *table, unsigned long long int *b, int num_electrons, int
 	if(PRINTBEST) print_hamiltonian(ham_target, N);
 	best_E = cost(psi, ham_target, N);
 
-	if(total_steps == TOTAL_STEPS_STEP) best_E_array[0] = best_E;
+	if(total_steps == TOTAL_STEPS_INIT) best_E_array[0] = best_E;
 	E_old = best_E;
 	if(PRINT) printf("Pre-Monte_Carlo Expectation:   %f\n", best_E);
 
@@ -309,7 +346,7 @@ double monte_carlo(int *table, unsigned long long int *b, int num_electrons, int
 		proposal_accepted = 0;
 		proposal_count = 0;
 
-		for (j=0; j<SWEEPS;j++)
+		for (j=0; j<SWEEPS*total_steps;j++)
 		{
 			copy_arrays(N, k_array, j_array, b_array, k_temp, j_temp,b_temp,total_steps);//a temporary array, used in the undoing of the changes
 
@@ -482,7 +519,7 @@ double calc_initial_temp(int *table, unsigned long long int *b, int num_electron
 		printf("#######################################################################\n");
 
 		printf("#######################################################################");
-		printf("\n ELECTRONS:         %2i || DIMENSION:      %4i || SEED:         %4i ||\n TAU:             %4.2f || TOTAL_STEPS:    %4i || TIME_STEP:   %4.3f ||\n INIT_TEMP:     %5.4f ||                      ||                    ||\n J_INIT:         %4.3f || K_INIT:        %4.3f || B_INIT:      %4.3f ||\n J_TARGET:       %4.3f || K_TARGET:      %4.3f || B_TARGET:    %4.3f ||\n",num_electrons, N,seed,time_step*total_steps,total_steps, time_step,initial_temp, jkb_initial[0], jkb_initial[1], jkb_initial[2], jkb_target[0], jkb_target[1], jkb_target[2]);
+		printf("\n ELECTRONS:         %2i || DIMENSION:      %4i || SEED:         %4i ||\n TAU:             %4.2f || TOTAL_STEPS:    %4i || TIME_STEP:   %4.3f ||\n INIT_TEMP:     %5.4f || TOTAL_SWEEPS:   %4i || TEMP_DECAYS:  %4i ||\n J_INIT:         %4.3f || K_INIT:        %4.3f || B_INIT:      %4.3f ||\n J_TARGET:       %4.3f || K_TARGET:      %4.3f || B_TARGET:    %4.3f ||\n",num_electrons, N,seed,time_step*total_steps,total_steps, time_step,initial_temp, total_steps*SWEEPS, TEMP_DECAY_ITERATIONS, jkb_initial[0], jkb_initial[1], jkb_initial[2], jkb_target[0], jkb_target[1], jkb_target[2]);
 		printf("\nPSI_START: "), print_vector(psi_start, N);
 		printf("#######################################################################\n");
 	}
@@ -512,11 +549,13 @@ void construct_device_hamiltonian(int *table, unsigned long long int *b,int num_
 			neighbor_count = get_neighbors(site, neighbors, lattice, D);
 			for (ii=0; ii<neighbor_count; ii++)
 			{
-
 				if (((1ULL<<(neighbors[ii]-1))&b[i])==0)//making sure neighbor is not occupied, otherwise nothing happens
 				{
+
 					hop(b[i], v,site, neighbors[ii]);
+
 					state=find(N,v, b);
+
 					bond = bonds[(site-1)*NUM_SITES+neighbors[ii]-1]-1;
 					ham_dev[(N*i+state-1)*2] -= j_array[index*NUM_SITES*2+bond];
 				}
@@ -547,7 +586,8 @@ void construct_device_hamiltonian(int *table, unsigned long long int *b,int num_
 			ham_dev[((N*i)+i)*2] += b_array[index*NUM_SITES+j]*sign;
 		}
 	}
-	free(neighbors), free(v);
+	b = (unsigned long long int*) malloc(N*sizeof(double));
+	free(neighbors);// free(v);
 	if(CHECK) check_hermicity(ham_dev, N);
 }
 
@@ -816,6 +856,12 @@ int hop(unsigned long long int b, unsigned long long int *v,int n, int j)
 {
 	unsigned long long int i,x,y;
 	int z_count = 0;
+
+//	printf("site %i\n", n);
+	//printf("neihbor %i\n", j);
+//	printf("b %llu\n",b);
+
+
 	x = (1ULL << (n-1)) + (1ULL << (j-1));
 	for (i=n;i<j-1;i++)  if((1ULL<<i) & (b)) z_count++;
 	y = (x ^ b);
@@ -832,6 +878,7 @@ int find(int N,unsigned long long int *v,unsigned long long int *b)
 	int first, last, mid;
 	first=0;
 	last=N-1;
+
 
 	while (first <= last)
 	{
@@ -867,7 +914,7 @@ void check_commutator(int N, double* A, double* B)
 	for (i =0; i<N*N*2; i++) if(C[i] < -0.001 || 0.001 < C[i]) commute = false;
 	if(commute) printf("\n\n\nWARNING: THE TARGET AND INITIAL HAMILTONIAN COMMUTE\n\n\n");
 	if(PRINT_COMMUTATOR) print_hamiltonian(C, N);
-	
+
 //	print_hamiltonian(A, N);
 //	print_hamiltonian(B, N);
 	free(C), free(BA), free(AB);
@@ -1236,6 +1283,8 @@ int get_neighbors(int site, int *neighbors, int lattice[][NX], int D)
 		return count;
 	}
 	printf("\n\n\nERROR! NO NEIGHBORS FOUND.\n\n\n");
+	exit(0);
+
 }
 
 
@@ -1279,7 +1328,7 @@ void check_norm(double* psi, int N)
 		sum+= psi[i]*psi[i]+(psi[i+1]*psi[i+1]);
 
 	}
-	if(sum>1.000000001 or sum<0.99999999) printf("\n\n\nNORM ERROR, SIZE: %f\n\n\n", sum);
+	if(sum>1.000000001 or sum<0.99999999) printf("\n\n\nNORM ERROR, SIZE: %f\n\n\n", sum), exit(0);
 }
 
 
@@ -1307,7 +1356,8 @@ void check_unitary(double* ham, int N)
 
 	for(i=0;i<N*N*2;i++)
 	{
-		if(unitary[i] < -0.00000001 or unitary[i] > 0.00000001) printf("\n\n\nERROR, NON UNITARY ELEMENTS AT %i, VALUE: %f\n\n\n", i, unitary[i]);
+		if(unitary[i] < -0.00000001 or unitary[i] > 0.00000001) printf("\n\n\nERROR, NON UNITARY ELEMENTS AT %i, VALUE: %f\n\n\n", i, unitary[i]), exit(0);
+
 	}
 	free(ham_t), free(unitary);
 }
@@ -1323,7 +1373,7 @@ void check_hermicity(double* ham, int N)
 	{
 		for(j=0;j<N;j++)
 		{
-			if(ham[2*(j*N+i)] != ham[2*(i*N+j)]) printf("\n\n\nERROR, NON HERMITIAN ELEMENT AT i,j: %i,%i\nElementi = %10.7f\n j = %10.7fi\n\n\n", i*N+j, j*N+i, ham[i*N+j], ham[j*N+i]);
+			if(abs(ham[2*(j*N+i)] - ham[2*(i*N+j)]) > 0.00001) printf("\n\n\nERROR, NON HERMITIAN ELEMENT AT i,j: %i,%i\nElement_ij = %10.7f\nElement_ji = %10.7f\n\n\n", i*N+j, j*N+i, ham[2*(i*N+j)], ham[2*(j*N+i)]), exit(0);
 		}
 	}
 }
@@ -1356,7 +1406,7 @@ void check_weights(double* state, double* ham, int N)
 		}
 		c_squared_sum += sum_real*sum_real+sum_im*sum_im;
 	}
-	if(c_squared_sum>1.00001 or c_squared_sum <0.999999) printf("\n\n\nERROR, BAD WEIGHTS\n\n\n");
+	if(c_squared_sum>1.00001 or c_squared_sum <0.999999) printf("\n\n\nERROR, BAD WEIGHTS\n\n\n"), exit(0);
 	free(Vdag), free(D), free(ham_real);
 }
 
@@ -1365,7 +1415,7 @@ void export_tau_data(double *tau_array, double *best_E_array, int total_steps, d
 {
 	int i;
 	ofstream file;
-	file.open("data/exp_difference_vs_tau/MAX_TAU=" + to_string(TAU_MAX) + "_SEED=" + to_string(SEED) + ".txt");
+	file.open("data/exp_difference_vs_tau/MAX_TAU=" + to_string(MAX_TAU) + "_SEED=" + to_string(SEED) + ".txt");
 	char output[200];
 	sprintf(output, "MAX TAU  |  MAX STEPS\n %5f    |   %5i\n", tau, total_steps);
 	file << output;
