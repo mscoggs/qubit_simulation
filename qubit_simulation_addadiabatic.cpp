@@ -27,7 +27,8 @@
 
 
 //Non-Physical Parameters
-
+#define MC true
+#define ADIABATIC !MC
 #define NX 2
 #define NY NX
 #define NUM_SITES NX*NY
@@ -42,6 +43,12 @@
 #define TAU_SCALAR 1.2
 #define MAX_MC_EVOLVE_STEPS (int) ceil((MAX_TAU*TOTAL_STEPS_INIT)/TAU_INIT)
 #define MAX_MC_TAU_STEPS (int) ceil(log(MAX_TAU)/TAU_SCALAR)
+
+#define MAX_ADI_EVOLVE_STEPS = 100
+#define MAX_ADI_TAU_STEPS = 100
+
+
+
 #define SWEEPS 20
 #define CHANGE 0.003
 #define ACCEPTANCE_PROB 0.5
@@ -91,7 +98,7 @@ using namespace std;
 
 
 //Homemade functions
-double monte_carlo(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_target, double* psi_start, double temp, double tau, int total_steps, double time_step, gsl_rng * r, double *k_best,double *j_best, double *b_best, double ground_E, double *best_E_array, int seed);
+double monte_carlo_simulation(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_target, double* psi_start, double temp, double tau, int total_steps, double time_step, gsl_rng * r, double *k_best,double *j_best, double *b_best, double ground_E, double *best_E_array, int seed);
 void evolve(int *table, unsigned long long int *b,int num_electrons,int N,  int lattice[][NX], double *psi, double *k_array, double *j_array, double *b_array, int *bonds, int total_steps, double time_step);
 double cost(double *psi, double *ham_target, int N);
 double calc_initial_temp(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_target, int total_steps, double time_step, double *psi_start, gsl_rng *r, int seed, double *jkb_initial, double *jkb_target);
@@ -168,15 +175,6 @@ int main (int argc, char *argv[])
 	jkb_initial = (double *) malloc(3*sizeof(double));
 	jkb_target = (double *) malloc(3*sizeof(double));
 
-	k_best = (double *) malloc(2*NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
-	j_best = (double *) malloc(2*NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
-	b_best = (double *) malloc(NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
-	pre_k_best = (double *) malloc(2*NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
-	pre_j_best = (double *) malloc(2*NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
-	pre_b_best = (double *) malloc(NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
-	tau_array = (double *) malloc(MAX_MC_TAU_STEPS*10*sizeof(double));
-	best_E_array = (double *) malloc(MAX_MC_TAU_STEPS*10*sizeof(double));
-
 
 	//change this later to cycle through all electrons
 	for(i=3;i<4;i++)
@@ -201,9 +199,11 @@ int main (int argc, char *argv[])
 		for(gt_i=0;gt_i<2;gt_i++)
 		{
 			g_target = g_targ[gt_i];
+
 			for(ft_i = 0;ft_i<2;ft_i++)
 			{
 				f_target = f_targ[ft_i];
+
 				for(gi_i = 0;gi_i<1;gi_i++)
 				{
 
@@ -225,86 +225,116 @@ int main (int argc, char *argv[])
 					ground_E = get_ground_E(N, ham_target);
 					if(CHECK) check_norm(psi_start, N);
 
-					for(seed=1; seed<5; seed++)
+					if(MC):
 					{
+						k_best = (double *) malloc(2*NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
+						j_best = (double *) malloc(2*NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
+						b_best = (double *) malloc(NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
+						pre_k_best = (double *) malloc(2*NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
+						pre_j_best = (double *) malloc(2*NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
+						pre_b_best = (double *) malloc(NUM_SITES*MAX_MC_EVOLVE_STEPS*sizeof(double));
+						tau_array = (double *) malloc(MAX_MC_TAU_STEPS*10*sizeof(double));
+						best_E_array = (double *) malloc(MAX_MC_TAU_STEPS*10*sizeof(double));
 
-						gsl_rng_set(r, seed);
-						for (x=0;x<2*NUM_SITES*MAX_MC_EVOLVE_STEPS;x++) k_best[x] =0, j_best[x] = 0;
-						for (x=0;x<NUM_SITES*MAX_MC_EVOLVE_STEPS;x++) b_best[x] =0;
-
-						index = 1;
-						tau_array[0] = 0;
-						init_arrays(k_best, j_best, b_best, r, MAX_MC_EVOLVE_STEPS);
-
-						tau = TAU_INIT, tau_min = TAU_INIT;
-						total_steps = TOTAL_STEPS_INIT;
-						time_step = tau/((double) total_steps);
-						bool ground_state = false,  binary_search = false;
-						double tau_max = tau,  pre_c_tau = 0,  pre_c_E = 0;
-						int pre_c_steps = 0;
-
-						while(tau<MAX_TAU)
+						for(seed=1; seed<5; seed++)
 						{
 
-							initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_target,total_steps, time_step, psi_start, r, seed, jkb_initial, jkb_target);
-							best_E = monte_carlo(table, b, num_electrons, N, lattice, ham_target, psi_start, initial_temp,tau, total_steps, time_step,r, k_best, j_best, b_best, ground_E, best_E_array, seed);
+							gsl_rng_set(r, seed);
+							for (x=0;x<2*NUM_SITES*MAX_MC_EVOLVE_STEPS;x++) k_best[x] =0, j_best[x] = 0;
+							for (x=0;x<NUM_SITES*MAX_MC_EVOLVE_STEPS;x++) b_best[x] =0;
 
-							difference = best_E-ground_E;
-							printf("BEST_E, FIRST E: %f\n\n", (best_E_array[0]-ground_E)/10.0);
-							if((difference < (best_E_array[0]-ground_E)/10.0) && pre_c_tau==0) pre_c_tau=tau, pre_c_E = best_E, pre_c_steps = total_steps, copy_arrays(N, k_best, j_best,b_best, pre_k_best, pre_j_best, pre_b_best, total_steps);
-							if(difference < DIFFERENCE_LIMIT) ground_state =true, printf("STARTING BINARY SEARCH METHOD\n");
+							index = 1;
+							tau_array[0] = 0;
+							init_arrays(k_best, j_best, b_best, r, MAX_MC_EVOLVE_STEPS);
 
-							if(ground_state)//the ground state has been reached, performing binary search
+							tau = TAU_INIT, tau_min = TAU_INIT;
+							total_steps = TOTAL_STEPS_INIT;
+							time_step = tau/((double) total_steps);
+							bool ground_state = false,  binary_search = false;
+							double tau_max = tau,  pre_c_tau = 0,  pre_c_E = 0;
+							int pre_c_steps = 0;
+
+							while(tau<MAX_TAU)
 							{
-								if(difference < DIFFERENCE_LIMIT)//still in the ground state, backtrack tau
+
+								initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_target,total_steps, time_step, psi_start, r, seed, jkb_initial, jkb_target);
+								best_E = monte_carlo_simulation(table, b, num_electrons, N, lattice, ham_target, psi_start, initial_temp,tau, total_steps, time_step,r, k_best, j_best, b_best, ground_E, best_E_array, seed);
+
+								difference = best_E-ground_E;
+								printf("BEST_E, FIRST E: %f\n\n", (best_E_array[0]-ground_E)/10.0);
+								if((difference < (best_E_array[0]-ground_E)/10.0) && pre_c_tau==0) pre_c_tau=tau, pre_c_E = best_E, pre_c_steps = total_steps, copy_arrays(N, k_best, j_best,b_best, pre_k_best, pre_j_best, pre_b_best, total_steps);
+								if(difference < DIFFERENCE_LIMIT) ground_state =true, printf("STARTING BINARY SEARCH METHOD\n");
+
+								if(ground_state)//the ground state has been reached, performing binary search
 								{
-									printf("Backtracking....\n");
-									if((tau-tau_min) < TAU_INIT/10.0) //Some arbitrary limit to stop the binary search
+									if(difference < DIFFERENCE_LIMIT)//still in the ground state, backtrack tau
 									{
+										printf("Backtracking....\n");
+										if((tau-tau_min) < TAU_INIT/10.0) //Some arbitrary limit to stop the binary search
+										{
+											tau_array[index] = tau;
+											best_E_array[index] = best_E;
+											printf("GROUND STATE REACHED\n");
+											goto end_loop;
+										}
+										tau_max = tau;
+										tau = (tau_max+tau_min)/2;
+										time_step = tau/((double) total_steps);
+									}
+									else
+									{
+										if((tau-tau_min) < TAU_INIT/1.0) //Some arbitrary limit to stop the binary search
+										{
+											tau_array[index] = tau;
+											best_E_array[index] = best_E;
+											printf("GROUND STATE REACHED\n");
+											goto end_loop;
+										}
 										tau_array[index] = tau;
 										best_E_array[index] = best_E;
-										printf("GROUND STATE REACHED\n");
-										goto end_loop;
+										index++;
+
+										tau_min = tau;
+										tau = (tau_min+tau_max)/2;
+										time_step = tau/((double) total_steps);
 									}
-									tau_max = tau;
-									tau = (tau_max+tau_min)/2;
-									time_step = tau/((double) total_steps);
+
 								}
-								else
+								else //operation as normal, pushing tau forward to look for the GS
 								{
-									if((tau-tau_min) < TAU_INIT/1.0) //Some arbitrary limit to stop the binary search
-									{
-										tau_array[index] = tau;
-										best_E_array[index] = best_E;
-										printf("GROUND STATE REACHED\n");
-										goto end_loop;
-									}
 									tau_array[index] = tau;
 									best_E_array[index] = best_E;
-									index++;
 
+									index ++;
 									tau_min = tau;
-									tau = (tau_min+tau_max)/2;
+									tau = tau*TAU_SCALAR;
+									total_steps = floor(TOTAL_STEPS_INIT*(tau/TAU_INIT));
 									time_step = tau/((double) total_steps);
+
 								}
-
 							}
-							else //operation as normal, pushing tau forward to look for the GS
-							{
-								tau_array[index] = tau;
-								best_E_array[index] = best_E;
 
-								index ++;
-								tau_min = tau;
-								tau = tau*TAU_SCALAR;
-								total_steps = floor(TOTAL_STEPS_INIT*(tau/TAU_INIT));
-								time_step = tau/((double) total_steps);
+							end_loop: if(TAU_DATA) export_tau_data(pre_c_tau, pre_c_steps, pre_c_E, j_best, k_best,b_best,pre_k_best, pre_j_best, pre_b_best,tau_array, best_E_array, total_steps,tau, ground_E, jkb_initial, jkb_target, index, seed);
+						}//Seed loop close bracket
+						free(k_best),free(j_best), free(b_best), free(pre_k_best), free(pre_j_best), free(pre_b_best), free(tau_array), free(best_E_array);
+					}//MC close bracket
+					if(ADIABATIC)
+					{
+						k_best = (double *) malloc(2*NUM_SITES*MAX_ADI_EVOLVE_STEPS*sizeof(double));
+						j_best = (double *) malloc(2*NUM_SITES*MAX_ADI_EVOLVE_STEPS*sizeof(double));
+						b_best = (double *) malloc(NUM_SITES*MAX_ADI_EVOLVE_STEPS*sizeof(double));
+						pre_k_best = (double *) malloc(2*NUM_SITES*MAX_ADI_EVOLVE_STEPS*sizeof(double));
+						pre_j_best = (double *) malloc(2*NUM_SITES*MAX_ADI_EVOLVE_STEPS*sizeof(double));
+						pre_b_best = (double *) malloc(NUM_SITES*MAX_ADI_EVOLVE_STEPS*sizeof(double));
+						tau_array = (double *) malloc(MAX_MC_TAU_STEPS*10*sizeof(double));
+						best_E_array = (double *) malloc(MAX_MC_TAU_STEPS*10*sizeof(double));
+						for (x=0;x<2*NUM_SITES*MAX_ADI_EVOLVE_STEPS;x++) k_best[x] =0, j_best[x] = 0;
+						for (x=0;x<NUM_SITES*MAX_ADI_EVOLVE_STEPS;x++) b_best[x] =0;
 
-							}
-						}
 
-						end_loop: if(TAU_DATA) export_tau_data(pre_c_tau, pre_c_steps, pre_c_E, j_best, k_best,b_best,pre_k_best, pre_j_best, pre_b_best,tau_array, best_E_array, total_steps,tau, ground_E, jkb_initial, jkb_target, index, seed);
-					}//Seed loop close bracket
+
+						free(k_best),free(j_best), free(b_best), free(pre_k_best), free(pre_j_best), free(pre_b_best), free(tau_array), free(best_E_array);
+					}
 				}//G_init closed bracket
 			}//f_target close bracket
 		}//g_target close bracket
@@ -316,8 +346,8 @@ int main (int argc, char *argv[])
 
 
 
-double monte_carlo(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_target, double* psi_start, double temperature, double tau, int total_steps, double time_step, gsl_rng * r, double *k_best,double *j_best, double *b_best, double ground_E, double *best_E_array, int seed)
-/*monte_carlo the values in the j, b, and k list in order to produce the lowest energy (expectation value) between the final state (psi), produced by evolve, and the model hamiltonian. This is done by randomly selecting one row of each list, making a slight change, then determining if the new energy is lower than the old. If the new energy is greater than the old, keep with probability exp(delta_E/Temp)*/
+double monte_carlo_simulation(int *table, unsigned long long int *b, int num_electrons, int N, int lattice[][NX], double*ham_target, double* psi_start, double temperature, double tau, int total_steps, double time_step, gsl_rng * r, double *k_best,double *j_best, double *b_best, double ground_E, double *best_E_array, int seed)
+/*monte_carlo_simulation the values in the j, b, and k list in order to produce the lowest energy (expectation value) between the final state (psi), produced by evolve, and the model hamiltonian. This is done by randomly selecting one row of each list, making a slight change, then determining if the new energy is lower than the old. If the new energy is greater than the old, keep with probability exp(delta_E/Temp)*/
 {
 	int i=0,j=0, random_row=0, random_col, proposal_accepted=0,proposal_count=0, poor_acceptance_count=0,*bonds;
 	double *psi, *k_array, *j_array,*b_array,*k_temp, *j_temp, *b_temp, acceptance_rate=0, E_old=0, E_new=0,best_E=0, change_pm=0;
@@ -1143,7 +1173,7 @@ void change_array(double *k_array, double *j_array, double *b_array, int random_
 
 
 void change_row(double *k_array,double *j_array,double *b_array, int row, double change, bool k, bool j, bool b, int jump, int offset)
-/*Changing all of the lists by a value change at at the row number, row. Used in the monte_carlo function. offset gives the starting element, jump gives the amount to increase each increment.
+/*Changing all of the lists by a value change at at the row number, row. Used in the monte_carlo_simulation function. offset gives the starting element, jump gives the amount to increase each increment.
   bool k, j, and b determine if the k,j,and b lists will be changes. Bounds of the values that the lists can take are given by the #defines if using a device that's the same as model, +-1 otherwise*/
 {
 	int i;
@@ -1171,7 +1201,7 @@ void change_row(double *k_array,double *j_array,double *b_array, int row, double
 
 
 void change_col(int total_steps,double *k_array,double *j_array,double *b_array, int col, double change,bool k, bool j, bool b, int jump, int offset)
-/*Changing all of the lists by a value change at at the col number, col. Used in the monte_carlo function. offset gives the starting element, jump gives the amount to increase each increment.
+/*Changing all of the lists by a value change at at the col number, col. Used in the monte_carlo_simulation function. offset gives the starting element, jump gives the amount to increase each increment.
   bool k, j, and b determine if the k,j,and b lists will be changes. Bounds of the values that the lists can take are given by the #defines if using a device that's the same as model, +-1 otherwise*/
 {
 	int i;
@@ -1833,7 +1863,7 @@ int main (int argc, char *argv[])
 
 
 							initial_temp = calc_initial_temp(table, b, num_electrons, N, lattice, ham_target,total_steps, time_step, psi_start, r);
-							monte_carlo(table, b, num_electrons, N, lattice, ham_target, psi_start, initial_temp,tau, total_steps, time_step,r, k_best, j_best, b_best, ground_E);
+							monte_carlo_simulation(table, b, num_electrons, N, lattice, ham_target, psi_start, initial_temp,tau, total_steps, time_step,r, k_best, j_best, b_best, ground_E);
 
 
 
