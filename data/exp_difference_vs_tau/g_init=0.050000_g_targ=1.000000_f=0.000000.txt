@@ -1,0 +1,164 @@
+  TAU  | TOTAL STEPS | SEED |
+ 0.000 |       3     |  1   |
+j_initial= 0.05
+k_initial= 0
+b_initial= 0.95
+j_target= 1
+k_target= 0
+b_target= 0
+
+
+pre_tau= 0.0001
+pre_steps= 3
+
+pre_j_protocol= [0.192324, 0.00212445, 0.00275589, ]
+pre_k_protocol= [0.466185, 0.000114381, 0.426041, ]
+pre_b_protocol= [2.19984e-05, 0.401557, 0.00233257, ]
+
+j_protocol= [0.466185, 0.000114381, 0.426041, ]
+
+k_protocol= [0.192324, 0.00212445, 0.00275589, ]
+
+b_protocol= [2.19984e-05, 0.401557, 0.00233257, ]
+
+times= [0, 0.0001, ]
+
+E_best = [-5.65685, 4.67781e-310, ]
+
+E_ground = [-5.65685, -5.65685, ]
+plot(times, E_best)
+hold on
+plot(times, E_ground)
+plot(0.0001,-5.65685,'r*')
+hold off
+
+
+
+
+
+
+
+
+  TAU  | TOTAL STEPS | SEED |
+ 0.000 |       3     |  2   |
+j_initial= 0.05
+k_initial= 0
+b_initial= 0.95
+j_target= 1
+k_target= 0
+b_target= 0
+
+
+pre_tau= 0.0001
+pre_steps= 3
+
+pre_j_protocol= [0.00192623, 0.431731, 0.000367802, ]
+pre_k_protocol= [0.00208208, 0.0336625, 0.0227491, ]
+pre_b_protocol= [0.000994903, 0.415541, 0.000322393, ]
+
+j_protocol= [0.00208208, 0.0336625, 0.0227491, ]
+
+k_protocol= [0.00192623, 0.431731, 0.000367802, ]
+
+b_protocol= [0.000994903, 0.415541, 0.000322393, ]
+
+times= [0, 0.0001, ]
+
+E_best = [-5.65685, 4.67781e-310, ]
+
+E_ground = [-5.65685, -5.65685, ]
+plot(times, E_best)
+hold on
+plot(times, E_ground)
+plot(0.0001,-5.65685,'r*')
+hold off
+
+
+
+
+
+
+
+
+  TAU  | TOTAL STEPS | SEED |
+ 0.000 |       3     |  3   |
+j_initial= 0.05
+k_initial= 0
+b_initial= 0.95
+j_target= 1
+k_target= 0
+b_target= 0
+
+
+pre_tau= 0.0001
+pre_steps= 3
+
+pre_j_protocol= [0.129148, 0.00132858, 0.388947, ]
+pre_k_protocol= [0.00172488, 0.00290474, 0.0653113, ]
+pre_b_protocol= [0.0017979, 0.314949, 0.0068276, ]
+
+j_protocol= [0.00172488, 0.00290474, 0.0653113, ]
+
+k_protocol= [0.129148, 0.00132858, 0.388947, ]
+
+b_protocol= [0.0017979, 0.314949, 0.0068276, ]
+
+times= [0, 0.0001, ]
+
+E_best = [-5.65685, 4.67781e-310, ]
+
+E_ground = [-5.65685, -5.65685, ]
+plot(times, E_best)
+hold on
+plot(times, E_ground)
+plot(0.0001,-5.65685,'r*')
+hold off
+
+
+
+
+
+
+
+
+  TAU  | TOTAL STEPS | SEED |
+ 0.000 |       3     |  4   |
+j_initial= 0.05
+k_initial= 0
+b_initial= 0.95
+j_target= 1
+k_target= 0
+b_target= 0
+
+
+pre_tau= 0.0001
+pre_steps= 3
+
+pre_j_protocol= [0.0132323, 0.294621, 0.172729, ]
+pre_k_protocol= [0.366621, 0.411684, 0.0840356, ]
+pre_b_protocol= [0.43303, 0.00169532, 0.189816, ]
+
+j_protocol= [0.366621, 0.411684, 0.0840356, ]
+
+k_protocol= [0.0132323, 0.294621, 0.172729, ]
+
+b_protocol= [0.43303, 0.00169532, 0.189816, ]
+
+times= [0, 0.0001, ]
+
+E_best = [-5.65685, 4.67781e-310, ]
+
+E_ground = [-5.65685, -5.65685, ]
+plot(times, E_best)
+hold on
+plot(times, E_ground)
+plot(0.0001,-5.65685,'r*')
+hold off
+
+
+
+
+
+
+
+
