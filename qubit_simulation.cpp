@@ -29,8 +29,8 @@ const double LOWK = MIN_PARAM;
 const double LOWB = MIN_PARAM;
 const double T = 1;
 const double V = 2;
-const int NX = 2;
-const int NY = 2;
+const int NX = 3;
+const int NY = 3;
 const int NUM_SITES = NX*NY;
 
 
@@ -50,18 +50,18 @@ const int SEED_TOTAL= 8;
 
 
 //MC method parameters
-const double DIFFERENCE_LIMIT_MC = 0.001;
-const double TAU_INIT_MC = 0.02;
+const double DIFFERENCE_LIMIT_MC = 0.005;
+const double TAU_INIT_MC = 0.03;
 const double MAX_TAU_MC = 10;
-const double TAU_SCALAR_MC = 1.5;
+const double TAU_SCALAR_MC = 1.4;
 const double MAX_CHANGE_MC_INIT = 0.2*(MAX_PARAM-MIN_PARAM);
 const double ACCEPTANCE_PROB_MC = 0.8;
 const double TEMP_EXP_DECAY_MC = 0.85;
-const double BINARY_SEARCH_TAU_LIMIT_MC = TAU_INIT_MC/50.0;
+const double BINARY_SEARCH_TAU_LIMIT_MC = TAU_INIT_MC/30.0;
 const int RANDOM_STATES_MC = 5;
 const int SWEEPS_MC = 50;
 const int TOTAL_STEPS_INIT_MC =  6;
-const int TEMP_DECAY_ITERATIONS_MC =  50;
+const int TEMP_DECAY_ITERATIONS_MC =  30;
 const int TEMP_DECAY_LIMIT_MC = 10;
 const int MAX_EVOLVE_STEPS_MC = ceil((MAX_TAU_MC*TOTAL_STEPS_INIT_MC)/TAU_INIT_MC);
 const int MAX_TAU_STEPS_MC = ceil(log(MAX_TAU_MC/TAU_INIT_MC)/log(TAU_SCALAR_MC));
@@ -290,9 +290,9 @@ main (int argc, char *argv[])
 	double f_targ[3] = {0.5,0.1,1};
 	double g_targ[3] = {0.5,0.1,1};
 	double f_init[2] = {0.1,1};
-  double g_init[2] = {0.1,1};
+	double g_init[2] = {0.1,1};
 
-	int num_electrons_array[1]= {2};
+	int num_electrons_array[4]= {2,3,4,7};
 	for(electron_index=0;electron_index<sizeof(num_electrons_array)/sizeof(int);electron_index++)
 	{
 		num_electrons = num_electrons_array[electron_index];
