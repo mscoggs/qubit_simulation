@@ -52,8 +52,8 @@ const int SEED_TOTAL= 8;
 //MC method parameters
 const double DIFFERENCE_LIMIT_MC = 0.005;
 const double TAU_INIT_MC = 0.03;
-const double MAX_TAU_MC = 10;
-const double TAU_SCALAR_MC = 1.4;
+const double MAX_TAU_MC = 20;
+const double TAU_SCALAR_MC = 1.3;
 const double MAX_CHANGE_MC_INIT = 0.2*(MAX_PARAM-MIN_PARAM);
 const double ACCEPTANCE_PROB_MC = 0.8;
 const double TEMP_EXP_DECAY_MC = 0.85;
@@ -287,7 +287,7 @@ main (int argc, char *argv[])
 	jkb_target = (double *) malloc(3*sizeof(double));
 
 
-	double f_targ[3] = {0.5,0.1,1};
+	double f_targ[2] = {0.1, 1}; //{0.5,0.1,1};
 	double g_targ[3] = {0.5,0.1,1};
 	double f_init[2] = {0.1,1};
 	double g_init[2] = {0.1,1};
