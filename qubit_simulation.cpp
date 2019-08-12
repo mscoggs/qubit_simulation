@@ -287,7 +287,7 @@ main (int argc, char *argv[])
 	jkb_target = (double *) malloc(3*sizeof(double));
 
 
-	double f_targ[2] = {0.5,0.1,1};
+	double f_targ[3] = {0.5,0.1,1};
 	double g_targ[3] = {0.5,0.1,1};
 	double f_init[2] = {0.1,1};
 	double g_init[2] = {0.1,1};
@@ -300,10 +300,7 @@ main (int argc, char *argv[])
 		b = (unsigned long long int*) malloc(N*N*N*sizeof(unsigned long long int));
 		table=(int*) malloc(num_electrons*N*sizeof(int));
 		ham_target = (double *) malloc (2*N*N*sizeof (double));
-		ham_initial = (double INIT:        0.090 || B_INIT:      0.810 ||
- J_TARGET:       0.500 || K_TARGET:      0.050 || B_TARGET:    0.450 ||
-
-PSI_START: [0.043+0.000i; 0.119+0*) malloc(2*N*N*sizeof(double));
+		ham_initial = (double *) malloc(2*N*N*sizeof(double));
 		psi_start = (double *) malloc(2*N*sizeof(double));
 		combinations (num_electrons,b,table, N);
 
@@ -324,15 +321,11 @@ PSI_START: [0.043+0.000i; 0.119+0*) malloc(2*N*N*sizeof(double));
 						jkb_initial[1] = (1-g_initial)*f_initial;
 						jkb_initial[2] = (1-f_initial)*(1-g_initial);
 						construct_device_hamiltonian_uniform(table, b, num_electrons, N, ham_initial, lattice, jkb_initial, DEVICE_DIMENSION);
-						printf("\n\nHAM_INITIAL:\n");
-						print_hamiltonian(ham_initial, N);
 
 						jkb_target[0] = g_target;
 						jkb_target[1] = (1-g_target)*f_target;
 						jkb_target[2] = (1-f_target)*(1-g_target);
 						construct_device_hamiltonian_uniform(table, b, num_electrons, N, ham_target, lattice, jkb_target, DEVICE_DIMENSION);
-						printf("\n\nHAM_TARGET:\n");
-						print_hamiltonian(ham_target, N);
 
 						if(CHECK) check_commutator(N, ham_initial, ham_target);
 
