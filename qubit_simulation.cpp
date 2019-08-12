@@ -287,12 +287,12 @@ main (int argc, char *argv[])
 	jkb_target = (double *) malloc(3*sizeof(double));
 
 
-	double f_targ[2] = {0.1, 1}; //{0.5,0.1,1};
+	double f_targ[2] = {0.5,0.1,1};
 	double g_targ[3] = {0.5,0.1,1};
 	double f_init[2] = {0.1,1};
 	double g_init[2] = {0.1,1};
 
-	int num_electrons_array[4]= {2,3,4,7};
+	int num_electrons_array[1]= {3};
 	for(electron_index=0;electron_index<sizeof(num_electrons_array)/sizeof(int);electron_index++)
 	{
 		num_electrons = num_electrons_array[electron_index];
@@ -300,7 +300,10 @@ main (int argc, char *argv[])
 		b = (unsigned long long int*) malloc(N*N*N*sizeof(unsigned long long int));
 		table=(int*) malloc(num_electrons*N*sizeof(int));
 		ham_target = (double *) malloc (2*N*N*sizeof (double));
-		ham_initial = (double *) malloc(2*N*N*sizeof(double));
+		ham_initial = (double INIT:        0.090 || B_INIT:      0.810 ||
+ J_TARGET:       0.500 || K_TARGET:      0.050 || B_TARGET:    0.450 ||
+
+PSI_START: [0.043+0.000i; 0.119+0*) malloc(2*N*N*sizeof(double));
 		psi_start = (double *) malloc(2*N*sizeof(double));
 		combinations (num_electrons,b,table, N);
 
