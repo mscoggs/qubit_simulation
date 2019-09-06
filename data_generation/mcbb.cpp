@@ -106,7 +106,6 @@ void mcbb_simulation(Simulation_Parameters& sim_params){
 	if(sim_params.index == 1) sim_params.best_E_array[0] = sim_params.best_E;
 	if(PRINT) print_mcbb_info(sim_params), printf("Pre-Monte_Carlo Expectation:   %f\n", sim_params.best_E);
 
-
 	for (i=0;i<TEMP_DECAY_ITERATIONS_MCBB;i++){
 		proposal_accepted = 0, proposal_count = 0;
 
@@ -288,7 +287,7 @@ void calc_tau_mcbb(Simulation_Parameters& sim_params){
 
 
 
-void find_next_time(double time, double tau,double* j_array, double* k_array,double*  b_array,int*  jkb_index, double*jkb){
+double find_next_time(double time, double tau,double* j_array, double* k_array,double*  b_array,int*  jkb_index, double*jkb){
 	bool j = true, k = true, b = true;
 	double newtime=tau;
 

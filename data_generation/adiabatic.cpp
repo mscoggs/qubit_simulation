@@ -49,7 +49,6 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 
 
 
-/*evolve a starting state, state, by acting on it with exp(ham_dev*-i*time_step). The resulting state is updated as state and the process repeats total_steps times (tau/total_steps) until the final state state is produced. The function contains two methods for calculating exp(ham_dev*-i+time_step), one is a diagonalization method, the other a Pade approximation*/
 void evolve_adiabatic(Simulation_Parameters& sim_params){
 	int i,j;
 	double *hamiltonian,*ham_t_i, *ham_real,*exp_matrix,*v_diag, *e_vals,*jkb,g,f;

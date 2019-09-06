@@ -1,6 +1,7 @@
 #ifndef __LINALG_H_INCLUDED__
 #define __LINALG_H_INCLUDED__
 
+
 extern "C" int zgemm_(char *TRANSA, char *TRANSB, int *M, int *N, int *K, double *ALPHA, double *Z, int *LDA, double *X, int *LDB, double *BETA, double *Y, int *LDC); //complex matrix*matrix mult, odd indices hold imaginary values.
 extern "C" int zgemv_(char *TRANS, int *M, int *N,double *ALPHA,double *A, int *LDA, double *X, int *INCX, double *BETA, double *Y, int *INCY); //complex matrix-vector mult, odd indices hold imaginary values.
 extern "C" int dsyev_(char *JOBZ, char *UPLO, int *N, double *v_diag, int *LDA, double *e_vals, double *WORK, int *LWORK, int *INFO);//diagonalization, returns the eigenvectors in v_diag and eigenvalues in e_vals.

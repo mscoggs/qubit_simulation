@@ -16,9 +16,7 @@ void save_mcbf_data(Simulation_Parameters& sim_params){
 
 	if(sim_params.seed == 1)	{
 		file.open(path);
-		file << "##############################################################\n";
-		file << "SIMULATIONS PARAMETERS\n";
-		file << "##############################################################\n";
+		file << "START_PARAMETERS\n";
 		file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
 		file << "SEED_TOTAL =                 " <<  SEED_TOTAL << "\n";
 		file << "DIFFERENCE_LIMIT_MC =        " <<  DIFFERENCE_LIMIT_MC << "\n";
@@ -36,7 +34,7 @@ void save_mcbf_data(Simulation_Parameters& sim_params){
 		file << "TEMP_DECAY_LIMIT_MC =        " <<  TEMP_DECAY_LIMIT_MC << "\n";
 		file << "MAX_EVOLVE_STEPS_MC =        " <<  MAX_EVOLVE_STEPS_MC << "\n";
 		file << "MAX_TAU_STEPS_MC =           " <<  MAX_TAU_STEPS_MC << "\n";
-		file << "ARRAY_SCALAR =               " <<  ARRAY_SCALAR << "\n\n\n";
+		file << "ARRAY_SCALAR =               " <<  ARRAY_SCALAR << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
 	}
@@ -78,9 +76,7 @@ void save_mcbb_data(Simulation_Parameters& sim_params){
 
 	if(sim_params.seed == 1){
 		file.open(path);
-		file << "##############################################################\n";
-		file << "SIMULATIONS PARAMETERS\n";
-		file << "##############################################################\n";
+		file << "START_PARAMETERS\n";
 		file << "DIAG =                         " <<  std::boolalpha << DIAG << "\n";
 		file << "SEED_TOTAL =                   " <<  SEED_TOTAL << "\n";
 		file << "DIFFERENCE_LIMIT_MCBB =        " <<  DIFFERENCE_LIMIT_MCBB << "\n";
@@ -96,7 +92,7 @@ void save_mcbb_data(Simulation_Parameters& sim_params){
 		file << "SWEEPS_MCBB =                  " <<  SWEEPS_MCBB << "\n";
 		file << "TEMP_DECAY_ITERATIONS_MCBB =   " <<  TEMP_DECAY_ITERATIONS_MCBB  << "\n";
 		file << "TEMP_DECAY_LIMIT_MCBB =        " <<  TEMP_DECAY_LIMIT_MCBB << "\n";
-		file << "MAX_TAU_STEPS_MCBB =           " <<  MAX_TAU_STEPS_MCBB << "\n\n";
+		file << "MAX_TAU_STEPS_MCBB =           " <<  MAX_TAU_STEPS_MCBB << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
 	}
@@ -108,20 +104,20 @@ void save_mcbb_data(Simulation_Parameters& sim_params){
 	file << "tau =               " << sim_params.tau   << "\n";
 	file << "ground_E =          " << sim_params.ground_E << "\n\n";
 
-	file << "\nj_times =  [";
+	file << "\nj_protocol =  [";
 	for(i=0;i<2*NUMBER_OF_BANGS*sim_params.index;i++) file << sim_params.j_best[i] << ", ";
-	file << "]\nk_times = [";
+	file << "]\nk_protocol = [";
 	for(i=0;i<2*NUMBER_OF_BANGS*sim_params.index;i++) file << sim_params.k_best[i] << ", ";
-	file << "]\nb_times = [";
+	file << "]\nb_protocol = [";
 	for(i=0;i<2*NUMBER_OF_BANGS*sim_params.index;i++) file << sim_params.b_best[i] << ", ";
 	file << "]\nj/k/b =   [";
 	for(i=1;i<2*NUMBER_OF_BANGS+1;i++) file << i%2 << ", ";
 	file <<"]\n\n";
 
 
-	file << "times = [";
+	file << "tau_array = [";
 	for(i=0;i<sim_params.index;i++) file << sim_params.tau_array[i] << ", ";
-	file << "]\nE_best = [";
+	file << "]\nbest_E_array = [";
 	for(i=0;i<sim_params.index;i++) file << sim_params.best_E_array[i] << ", ";
 	file << "]\n\n";
 	file.close();
@@ -136,15 +132,13 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	std::string path = make_path(sim_params, type);
 
 	file.open(path);
-	file << "##############################################################\n";
-	file << "SIMULATIONS PARAMETERS\n";
-	file << "##############################################################\n";
+	file << "START_PARAMETERS\n";
 	file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
 	file << "DIFFERENCE_LIMIT_ADIA =      " <<  DIFFERENCE_LIMIT_ADIA << "\n";
 	file << "TAU_INIT_ADIA =              " <<  TAU_INIT_ADIA << "\n";
 	file << "MAX_TAU_ADIA =               " <<  MAX_TAU_ADIA << "\n";
 	file << "TAU_SCALAR_ADIA =            " <<  TAU_SCALAR_ADIA << "\n";
-	file << "TIME_STEP_ADIA =             " <<  TIME_STEP_ADIA << "\n\n";
+	file << "TIME_STEP_ADIA =             " <<  TIME_STEP_ADIA << "\n";
 	file.close();
 	save_hamiltonian_parameters(sim_params, path);
 	file.open(path, std::ios::app);
@@ -155,9 +149,9 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	file << "total_steps =       " << sim_params.total_steps << "\n";
 	file << "ground_E =          " << sim_params.ground_E << "\n\n";
 
-	file << "times = [";
+	file << "tau_array = [";
 	for(i=0;i<sim_params.index;i++) file << sim_params.tau_array[i] << ", ";
-	file << "]\nE_best = [";
+	file << "]\nbest_E_array = [";
 	for(i=0;i<sim_params.index;i++) file << sim_params.best_E_array[i] << ", ";
 	file << "]\n\n";
 
@@ -196,9 +190,6 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	std::ofstream file;
 	file.open(path, std::ios::app);
 
-	file << "##############################################################\n";
-	file << "HAMILTONIAN PARAMETERS\n";
-	file << "##############################################################\n";
 	file << "g_initial =        " << sim_params.g_initial << "\n";
 	file << "f_initial =        " << sim_params.f_initial << "\n";
 	file << "g_targe t =        " << sim_params.g_target << "\n";
@@ -213,6 +204,7 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file << "UNIFORM_SITES =    " << std::boolalpha << UNIFORM_SITES << "\n";
 	file << "DEVICE_DIMENSION = " << DEVICE_DIMENSION << "\n";
 	file << "MAX_PARAM =        " << MAX_PARAM << "\n";
-	file << "MIN_PARAM =        " << MIN_PARAM << "\n\n";
+	file << "MIN_PARAM =        " << MIN_PARAM << "\n";
+	file << "END_PARAMETERS\n";
 	file.close();
 }

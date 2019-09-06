@@ -90,12 +90,10 @@ void construct_device_hamiltonian_uniform(Simulation_Parameters sim_params, doub
 				}
 			}
 		}
-
 		for (j=0; j<NUMBER_OF_SITES;j++){//The B term calculation
 			sign = -1;
 			if(((1ULL<<j)&sim_params.b[i])>0) sign=1;
 			hamiltonian[((sim_params.N*i)+i)*2] += jkb[2]*sign;
-			printf("jkb[2]*sign: %f", jkb[2]*sign);
 		}
 	}
 	delete[] neighbors, delete[] v;

@@ -4,7 +4,6 @@
 #include "linear_algebra.h"
 
 
-
 void diag_hermitian_real_double(int N,  double *A, double *v_diag,double *e_vals){
 	char JOBZ='V',UPLO='U';
 	int LDA=N,LWORK=-1, INFO;

@@ -72,8 +72,10 @@ void calc_tau_mcbb(Simulation_Parameters& sim_params);
     @param b_array the protocol of the b parameter, where each odd-index holds the time of a jump (b=1) and the even-index holds the time of a drop(b=0)
     @param jkb_index the current index for each protocol (ie, the last time that was grabbed for each)
     @param jkb the values of the j/k/b arrays at a given time (either 1 or 0 for each, where jkb[0] is the j, jkb [1] is the k...)
+
+    @return newtime the next time from the j/k/b arrays
 */
-void find_next_time(double time, double tau,double* j_array, double* k_array,double*  b_array,int*  jkb_index, double*jkb);
+double find_next_time(double time, double tau,double* j_array, double* k_array,double*  b_array,int*  jkb_index, double*jkb);
 
 
 /**
