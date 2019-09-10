@@ -1,0 +1,47 @@
+000 (674039.000.000) 09/06 11:59:27 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5480_8b22_11>
+...
+012 (674039.000.000) 09/06 15:58:03 Job was held.
+	via condor_hold (by user condor)
+	Code 1 Subcode 0
+...
+013 (674039.000.000) 09/09 09:30:28 Job was released.
+	via condor_release (by user condor)
+...
+001 (674039.000.000) 09/09 09:52:29 Job executing on host: <140.160.143.149:9618?addrs=140.160.143.149-9618&noUDP&sock=8214_036a_3>
+...
+006 (674039.000.000) 09/09 09:52:37 Image size of job updated: 13308
+	13  -  MemoryUsage of job (MB)
+	13308  -  ResidentSetSize of job (KB)
+...
+006 (674039.000.000) 09/09 09:57:37 Image size of job updated: 498680
+	487  -  MemoryUsage of job (MB)
+	498680  -  ResidentSetSize of job (KB)
+...
+006 (674039.000.000) 09/09 10:02:38 Image size of job updated: 898432
+	878  -  MemoryUsage of job (MB)
+	898432  -  ResidentSetSize of job (KB)
+...
+005 (674039.000.000) 09/09 12:23:07 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:11:41, Sys 0 00:07:06  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:11:41, Sys 0 00:07:06  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     2.00        2         2 
+	   Disk (KB)            :   150         150     18162 
+	   Gpus                 :                           0 
+	   Memory (MB)          :   878           1       128 
+...
+000 (674182.000.000) 09/10 13:41:39 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5591_da80_4>
+...
+001 (674182.000.000) 09/10 13:41:50 Job executing on host: <140.160.143.149:9618?addrs=140.160.143.149-9618&noUDP&sock=8214_036a_3>
+...
+006 (674182.000.000) 09/10 13:41:58 Image size of job updated: 10744
+	11  -  MemoryUsage of job (MB)
+	10744  -  ResidentSetSize of job (KB)
+...

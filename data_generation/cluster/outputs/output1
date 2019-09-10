@@ -1,0 +1,829 @@
+
+
+
+WARNING: THE TARGET AND INITIAL HAMILTONIAN COMMUTE
+
+
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             1 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030522
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8800 (154/175)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8418 (133/158)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8261 (133/161)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8103 (141/174)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7688 (123/160)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8122 (147/181)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7633 (129/169)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7941 (135/170)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7095 (127/179)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6971 (122/175)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6915 (130/188)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6413 (118/184)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5879 (107/182)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5525 (100/181)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5544 (107/193)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5692 (111/195)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5200 (104/200)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4771 (104/218)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4583 (99/216)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4180 (79/189)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4579 (98/214)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4272 (91/213)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3363 (76/226)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3304 (75/227)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2700 (64/237)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2771 (64/231)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2390 (60/251)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2816 (69/245)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1728 (42/243)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2255 (53/235)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2131 (52/244)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0806 (22/273)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1780 (47/264)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1705 (45/264)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1301 (35/269)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1315 (33/251)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1259 (34/270)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0866 (24/277)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1053 (28/266)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1055 (27/256)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0725 (20/276)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0645 (18/279)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0551 (14/254)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0797 (22/276)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0569 (16/281)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0507 (14/276)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0442 (13/294)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0356 (10/281)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0423 (12/284)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0418 (12/287)
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030522
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             2 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030521
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8025 (130/162)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8204 (137/167)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8095 (136/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7785 (123/158)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7798 (131/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7531 (122/162)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7389 (133/180)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7102 (125/176)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7453 (120/161)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7337 (135/184)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6649 (125/188)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5699 (110/193)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6000 (108/180)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6158 (117/190)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5781 (111/192)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5408 (106/196)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4646 (92/198)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5123 (104/203)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3864 (85/220)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4258 (89/209)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4732 (97/205)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4341 (89/205)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2629 (61/232)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3466 (87/251)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3117 (77/247)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2876 (67/233)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1903 (47/247)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2787 (68/244)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1901 (46/242)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1646 (40/243)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1566 (39/249)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1872 (44/235)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1694 (42/248)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1255 (33/263)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1303 (37/284)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1264 (35/277)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1026 (28/273)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0951 (25/263)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1107 (31/280)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0807 (23/285)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0645 (18/279)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0702 (20/285)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0370 (10/270)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0562 (15/267)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0515 (14/272)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0467 (12/257)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0383 (10/261)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0494 (13/263)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0288 (8/278)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0289 (8/277)
+NO MC PROGRESS FOR 10 TEMP DECAY ITERATIONS, TERMINATING
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030521
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             3 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030521
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8324 (144/173)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8462 (132/156)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8457 (137/162)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7953 (136/171)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8452 (142/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7692 (120/156)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7725 (129/167)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7019 (113/161)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7452 (117/157)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6500 (117/180)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6914 (121/175)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5691 (107/188)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6276 (123/196)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5759 (110/191)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5354 (106/198)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5532 (104/188)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4870 (94/193)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4660 (96/206)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4550 (91/200)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4194 (91/217)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3907 (84/215)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3380 (73/216)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3440 (75/218)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3470 (76/219)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3302 (70/212)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2456 (56/228)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2544 (58/228)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2231 (56/251)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2048 (51/249)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1781 (44/247)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1655 (47/284)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1897 (48/253)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1612 (39/242)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1446 (35/242)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1318 (34/258)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1496 (35/234)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1181 (30/254)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0931 (23/247)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0821 (22/268)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1145 (30/262)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1115 (32/287)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0824 (22/267)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0510 (15/294)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0662 (19/287)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0563 (16/284)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0627 (18/287)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0433 (13/300)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0369 (11/298)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0393 (12/305)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0367 (11/300)
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030521
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             4 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030521
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.9359 (146/156)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8462 (132/156)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8889 (144/162)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8313 (133/160)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8452 (142/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8313 (138/166)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8199 (132/161)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7738 (130/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7200 (126/175)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7258 (135/186)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7134 (117/164)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7072 (128/181)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7683 (126/164)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6480 (116/179)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6751 (133/197)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5882 (110/187)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6263 (124/198)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5144 (107/208)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4533 (97/214)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4901 (99/202)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4414 (98/222)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4645 (98/211)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4356 (88/202)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4047 (87/215)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4198 (89/212)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2876 (67/233)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3435 (79/230)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2892 (72/249)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2918 (68/233)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2562 (62/242)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2169 (54/249)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2199 (53/241)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1767 (47/266)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1992 (52/261)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2085 (44/211)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1508 (38/252)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1169 (29/248)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1402 (37/264)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1149 (30/261)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1063 (27/254)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0898 (22/245)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0940 (25/266)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0701 (19/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0709 (20/282)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0738 (20/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0833 (23/276)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0507 (14/276)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0629 (18/286)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0524 (15/286)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0470 (14/298)
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030521
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             5 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030502
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8081 (139/172)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8882 (135/152)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8503 (142/167)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7933 (142/179)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8037 (131/163)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7706 (131/170)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7386 (130/176)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7824 (133/170)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7457 (129/173)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6393 (117/183)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6207 (108/174)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6704 (120/179)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6344 (118/186)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6146 (118/192)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5751 (111/193)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5380 (99/184)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5169 (107/207)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5189 (110/212)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4567 (95/208)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4019 (86/214)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4009 (87/217)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3632 (77/212)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3548 (77/217)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3402 (83/244)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3004 (67/223)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2924 (69/236)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2510 (65/259)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2479 (60/242)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2353 (56/238)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2137 (50/234)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1918 (47/245)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1504 (40/266)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1306 (35/268)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1264 (33/261)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1392 (38/273)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1197 (34/284)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1226 (32/261)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0885 (23/260)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0899 (24/267)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1055 (29/275)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0792 (21/265)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0738 (20/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0616 (17/276)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0717 (21/293)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0442 (13/294)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0610 (18/295)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0333 (10/300)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0344 (10/291)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0314 (10/318)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0227 (7/308)
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030502
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             6 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030488
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8947 (136/152)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8393 (141/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8289 (126/152)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7593 (123/162)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7879 (130/165)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8107 (137/169)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7471 (130/174)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7401 (131/177)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7086 (124/175)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7442 (128/172)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6739 (124/184)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6166 (119/193)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6236 (111/178)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5685 (112/197)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5602 (107/191)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5323 (99/186)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4481 (95/212)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5274 (106/201)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4627 (93/201)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4151 (88/212)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4201 (92/219)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3621 (84/232)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4098 (84/205)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3251 (66/203)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3430 (83/242)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2941 (65/221)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2615 (68/260)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2595 (68/262)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2529 (65/257)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2023 (53/262)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1815 (47/259)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1619 (40/247)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1496 (41/274)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1122 (33/294)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1784 (48/269)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1060 (32/302)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1234 (38/308)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0881 (28/318)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0819 (24/293)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0870 (26/299)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0627 (18/287)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0554 (15/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0649 (17/262)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0443 (12/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0627 (17/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0448 (12/268)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0403 (11/273)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0580 (16/276)
+NO MC PROGRESS FOR 10 TEMP DECAY ITERATIONS, TERMINATING
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030488
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             7 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030505
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8788 (145/165)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8305 (147/177)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8580 (145/169)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8012 (129/161)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7847 (113/144)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7809 (139/178)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7318 (131/179)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7811 (132/169)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6796 (123/181)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7151 (123/172)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6548 (110/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6150 (115/187)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5803 (112/193)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5211 (99/190)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4975 (99/199)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5550 (106/191)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5286 (111/210)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4435 (102/230)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4612 (95/206)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4203 (87/207)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3971 (81/204)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3797 (90/237)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3397 (71/209)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3089 (76/246)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3160 (67/212)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2632 (65/247)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2403 (62/258)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2317 (57/246)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2099 (51/243)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1992 (53/266)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2083 (55/264)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1446 (36/249)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1086 (29/267)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1170 (31/265)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1351 (35/259)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1481 (36/243)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0929 (26/280)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0871 (25/287)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0602 (18/299)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0850 (25/294)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0726 (23/317)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0619 (18/291)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0688 (19/276)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0664 (18/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0646 (17/263)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0833 (24/288)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0445 (13/292)
+NO MC PROGRESS FOR 10 TEMP DECAY ITERATIONS, TERMINATING
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030505
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             8 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030516
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8077 (126/156)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8655 (148/171)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7922 (122/154)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8333 (145/174)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8448 (147/174)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7989 (143/179)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8012 (137/171)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7594 (142/187)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7345 (130/177)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7151 (123/172)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6575 (119/181)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7188 (115/160)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6648 (121/182)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5795 (113/195)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5510 (108/196)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5677 (109/192)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4760 (99/208)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5302 (114/215)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4840 (106/219)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4065 (87/214)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4402 (92/209)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4028 (85/211)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3350 (68/203)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2857 (64/224)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3237 (78/241)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2948 (74/251)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2598 (66/254)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2381 (60/252)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2327 (57/245)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1760 (44/250)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1667 (45/270)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1783 (46/258)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1771 (48/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1508 (38/252)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1254 (35/279)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1138 (33/290)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1011 (27/267)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1053 (30/285)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0899 (24/267)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0836 (24/287)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0882 (24/272)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0669 (19/284)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0451 (13/288)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0542 (15/277)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0295 (8/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0717 (19/265)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0436 (12/275)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0241 (7/290)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0463 (13/281)
+NO MC PROGRESS FOR 10 TEMP DECAY ITERATIONS, TERMINATING
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030516
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:             9 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030517
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8355 (127/152)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.9000 (144/160)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8269 (129/156)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8324 (144/173)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8012 (133/166)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7560 (127/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8084 (135/167)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7262 (122/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7143 (125/175)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7241 (126/174)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7143 (120/168)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6994 (121/173)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6425 (115/179)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6455 (122/189)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5446 (110/202)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5930 (118/199)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5320 (108/203)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5097 (105/206)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4831 (86/178)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4258 (89/209)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4030 (81/201)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4054 (90/222)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3796 (82/216)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3929 (88/224)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3453 (77/223)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2646 (68/257)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2656 (64/241)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2119 (50/236)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2245 (55/245)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2016 (51/253)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1954 (51/261)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1804 (46/255)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1711 (45/263)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1336 (37/277)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1087 (30/276)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1250 (35/280)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1070 (32/299)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0774 (24/310)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0726 (22/303)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0732 (24/328)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0671 (22/328)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0656 (21/320)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0811 (24/296)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0608 (18/296)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0780 (22/282)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0736 (22/299)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0358 (11/307)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0271 (8/295)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0476 (14/294)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0295 (9/305)
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030517
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+
+
+
+
+...Calculating initial temperature based on 5 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 || SEED:            10 ||
+|| TAU_MAX:       20.0000 || TAU:            0.0050 || TIME_STEP    0.0008 ||
+|| TOTAL_STEPS:        6 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        50 ||                     ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+Pre-Monte_Carlo Expectation:   -1.030519
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.9139 (138/151)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8667 (143/165)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8773 (143/163)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8598 (141/164)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8354 (132/158)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.8373 (139/166)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7673 (122/159)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7486 (131/175)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7600 (133/175)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7636 (126/165)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.7062 (125/177)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6154 (112/182)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6617 (133/201)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6374 (116/182)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6126 (117/191)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.6142 (121/197)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5508 (103/187)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5206 (101/194)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.5437 (112/206)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4429 (97/219)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.4434 (94/212)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3871 (84/217)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3981 (86/216)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3486 (76/218)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3128 (71/227)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3030 (70/231)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2339 (51/218)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.3200 (72/225)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2522 (57/226)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2198 (51/232)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.2429 (60/247)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1910 (51/267)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1692 (44/260)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1699 (44/259)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1250 (29/232)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1807 (45/249)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1348 (31/230)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.1412 (36/255)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0886 (24/271)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0843 (22/261)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0906 (24/265)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0855 (23/269)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0741 (20/270)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0756 (22/291)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0336 (10/298)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0493 (15/304)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0249 (8/321)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0514 (16/311)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0265 (8/302)
+           Best Expectation:   -1.030522  ||  Acceptance Rate: 0.0374 (12/321)
+#######################################################################
+BEST ENERGY=    -1.030522
+TARGET ENERGY=  -1.030522
+DIFFERENCE=      0.000000
+INITIAL ENERGY= -1.030519
+NEW DISTANCNCE=  1.000000
+OLD DISTANCNCE=  1.000000
+#######################################################################
+
+Using binary search method to look for optimal ground state...
+Upper and lower tau are close enough, exiting binary_search_mcbf
+############################################################################
+########################## THE ADIABATIC METHOD ############################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:           6 ||                     ||
+|| TAU_MAX:       30.000 || TOTAL_STEPS:         5 || TIME_STEP    0.0010 ||
+|| G_INITIAL:     0.1000 || F_INITIAL:      0.1000 ||                     ||
+|| G_TARGET:      0.1000 || F_TARGET:       0.1000 ||                     ||
+|| J_INITIAL:     0.1000 || K_INITIAL:      0.0900 || B_INITIAL:   0.8100 ||
+|| J_TARGET:      0.1000 || K_TARGET:       0.0900 || B_TARGET:    0.8100 ||
+
+INITIAL_STATE: [-0.241+0.000i; -0.620+0.000i; -0.241+0.000i; -0.241+0.000i; -0.620+0.000i; -0.241+0.000i; ]
+############################################################################
+       Tau:  0.01  ||  Expectation-Value:  -1.0305  ||  Target: -1.030522 
+GROUND STATE REACHED. STOPPING THE ADIABATIC EVOLUTION
+

@@ -1,0 +1,50 @@
+000 (674031.000.000) 09/06 11:59:27 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5480_8b22_11>
+...
+012 (674031.000.000) 09/06 15:58:09 Job was held.
+	via condor_hold (by user condor)
+	Code 1 Subcode 0
+...
+013 (674031.000.000) 09/09 09:30:28 Job was released.
+	via condor_release (by user condor)
+...
+001 (674031.000.000) 09/09 09:39:58 Job executing on host: <140.160.143.154:9618?addrs=140.160.143.154-9618&noUDP&sock=4512_bfcf_3>
+...
+006 (674031.000.000) 09/09 09:40:08 Image size of job updated: 18948
+	18  -  MemoryUsage of job (MB)
+	18100  -  ResidentSetSize of job (KB)
+...
+006 (674031.000.000) 09/09 09:45:08 Image size of job updated: 531936
+	519  -  MemoryUsage of job (MB)
+	531084  -  ResidentSetSize of job (KB)
+...
+006 (674031.000.000) 09/09 09:50:09 Image size of job updated: 1013468
+	989  -  MemoryUsage of job (MB)
+	1012616  -  ResidentSetSize of job (KB)
+...
+006 (674031.000.000) 09/09 09:55:10 Image size of job updated: 1404304
+	1371  -  MemoryUsage of job (MB)
+	1403452  -  ResidentSetSize of job (KB)
+...
+005 (674031.000.000) 09/09 11:54:44 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:17:01, Sys 0 00:10:54  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:17:01, Sys 0 00:10:54  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.99        2         2 
+	   Disk (KB)            :   150         150     17614 
+	   Memory (MB)          :  1371           1       128 
+...
+000 (674174.000.000) 09/10 13:41:39 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5591_da80_4>
+...
+001 (674174.000.000) 09/10 13:41:49 Job executing on host: <140.160.143.154:9618?addrs=140.160.143.154-9618&noUDP&sock=4512_bfcf_3>
+...
+006 (674174.000.000) 09/10 13:41:58 Image size of job updated: 21232
+	21  -  MemoryUsage of job (MB)
+	21232  -  ResidentSetSize of job (KB)
+...

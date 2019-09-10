@@ -1,0 +1,6 @@
+Executable        = main
+Arguments         = 1.0 0.1 0.1 1.0
+Log               = cluster/logs/submit21.log
+Output            = cluster/outputs/output21
+request_cpus      = 1
+Queue

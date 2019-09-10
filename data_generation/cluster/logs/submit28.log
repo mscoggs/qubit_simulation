@@ -1,0 +1,52 @@
+000 (674054.000.000) 09/06 11:59:27 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5480_8b22_11>
+...
+012 (674054.000.000) 09/06 15:58:03 Job was held.
+	via condor_hold (by user condor)
+	Code 1 Subcode 0
+...
+013 (674054.000.000) 09/09 09:30:28 Job was released.
+	via condor_release (by user condor)
+...
+001 (674054.000.000) 09/09 10:00:29 Job executing on host: <140.160.143.151:9618?addrs=140.160.143.151-9618&noUDP&sock=4465_23ab_3>
+...
+006 (674054.000.000) 09/09 10:00:38 Image size of job updated: 10332
+	11  -  MemoryUsage of job (MB)
+	10332  -  ResidentSetSize of job (KB)
+...
+006 (674054.000.000) 09/09 10:05:39 Image size of job updated: 425416
+	416  -  MemoryUsage of job (MB)
+	425416  -  ResidentSetSize of job (KB)
+...
+006 (674054.000.000) 09/09 10:10:40 Image size of job updated: 836256
+	817  -  MemoryUsage of job (MB)
+	836256  -  ResidentSetSize of job (KB)
+...
+006 (674054.000.000) 09/09 10:15:40 Image size of job updated: 1258968
+	1230  -  MemoryUsage of job (MB)
+	1258968  -  ResidentSetSize of job (KB)
+...
+006 (674054.000.000) 09/09 10:20:40 Image size of job updated: 1671764
+	1633  -  MemoryUsage of job (MB)
+	1671764  -  ResidentSetSize of job (KB)
+...
+006 (674054.000.000) 09/09 10:25:41 Image size of job updated: 1731348
+	1691  -  MemoryUsage of job (MB)
+	1731348  -  ResidentSetSize of job (KB)
+...
+005 (674054.000.000) 09/09 11:55:31 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:22:34, Sys 0 00:14:42  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:22:34, Sys 0 00:14:42  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     2.00        2         2 
+	   Disk (KB)            :   150         150     17583 
+	   Memory (MB)          :  1691           1       128 
+...
+000 (674197.000.000) 09/10 13:41:39 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5591_da80_4>
+...

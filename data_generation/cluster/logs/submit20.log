@@ -1,0 +1,56 @@
+000 (674046.000.000) 09/06 11:59:27 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5480_8b22_11>
+...
+012 (674046.000.000) 09/06 15:58:03 Job was held.
+	via condor_hold (by user condor)
+	Code 1 Subcode 0
+...
+013 (674046.000.000) 09/09 09:30:28 Job was released.
+	via condor_release (by user condor)
+...
+001 (674046.000.000) 09/09 10:00:29 Job executing on host: <140.160.143.155:9618?addrs=140.160.143.155-9618&noUDP&sock=4483_db90_3>
+...
+006 (674046.000.000) 09/09 10:00:38 Image size of job updated: 14384
+	14  -  MemoryUsage of job (MB)
+	14192  -  ResidentSetSize of job (KB)
+...
+006 (674046.000.000) 09/09 10:05:39 Image size of job updated: 528148
+	516  -  MemoryUsage of job (MB)
+	527956  -  ResidentSetSize of job (KB)
+...
+006 (674046.000.000) 09/09 10:10:40 Image size of job updated: 1039372
+	1015  -  MemoryUsage of job (MB)
+	1039180  -  ResidentSetSize of job (KB)
+...
+006 (674046.000.000) 09/09 10:15:40 Image size of job updated: 1543692
+	1508  -  MemoryUsage of job (MB)
+	1543500  -  ResidentSetSize of job (KB)
+...
+006 (674046.000.000) 09/09 10:20:40 Image size of job updated: 2093824
+	2045  -  MemoryUsage of job (MB)
+	2093636  -  ResidentSetSize of job (KB)
+...
+006 (674046.000.000) 09/09 10:25:41 Image size of job updated: 2518884
+	2460  -  MemoryUsage of job (MB)
+	2518696  -  ResidentSetSize of job (KB)
+...
+006 (674046.000.000) 09/09 12:03:22 Image size of job updated: 14076552
+	2460  -  MemoryUsage of job (MB)
+	2518696  -  ResidentSetSize of job (KB)
+...
+005 (674046.000.000) 09/09 12:03:22 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:29:22, Sys 0 00:18:27  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:29:22, Sys 0 00:18:27  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.99        2         2 
+	   Disk (KB)            :   150         150     17594 
+	   Memory (MB)          :  2460           1       128 
+...
+000 (674189.000.000) 09/10 13:41:39 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5591_da80_4>
+...
