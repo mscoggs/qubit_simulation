@@ -41,7 +41,7 @@ main (int argc, char *argv[]){
 	double f_init[1] = {atof(argv[2])};//{0.1,1};
 	double g_targ[1] = {atof(argv[3])};//{0.5,0.1,1};
 	double f_targ[1] = {atof(argv[4])};//{0.5,0.1,1};
-	int num_occupants_array[1]= {2};
+	int num_occupants_array[2]= {2, 7};
 	
 	
 

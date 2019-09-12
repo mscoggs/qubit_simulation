@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# chmod u+x run_jobs.sh
+# ./run_jobs.sh
+
+
 condor_submit cluster/submits/submit1.job
 condor_submit cluster/submits/submit2.job
 condor_submit cluster/submits/submit3.job

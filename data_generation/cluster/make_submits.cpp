@@ -21,7 +21,7 @@ main(int argc, char *argv[]){
 	run_file << "#!/bin/bash\n\n";
 
 	run_file << "# chmod u+x run_jobs.sh\n";
-	run_file << "./run_jobs.sh\n\n\n";
+	run_file << "# ./run_jobs.sh\n\n\n";
 	for(gi_i=0;gi_i<(sizeof(g_init)/sizeof(double));gi_i++){
 		for(fi_i=0;fi_i<(sizeof(f_init)/sizeof(double));fi_i++){
 			for(gt_i=0;gt_i<(sizeof(g_targ)/sizeof(double));gt_i++){
@@ -40,7 +40,7 @@ main(int argc, char *argv[]){
 					submit_file << "Arguments         = " << gi << " " << fi << " " << gt << " " << ft << "\n";
 					submit_file << "Log               = cluster/logs/submit" << counterst << ".log\n";
 					submit_file << "Output            = cluster/outputs/output" << counterst << "\n";
-					submit_file << "request_cpus      = 1\n";
+					submit_file << "request_cpus      = 2\n";
 					submit_file << "Queue\n";
 					submit_file.close();
 

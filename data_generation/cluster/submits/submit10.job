@@ -2,5 +2,5 @@ Executable        = main
 Arguments         = 0.1 1.0 0.1 0.1
 Log               = cluster/logs/submit10.log
 Output            = cluster/outputs/output10
-request_cpus      = 1
+request_cpus      = 2
 Queue

@@ -33,8 +33,8 @@ const int NUMBER_OF_SITES = NX*NY;
 //Non-Physical Simulation_Parameters
 const bool MCBF = true;
 const bool MCBF_DATA = true;
-const bool MCBB = false;
-const bool MCBB_DATA = false;
+const bool MCBB = true;
+const bool MCBB_DATA = true;
 const bool ADIABATIC = true;
 const bool ADIABATIC_DATA = true;
 const int SEED_TOTAL= 10;
@@ -85,7 +85,7 @@ const double ACCEPTANCE_PROB_MCBB = ACCEPTANCE_PROB_MC;
 const double TEMP_EXP_DECAY_MCBB = TEMP_EXP_DECAY_MC;
 const double BINARY_SEARCH_TAU_LIMIT_MCBB = TAU_INIT_MCBB/30.0;
 const int RANDOM_STATES_MCBB = RANDOM_STATES_MC;
-const int NUMBER_OF_BANGS = 8;
+const int NUMBER_OF_BANGS = 12;
 const int SWEEPS_MCBB = 100;
 const int TEMP_DECAY_ITERATIONS_MCBB = TEMP_DECAY_ITERATIONS_MC;;
 const int TEMP_DECAY_LIMIT_MCBB = TEMP_DECAY_LIMIT_MC;
@@ -94,8 +94,8 @@ const int MAX_BS_STEPS_MCBB = ceil(log(BINARY_SEARCH_TAU_LIMIT_MCBB/((TAU_SCALAR
 
 
 //Adiabatic method parameters
-const double DIFFERENCE_LIMIT_ADIA = 0.001;
-const double TAU_INIT_ADIA = 0.005;
+const double DIFFERENCE_LIMIT_ADIA = 0.01;
+const double TAU_INIT_ADIA = 0.5;
 const double MAX_TAU_ADIA = 30;
 const double TAU_SCALAR_ADIA = 1.15;
 const double TIME_STEP_ADIA = 1/1000.0;
