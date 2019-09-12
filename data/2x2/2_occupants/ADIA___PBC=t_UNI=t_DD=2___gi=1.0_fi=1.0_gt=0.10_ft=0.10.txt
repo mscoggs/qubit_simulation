@@ -7,14 +7,14 @@ TAU_SCALAR_ADIA =            1.15
 TIME_STEP_ADIA =             0.001
 g_initial =        1
 f_initial =        1
-g_targe t =        1
-f_target =         1
+g_targe t =        0.1
+f_target =         0.1
 j_initial =        1
 k_initial =        0
 b_initial =        0
-j_target =         1
-k_target =         0
-b_target =         0
+j_target =         0.1
+k_target =         0.09
+b_target =         0.81
 PERIODIC =         true
 UNIFORM_SITES =    true
 DEVICE_DIMENSION = 2
@@ -27,10 +27,10 @@ END_PARAMETERS
 
 ##############################################################################
 ##############################################################################
-tau =               0.1
-total_steps =       100
-ground_E =          -5.65685
+tau =               0.8
+total_steps =       799
+ground_E =          -1.03052
 
-tau_array = []
-best_E_array = []
+tau_array = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, ]
+best_E_array = [-0.929489, -0.940232, -0.956065, -0.974379, -0.992384, -1.0077, -1.01871, ]
 

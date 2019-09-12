@@ -28,7 +28,6 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 	while(sim_params.tau<MAX_TAU_ADIA){
 		memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));//resetting state
 		evolve_adiabatic(sim_params);
-
 		sim_params.best_E_array[sim_params.index] = cost(sim_params.N, sim_params.state, sim_params.ham_target);
 		sim_params.tau_array[sim_params.index] = sim_params.tau;
 
@@ -64,7 +63,7 @@ void evolve_adiabatic(Simulation_Parameters& sim_params){
 	for (i=1; i<sim_params.total_steps+1;i++){
 
 		g = sim_params.g_initial + (sim_params.g_target-sim_params.g_initial)*((i*1.0)/sim_params.total_steps);
-		f = sim_params.f_initial + (sim_params.f_target-sim_params.f_initial)*(i/sim_params.total_steps);
+		f = sim_params.f_initial + (sim_params.f_target-sim_params.f_initial)*(i*1.0/sim_params.total_steps);
 		jkb[0] = g, jkb[1] = (1-g)*f, jkb[2] = (1-f)*(1-g);
 		construct_device_hamiltonian_uniform(sim_params,hamiltonian, jkb);
 
