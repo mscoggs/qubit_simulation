@@ -42,7 +42,7 @@ const bool DIAG = false;
 
 
 //MCBF method parameters
-const double DIFFERENCE_LIMIT_MC = 0.0001;
+const double DIFFERENCE_LIMIT_MC = 0.005;
 const double TAU_INIT_MC = 0.005;
 const double MAX_TAU_MC = 20;
 const double TAU_SCALAR_MC = 1.15;
@@ -52,10 +52,10 @@ const double TEMP_EXP_DECAY_MC = 0.85;
 const double BINARY_SEARCH_TAU_LIMIT_MC = TAU_INIT_MC/10.0;
 const int RANDOM_STATES_MC = 3;
 const int SWEEPS_MC = 20;
-const int TOTAL_STEPS_INIT_MC =  12;
+const int TOTAL_STEPS_INIT_MC =  6;
 const int TEMP_DECAY_ITERATIONS_MC =  20;
 const int TEMP_DECAY_LIMIT_MC = 10;
-const int MAX_EVOLVE_STEPS_MC = 5*TOTAL_STEPS_INIT_MC;
+const int MAX_EVOLVE_STEPS_MC = 7*TOTAL_STEPS_INIT_MC;
 const int MAX_TAU_STEPS_MC = ceil(log(MAX_TAU_MC/TAU_INIT_MC)/log(TAU_SCALAR_MC));
 const int MAX_BS_STEPS_MC = ceil(log(BINARY_SEARCH_TAU_LIMIT_MC/((TAU_SCALAR_MC-1)*MAX_TAU_MC))/log(0.5));
 const int ARRAY_SCALAR = 2;
@@ -94,8 +94,8 @@ const int MAX_BS_STEPS_MCBB = ceil(log(BINARY_SEARCH_TAU_LIMIT_MCBB/((TAU_SCALAR
 
 
 //Adiabatic method parameters
-const double DIFFERENCE_LIMIT_ADIA = 0.001;
-const double TAU_INIT_ADIA = 0.1;
+const double DIFFERENCE_LIMIT_ADIA = 0.01;
+const double TAU_INIT_ADIA = 0.5;
 const double MAX_TAU_ADIA = 30;
 const double TAU_SCALAR_ADIA = 1.15;
 const double TIME_STEP_ADIA = 1/1000.0;

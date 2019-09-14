@@ -39,7 +39,7 @@ main(int argc, char *argv[]){
 						submit_file_name = "submits/submit_" + identifier  +".job";
 						
 						submit_file.open(submit_file_name);
-						submit_file << "Executable        = main_3_by_3_adia\n";
+						submit_file << "Executable        = main\n";
 						submit_file << "Arguments         = " << num << " " << gi << " " << fi << " " << gt << " " << ft << "\n";
 						submit_file << "Log               = cluster/logs/_" << identifier  << ".log\n";
 						submit_file << "Output            = cluster/outputs/_" << identifier << "\n";
