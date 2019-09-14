@@ -1,0 +1,6 @@
+Executable        = main_3_by_3_adia
+Arguments         = 4 0.1 0.1 0.1 0.5
+Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_0.1__ft_0.5.log
+Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_0.1__ft_0.5
+request_cpus      = 2
+Queue

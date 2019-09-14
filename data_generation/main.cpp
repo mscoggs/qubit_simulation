@@ -37,11 +37,11 @@ g++ -o main main.cpp adiabatic.cpp check.cpp export_data.cpp hamiltonian.cpp lin
 main (int argc, char *argv[]){
 	int gt_i, ft_i, gi_i, fi_i, occupant_index;
 	Simulation_Parameters sim_params;
-	double g_init[1] = {atof(argv[1])};//{0.1,1};
-	double f_init[1] = {atof(argv[2])};//{0.1,1};
-	double g_targ[1] = {atof(argv[3])};//{0.5,0.1,1};
-	double f_targ[1] = {atof(argv[4])};//{0.5,0.1,1};
-	int num_occupants_array[2]= {2, 7};
+	int num_occupants_array[1]= {atoi(argv[1])};
+	double g_init[1] = {atof(argv[2])};//{0.1,1};
+	double f_init[1] = {atof(argv[3])};//{0.1,1};
+	double g_targ[1] = {atof(argv[4])};//{0.5,0.1,1};
+	double f_targ[1] = {atof(argv[5])};//{0.5,0.1,1};
 	
 	
 
@@ -59,8 +59,8 @@ main (int argc, char *argv[]){
 						//if(sim_params.g_initial == sim_params.g_target && sim_params.f_initial == sim_params.f_target) continue;
 						sim_params.initialize_target_and_initial_hamiltonian(sim_params);
 
-						if(MCBF) mcbf_method(sim_params);
 						if(MCBB) mcbb_method(sim_params);
+						if(MCBF) mcbf_method(sim_params);
 						if(ADIABATIC)  adiabatic_method(sim_params);
 					}}}}
 		delete[] sim_params.b, delete[] sim_params.ham_initial, delete[] sim_params.ham_target, delete[] sim_params.table, delete[] sim_params.start_state;

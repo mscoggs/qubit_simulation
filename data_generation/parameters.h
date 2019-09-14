@@ -25,16 +25,16 @@ const double LOWK = MIN_PARAM;
 const double LOWB = MIN_PARAM;
 const double T = 1;
 const double V = 2;
-const int NX = 2;
-const int NY = 2;
+const int NX = 3;
+const int NY = 3;
 const int NUMBER_OF_SITES = NX*NY;
 
 
 //Non-Physical Simulation_Parameters
-const bool MCBF = true;
-const bool MCBF_DATA = true;
-const bool MCBB = true;
-const bool MCBB_DATA = true;
+const bool MCBF = false;
+const bool MCBF_DATA = false;
+const bool MCBB = false;
+const bool MCBB_DATA = false;
 const bool ADIABATIC = true;
 const bool ADIABATIC_DATA = true;
 const int SEED_TOTAL= 10;
