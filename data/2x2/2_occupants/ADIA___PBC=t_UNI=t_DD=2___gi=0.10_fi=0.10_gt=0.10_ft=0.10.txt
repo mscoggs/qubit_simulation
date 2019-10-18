@@ -1,7 +1,7 @@
 START_PARAMETERS
 DIAG =                       false
-DIFFERENCE_LIMIT_ADIA =      0.001
-TAU_INIT_ADIA =              0.005
+DIFFERENCE_LIMIT_ADIA =      0.01
+TAU_INIT_ADIA =              0.5
 MAX_TAU_ADIA =               30
 TAU_SCALAR_ADIA =            1.15
 TIME_STEP_ADIA =             0.001
@@ -27,8 +27,8 @@ END_PARAMETERS
 
 ##############################################################################
 ##############################################################################
-tau =               0.005
-total_steps =       5
+tau =               0.5
+total_steps =       500
 ground_E =          -1.03052
 
 tau_array = []

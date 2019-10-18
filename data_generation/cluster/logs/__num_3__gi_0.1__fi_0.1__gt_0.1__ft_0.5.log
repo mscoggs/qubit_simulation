@@ -9,3 +9,51 @@
 ...
 000 (674850.000.000) 09/14 14:27:39 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5591_da80_4>
 ...
+009 (674850.000.000) 09/14 14:46:33 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+009 (674562.000.000) 09/14 14:46:33 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+009 (674706.000.000) 09/14 14:46:33 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (675030.000.000) 09/14 22:20:25 Job submitted from host: <140.160.143.130:9618?addrs=140.160.143.130-9618&noUDP&sock=5591_da80_4>
+...
+001 (675030.000.000) 09/16 01:19:51 Job executing on host: <140.160.143.155:9618?addrs=140.160.143.155-9618&noUDP&sock=4483_db90_3>
+...
+006 (675030.000.000) 09/16 01:20:00 Image size of job updated: 3080
+	4  -  MemoryUsage of job (MB)
+	3080  -  ResidentSetSize of job (KB)
+...
+006 (675030.000.000) 09/16 01:25:01 Image size of job updated: 21932
+	22  -  MemoryUsage of job (MB)
+	21932  -  ResidentSetSize of job (KB)
+...
+006 (675030.000.000) 09/16 01:30:01 Image size of job updated: 39508
+	39  -  MemoryUsage of job (MB)
+	39508  -  ResidentSetSize of job (KB)
+...
+006 (675030.000.000) 09/16 01:35:01 Image size of job updated: 56844
+	56  -  MemoryUsage of job (MB)
+	56844  -  ResidentSetSize of job (KB)
+...
+006 (675030.000.000) 09/16 01:40:02 Image size of job updated: 69536
+	68  -  MemoryUsage of job (MB)
+	69536  -  ResidentSetSize of job (KB)
+...
+005 (675030.000.000) 09/18 11:42:58 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:21:55, Sys 0 00:08:45  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:21:55, Sys 0 00:08:45  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.99        2         2 
+	   Disk (KB)            :   150         150     17594 
+	   Memory (MB)          :    68           1       128 
+...
