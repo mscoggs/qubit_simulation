@@ -43,15 +43,15 @@ const bool DIAG = false;
 
 //MCBF method parameters
 const double DIFFERENCE_LIMIT_MC = 0.0001;
-const double TAU_INIT_MC = 0.005;
-const double MAX_TAU_MC = 20;
+const double TAU_INIT_MC = 0.01;
+const double MAX_TAU_MC = 50;
 const double TAU_SCALAR_MC = 1.15;
 const double MAX_CHANGE_MC_INIT = 0.5*(MAX_PARAM-MIN_PARAM);
 const double ACCEPTANCE_PROB_MC = 0.8;
 const double TEMP_EXP_DECAY_MC = 0.85;
 const double BINARY_SEARCH_TAU_LIMIT_MC = TAU_INIT_MC/10.0;
 const int RANDOM_STATES_MC = 3;
-const int SWEEPS_MC = 20;
+const int SWEEPS_MC = 50;
 const int TOTAL_STEPS_INIT_MC =  12;
 const int TEMP_DECAY_ITERATIONS_MC =  20;
 const int TEMP_DECAY_LIMIT_MC = 10;
@@ -85,7 +85,7 @@ const double ACCEPTANCE_PROB_MCBB = ACCEPTANCE_PROB_MC;
 const double TEMP_EXP_DECAY_MCBB = TEMP_EXP_DECAY_MC;
 const double BINARY_SEARCH_TAU_LIMIT_MCBB = TAU_INIT_MCBB/10.0;
 const int RANDOM_STATES_MCBB = RANDOM_STATES_MC;
-const int NUMBER_OF_BANGS = 12;
+const int NUMBER_OF_BANGS = 8;
 const int SWEEPS_MCBB = 25;
 const int TEMP_DECAY_ITERATIONS_MCBB = TEMP_DECAY_ITERATIONS_MC;;
 const int TEMP_DECAY_LIMIT_MCBB = TEMP_DECAY_LIMIT_MC;

@@ -4,7 +4,6 @@
 # ./run_jobs.sh
 
 
-condor_submit cluster/submits/submit__num_2__gi_0.1__fi_0.1__gt_0.1__ft_0.1.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_0.1__gt_0.1__ft_0.5.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_0.1__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_0.1__gt_0.5__ft_0.1.job
@@ -15,7 +14,6 @@ condor_submit cluster/submits/submit__num_2__gi_0.1__fi_0.1__gt_1.0__ft_0.5.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_0.1__gt_1.0__ft_1.0.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_1.0__gt_0.1__ft_0.1.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_1.0__gt_0.1__ft_0.5.job
-condor_submit cluster/submits/submit__num_2__gi_0.1__fi_1.0__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_1.0__gt_0.5__ft_0.1.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_1.0__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_2__gi_0.1__fi_1.0__gt_0.5__ft_1.0.job
@@ -28,7 +26,6 @@ condor_submit cluster/submits/submit__num_2__gi_1.0__fi_0.1__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_0.1__gt_0.5__ft_0.1.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_0.1__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_0.1__gt_0.5__ft_1.0.job
-condor_submit cluster/submits/submit__num_2__gi_1.0__fi_0.1__gt_1.0__ft_0.1.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_0.1__gt_1.0__ft_0.5.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_0.1__gt_1.0__ft_1.0.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_1.0__gt_0.1__ft_0.1.job
@@ -39,8 +36,6 @@ condor_submit cluster/submits/submit__num_2__gi_1.0__fi_1.0__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_1.0__gt_0.5__ft_1.0.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_1.0__gt_1.0__ft_0.1.job
 condor_submit cluster/submits/submit__num_2__gi_1.0__fi_1.0__gt_1.0__ft_0.5.job
-condor_submit cluster/submits/submit__num_2__gi_1.0__fi_1.0__gt_1.0__ft_1.0.job
-condor_submit cluster/submits/submit__num_7__gi_0.1__fi_0.1__gt_0.1__ft_0.1.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_0.1__gt_0.1__ft_0.5.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_0.1__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_0.1__gt_0.5__ft_0.1.job
@@ -51,7 +46,6 @@ condor_submit cluster/submits/submit__num_7__gi_0.1__fi_0.1__gt_1.0__ft_0.5.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_0.1__gt_1.0__ft_1.0.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_1.0__gt_0.1__ft_0.1.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_1.0__gt_0.1__ft_0.5.job
-condor_submit cluster/submits/submit__num_7__gi_0.1__fi_1.0__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_1.0__gt_0.5__ft_0.1.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_1.0__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_7__gi_0.1__fi_1.0__gt_0.5__ft_1.0.job
@@ -64,7 +58,6 @@ condor_submit cluster/submits/submit__num_7__gi_1.0__fi_0.1__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_0.1__gt_0.5__ft_0.1.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_0.1__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_0.1__gt_0.5__ft_1.0.job
-condor_submit cluster/submits/submit__num_7__gi_1.0__fi_0.1__gt_1.0__ft_0.1.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_0.1__gt_1.0__ft_0.5.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_0.1__gt_1.0__ft_1.0.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_1.0__gt_0.1__ft_0.1.job
@@ -75,8 +68,6 @@ condor_submit cluster/submits/submit__num_7__gi_1.0__fi_1.0__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_1.0__gt_0.5__ft_1.0.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_1.0__gt_1.0__ft_0.1.job
 condor_submit cluster/submits/submit__num_7__gi_1.0__fi_1.0__gt_1.0__ft_0.5.job
-condor_submit cluster/submits/submit__num_7__gi_1.0__fi_1.0__gt_1.0__ft_1.0.job
-condor_submit cluster/submits/submit__num_3__gi_0.1__fi_0.1__gt_0.1__ft_0.1.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_0.1__gt_0.1__ft_0.5.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_0.1__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_0.1__gt_0.5__ft_0.1.job
@@ -87,7 +78,6 @@ condor_submit cluster/submits/submit__num_3__gi_0.1__fi_0.1__gt_1.0__ft_0.5.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_0.1__gt_1.0__ft_1.0.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_1.0__gt_0.1__ft_0.1.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_1.0__gt_0.1__ft_0.5.job
-condor_submit cluster/submits/submit__num_3__gi_0.1__fi_1.0__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_1.0__gt_0.5__ft_0.1.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_1.0__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_3__gi_0.1__fi_1.0__gt_0.5__ft_1.0.job
@@ -100,7 +90,6 @@ condor_submit cluster/submits/submit__num_3__gi_1.0__fi_0.1__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_0.1__gt_0.5__ft_0.1.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_0.1__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_0.1__gt_0.5__ft_1.0.job
-condor_submit cluster/submits/submit__num_3__gi_1.0__fi_0.1__gt_1.0__ft_0.1.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_0.1__gt_1.0__ft_0.5.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_0.1__gt_1.0__ft_1.0.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_1.0__gt_0.1__ft_0.1.job
@@ -111,8 +100,6 @@ condor_submit cluster/submits/submit__num_3__gi_1.0__fi_1.0__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_1.0__gt_0.5__ft_1.0.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_1.0__gt_1.0__ft_0.1.job
 condor_submit cluster/submits/submit__num_3__gi_1.0__fi_1.0__gt_1.0__ft_0.5.job
-condor_submit cluster/submits/submit__num_3__gi_1.0__fi_1.0__gt_1.0__ft_1.0.job
-condor_submit cluster/submits/submit__num_4__gi_0.1__fi_0.1__gt_0.1__ft_0.1.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_0.1__gt_0.1__ft_0.5.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_0.1__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_0.1__gt_0.5__ft_0.1.job
@@ -123,7 +110,6 @@ condor_submit cluster/submits/submit__num_4__gi_0.1__fi_0.1__gt_1.0__ft_0.5.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_0.1__gt_1.0__ft_1.0.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_1.0__gt_0.1__ft_0.1.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_1.0__gt_0.1__ft_0.5.job
-condor_submit cluster/submits/submit__num_4__gi_0.1__fi_1.0__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_1.0__gt_0.5__ft_0.1.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_1.0__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_4__gi_0.1__fi_1.0__gt_0.5__ft_1.0.job
@@ -136,7 +122,6 @@ condor_submit cluster/submits/submit__num_4__gi_1.0__fi_0.1__gt_0.1__ft_1.0.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_0.1__gt_0.5__ft_0.1.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_0.1__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_0.1__gt_0.5__ft_1.0.job
-condor_submit cluster/submits/submit__num_4__gi_1.0__fi_0.1__gt_1.0__ft_0.1.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_0.1__gt_1.0__ft_0.5.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_0.1__gt_1.0__ft_1.0.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_1.0__gt_0.1__ft_0.1.job
@@ -147,4 +132,3 @@ condor_submit cluster/submits/submit__num_4__gi_1.0__fi_1.0__gt_0.5__ft_0.5.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_1.0__gt_0.5__ft_1.0.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_1.0__gt_1.0__ft_0.1.job
 condor_submit cluster/submits/submit__num_4__gi_1.0__fi_1.0__gt_1.0__ft_0.5.job
-condor_submit cluster/submits/submit__num_4__gi_1.0__fi_1.0__gt_1.0__ft_1.0.job

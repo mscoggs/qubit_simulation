@@ -62,7 +62,7 @@ void exp_complex_double_matrix_pade(int N, double *A, double *B){
 	char TRANSA='N',TRANSB='N',TRANS='N';
 	ALPHA[0]=1.0,ALPHA[1]=0.0;
 	BETA[0]=0.0,BETA[1]=0.0;
- new double[N]();
+
 	row_norm = new double[N]();
 	X= new double[2*N*N]();
 	Y= new double[2*N*N]();

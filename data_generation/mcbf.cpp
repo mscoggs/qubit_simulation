@@ -16,13 +16,13 @@
 void mcbf_method(Simulation_Parameters& sim_params){
 	int i;
 	sim_params.best_arrays_size 	 = ceil(NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC*(MAX_TAU_STEPS_MC+MAX_BS_STEPS_MC));
-	sim_params.tau_array_size 		 = ceil(MAX_TAU_STEPS_MC+MAX_BS_STEPS_MC);
-	sim_params.j_best       			 = new double[2*sim_params.best_arrays_size]();
+	sim_params.tau_array_size 		   = ceil(MAX_TAU_STEPS_MC+MAX_BS_STEPS_MC);
+	sim_params.j_best       	           = new double[2*sim_params.best_arrays_size]();
 	sim_params.k_best     			   = new double[2*sim_params.best_arrays_size]();
 	sim_params.b_best     			   = new double[sim_params.best_arrays_size]();
 	sim_params.tau_array  			   = new double[sim_params.tau_array_size]();
-	sim_params.best_E_array 			 = new double[sim_params.tau_array_size]();
-	sim_params.total_steps_cummulative_sum = new int[sim_params.best_arrays_size]();
+	sim_params.best_E_array 		   = new double[sim_params.tau_array_size]();
+	sim_params.total_steps_cummulative_sum     = new int[sim_params.best_arrays_size]();
 
 	for(sim_params.seed=1; sim_params.seed<SEED_TOTAL+1; sim_params.seed++){
 
@@ -79,9 +79,10 @@ void mcbf_method(Simulation_Parameters& sim_params){
 				sim_params.index ++;
 			}
 		}
+		sim_params.tau = sim_params.tau_old;
 		if(MCBF_DATA) save_mcbf_data(sim_params);
 	}
-	delete[] sim_params.j_best, delete[] sim_params.k_best, delete[] sim_params.b_best, delete[] sim_params.tau_array, delete[] sim_params.best_E_array;
+	delete[] sim_params.j_best, delete[] sim_params.k_best, delete[] sim_params.b_best, delete[] sim_params.tau_array, delete[] sim_params.best_E_array, delete[] sim_params.total_steps_cummulative_sum;
 }
 
 
@@ -145,7 +146,7 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 		}
 		sim_params.temperature=sim_params.temperature*TEMP_EXP_DECAY_MC;
 	}
-	delete[] j_array, delete[] k_array, delete[] b_array, delete[] j_temp, delete[] k_temp, delete[] b_temp;
+	delete[] j_array, delete[] k_array, delete[] b_array, delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] sim_params.state;
 }
 
 
@@ -224,7 +225,7 @@ void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 			old_E=new_E;
 		}
 	}
-	delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] state_random;
+	delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] state_random, delete[] sim_params.state;
 	sim_params.temperature = -(sum/(count*log(ACCEPTANCE_PROB_MC)));
 }
 
@@ -283,8 +284,7 @@ void calc_tau_mcbf(Simulation_Parameters& sim_params){
 	difference = abs(sim_params.old_distance - sim_params.new_distance);
 
 	if(difference > .1) tau_scalar = TAU_SCALAR_MC; //business as usual, decent progress
-	else tau_scalar = TAU_SCALAR_MC* fmin((.1/difference), 5);
-
+	else tau_scalar = TAU_SCALAR_MC* fmin((.1/difference), 3);
 	sim_params.tau = sim_params.tau*tau_scalar;
 }
 

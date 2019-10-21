@@ -74,6 +74,7 @@ void mcbb_method(Simulation_Parameters& sim_params){
 				sim_params.index ++;
 			}
 		}
+		sim_params.tau = sim_params.tau_old;
 		if(MCBB_DATA) save_mcbb_data(sim_params);
 	}
 	delete[] sim_params.j_best, delete[] sim_params.k_best, delete[] sim_params.b_best, delete[] sim_params.tau_array, delete[] sim_params.best_E_array;
@@ -281,7 +282,7 @@ void calc_tau_mcbb(Simulation_Parameters& sim_params){
 	double difference = abs(sim_params.old_distance - sim_params.new_distance), tau_scalar;
 
 	if(difference > .1) tau_scalar = TAU_SCALAR_MCBB; //business as usual, decent progress
-	else tau_scalar = TAU_SCALAR_MCBB* fmin((.1/difference), 5);
+	else tau_scalar = TAU_SCALAR_MCBB* fmin((.1/difference), 3);
 	sim_params.tau = sim_params.tau*tau_scalar;
 }
 
