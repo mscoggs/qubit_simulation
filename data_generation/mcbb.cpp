@@ -15,6 +15,7 @@
 
 void mcbb_method(Simulation_Parameters& sim_params){
 	int i;
+	double distance_temp;
 	sim_params.best_arrays_size = ceil(2*NUMBER_OF_BANGS*(MAX_TAU_STEPS_MC+MAX_BS_STEPS_MC));
 	sim_params.tau_array_size   = ceil(MAX_TAU_STEPS_MC+MAX_BS_STEPS_MC);
 	sim_params.j_best 					= new double[sim_params.best_arrays_size]();
@@ -47,20 +48,18 @@ void mcbb_method(Simulation_Parameters& sim_params){
 		while(sim_params.tau<MAX_TAU_MCBB){
 
 			calc_initial_temp_mcbb(sim_params);
-		  mcbb_simulation(sim_params);
-			sim_params.difference = sim_params.best_E-sim_params.ground_E;
-
+			mcbb_simulation(sim_params);
+			distance_temp = calc_distance(sim_params.best_E_array[0], sim_params.ground_E,  sim_params.best_E);
 			if(PRINT) print_mc_results(sim_params);
 
-
-			if(sim_params.difference < DIFFERENCE_LIMIT_MCBB){
+			if(distance_temp < DIFFERENCE_LIMIT_MCBB){
 				binary_search_mcbb(sim_params);
 				break;
 
 			}else{
 
 				sim_params.old_distance = sim_params.new_distance;
-				sim_params.new_distance = calc_distance(sim_params.best_E_array[0], sim_params.ground_E,  sim_params.best_E);
+				sim_params.new_distance = distance_temp;
 
 				sim_params.tau_array[sim_params.index] = sim_params.tau;
 				sim_params.best_E_array[sim_params.index] = sim_params.best_E;
@@ -236,18 +235,18 @@ void calc_initial_temp_mcbb(Simulation_Parameters& sim_params){
 void binary_search_mcbb(Simulation_Parameters& sim_params){
 	printf("\nUsing binary search method to look for optimal ground state...");
 
-	double tau_max = sim_params.tau, tau_min = sim_params.tau_array[sim_params.index-1];
+	double tau_max = sim_params.tau, tau_min = sim_params.tau_array[sim_params.index-1], distance_temp;
 	sim_params.tau = (tau_max + tau_min) / 2.0;
 
 	while((tau_max - tau_min) >BINARY_SEARCH_TAU_LIMIT_MCBB){
 
 		calc_initial_temp_mcbb(sim_params);
 		mcbb_simulation(sim_params);
-		sim_params.difference = sim_params.best_E-sim_params.ground_E;
+		distance_temp = calc_distance(sim_params.best_E_array[0], sim_params.ground_E,  sim_params.best_E);
 
 		if(PRINT) print_mc_results(sim_params);
 
-		if(sim_params.difference < DIFFERENCE_LIMIT_MCBB){//still in the ground state, backtrack tau
+		if(distance_temp < DIFFERENCE_LIMIT_MCBB){//still in the ground state, backtrack tau
 			printf("\nIn binary_search_mcbf....\nStepping backward....\n");
 
 			tau_max = sim_params.tau;
@@ -258,7 +257,7 @@ void binary_search_mcbb(Simulation_Parameters& sim_params){
 			printf("\nIn binary_search_mcbf....\nStepping forward....\n");
 
 			sim_params.old_distance = sim_params.new_distance;
-			sim_params.new_distance = calc_distance(sim_params.best_E_array[0], sim_params.ground_E,  sim_params.best_E);
+			sim_params.new_distance = distance_temp;
 
 			sim_params.tau_array[sim_params.index] = sim_params.tau;
 			sim_params.best_E_array[sim_params.index] = sim_params.best_E;
@@ -281,10 +280,11 @@ void binary_search_mcbb(Simulation_Parameters& sim_params){
 void calc_tau_mcbb(Simulation_Parameters& sim_params){
 	double difference = abs(sim_params.old_distance - sim_params.new_distance), tau_scalar;
 
-	if(difference > .1) tau_scalar = TAU_SCALAR_MCBB; //business as usual, decent progress
-	else tau_scalar = TAU_SCALAR_MCBB* fmin((.1/difference), 3);
+	if((difference < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_MC * 2 ;
+	else tau_scalar = TAU_SCALAR_MCBB;
 	sim_params.tau = sim_params.tau*tau_scalar;
 }
+
 
 
 

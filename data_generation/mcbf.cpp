@@ -283,8 +283,8 @@ void calc_tau_mcbf(Simulation_Parameters& sim_params){
 
 	difference = abs(sim_params.old_distance - sim_params.new_distance);
 
-	if(difference > .1) tau_scalar = TAU_SCALAR_MC; //business as usual, decent progress
-	else tau_scalar = TAU_SCALAR_MC* fmin((.1/difference), 3);
+	if((difference < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_MC * 2 ;
+	else tau_scalar = TAU_SCALAR_MC;
 	sim_params.tau = sim_params.tau*tau_scalar;
 }
 
