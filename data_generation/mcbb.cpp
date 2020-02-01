@@ -41,12 +41,13 @@ void mcbb_method(Simulation_Parameters& sim_params){
 		if(PRINT) print_mc_results(sim_params);
 
 		if(sim_params.new_distance < DISTANCE_LIMIT_MCBB){
-			binary_search_mcbb(sim_params);
+			//binary_search_mcbb(sim_params);
+			if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
 			if(MCBB_DATA)	save_mcbb_data(sim_params);
 			break;
 		}else{
-			if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
 
+			if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
 			sim_params.tau_array[sim_params.index] = sim_params.tau;
 			sim_params.best_E_array[sim_params.index] = sim_params.best_E;
 			copy_arrays_mcbb(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,(2*NUMBER_OF_BANGS)*sim_params.index, (2*NUMBER_OF_BANGS)*sim_params.best_index_fixed_tau);
@@ -219,7 +220,7 @@ void calc_initial_temp_mcbb(Simulation_Parameters& sim_params){
 
 void binary_search_mcbb(Simulation_Parameters& sim_params){
 	int i;
-	double tau_max = sim_params.tau, tau_min;
+	double tau_max = sim_params.tau, tau_min, distance_temp;
 
 
 	if(sim_params.index>=1) tau_min = sim_params.tau_array[sim_params.index-1];
@@ -244,7 +245,7 @@ void binary_search_mcbb(Simulation_Parameters& sim_params){
 		sim_params.best_index_fixed_tau = 0;
 		for (i=0;i<NUM_SEEDS;i++) if(sim_params.E_array_fixed_tau[i] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[i], sim_params.best_index_fixed_tau = i;
 
-		sim_params.old_distance = sim_params.new_distance;
+		distance_temp	= sim_params.new_distance;
 		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
 
 		if(PRINT) print_mc_results(sim_params);
@@ -261,6 +262,7 @@ void binary_search_mcbb(Simulation_Parameters& sim_params){
 			}
 		}else{
 			printf("\nIn binary_search_mcbb....\nStepping forward....\n");
+			sim_params.old_distance = sim_params.new_distance;
 			if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
 
 			copy_arrays_mcbb(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,(2*NUMBER_OF_BANGS)*sim_params.index, (2*NUMBER_OF_BANGS)*sim_params.best_index_fixed_tau);
