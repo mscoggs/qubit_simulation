@@ -45,13 +45,13 @@ void print_arrays_mcbb(double* j_times, double* k_times, double* b_times){
 	int i;
 	printf("\nj_time=[");
 
-	for (i=0; i<2*NUMBER_OF_BANGS*10; i++) printf(" %5.4f |", j_times[i]);
+	for (i=0; i<2*NUMBER_OF_BANGS; i++) printf(" %5.4f |", j_times[i]);
 
 	printf("]\nk_times=[");
-	for (i=0; i<2*NUMBER_OF_BANGS*10; i++) printf(" %5.4f |", k_times[i]);
+	for (i=0; i<2*NUMBER_OF_BANGS; i++) printf(" %5.4f |", k_times[i]);
 
-	printf("]\nb_times=[");
-	for (i=0; i<2*NUMBER_OF_BANGS*10; i++) printf(" %5.4f |", b_times[i]);
+	//printf("]\nb_times=[");
+	//for (i=0; i<2*NUMBER_OF_BANGS; i++) printf(" %5.4f |", b_times[i]);
 	printf("\n");
 }
 
@@ -102,14 +102,13 @@ void print_arrays_mcbf(double *j_array, double *k_array, double *b_array, int to
 
 
 void print_mc_results(Simulation_Parameters& sim_params){
-	printf("#######################################################################\n");
+	printf("############################################################################\n");
 	printf("BEST ENERGY=    %9.6f\n",sim_params.best_E);
 	printf("TARGET ENERGY=  %9.6f\n",sim_params.ground_E);
-	printf("DIFFERENCE=     %9.6f\n",sim_params.best_E - sim_params.ground_E);
-	printf("INITIAL ENERGY= %9.6f\n",sim_params.best_E_array[0]);
-	printf("NEW DISTANCNCE= %9.6f\n",sim_params.new_distance);
+	printf("INITIAL ENERGY= %9.6f\n",sim_params.initial_E);
 	printf("OLD DISTANCNCE= %9.6f\n",sim_params.old_distance);
-	printf("#######################################################################\n");
+	printf("NEW DISTANCNCE= %9.6f\n",sim_params.new_distance);
+	printf("############################################################################\n\n\n\n\n");
 }
 
 
@@ -135,7 +134,7 @@ void print_mcbf_info(Simulation_Parameters& sim_params){
 		printf("################### THE  MONTE-CARLO BRUTE-FORCE METHOD ####################\n");
 		printf("############################################################################\n");
 		printf("|| OCCUPANTS:       %4i || DIMENSION:        %4i || SEED:          %4i ||\n", sim_params.num_occupants, sim_params.N, sim_params.seed);
-		printf("|| TAU_MAX:       %4.4f || TAU:            %4.4f || TIME_STEP    %4.4f ||\n", double(MAX_TAU_MC), sim_params.tau, sim_params.time_step);
+		printf("|| TAU_MAX:       %4.4f || TAU:            %4.4f || TIME_STEP    %4.4f ||\n", double(MAX_TAU_MCBF), sim_params.tau, sim_params.time_step);
 		printf("|| TOTAL_STEPS:     %4i || TOTAL_SWEEPS:     %4i ||                     ||\n", sim_params.total_steps, SWEEPS_MC*sim_params.total_steps);
 		printf("|| TEMPERATURE:   %4.4f || TEMP_DECAYS:      %4i ||                     ||\n", sim_params.temperature, TEMP_DECAY_ITERATIONS_MC);
 		printf("|| G_INITIAL:     %4.4f || F_INITIAL:      %4.4f ||                     ||\n", sim_params.g_initial,     sim_params.f_initial);

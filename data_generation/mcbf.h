@@ -14,7 +14,6 @@
 */
 void mcbf_method(Simulation_Parameters& sim_params);
 
-
 /**
 		Runs the monte carlo brute force simluation for a fixed total time (tau). The temperature is annealed over each  iteration. This
         temperature dictactes the chance the a change in the j-k-b protocls (which drives us away from our desired state) is allowed.
@@ -82,7 +81,7 @@ void calc_total_steps_mcbf(Simulation_Parameters& sim_params);
     @param total_steps the total number of steps for the evolution, the total number of inputs for each array is equal to
            total_steps*NUMBER_OF_SITES for b (a site dependent parameter), and twice that for j/k, a bond dependent parameter
 */
-void init_arrays_mcbf(Simulation_Parameters& sim_params, double *j_array, double *k_array, double *b_array, int total_steps);
+void init_arrays_mcbf(Simulation_Parameters& sim_params, double *j_array, double *k_array, double *b_array);
 
 
 /**

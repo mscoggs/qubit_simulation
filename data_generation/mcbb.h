@@ -5,7 +5,6 @@
 
 #include "parameters.h"
 
-
 /**
 		Runs the monte carlo bang bang method, iterating over each seed. For each seed, the total time (tau) increased iteratively
         until the target ground state is met in the monte carlo bang bang simulation.
@@ -139,5 +138,11 @@ double get_change_mcbb(Simulation_Parameters& sim_params);
 */
 void scale_arrays_mcbb(double *j_array, double *k_array, double *b_array, double scalar);
 
+
+/**
+	prints tau vs energy for the evolution of a fixed protocol, where the time of the jumps are a fixed fraction of tau
+    @param sim_params contains all of the variables for the simulation
+*/
+void evolve_fixed_protocol(Simulation_Parameters& sim_params);
 
 #endif

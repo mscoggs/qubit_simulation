@@ -7,33 +7,34 @@
 
 
 
-void save_mcbf_data(Simulation_Parameters& sim_params){
-	int i;
+void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
+	int i,j,seed;
 	std::ofstream file;
 	std::string type = "MCBF";
 	std::string path = make_path(sim_params, type);
 
 
-	if(sim_params.seed == 1)	{
+	if(sim_params.tau == TAU_INIT_MCBB){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
-		file << "SEED_TOTAL =                 " <<  SEED_TOTAL << "\n";
-		file << "DIFFERENCE_LIMIT_MC =        " <<  DIFFERENCE_LIMIT_MC << "\n";
-		file << "TAU_INIT_MC =                " <<  TAU_INIT_MC << "\n";
-		file << "MAX_TAU_MC =                 " <<  MAX_TAU_MC << "\n";
+		file << "NUM_SEEDS =                  " <<  NUM_SEEDS << "\n";
+		file << "DISTANCE_LIMIT_MCBF =        " <<  DISTANCE_LIMIT_MCBF << "\n";
+		file << "TAU_INIT_MCBF =              " <<  TAU_INIT_MCBF << "\n";
+		file << "MAX_TAU_MCBF =               " <<  MAX_TAU_MCBF << "\n";
 		file << "TAU_SCALAR_MC =              " <<  TAU_SCALAR_MC << "\n";
-		file << "MAX_CHANGE_MC_INIT =         " <<  MAX_CHANGE_MC_INIT << "\n";
+		file << "MAX_CHANGE_MCBF_INIT =       " <<  MAX_CHANGE_MCBF_INIT << "\n";
+		file << "MIN_CHANGE_MCBF_INIT =       " <<  MIN_CHANGE_MCBF_INIT << "\n";
 		file << "ACCEPTANCE_PROB_MC =         " <<  ACCEPTANCE_PROB_MC << "\n";
 		file << "TEMP_EXP_DECAY_MC =          " <<  TEMP_EXP_DECAY_MC << "\n";
-		file << "BINARY_SEARCH_TAU_LIMIT_MC = " <<  BINARY_SEARCH_TAU_LIMIT_MC << "\n";
+		file << "BINARY_SEARCH_TAU_LIMIT_MCBF = " <<  BINARY_SEARCH_TAU_LIMIT_MCBF << "\n";
 		file << "RANDOM_STATES_MC =           " <<  RANDOM_STATES_MC  << "\n";
 		file << "SWEEPS_MC =                  " <<  SWEEPS_MC << "\n";
 		file << "TOTAL_STEPS_INIT_MC =        " <<  TOTAL_STEPS_INIT_MC << "\n";
 		file << "TEMP_DECAY_ITERATIONS_MC =   " <<  TEMP_DECAY_ITERATIONS_MC  << "\n";
 		file << "TEMP_DECAY_LIMIT_MC =        " <<  TEMP_DECAY_LIMIT_MC << "\n";
 		file << "MAX_EVOLVE_STEPS_MC =        " <<  MAX_EVOLVE_STEPS_MC << "\n";
-		file << "MAX_TAU_STEPS_MC =           " <<  MAX_TAU_STEPS_MC << "\n";
+		file << "MAX_TAU_STEPS_MCBF =           " <<  MAX_TAU_STEPS_MCBF << "\n";
 		file << "ARRAY_SCALAR =               " <<  ARRAY_SCALAR << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
@@ -42,48 +43,104 @@ void save_mcbf_data(Simulation_Parameters& sim_params){
 
 	file << "\n\n\n\n##############################################################################\n";
 	file << "##############################################################################\n";
-	file << "seed =              " << sim_params.seed << "\n";
 	file << "tau =               " << sim_params.tau   << "\n";
 	file << "total_steps =       " << sim_params.total_steps << "\n";
-	file << "ground_E =          " << sim_params.ground_E << "\n\n";
+	file << "time_step =       " << sim_params.time_step << "\n";
+	file << "best_E =          " << sim_params.best_E << "\n\n";
+	file << "distance =          " << sim_params.new_distance << "\n\n";
+	file << "\nj_protocol =  [";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<sim_params.total_steps;j++) file << sim_params.j_best_fixed_tau[NUMBER_OF_SITES*2*(i*sim_params.total_steps + j)] << ", ";
+		file << "],";
+	}
 
-	file << "j_protocol = [";
-	for(i=0;i<sim_params.total_steps_cummulative_sum[sim_params.index-1];i++) file << sim_params.j_best[i*NUMBER_OF_SITES*2] << ", ";
-	file <<"]\nk_protocol = [";
-	for(i=0;i<sim_params.total_steps_cummulative_sum[sim_params.index-1];i++) file << sim_params.k_best[i*NUMBER_OF_SITES*2] << ", ";
-	file <<"]\nb_protocol = [";
-	for(i=0;i<sim_params.total_steps_cummulative_sum[sim_params.index-1];i++) file << sim_params.b_best[i*NUMBER_OF_SITES] << ", ";
+
+	file << "\nk_protocol =  [";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<sim_params.total_steps;j++) file << sim_params.k_best_fixed_tau[NUMBER_OF_SITES*2*(i*sim_params.total_steps + j)] << ", ";
+		file << "],";
+	}
+
+	file << "\nb_protocol =  [";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<sim_params.total_steps;j++) file << sim_params.b_best_fixed_tau[NUMBER_OF_SITES*(i*sim_params.total_steps + j)] << ", ";
+		file << "],";
+	}
+
+	file << "]\nbest_E_fixed_tau =   [";
+	for(i=0;i<NUM_SEEDS;i++) file << sim_params.E_array_fixed_tau[i] << ", ";
 	file <<"]\n\n";
+	file.close();
+}
 
-	file <<  "tau_array =  [";
-	for(i=0;i< sim_params.index;i++) file << sim_params.tau_array[i] << ", ";
-	file << "]\nbest_E_array =  [";
-	for(i=0;i< sim_params.index;i++) file << sim_params.best_E_array[i] << ", ";
-	file << "]\ntotal_steps_cummulative_sum = [";
-	for(i=0;i< sim_params.index;i++) file << sim_params.total_steps_cummulative_sum[i] << ", ";
+void save_mcbf_data(Simulation_Parameters& sim_params){
+	int i,j, cummulative_steps=0;
+	std::ofstream file;
+	std::string type = "MCBF";
+	std::string path = make_path(sim_params, type);
+	file.open(path, std::ios::app);
+
+	file << "\n\n\n\n##############################################################################\n";
+	file << "##############################################################################\n";
+	file << "ground_E =          " << sim_params.ground_E << "\n\n";
+	file << "tau_array = [";
+	for(i=0;i<sim_params.index;i++) file << sim_params.tau_array[i] << ", ";
+	file << "]\nbest_E_array = [";
+	for(i=0;i<sim_params.index;i++) file << sim_params.best_E_array[i] << ", ";
+	file << "]\ntotal_steps_array = [";
+	for(i=0;i<sim_params.index;i++) file << sim_params.total_steps_array[i] << ", ";
+
+	file << "]\nj_best =  [";
+	for(i=0;i<sim_params.index;i++){
+		file << "[";
+		for(j=0;j<sim_params.total_steps_array[i];j++) file << sim_params.j_best[2*NUMBER_OF_SITES*(cummulative_steps+j)] << ", ";
+		file << "],";
+		cummulative_steps += sim_params.total_steps_array[i];
+	}
+
+	cummulative_steps = 0;
+	file << "]\nk_best =  [";
+	for(i=0;i<sim_params.index;i++){
+		file << "[";
+		for(j=0;j<sim_params.total_steps_array[i];j++) file << sim_params.k_best[2*NUMBER_OF_SITES*(cummulative_steps+j)] << ", ";
+		file << "],";
+		cummulative_steps += sim_params.total_steps_array[i];
+	}
+
+	cummulative_steps = 0;
+	file << "]\nb_best =  [";
+	for(i=0;i<sim_params.index;i++){
+		file << "[";
+		for(j=0;j<sim_params.total_steps_array[i];j++) file << sim_params.b_best[NUMBER_OF_SITES*(cummulative_steps+j)] << ", ";
+		file << "],";
+		cummulative_steps += sim_params.total_steps_array[i];
+	}
 	file << "]\n\n";
-
 	file.close();
 }
 
 
 
-void save_mcbb_data(Simulation_Parameters& sim_params){
-	int i;
+void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
+	int i, j;
 	std::ofstream file;
 	std::string type = "MCBB";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.seed == 1){
+	if(sim_params.tau == TAU_INIT_MCBB){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "DIAG =                         " <<  std::boolalpha << DIAG << "\n";
-		file << "SEED_TOTAL =                   " <<  SEED_TOTAL << "\n";
-		file << "DIFFERENCE_LIMIT_MCBB =        " <<  DIFFERENCE_LIMIT_MCBB << "\n";
+		file << "NUM_SEEDS =                    " <<  NUM_SEEDS << "\n";
+		file << "DISTANCE_LIMIT_MCBB =          " <<  DISTANCE_LIMIT_MCBB << "\n";
 		file << "TAU_INIT_MCBB =                " <<  TAU_INIT_MCBB << "\n";
 		file << "MAX_TAU_MCBB =                 " <<  MAX_TAU_MCBB << "\n";
 		file << "TAU_SCALAR_MCBB =              " <<  TAU_SCALAR_MCBB << "\n";
-		file << "CHANGE_FRACTION_MCBB =         " <<  CHANGE_FRACTION_MCBB << "\n";
+		file << "MAX_CHANGE_FRACTION_MCBB =     " <<  MAX_CHANGE_FRACTION_MCBB << "\n";
+		file << "MIN_CHANGE_FRACTION_MCBB =     " <<  MIN_CHANGE_FRACTION_MCBB << "\n";
 		file << "ACCEPTANCE_PROB_MCBB =         " <<  ACCEPTANCE_PROB_MCBB << "\n";
 		file << "TEMP_EXP_DECAY_MCBB =          " <<  TEMP_EXP_DECAY_MCBB << "\n";
 		file << "BINARY_SEARCH_TAU_LIMIT_MCBB = " <<  BINARY_SEARCH_TAU_LIMIT_MCBB << "\n";
@@ -100,30 +157,75 @@ void save_mcbb_data(Simulation_Parameters& sim_params){
 
 	file << "\n\n\n\n##############################################################################\n";
 	file << "##############################################################################\n";
-	file << "seed =              " << sim_params.seed << "\n";
 	file << "tau =               " << sim_params.tau   << "\n";
-	file << "ground_E =          " << sim_params.ground_E << "\n\n";
+	file << "best_E =          " << sim_params.best_E << "\n";
+	file << "distance =          " << sim_params.new_distance << "\n";
 
 	file << "\nj_protocol =  [";
-	for(i=0;i<2*NUMBER_OF_BANGS*sim_params.index;i++) file << sim_params.j_best[i] << ", ";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.j_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		file << "],";
+	}
+
 	file << "]\nk_protocol = [";
-	for(i=0;i<2*NUMBER_OF_BANGS*sim_params.index;i++) file << sim_params.k_best[i] << ", ";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.k_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		file << "],";
+	}
+
 	file << "]\nb_protocol = [";
-	for(i=0;i<2*NUMBER_OF_BANGS*sim_params.index;i++) file << sim_params.b_best[i] << ", ";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.b_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		file << "],";
+	}
+
 	file << "]\nj/k/b =   [";
 	for(i=1;i<2*NUMBER_OF_BANGS+1;i++) file << i%2 << ", ";
+
+	file << "]\nbest_E_fixed_tau =   [";
+	for(i=0;i<NUM_SEEDS;i++) file << sim_params.E_array_fixed_tau[i] << ", ";
 	file <<"]\n\n";
+	file.close();
+}
 
+void save_mcbb_data(Simulation_Parameters& sim_params){
+	int i,j;
+	std::ofstream file;
+	std::string type = "MCBB";
+	std::string path = make_path(sim_params, type);
+	file.open(path, std::ios::app);
 
+	file << "\n\n\n\n##############################################################################\n";
+	file << "##############################################################################\n";
+	file << "ground_E =          " << sim_params.ground_E << "\n\n";
 	file << "tau_array = [";
 	for(i=0;i<sim_params.index;i++) file << sim_params.tau_array[i] << ", ";
 	file << "]\nbest_E_array = [";
 	for(i=0;i<sim_params.index;i++) file << sim_params.best_E_array[i] << ", ";
-	file << "]\n\n";
+
+	file << "]\nj_best =  [";
+	for(i=0;i<sim_params.index;i++){
+		file << "[";
+		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.j_best[i*2*NUMBER_OF_BANGS + j] << ", ";
+		file << "],";
+	}
+	file << "\nk_best =  [";
+	for(i=0;i<sim_params.index;i++){
+		file << "[";
+		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.k_best[i*2*NUMBER_OF_BANGS + j] << ", ";
+		file << "],";
+	}
+	file << "\nb_best =  [";
+	for(i=0;i<sim_params.index;i++){
+		file << "[";
+		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.b_best[i*2*NUMBER_OF_BANGS + j] << ", ";
+		file << "],";
+	}	file << "]\n\n";
 	file.close();
 }
-
-
 
 void save_adiabatic_data(Simulation_Parameters& sim_params){
 	int i;
@@ -134,7 +236,7 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	file.open(path);
 	file << "START_PARAMETERS\n";
 	file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
-	file << "DIFFERENCE_LIMIT_ADIA =      " <<  DIFFERENCE_LIMIT_ADIA << "\n";
+	file << "DISTANCE_LIMIT_ADIA =        " <<  DISTANCE_LIMIT_ADIA << "\n";
 	file << "TAU_INIT_ADIA =              " <<  TAU_INIT_ADIA << "\n";
 	file << "MAX_TAU_ADIA =               " <<  MAX_TAU_ADIA << "\n";
 	file << "TAU_SCALAR_ADIA =            " <<  TAU_SCALAR_ADIA << "\n";
@@ -206,5 +308,26 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file << "MAX_PARAM =        " << MAX_PARAM << "\n";
 	file << "MIN_PARAM =        " << MIN_PARAM << "\n";
 	file << "END_PARAMETERS\n";
+	file.close();
+}
+
+
+
+
+
+
+void save_gap_data(Simulation_Parameters& sim_params, double *f, double *g, double *gap, int L){
+	int i;
+	std::ofstream file;
+	std::string path = "../data/gap.txt";
+	file.open(path);
+
+	file << "f = [";
+	for(i=0;i<L*L;i++) file << f[i] << ", ";
+	file << "]\ng = [";
+	for(i=0;i<L*L;i++) file << g[i] << ", ";
+	file << "]\ngap = [";
+	for(i=0;i<L*L;i++) file << gap[i] << ", ";
+	file << "]\n";
 	file.close();
 }

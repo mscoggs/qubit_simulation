@@ -33,9 +33,9 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 
 		printf("       Tau: %5.2f  ||  Expectation-Value:  %7.4f  ||  Target: %f \n", sim_params.tau, sim_params.best_E_array[sim_params.index],sim_params.ground_E);
 
-		if((sim_params.best_E_array[sim_params.index] - sim_params.ground_E) < DIFFERENCE_LIMIT_ADIA){
+		if((calc_distance(sim_params.initial_E, sim_params.ground_E, sim_params.best_E_array[sim_params.index])) < DISTANCE_LIMIT_ADIA){
 			printf("GROUND STATE REACHED. STOPPING THE ADIABATIC EVOLUTION\n\n");
-		  break;
+		        break;
 		}
 
 		sim_params.index++;

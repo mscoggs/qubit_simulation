@@ -40,6 +40,10 @@ double get_ground_E(int N, double *hamiltonian){
 	diag_hermitian_real_double(N, ham_real,v_diag, evals);
 
 	for(i=0; i<N; i++) if(evals[i]<min_E) min_E = evals[i];
+	
+	int counter = 0;
+	for(i=0; i<N; i++) if(evals[i] == min_E) counter += 1;
+	if(counter > 1) printf("WARNING: GROUND STATE DEGENERACY!\n\n\n");
 
 	delete[] evals, delete[] v_diag, delete[] ham_real;
 	return min_E;
