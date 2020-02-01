@@ -46,8 +46,9 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
 	file << "tau =               " << sim_params.tau   << "\n";
 	file << "total_steps =       " << sim_params.total_steps << "\n";
 	file << "time_step =       " << sim_params.time_step << "\n";
-	file << "best_E =          " << sim_params.best_E << "\n\n";
-	file << "distance =          " << sim_params.new_distance << "\n\n";
+	file << "best_E =          " << sim_params.best_E << "\n";
+	file << "distance =          " << sim_params.new_distance << "\n";
+
 	file << "\nj_protocol =  [";
 	for(i=0;i<NUM_SEEDS;i++){
 		file << "[";
@@ -85,7 +86,8 @@ void save_mcbf_data(Simulation_Parameters& sim_params){
 
 	file << "\n\n\n\n##############################################################################\n";
 	file << "##############################################################################\n";
-	file << "ground_E =          " << sim_params.ground_E << "\n\n";
+	file << "ground_E =          " << sim_params.ground_E << "\n";
+	file << "initial_E =          " << sim_params.initial_E << "\n\n";
 	file << "tau_array = [";
 	for(i=0;i<sim_params.index;i++) file << sim_params.tau_array[i] << ", ";
 	file << "]\nbest_E_array = [";
@@ -200,7 +202,8 @@ void save_mcbb_data(Simulation_Parameters& sim_params){
 
 	file << "\n\n\n\n##############################################################################\n";
 	file << "##############################################################################\n";
-	file << "ground_E =          " << sim_params.ground_E << "\n\n";
+	file << "ground_E =          " << sim_params.ground_E << "\n";
+	file << "initial_E =          " << sim_params.initial_E << "\n\n";
 	file << "tau_array = [";
 	for(i=0;i<sim_params.index;i++) file << sim_params.tau_array[i] << ", ";
 	file << "]\nbest_E_array = [";
@@ -212,13 +215,13 @@ void save_mcbb_data(Simulation_Parameters& sim_params){
 		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.j_best[i*2*NUMBER_OF_BANGS + j] << ", ";
 		file << "],";
 	}
-	file << "\nk_best =  [";
+	file << "\n]k_best =  [";
 	for(i=0;i<sim_params.index;i++){
 		file << "[";
 		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.k_best[i*2*NUMBER_OF_BANGS + j] << ", ";
 		file << "],";
 	}
-	file << "\nb_best =  [";
+	file << "\n]b_best =  [";
 	for(i=0;i<sim_params.index;i++){
 		file << "[";
 		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.b_best[i*2*NUMBER_OF_BANGS + j] << ", ";
