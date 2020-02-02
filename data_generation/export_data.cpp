@@ -215,18 +215,19 @@ void save_mcbb_data(Simulation_Parameters& sim_params){
 		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.j_best[i*2*NUMBER_OF_BANGS + j] << ", ";
 		file << "],";
 	}
-	file << "\n]k_best =  [";
+	file << "]\nk_best =  [";
 	for(i=0;i<sim_params.index;i++){
 		file << "[";
 		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.k_best[i*2*NUMBER_OF_BANGS + j] << ", ";
 		file << "],";
 	}
-	file << "\n]b_best =  [";
+	file << "]\nb_best =  [";
 	for(i=0;i<sim_params.index;i++){
 		file << "[";
 		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.b_best[i*2*NUMBER_OF_BANGS + j] << ", ";
 		file << "],";
-	}	file << "]\n\n";
+	}	
+	file << "]\n\n";
 	file.close();
 }
 
