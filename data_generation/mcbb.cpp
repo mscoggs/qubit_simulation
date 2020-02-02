@@ -42,6 +42,10 @@ void mcbb_method(Simulation_Parameters& sim_params){
 
 		if(sim_params.new_distance < DISTANCE_LIMIT_MCBB){
 			//binary_search_mcbb(sim_params);
+			sim_params.tau_array[sim_params.index] = sim_params.tau;
+			sim_params.best_E_array[sim_params.index] = sim_params.best_E;
+			copy_arrays_mcbb(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,(2*NUMBER_OF_BANGS)*sim_params.index, (2*NUMBER_OF_BANGS)*sim_params.best_index_fixed_tau);
+			sim_params.index ++;
 			if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
 			if(MCBB_DATA)	save_mcbb_data(sim_params);
 			break;
