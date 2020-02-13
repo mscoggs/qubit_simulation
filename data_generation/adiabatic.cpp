@@ -12,8 +12,6 @@
 
 
 void adiabatic_method(Simulation_Parameters& sim_params){
-	sim_params.tau_array    = new double[MAX_TAU_STEPS_ADIA]();
-	sim_params.best_E_array = new double[MAX_TAU_STEPS_ADIA]();
 	sim_params.state        = new double[2*sim_params.N]();
 
 	memcpy(sim_params.state,  sim_params.start_state,  2*sim_params.N*sizeof(double));
@@ -21,29 +19,27 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 	sim_params.tau         = TAU_INIT_ADIA;
 	sim_params.time_step   = TIME_STEP_ADIA;
 	sim_params.total_steps = floor(int(TAU_INIT_ADIA/double(TIME_STEP_ADIA)));
-	sim_params.index=0;
+	sim_params.new_distance = 1;
+	sim_params.old_distance = 1;
 
 	if(PRINT) print_adiabatic_info(sim_params);
 
 	while(sim_params.tau<MAX_TAU_ADIA){
 		memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));//resetting state
 		evolve_adiabatic(sim_params);
-		sim_params.best_E_array[sim_params.index] = cost(sim_params.N, sim_params.state, sim_params.ham_target);
-		sim_params.tau_array[sim_params.index] = sim_params.tau;
+		sim_params.best_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);
+  	sim_params.old_distance = sim_params.new_distance;
+		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E, sim_params.best_E);
+		printf("       Tau: %5.2f  ||  Expectation-Value:  %7.4f  ||  Distance: %f \n", sim_params.tau, sim_params.best_E,sim_params.new_distance);
 
-		printf("       Tau: %5.2f  ||  Expectation-Value:  %7.4f  ||  Target: %f \n", sim_params.tau, sim_params.best_E_array[sim_params.index],sim_params.ground_E);
+		if (ADIABATIC_DATA) save_adiabatic_data(sim_params);
 
-		if((calc_distance(sim_params.initial_E, sim_params.ground_E, sim_params.best_E_array[sim_params.index])) < DISTANCE_LIMIT_ADIA){
-			printf("GROUND STATE REACHED. STOPPING THE ADIABATIC EVOLUTION\n\n");
-		        break;
-		}
+		if(sim_params.new_distance < DISTANCE_LIMIT_ADIA) break;
 
-		sim_params.index++;
 		sim_params.tau         = sim_params.tau+TAU_INIT_ADIA;//I*TAU_SCALAR_ADIA;
 		sim_params.total_steps = floor(sim_params.tau/sim_params.time_step);
 	}
-	if (ADIABATIC_DATA) save_adiabatic_data(sim_params);
-	delete[] sim_params.tau_array, delete[] sim_params.best_E_array, delete[] sim_params.state;
+	delete[] sim_params.state;
 }
 
 

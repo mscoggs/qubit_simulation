@@ -42,6 +42,16 @@ void print_hamiltonian_real(double *hamiltonian, int N);
  */
 void print_arrays_mcbb(double* j_times, double* k_times, double* b_times);
 
+/**
+    Prints the mcdb arrays, where each index holds the value of j/k/b during evolution
+
+    @param j_times the array holding the time of each jump/drop for the j parameter. The even indicies hold a jump, the odds hold a drop.
+    @param k_times the array holding the time of each jump/drop for the k parameter. The even indicies hold a jump, the odds hold a drop.
+    @param b_times the array holding the time of each jump/drop for the b parameter. The even indicies hold a jump, the odds hold a drop.
+    @oaram size the size of the arrays
+ */
+void print_arrays_mcdb(double* j_times, double* k_times, double* b_times, int size);
+
 
 /**
     Prints the mcbf arrays, where each index holds a value at a certain time of the evolution.
@@ -77,6 +87,14 @@ void print_adiabatic_info(Simulation_Parameters& sim_params);
     @param sim_params contains all of the variables for the simulation
  */
 void print_mcbf_info(Simulation_Parameters& sim_params);
+
+
+/**
+    Prints the info relevant to the monte-carlo discrete-bang simulation
+
+    @param sim_params contains all of the variables for the simulation
+ */
+void print_mcdb_info(Simulation_Parameters& sim_params);
 
 
 /**

@@ -1,8 +1,9 @@
 #include <string.h>
 
+#include "parameters.h"
+#include "print.h"
 #include "check.h"
 #include "linear_algebra.h"
-#include "parameters.h"
 #include "operations.h"
 
 
@@ -40,7 +41,7 @@ double get_ground_E(int N, double *hamiltonian){
 	diag_hermitian_real_double(N, ham_real,v_diag, evals);
 
 	for(i=0; i<N; i++) if(evals[i]<min_E) min_E = evals[i];
-	
+
 	int counter = 0;
 	for(i=0; i<N; i++) if(evals[i] == min_E) counter += 1;
 	if(counter > 1) printf("WARNING: GROUND STATE DEGENERACY!\n\n\n");
@@ -215,4 +216,25 @@ int get_neighbors(int site, int *neighbors, int lattice[NX][NY]){
 		return count;
 	}
 	printf("\n\n\nERROR! UNSPECIFIED DIMENSION.\n\n\n");
+}
+
+
+bool update_distances(Simulation_Parameters& sim_params){
+	sim_params.temp_distance = sim_params.old_distance;
+	sim_params.old_distance = sim_params.new_distance;
+	sim_params.new_distance  = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
+
+	if(sim_params.new_distance > sim_params.old_distance && sim_params.sweeps_multiplier <= 4){
+		if(PRINT) print_mc_results(sim_params);
+		printf("############################################################################\n");
+		printf("POOR CONVERGENCE DURING THE LAST SIMULATION FOR TAU: %f\nRUNNING AGAIN WITH TWICE THE SWEEPS\n", sim_params.tau);
+		printf("############################################################################\n");
+		sim_params.new_distance  = 	sim_params.old_distance;
+		sim_params.old_distance = sim_params.temp_distance;
+		sim_params.sweeps_multiplier = sim_params.sweeps_multiplier * 2;
+		return false;
+	}
+
+	sim_params.sweeps_multiplier = 1;
+	return true;
 }

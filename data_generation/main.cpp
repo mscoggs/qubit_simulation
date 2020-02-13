@@ -15,6 +15,7 @@
 #include "export_data.h"
 #include "hamiltonian.h"
 #include "mcbb.h"
+#include "mcdb.h"
 #include "mcbf.h"
 #include "operations.h"
 #include "parameters.h"
@@ -40,7 +41,8 @@ main (int argc, char *argv[]){
 
 
 	sim_params.initialize_simluation(num_occupants, gi, fi, gt, ft, sim_params);
-	if(MCBF) mcbf_method(sim_params);
-	if(MCBB) mcbb_method(sim_params);
 	if(ADIABATIC)  adiabatic_method(sim_params);
+	if(MCDB) mcdb_method(sim_params);
+	if(MCBB) mcbb_method(sim_params);
+	if(MCBF) mcbf_method(sim_params);
 }

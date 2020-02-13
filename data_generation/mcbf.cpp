@@ -28,32 +28,18 @@ void mcbf_method(Simulation_Parameters& sim_params){
 			mcbf_simulation(sim_params);
 
 			sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
-			copy_arrays_mcbf(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_mcbf,  sim_params.k_mcbf,  sim_params.b_mcbf,  (sim_params.seed-1)*NUMBER_OF_SITES*sim_params.total_steps, 0);
+			copy_arrays_mcbf(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*NUMBER_OF_SITES*sim_params.total_steps, 0);
 		}
+		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
 
-		sim_params.best_index_fixed_tau = 0;
-		for (i=0;i<NUM_SEEDS;i++) if(sim_params.E_array_fixed_tau[i] <= sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[i], sim_params.best_index_fixed_tau = i;
-
-		sim_params.old_distance = sim_params.new_distance;
-		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
+		if(!update_distances(sim_params)) continue;
 
 		if(PRINT) print_mc_results(sim_params);
+		if(MCBF_DATA) save_mcbf_data_fixed_tau(sim_params);
 
-		if(sim_params.new_distance < DISTANCE_LIMIT_MCBF){
-			binary_search_mcbf(sim_params);
-			if(MCBF_DATA)	save_mcbf_data(sim_params);
-			break;
-		}else{
-			if(MCBF_DATA) save_mcbf_data_fixed_tau(sim_params);
-
-			sim_params.tau_array[sim_params.index] = sim_params.tau;
-			sim_params.best_E_array[sim_params.index] = sim_params.best_E;
-			sim_params.total_steps_array[sim_params.index] = sim_params.total_steps;
-			printf("sim_params.best_index_fixed_tau: %i\n\n\n\n", sim_params.best_index_fixed_tau);
-			copy_arrays_mcbf(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.cummulative_steps*NUMBER_OF_SITES, sim_params.total_steps*NUMBER_OF_SITES*sim_params.best_index_fixed_tau);
-			sim_params.index ++;
+		if(sim_params.new_distance < DISTANCE_LIMIT_MCBF) break;
+		else{
 			calc_tau_mcbf(sim_params);
-			sim_params.cummulative_steps += sim_params.total_steps;
 			calc_total_steps_mcbf(sim_params);
 			sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
 		}
@@ -76,8 +62,8 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 
 
 	std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
-	init_arrays_mcbf(sim_params, sim_params.j_mcbf,sim_params.k_mcbf,sim_params.b_mcbf);
-	copy_arrays_mcbf(sim_params, j_array, k_array, b_array,sim_params.j_mcbf,sim_params.k_mcbf,sim_params.b_mcbf,0,0);//a temporary array, used in the undoing of the changes
+	init_arrays_mcbf(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best);
+	copy_arrays_mcbf(sim_params, j_array, k_array, b_array,sim_params.j_best,sim_params.k_best,sim_params.b_best,0,0);//a temporary array, used in the undoing of the changes
 
 	evolve_mcbf(sim_params, j_array,k_array,b_array);
 	sim_params.best_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);
@@ -89,7 +75,7 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 
 		proposal_accepted = 0,proposal_count = 0;
 
-		for (j=0; j<SWEEPS_MC*sim_params.total_steps;j++){
+		for (j=0; j<SWEEPS_MC*sim_params.total_steps*sim_params.sweeps_multiplier;j++){
 
 			copy_arrays_mcbf(sim_params, j_temp, k_temp,b_temp,j_array, k_array, b_array,0,0);//a temporary array, used in the undoing of the changes
 
@@ -102,7 +88,7 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 			evolve_mcbf(sim_params, j_array,k_array,b_array);
 			new_E = cost(sim_params.N,sim_params.state, sim_params.ham_target);
 
-			if (new_E<sim_params.best_E) sim_params.best_E=new_E, old_E=new_E,  copy_arrays_mcbf(sim_params, sim_params.j_mcbf, sim_params.k_mcbf, sim_params.b_mcbf,j_array, k_array, b_array, 0, 0), poor_acceptance_streak = 0;
+			if (new_E<sim_params.best_E) sim_params.best_E=new_E, old_E=new_E,  copy_arrays_mcbf(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), poor_acceptance_streak = 0;
 //			else if (new_E<=old_E) old_E=new_E;
 			else if (get_random_double(0,1,sim_params.rng)<exp(-(new_E-old_E)/(sim_params.temperature))) old_E=new_E, proposal_accepted++, proposal_count++;
 			else copy_arrays_mcbf(sim_params, j_array, k_array, b_array,  j_temp, k_temp, b_temp, 0,0), proposal_count++;//undoing the change
@@ -214,8 +200,7 @@ void binary_search_mcbf(Simulation_Parameters& sim_params){
 	int i;
 	double tau_max = sim_params.tau, tau_min;
 
-	if(sim_params.index >=1) tau_min = sim_params.tau_array[sim_params.index-1];
-	else tau_min = tau_max;
+	tau_min = sim_params.tau/TAU_SCALAR_MCBF_TINY;
 	sim_params.tau = (tau_max + tau_min) / 2.0;
 	sim_params.new_distance = sim_params.old_distance;
 
@@ -231,11 +216,9 @@ void binary_search_mcbf(Simulation_Parameters& sim_params){
 			mcbf_simulation(sim_params);
 
 			sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
-			copy_arrays_mcbf(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_mcbf,  sim_params.k_mcbf,  sim_params.b_mcbf,  (sim_params.seed-1)*NUMBER_OF_SITES*sim_params.total_steps, 0);
+			copy_arrays_mcbf(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*NUMBER_OF_SITES*sim_params.total_steps, 0);
 		}
-
-		sim_params.best_index_fixed_tau = 0;
-		for (i=0;i<NUM_SEEDS;i++) if(sim_params.E_array_fixed_tau[i] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[i], sim_params.best_index_fixed_tau = i;
+		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
 
 		sim_params.old_distance = sim_params.new_distance;
 		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
@@ -244,32 +227,16 @@ void binary_search_mcbf(Simulation_Parameters& sim_params){
 
 		if(sim_params.new_distance < DISTANCE_LIMIT_MCBF){
 			printf("\nIn binary_search_mcbf....\nStepping backward....\n");
-
 			tau_max = sim_params.tau;
 			sim_params.tau = (tau_max+tau_min)/2.0;
 			sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
 
-			if((tau_max-tau_min) <= BINARY_SEARCH_TAU_LIMIT_MCBF){
-				sim_params.tau_array[sim_params.index] = sim_params.tau;
-				sim_params.best_E_array[sim_params.index] = sim_params.best_E;
-				copy_arrays_mcbf(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.cummulative_steps*NUMBER_OF_SITES, sim_params.total_steps*NUMBER_OF_SITES*sim_params.best_index_fixed_tau);
-				sim_params.index ++;
-			}
 		}else{
 			printf("\nIn binary_search_mcbf....\nStepping forward....\n");
-
-			copy_arrays_mcbf(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.cummulative_steps*NUMBER_OF_SITES, sim_params.total_steps*NUMBER_OF_SITES*sim_params.best_index_fixed_tau);
-
-			sim_params.tau_array[sim_params.index] = sim_params.tau;
-			sim_params.best_E_array[sim_params.index] = sim_params.best_E;
-			sim_params.total_steps_array[sim_params.index] = sim_params.total_steps;
 			tau_min = sim_params.tau;
 			sim_params.tau = (tau_min+tau_max)/2;
 			calc_total_steps_mcbf(sim_params);
-			sim_params.cummulative_steps += sim_params.total_steps;
 			sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
-			sim_params.index ++;
-
 			if(MCBF_DATA) save_mcbf_data_fixed_tau(sim_params);
 		}
 	}
@@ -285,7 +252,7 @@ void calc_tau_mcbf(Simulation_Parameters& sim_params){
 
 	if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_MCBF_TINY;
 	else if((abs(sim_params.old_distance - sim_params.new_distance) < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_MCBF_BIG;
-	else tau_scalar = TAU_SCALAR_MC;
+	else tau_scalar = TAU_SCALAR_MCBF;
 
 	sim_params.tau = sim_params.tau*tau_scalar;
 }

@@ -139,4 +139,15 @@ void assign_bonds(int *bonds, int lattice[NX][NY]);
 */
 int get_neighbors(int site, int *neighbors, int lattice[NX][NY]);
 
+
+/**
+	  Updates the distances after a number of (NUM_SEEDS) monte carlo simulations. Checks to see if there's a convergence issue, meaning the most recent simulation was further away
+    from the ground state than the previous. If this is the case, return false. If not, return true with the updates distances.
+
+		@param sim_params an object that contains all of the parameters for the simulation
+
+		@return bool true if the most recent simulation made progress towards the ground state, false if not
+*/
+bool update_distances(Simulation_Parameters& sim_params);
+
 #endif

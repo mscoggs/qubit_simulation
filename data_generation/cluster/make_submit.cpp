@@ -30,12 +30,15 @@ main(int argc, char *argv[]){
 				for(gt_i=0;gt_i<(sizeof(g_targ)/sizeof(double));gt_i++){
 					for(ft_i=0;ft_i<(sizeof(f_targ)/sizeof(double));ft_i++){
 							
+						if(g_init[gi_i]==g_targ[gt_i] && f_init[fi_i]==f_targ[ft_i]) continue;
+						if(g_init[gi_i]==1.0 && g_targ[gt_i]==1.0) continue;
+
 						num = std::to_string(num_occupants[occ_i]);
 						gi = std::to_string(g_init[gi_i]).substr(0,3);
 						fi = std::to_string(f_init[fi_i]).substr(0,3);
 						gt = std::to_string(g_targ[gt_i]).substr(0,3);
 						ft = std::to_string(f_targ[ft_i]).substr(0,3);
-						if(gi==gt and fi==ft) continue;
+
 
 						identifier = "_num_"+num+"__gi_"+gi+"__fi_"+fi+"__gt_"+gt+"__ft_"+ft;
 

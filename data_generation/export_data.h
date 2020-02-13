@@ -11,14 +11,6 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params);
 
 
 /**
-    Saves the monte carlo brute force simulation data
-
-    @param sim_params contains all of the variables for the simulation
-*/
-void save_mcbf_data(Simulation_Parameters& sim_params);
-
-
-/**
     Saves the monte carlo bang bang simulation data for a fixed tau
 
     @param sim_params contains all of the variables for the simulation
@@ -27,12 +19,11 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params);
 
 
 /**
-    Saves the monte carlo bang bang simulation data, keeping the best energies and best protocol over the entire simulationn
+    Saves the monte carlo bang bang simulation data for a fixed tau
 
     @param sim_params contains all of the variables for the simulation
 */
-void save_mcbb_data(Simulation_Parameters& sim_params);
-
+void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params);
 
 
 /**

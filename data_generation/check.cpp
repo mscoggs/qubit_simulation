@@ -49,7 +49,7 @@ void check_unitary(double* hamiltonian, int N){
 	zgemm_(&TRANSA, &TRANSB, &N, &N, &N, ALPHA, ham_t, &LDA, hamiltonian, &LDB, BETA, unitary, &LDC); //matrix mult
 
 	for(i=0;i<N;i++) unitary[2*(i*N+i)] = unitary[2*(i*N+i)] -1;
-	for(i=0;i<N*N*2;i++) if(unitary[i] < -0.00000001 or unitary[i] > 0.00000001) printf("\n\n\nERROR, NON UNITARY ELEMENTS AT %i, VALUE: %f\n\n\n", i, unitary[i]);
+	for(i=0;i<N*N*2;i++) if(unitary[i] < -0.00000001 or unitary[i] > 0.00000001) printf("\n\n\nERROR, NON UNITARY ELEMENTS AT %i, VALUE: %f\n\n\n", i, unitary[i]), exit(0);
 	delete[] ham_t, delete[] unitary;
 }
 
@@ -88,8 +88,9 @@ void check_weights(double* state, double* hamiltonian, int N){
 
 
 void check_norm(double* state, int N){
+
 	int i;
 	double sum=0;
 	for(i=0;i<N*2; i+=2) sum+= state[i]*state[i]+(state[i+1]*state[i+1]);
-	if(sum>1.000000001 or sum<0.99999999) printf("\n\n\nNORM ERROR, SIZE: %f\n\n\n", sum);
+	if(sum>1.000000001 or sum<0.99999999) printf("\n\n\nNORM ERROR, SIZE: %f\n\n\n", sum),print_state(state, N), exit(0);
 }

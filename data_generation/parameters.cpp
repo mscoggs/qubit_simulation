@@ -64,98 +64,112 @@ void Simulation_Parameters::initialize_simluation(int number_of_occupants, doubl
 
 
 void Simulation_Parameters::init_mcbb_params(){
-	tau_array_size	  = ceil(MAX_TAU_STEPS_MCBB+MAX_BS_STEPS_MCBB);
-	best_arrays_size  = ceil(2*NUMBER_OF_BANGS)*tau_array_size;
-	tau_array 	  = new double[tau_array_size]();
-	best_E_array      = new double[tau_array_size]();
-
-	j_best 		  = new double[best_arrays_size]();
-	k_best 	   	  = new double[best_arrays_size]();
-	b_best 		  = new double[best_arrays_size]();
-
 	E_array_fixed_tau = new double[NUM_SEEDS]();
 	j_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
 	k_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
 	b_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
 
-	j_mcbb		  = new double[2*NUMBER_OF_BANGS]();
-	k_mcbb  	  = new double[2*NUMBER_OF_BANGS]();
-	b_mcbb 		  = new double[2*NUMBER_OF_BANGS]();
+	j_best		  = new double[2*NUMBER_OF_BANGS]();
+	k_best  	  = new double[2*NUMBER_OF_BANGS]();
+	b_best 		  = new double[2*NUMBER_OF_BANGS]();
 
 	tau		  = TAU_INIT_MCBB;
 	old_distance      = 1;
 	new_distance      = 1;
-	index 		  = 0;
 	temp_iteration    = 0;
+	sweeps_multiplier = 1;
 }
 
 
 
 
+
 void Simulation_Parameters::clear_mcbb_params(){
-	delete[] tau_array;
-	delete[] best_E_array;
-       	delete[] j_best;
-       	delete[] k_best;
-       	delete[] b_best;
-       	delete[] E_array_fixed_tau;
-       	delete[] j_best_fixed_tau;
-       	delete[] k_best_fixed_tau;
-       	delete[] b_best_fixed_tau;
-       	delete[] j_mcbb;
-       	delete[] k_mcbb;
-       	delete[] b_mcbb;
+	delete[] E_array_fixed_tau;
+	delete[] j_best_fixed_tau;
+	delete[] k_best_fixed_tau;
+	delete[] b_best_fixed_tau;
+	delete[] j_best;
+	delete[] k_best;
+	delete[] b_best;
+}
+
+
+
+
+
+
+void Simulation_Parameters::init_mcdb_params(){
+	max_steps_mcdb    = floor(MAX_TAU_MCDB/TIME_STEP_MCDB);
+
+	E_array_fixed_tau = new double[NUM_SEEDS]();
+	j_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
+	k_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
+	b_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
+
+	j_best  	  = new double[max_steps_mcdb]();
+	k_best  	  = new double[max_steps_mcdb]();
+	b_best 		  = new double[max_steps_mcdb]();
+
+	tau		            = TAU_INIT_MCDB;
+	time_step         = TIME_STEP_MCDB;
+	total_steps       = floor(tau/time_step);
+	old_distance      = 1;
+	new_distance      = 1;
+	sweeps_multiplier = 1;
+
+
+	e11  = new double[2*N*N]();
+	e01  = new double[2*N*N]();
+	e10  = new double[2*N*N]();
+}
+
+
+
+
+void Simulation_Parameters::clear_mcdb_params(){
+	delete[] E_array_fixed_tau;
+	delete[] j_best_fixed_tau;
+	delete[] k_best_fixed_tau;
+	delete[] b_best_fixed_tau;
+	delete[] j_best;
+	delete[] k_best;
+	delete[] b_best;
+	delete[] e10;
+	delete[] e01;
+	delete[] e11;
 }
 
 
 
 
 void Simulation_Parameters::init_mcbf_params(){
-	tau_array_size    = ceil(MAX_TAU_STEPS_MCBF+MAX_BS_STEPS_MCBF);
-	best_arrays_size  = tau_array_size*ceil(MAX_EVOLVE_STEPS_MC);
-
-	tau_array 	  = new double[tau_array_size]();
-	best_E_array	  = new double[tau_array_size]();
-	total_steps_array = new int[tau_array_size]();
-
-	j_best 		  = new double[best_arrays_size]();
-	k_best 		  = new double[best_arrays_size]();
-	b_best 		  = new double[best_arrays_size]();
-
 	E_array_fixed_tau = new double[NUM_SEEDS]();
 	j_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
 	k_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
 	b_best_fixed_tau  = new double[NUM_SEEDS*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
 
-	j_mcbf            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
-	k_mcbf            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
-	b_mcbf            = new double[NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
+	j_best            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
+	k_best            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
+	b_best            = new double[NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
 
 	tau               = TAU_INIT_MCBF;
 	total_steps       = TOTAL_STEPS_INIT_MC;
-	cummulative_steps = 0;
-	time_step         =  tau/total_steps;
+	time_step         = tau/total_steps;
 	old_distance      = 1;
 	new_distance      = 1;
-	index             = 0;
-	temp_iteration    = 0;
+	sweeps_multiplier = 1;
 }
 
 
 
 
 void Simulation_Parameters::clear_mcbf_params(){
-	delete[] tau_array;
-	delete[] best_E_array;
-	delete[] total_steps_array;
-       	delete[] j_best;
-       	delete[] k_best;
-       	delete[] b_best;
-       	delete[] E_array_fixed_tau;
-       	delete[] j_best_fixed_tau;
-       	delete[] k_best_fixed_tau;
-       	delete[] b_best_fixed_tau;
-       	delete[] j_mcbf;
-       	delete[] k_mcbf;
-       	delete[] b_mcbf;
+	delete[] E_array_fixed_tau;
+	delete[] j_best_fixed_tau;
+	delete[] k_best_fixed_tau;
+	delete[] b_best_fixed_tau;
+	delete[] j_best;
+	delete[] k_best;
+	delete[] b_best;
 }
