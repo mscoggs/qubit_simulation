@@ -43,8 +43,8 @@ main(int argc, char *argv[]){
 						submit_file << "Arguments         = " << num << " " << gi << " " << fi << " " << gt << " " << ft << "\n";
 						submit_file << "Log               = cluster/logs/_" << identifier  << ".log\n";
 						submit_file << "Output            = cluster/outputs/_" << identifier << "\n";
-						submit_file << "request_cpus      = 2\n";
-						submit_file << "request_memory    = 20 GB\n";
+						submit_file << "request_cpus      = 4\n";
+						//submit_file << "request_memory    = 20 GB\n";
 						submit_file << "queue\n";
 	}}}}}
 }
