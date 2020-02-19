@@ -1,19 +1,26 @@
-import glob
-def main():
-    seed_num = 10
+import os, glob, re
 
-    complete = []
-    for x in range(seed_num):
-        complete.append(0)
-    total_files = 0
-    for filepath in glob.iglob('3x3/4_occupants/*.txt'):
-        for line in open(filepath):
-            for x in range(2,seed_num+1):
-                if "seed" in line and str(x) in line and "TOTAL" not in line:
-                    complete[x-1] +=1
-        total_files +=1
-        
-    for x in range(1,seed_num):
-        print(str(complete[x]) + "/"+ str(total_files) + " files have finished seed" + str(x+1))
+dir_name = ["3x3/3_occupants/", "3x3/4_occupants/"]
+#dir_name = ["3x3/3_occupants/"]
+total_files = 0
+finished_files = 0
+for dir_ in dir_name:
+    for fname in glob.glob(dir_ + "*.txt"):
+        total_files += 1
+        distance = 100
+        with open(fname) as f:
+            for line in f:
+                if "distance" in line:
+                    distance = min(float(line.split(" ")[-1]), distance)
 
-main()
+        print(fname)
+        print("distance: " + str(distance) + " \n\n")
+        if distance < 0.05:
+            finished_files += 1
+        if distance > 1 or distance < 0:
+            total_files -=1
+
+print("Of " + str(total_files) + " files, " + str(finished_files) + " of them are finished")
+
+
+
