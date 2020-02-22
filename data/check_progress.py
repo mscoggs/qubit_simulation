@@ -20,7 +20,7 @@ for dir_ in dir_name:
         if distance > 1 or distance < 0:
             total_files -=1
 
-print("Of " + str(total_files) + " files, " + str(finished_files) + " of them are finished")
+print(str(finished_files) + "/" + str(total_files) + " files finished")
 
 
 
