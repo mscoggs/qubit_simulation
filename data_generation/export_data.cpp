@@ -14,7 +14,7 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
 	std::string path = make_path(sim_params, type);
 
 
-	if(sim_params.tau == TAU_INIT_MCBF){
+	if(sim_params.tau == TAU_INIT_MCBF || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
@@ -87,7 +87,7 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 	std::string type = "MCBB";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT_MCBB){
+	if(sim_params.tau == TAU_INIT_MCBB || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "DIAG =                         " <<  std::boolalpha << DIAG << "\n";
@@ -159,7 +159,7 @@ void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params){
 	std::string type = "MCDB";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT_MCDB){
+	if(sim_params.tau == TAU_INIT_MCDB || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "NUM_SEEDS =                    " <<  NUM_SEEDS << "\n";
@@ -228,7 +228,7 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	std::string type = "ADIA";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT_ADIA){
+	if(sim_params.tau == TAU_INIT_ADIA || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
@@ -286,7 +286,7 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file << "INITIAL_E =                  " <<  sim_params.initial_E << "\n";
 	file << "g_initial =        " << sim_params.g_initial << "\n";
 	file << "f_initial =        " << sim_params.f_initial << "\n";
-	file << "g_targe t =        " << sim_params.g_target << "\n";
+	file << "g_target =         " << sim_params.g_target << "\n";
 	file << "f_target =         " << sim_params.f_target << "\n";
 	file << "j_initial =        " << sim_params.j_initial << "\n";
 	file << "k_initial =        " << sim_params.k_initial << "\n";

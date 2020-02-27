@@ -12,6 +12,16 @@
 
 
 void adiabatic_method(Simulation_Parameters& sim_params){
+
+
+	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.initial_E -sim_params.ground_E < 0.001){
+		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
+		if(ADIA_DATA) save_adiabatic_data(sim_params);
+		return;
+	}
+
+
+
 	sim_params.state        = new double[2*sim_params.N]();
 
 	memcpy(sim_params.state,  sim_params.start_state,  2*sim_params.N*sizeof(double));
@@ -32,7 +42,7 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E, sim_params.best_E);
 		printf("       Tau: %5.2f  ||  Expectation-Value:  %7.4f  ||  Distance: %f \n", sim_params.tau, sim_params.best_E,sim_params.new_distance);
 
-		if (ADIABATIC_DATA) save_adiabatic_data(sim_params);
+		if (ADIA_DATA) save_adiabatic_data(sim_params);
 
 		if(sim_params.new_distance < DISTANCE_LIMIT_ADIA) break;
 

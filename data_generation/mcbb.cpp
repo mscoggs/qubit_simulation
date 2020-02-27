@@ -16,7 +16,15 @@
 
 void mcbb_method(Simulation_Parameters& sim_params){
 	int i;
+
+
 	sim_params.init_mcbb_params();
+	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.initial_E -sim_params.ground_E < 0.001){
+		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
+		if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
+		sim_params.clear_mcbb_params();
+		return;
+	}
 
 
 	while(sim_params.tau<MAX_TAU_MCBB){

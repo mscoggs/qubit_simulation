@@ -37,12 +37,12 @@ const int NUMBER_OF_SITES = NX*NY;
 //Non-Physical Simulation_Parameters
 const bool MCBF = false;
 const bool MCBF_DATA = false;
-const bool MCBB = true;
+const bool MCBB =true;
 const bool MCBB_DATA = true;
 const bool MCDB = false;
 const bool MCDB_DATA = false;
-const bool ADIABATIC = false;
-const bool ADIABATIC_DATA = false;
+const bool ADIA = false;
+const bool ADIA_DATA= false;
 const int  NUM_SEEDS = 5;
 const bool DIAG = false;
 

@@ -57,7 +57,7 @@ void Simulation_Parameters::initialize_simluation(int number_of_occupants, doubl
 	ground_E = get_ground_E(N, ham_target);
 	initial_E = cost(N, start_state, ham_target);
 
-	if(CHECK) check_norm(start_state, N), check_commutator(N, ham_initial, ham_target);
+	if(CHECK) check_norm(start_state, N);
 }
 
 

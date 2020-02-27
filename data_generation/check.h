@@ -9,8 +9,10 @@
     @param N the dimension of the quantum system and the hamiltonians
     @param A one the the hamiltonians of size 2*N X 2*N, where odd indices hold imaginary components
     @param B one the the hamiltonians of size 2*N X 2*N
+
+    @return true if they do commute, false if they don't
 */
-void check_commutator(int N, double* A, double* B);
+bool check_commutator(int N, double* A, double* B);
 
 
 /**

@@ -9,7 +9,7 @@
 
 
 
-void check_commutator(int N, double* A, double* B){
+bool check_commutator(int N, double* A, double* B){
 	char TRANSA = 'N', TRANSB = 'N';
 	int i, *IPIV, LWORK=N*N, INFO, LDA=N, LDB=N, LDC=N;
 	double *C, *AB, *BA ,ALPHA[2], BETA[2];
@@ -30,6 +30,8 @@ void check_commutator(int N, double* A, double* B){
 	if(PRINT_COMMUTATOR) print_hamiltonian_complex(C, N);
 
 	delete[] C, delete[] AB, delete[] BA;
+
+	return commute;
 }
 
 

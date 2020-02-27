@@ -18,3 +18,7 @@ submit:
 	./make_submit
 	cd ..
 	condor_submit submit_file.txt
+
+run_gap:
+	$(CC) -o gap gap.cpp hamiltonian.cpp check.cpp export_data.cpp operations.cpp parameters.cpp print.cpp linear_algebra.cpp -lgsl -llapack -lblas -std=gnu++11
+	./gap

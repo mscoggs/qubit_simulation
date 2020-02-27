@@ -25,6 +25,11 @@
 /*
 g++ -o main main.cpp adiabatic.cpp check.cpp export_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 ./main g_initial(double) f_initial(double) g_target(double) f_target(double)
+
+OR
+
+make compile
+make run
 */
 
 
@@ -35,13 +40,13 @@ main (int argc, char *argv[]){
 	num_occupants = atoi(argv[1]);
 	gi = atof(argv[2]);
 	fi = atof(argv[3]);
-	ft = atof(argv[4]);
-	gt = atof(argv[5]);
+	gt = atof(argv[4]);
+	ft = atof(argv[5]);
 
 
 
 	sim_params.initialize_simluation(num_occupants, gi, fi, gt, ft, sim_params);
-	if(ADIABATIC)  adiabatic_method(sim_params);
+	if(ADIA)  adiabatic_method(sim_params);
 	if(MCDB) mcdb_method(sim_params);
 	if(MCBB) mcbb_method(sim_params);
 	if(MCBF) mcbf_method(sim_params);
