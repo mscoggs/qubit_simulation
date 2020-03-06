@@ -8,7 +8,7 @@
 
 
 
-void Simulation_Parameters::initialize_simluation(int number_of_occupants, double ji, double ki, double jt, double kt, Simulation_Parameters& sim_params){
+void Simulation_Parameters::initialize_lattice(int number_of_occupants, Simulation_Parameters& sim_params){
 	const gsl_rng_type * TT;
 
 	num_occupants = number_of_occupants;
@@ -28,7 +28,9 @@ void Simulation_Parameters::initialize_simluation(int number_of_occupants, doubl
 	gsl_rng_env_setup();
 	TT = gsl_rng_default;
 	rng  = gsl_rng_alloc (TT);
+}
 
+void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double jt, double kt, Simulation_Parameters& sim_params){
 	j_initial = ji;
 	k_initial = ki;
 	b_initial = 0;
@@ -54,7 +56,6 @@ void Simulation_Parameters::initialize_simluation(int number_of_occupants, doubl
 
 	if(CHECK) check_norm(start_state, N);
 }
-
 
 
 

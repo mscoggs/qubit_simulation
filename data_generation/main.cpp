@@ -35,19 +35,40 @@ make run
 
 main (int argc, char *argv[]){
 	Simulation_Parameters sim_params;
-	int num_occupants;
+	int num_occupants =2;
 	double ji,ki,jt,kt;
-	num_occupants = atoi(argv[1]);
-	ji = atof(argv[2]);
-	ki = atof(argv[3]);
-	jt = atof(argv[4]);
-	kt = atof(argv[5]);
 
 
+	sim_params.initialize_lattice(num_occupants,sim_params);
 
-	sim_params.initialize_simluation(num_occupants, ji,ki,jt,kt, sim_params);
-	if(ADIA)  adiabatic_method(sim_params);
-	if(MCDB) mcdb_method(sim_params);
-	if(MCBB) mcbb_method(sim_params);
-	if(MCBF) mcbf_method(sim_params);
+	for(ji=0.05;ji<=1.0;ji+=0.95){
+		for(ki=0.05;ki<=1.0;ki+=0.95){
+			for(jt=0.05;jt<=1.0;jt+=0.15){
+				for(kt=0.05;kt<=1.0;kt+=0.15){
+					
+					  sim_params.initialize_hamiltonians(ji,ki,jt,kt, sim_params);
+
+						if(ADIA)  adiabatic_method(sim_params);
+						if(MCDB) mcdb_method(sim_params);
+						if(MCBB) mcbb_method(sim_params);
+						if(MCBF) mcbf_method(sim_params);
+				}
+			}
+		}
+	}
+	// Simulation_Parameters sim_params;
+	// int num_occupants;
+	// double ji,ki,jt,kt;
+	// num_occupants = atoi(argv[1]);
+	// ji = atof(argv[2]);
+	// ki = atof(argv[3]);
+	// jt = atof(argv[4]);
+	// kt = atof(argv[5]);
+	//
+	// sim_params.initialize_lattice(num_occupants,sim_params);
+	// sim_params.initialize_hamiltonians(ji,ki,jt,kt, sim_params);
+	// if(ADIA)  adiabatic_method(sim_params);
+	// if(MCDB) mcdb_method(sim_params);
+	// if(MCBB) mcbb_method(sim_params);
+	// if(MCBF) mcbf_method(sim_params);
 }

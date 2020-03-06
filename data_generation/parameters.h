@@ -163,15 +163,25 @@ public:
 	 Constructs the lattice, generates the dimension of the quantum system, assigns the bonds, initializes the rng rng,
 	 and creates the b and table arrays (see func 'combinations' in operations.h for more info)
 
-		Generates the target and initial hamiltonian given the jkb initial and target values. Also grabs the ground state from
-		the initial hamiltonian and the ground state from the target hamiltonian, which serve as the initial state in the
-		evolution process and the target energy in the monte carlo simulations
-
-		@param sim_params contains all of the variables for the simulation
+	 @param number_of_occupants occupants on the lattice
+	 @param sim_params contains all of the variables for the simulation
 	 */
-	void initialize_simluation(int number_of_occupants, double ji, double ki, double jt, double kt, Simulation_Parameters& sim_params);
+	void initialize_lattice(int number_of_occupants, Simulation_Parameters& sim_params);
 
 
+
+	/**
+	Generates the target and initial hamiltonian given the jkb initial and target values. Also grabs the ground state from
+	the initial hamiltonian and the ground state from the target hamiltonian, which serve as the initial state in the
+	evolution process and the target energy in the monte carlo simulations
+
+	@param ji j_initial
+	@param ki k_initial
+	@param jt j_target
+	@param kt k_target
+	@param sim_params contains all of the variables for the simulation
+	*/
+	void initialize_hamiltonians(double ji, double ki, double jt, double kt, Simulation_Parameters& sim_params);
 
 
 	/**
