@@ -224,7 +224,7 @@ bool update_distances(Simulation_Parameters& sim_params){
 	sim_params.old_distance = sim_params.new_distance;
 	sim_params.new_distance  = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
 
-	if(sim_params.new_distance > sim_params.old_distance && sim_params.sweeps_multiplier <= 4){
+	if(sim_params.new_distance > sim_params.old_distance && sim_params.sweeps_multiplier <= 2){
 		if(PRINT) print_mc_results(sim_params);
 		printf("############################################################################\n");
 		printf("POOR CONVERGENCE DURING THE LAST SIMULATION FOR TAU: %f\nRUNNING AGAIN WITH TWICE THE SWEEPS\n", sim_params.tau);

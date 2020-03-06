@@ -62,5 +62,5 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
     @param gap the difference between the first excited state and the ground state
     @param L the 'dimension' of the f-g plane.
 */
-void save_gap_data(Simulation_Parameters& sim_params, double *f, double *g, double *gap, int L);
+void save_gap_data(Simulation_Parameters& sim_params, double *j, double *k, double *gap, int L);
 #endif

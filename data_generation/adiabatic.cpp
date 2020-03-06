@@ -56,7 +56,7 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 
 void evolve_adiabatic(Simulation_Parameters& sim_params){
 	int i,j;
-	double *hamiltonian,*ham_t_i, *ham_real,*exp_matrix,*v_diag, *e_vals,*jkb,g,f;
+	double *hamiltonian,*ham_t_i, *ham_real,*exp_matrix,*v_diag, *e_vals,*jkb,j_,k_;
 
 	hamiltonian        = new double[2*sim_params.N*sim_params.N]();
 	ham_t_i    = new double[2*sim_params.N*sim_params.N]();
@@ -68,9 +68,9 @@ void evolve_adiabatic(Simulation_Parameters& sim_params){
 
 	for (i=1; i<sim_params.total_steps+1;i++){
 
-		g = sim_params.g_initial + (sim_params.g_target-sim_params.g_initial)*((i*1.0)/sim_params.total_steps);
-		f = sim_params.f_initial + (sim_params.f_target-sim_params.f_initial)*(i*1.0/sim_params.total_steps);
-		jkb[0] = g, jkb[1] = (1-g)*f, jkb[2] = (1-f)*(1-g);
+		j_ = sim_params.j_initial + (sim_params.j_target-sim_params.j_initial)*((i*1.0)/sim_params.total_steps);
+		k_ = sim_params.k_initial + (sim_params.k_target-sim_params.k_initial)*(i*1.0/sim_params.total_steps);
+		jkb[0] = j_, jkb[1] = k_, jkb[2] = 0;
 		construct_device_hamiltonian_uniform(sim_params,hamiltonian, jkb);
 
 		if(DIAG){

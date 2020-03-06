@@ -254,16 +254,16 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 
 
 std::string make_path(Simulation_Parameters sim_params, std::string type){
-	std::string uni, pbc, gi, gt, fi, ft;
+	std::string uni, pbc, ji, ki, jt, kt;
 
-	gi = std::to_string(sim_params.g_initial);
-	gi.erase(gi.find_last_not_of('0') + 2, std::string::npos);
-	fi = std::to_string(sim_params.f_initial);
-	fi.erase(fi.find_last_not_of('0') + 2, std::string::npos);
-	gt = std::to_string(sim_params.g_target);
-	gt.erase(gt.find_last_not_of('0') + 2, std::string::npos);
-	ft = std::to_string(sim_params.f_target);
-	ft.erase(ft.find_last_not_of('0') + 2, std::string::npos);
+	ji = std::to_string(sim_params.j_initial);
+	ji.erase(ji.find_last_not_of('0') + 2, std::string::npos);
+	ki = std::to_string(sim_params.k_initial);
+	ki.erase(ki.find_last_not_of('0') + 2, std::string::npos);
+	jt = std::to_string(sim_params.j_target);
+	jt.erase(jt.find_last_not_of('0') + 2, std::string::npos);
+	kt = std::to_string(sim_params.k_target);
+	kt.erase(kt.find_last_not_of('0') + 2, std::string::npos);
 
 	if (PERIODIC) pbc = 't';
 	else pbc = 'f';
@@ -271,7 +271,7 @@ std::string make_path(Simulation_Parameters sim_params, std::string type){
 	else uni = 'f';
 
 	std::string dir = "../data/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
-	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___gi=" + gi + "_fi=" + fi +"_gt=" + gt +  "_ft="+ ft +".txt";
+	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ji=" + ji + "_ki=" + ki +"_jt=" + jt +  "_kt="+ kt +".txt";
 	std::string path = dir+file_name;
 
 	return path;
@@ -284,10 +284,6 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file.open(path, std::ios::app);
 	file << "GROUND_E =                   " <<  sim_params.ground_E << "\n";
 	file << "INITIAL_E =                  " <<  sim_params.initial_E << "\n";
-	file << "g_initial =        " << sim_params.g_initial << "\n";
-	file << "f_initial =        " << sim_params.f_initial << "\n";
-	file << "g_target =         " << sim_params.g_target << "\n";
-	file << "f_target =         " << sim_params.f_target << "\n";
 	file << "j_initial =        " << sim_params.j_initial << "\n";
 	file << "k_initial =        " << sim_params.k_initial << "\n";
 	file << "b_initial =        " << sim_params.b_initial << "\n";
@@ -308,16 +304,16 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 
 
 
-void save_gap_data(Simulation_Parameters& sim_params, double *f, double *g, double *gap, int L){
+void save_gap_data(Simulation_Parameters& sim_params, double *j, double *k, double *gap, int L){
 	int i;
 	std::ofstream file;
 	std::string path = "../data/gap.txt";
 	file.open(path);
 
-	file << "f = [";
-	for(i=0;i<L*L;i++) file << f[i] << ", ";
-	file << "]\ng = [";
-	for(i=0;i<L*L;i++) file << g[i] << ", ";
+	file << "j = [";
+	for(i=0;i<L*L;i++) file << j[i] << ", ";
+	file << "]\nk = [";
+	for(i=0;i<L*L;i++) file << k[i] << ", ";
 	file << "]\ngap = [";
 	for(i=0;i<L*L;i++) file << gap[i] << ", ";
 	file << "]\n";

@@ -8,7 +8,7 @@
 
 
 
-void Simulation_Parameters::initialize_simluation(int number_of_occupants, double gi, double fi, double gt, double ft, Simulation_Parameters& sim_params){
+void Simulation_Parameters::initialize_simluation(int number_of_occupants, double ji, double ki, double jt, double kt, Simulation_Parameters& sim_params){
 	const gsl_rng_type * TT;
 
 	num_occupants = number_of_occupants;
@@ -29,18 +29,13 @@ void Simulation_Parameters::initialize_simluation(int number_of_occupants, doubl
 	TT = gsl_rng_default;
 	rng  = gsl_rng_alloc (TT);
 
-	g_initial = gi;
-	f_initial = fi;
-	g_target = gt;
-	f_target = ft;
+	j_initial = ji;
+	k_initial = ki;
+	b_initial = 0;
 
-	j_initial = g_initial;
-	k_initial = (1-g_initial)*f_initial;
-	b_initial = (1-f_initial)*(1-g_initial);
-
-	j_target = g_target;
-	k_target = (1-g_target)*f_target;
-	b_target = (1-f_target)*(1-g_target);
+	j_target = jt;
+	k_target = kt;
+	b_target = 0;
 
 	jkb_initial[0] = j_initial;
 	jkb_initial[1] = k_initial;

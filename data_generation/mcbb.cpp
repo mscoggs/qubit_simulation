@@ -21,6 +21,7 @@ void mcbb_method(Simulation_Parameters& sim_params){
 	sim_params.init_mcbb_params();
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.initial_E -sim_params.ground_E < 0.001){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
+		if(PRINT) print_mcbb_info(sim_params);
 		if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
 		sim_params.clear_mcbb_params();
 		return;
@@ -394,6 +395,7 @@ void evolve_fixed_protocol(Simulation_Parameters& sim_params){
 	//
 	// std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
 	//
+
 	//
 	// while(sim_params.tau<1.0){
 	// 	for(i=0;i<2*NUMBER_OF_BANGS;i++) sim_params.j_best[i] = sim_params.tau, sim_params.k_best[i] = sim_params.tau;
