@@ -1,336 +1,1176 @@
-Executable        = main
-Arguments         = 3 0.1 0.1 0.1 0.5
-Log               = cluster/logs/__num_3__gi_0.1__fi_0.1__gt_0.1__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_0.1__gt_0.1__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.05 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.05
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 0.1 0.1 1.0
-Log               = cluster/logs/__num_3__gi_0.1__fi_0.1__gt_0.1__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_0.1__gt_0.1__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.05 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.20
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 0.1 0.5 0.1
-Log               = cluster/logs/__num_3__gi_0.1__fi_0.1__gt_0.5__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_0.1__gt_0.5__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.05 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.35
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 0.1 0.5 0.5
-Log               = cluster/logs/__num_3__gi_0.1__fi_0.1__gt_0.5__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_0.1__gt_0.5__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.05 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.50
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 0.1 0.5 1.0
-Log               = cluster/logs/__num_3__gi_0.1__fi_0.1__gt_0.5__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_0.1__gt_0.5__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.05 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.65
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 0.1 1.0 0.1
-Log               = cluster/logs/__num_3__gi_0.1__fi_0.1__gt_1.0__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_0.1__gt_1.0__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.05 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.80
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 0.1 1.0 0.5
-Log               = cluster/logs/__num_3__gi_0.1__fi_0.1__gt_1.0__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_0.1__gt_1.0__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.05 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.05__kt_0.95
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 0.1 1.0 1.0
-Log               = cluster/logs/__num_3__gi_0.1__fi_0.1__gt_1.0__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_0.1__gt_1.0__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.20 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.05
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 1.0 0.1 0.1
-Log               = cluster/logs/__num_3__gi_0.1__fi_1.0__gt_0.1__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_1.0__gt_0.1__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.20 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.20
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 1.0 0.1 0.5
-Log               = cluster/logs/__num_3__gi_0.1__fi_1.0__gt_0.1__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_1.0__gt_0.1__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.20 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.35
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 1.0 0.5 0.1
-Log               = cluster/logs/__num_3__gi_0.1__fi_1.0__gt_0.5__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_1.0__gt_0.5__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.20 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.50
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 1.0 0.5 0.5
-Log               = cluster/logs/__num_3__gi_0.1__fi_1.0__gt_0.5__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_1.0__gt_0.5__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.20 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.65
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 1.0 0.5 1.0
-Log               = cluster/logs/__num_3__gi_0.1__fi_1.0__gt_0.5__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_1.0__gt_0.5__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.20 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.80
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 1.0 1.0 0.1
-Log               = cluster/logs/__num_3__gi_0.1__fi_1.0__gt_1.0__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_1.0__gt_1.0__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.20 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.20__kt_0.95
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 1.0 1.0 0.5
-Log               = cluster/logs/__num_3__gi_0.1__fi_1.0__gt_1.0__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_1.0__gt_1.0__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.35 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.05
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 0.1 1.0 1.0 1.0
-Log               = cluster/logs/__num_3__gi_0.1__fi_1.0__gt_1.0__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_0.1__fi_1.0__gt_1.0__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.35 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.20
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 0.1 0.1 0.1
-Log               = cluster/logs/__num_3__gi_1.0__fi_0.1__gt_0.1__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_0.1__gt_0.1__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.35 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.35
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 0.1 0.1 0.5
-Log               = cluster/logs/__num_3__gi_1.0__fi_0.1__gt_0.1__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_0.1__gt_0.1__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.35 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.50
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 0.1 0.1 1.0
-Log               = cluster/logs/__num_3__gi_1.0__fi_0.1__gt_0.1__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_0.1__gt_0.1__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.35 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.65
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 0.1 0.5 0.1
-Log               = cluster/logs/__num_3__gi_1.0__fi_0.1__gt_0.5__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_0.1__gt_0.5__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.35 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.80
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 0.1 0.5 0.5
-Log               = cluster/logs/__num_3__gi_1.0__fi_0.1__gt_0.5__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_0.1__gt_0.5__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.35 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.35__kt_0.95
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 0.1 0.5 1.0
-Log               = cluster/logs/__num_3__gi_1.0__fi_0.1__gt_0.5__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_0.1__gt_0.5__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.50 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.05
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 1.0 0.1 0.1
-Log               = cluster/logs/__num_3__gi_1.0__fi_1.0__gt_0.1__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_1.0__gt_0.1__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.50 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.20
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 1.0 0.1 0.5
-Log               = cluster/logs/__num_3__gi_1.0__fi_1.0__gt_0.1__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_1.0__gt_0.1__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.50 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.35
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 1.0 0.1 1.0
-Log               = cluster/logs/__num_3__gi_1.0__fi_1.0__gt_0.1__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_1.0__gt_0.1__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.50 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.50
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 1.0 0.5 0.1
-Log               = cluster/logs/__num_3__gi_1.0__fi_1.0__gt_0.5__ft_0.1.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_1.0__gt_0.5__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.50 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.65
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 1.0 0.5 0.5
-Log               = cluster/logs/__num_3__gi_1.0__fi_1.0__gt_0.5__ft_0.5.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_1.0__gt_0.5__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.50 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.80
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 3 1.0 1.0 0.5 1.0
-Log               = cluster/logs/__num_3__gi_1.0__fi_1.0__gt_0.5__ft_1.0.log
-Output            = cluster/outputs/__num_3__gi_1.0__fi_1.0__gt_0.5__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.50 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.50__kt_0.95
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 0.1 0.1 0.5
-Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_0.1__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_0.1__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.65 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.05
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 0.1 0.1 1.0
-Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_0.1__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_0.1__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.65 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.20
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 0.1 0.5 0.1
-Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_0.5__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_0.5__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.65 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.35
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 0.1 0.5 0.5
-Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_0.5__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_0.5__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.65 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.50
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 0.1 0.5 1.0
-Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_0.5__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_0.5__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.65 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.65
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 0.1 1.0 0.1
-Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_1.0__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_1.0__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.65 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.80
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 0.1 1.0 0.5
-Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_1.0__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_1.0__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.65 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.65__kt_0.95
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 0.1 1.0 1.0
-Log               = cluster/logs/__num_4__gi_0.1__fi_0.1__gt_1.0__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_0.1__gt_1.0__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.80 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.05
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 1.0 0.1 0.1
-Log               = cluster/logs/__num_4__gi_0.1__fi_1.0__gt_0.1__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_1.0__gt_0.1__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.80 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.20
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 1.0 0.1 0.5
-Log               = cluster/logs/__num_4__gi_0.1__fi_1.0__gt_0.1__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_1.0__gt_0.1__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.80 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.35
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 1.0 0.5 0.1
-Log               = cluster/logs/__num_4__gi_0.1__fi_1.0__gt_0.5__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_1.0__gt_0.5__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.80 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.50
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 1.0 0.5 0.5
-Log               = cluster/logs/__num_4__gi_0.1__fi_1.0__gt_0.5__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_1.0__gt_0.5__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.80 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.65
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 1.0 0.5 1.0
-Log               = cluster/logs/__num_4__gi_0.1__fi_1.0__gt_0.5__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_1.0__gt_0.5__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.80 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.80
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 1.0 1.0 0.1
-Log               = cluster/logs/__num_4__gi_0.1__fi_1.0__gt_1.0__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_1.0__gt_1.0__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.80 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.80__kt_0.95
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 1.0 1.0 0.5
-Log               = cluster/logs/__num_4__gi_0.1__fi_1.0__gt_1.0__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_1.0__gt_1.0__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.95 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.05
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 0.1 1.0 1.0 1.0
-Log               = cluster/logs/__num_4__gi_0.1__fi_1.0__gt_1.0__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_0.1__fi_1.0__gt_1.0__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.95 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.20
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 0.1 0.1 0.1
-Log               = cluster/logs/__num_4__gi_1.0__fi_0.1__gt_0.1__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_0.1__gt_0.1__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.95 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.35
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 0.1 0.1 0.5
-Log               = cluster/logs/__num_4__gi_1.0__fi_0.1__gt_0.1__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_0.1__gt_0.1__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.95 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.50
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 0.1 0.1 1.0
-Log               = cluster/logs/__num_4__gi_1.0__fi_0.1__gt_0.1__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_0.1__gt_0.1__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.95 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.65
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 0.1 0.5 0.1
-Log               = cluster/logs/__num_4__gi_1.0__fi_0.1__gt_0.5__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_0.1__gt_0.5__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.95 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.80
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 0.1 0.5 0.5
-Log               = cluster/logs/__num_4__gi_1.0__fi_0.1__gt_0.5__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_0.1__gt_0.5__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.05 0.95 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.05__jt_0.95__kt_0.95
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 0.1 0.5 1.0
-Log               = cluster/logs/__num_4__gi_1.0__fi_0.1__gt_0.5__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_0.1__gt_0.5__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.05 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.05
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 1.0 0.1 0.1
-Log               = cluster/logs/__num_4__gi_1.0__fi_1.0__gt_0.1__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_1.0__gt_0.1__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.05 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.20
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 1.0 0.1 0.5
-Log               = cluster/logs/__num_4__gi_1.0__fi_1.0__gt_0.1__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_1.0__gt_0.1__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.05 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.35
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 1.0 0.1 1.0
-Log               = cluster/logs/__num_4__gi_1.0__fi_1.0__gt_0.1__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_1.0__gt_0.1__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.05 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.50
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 1.0 0.5 0.1
-Log               = cluster/logs/__num_4__gi_1.0__fi_1.0__gt_0.5__ft_0.1.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_1.0__gt_0.5__ft_0.1
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.05 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.65
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 1.0 0.5 0.5
-Log               = cluster/logs/__num_4__gi_1.0__fi_1.0__gt_0.5__ft_0.5.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_1.0__gt_0.5__ft_0.5
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.05 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.80
 request_cpus      = 4
 queue
-Executable        = main
-Arguments         = 4 1.0 1.0 0.5 1.0
-Log               = cluster/logs/__num_4__gi_1.0__fi_1.0__gt_0.5__ft_1.0.log
-Output            = cluster/outputs/__num_4__gi_1.0__fi_1.0__gt_0.5__ft_1.0
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.05 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.05__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.20 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.20 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.20 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.20 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.20 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.20 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.20 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.20__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.35 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.35 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.35 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.35 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.35 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.35 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.35 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.35__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.50 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.50 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.50 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.50 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.50 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.50 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.50 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.50__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.65 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.65 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.65 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.65 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.65 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.65 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.65 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.65__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.80 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.80 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.80 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.80 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.80 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.80 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.80 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.80__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.95 0.05
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.95 0.20
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.95 0.35
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.95 0.50
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.95 0.65
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.95 0.80
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.05 0.95 0.95 0.95
+Log               = cluster/logs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.05__ki_0.95__jt_0.95__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.05 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.05 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.05 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.05 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.05 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.05 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.05 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.05__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.20 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.20 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.20 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.20 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.20 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.20 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.20 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.20__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.35 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.35 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.35 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.35 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.35 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.35 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.35 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.35__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.50 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.50 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.50 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.50 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.50 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.50 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.50 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.50__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.65 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.65 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.65 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.65 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.65 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.65 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.65 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.65__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.80 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.80 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.80 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.80 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.80 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.80 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.80 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.80__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.95 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.95 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.95 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.95 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.95 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.95 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.05 0.95 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.05__jt_0.95__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.05 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.05 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.05 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.05 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.05 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.05 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.05 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.05__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.20 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.20 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.20 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.20 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.20 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.20 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.20 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.20__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.35 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.35 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.35 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.35 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.35 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.35 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.35 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.35__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.50 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.50 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.50 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.50 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.50 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.50 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.50 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.50__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.65 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.65 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.65 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.65 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.65 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.65 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.65 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.65__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.80 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.80 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.80 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.80 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.80 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.80 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.80 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.80__kt_0.95
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.95 0.05
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.05.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.05
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.95 0.20
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.20.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.20
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.95 0.35
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.35.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.35
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.95 0.50
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.50.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.50
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.95 0.65
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.65.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.65
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.95 0.80
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.80.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.80
+request_cpus      = 4
+queue
+Executable        = main_4x4
+Arguments         = 2 0.95 0.95 0.95 0.95
+Log               = cluster/logs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.95.log
+Output            = cluster/outputs/__num_2__ji_0.95__ki_0.95__jt_0.95__kt_0.95
 request_cpus      = 4
 queue

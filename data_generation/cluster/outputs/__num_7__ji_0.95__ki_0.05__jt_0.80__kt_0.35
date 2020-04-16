@@ -1,0 +1,852 @@
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       0.8000 || TAU:            0.0500 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0030 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.490460  ||  Acceptance Rate: 0.9199 (264/287)
+           Best Expectation:   -4.490677  ||  Acceptance Rate: 0.8277 (245/296)
+           Best Expectation:   -4.490722  ||  Acceptance Rate: 0.7860 (235/299)
+           Best Expectation:   -4.490722  ||  Acceptance Rate: 0.8100 (243/300)
+           Best Expectation:   -4.490722  ||  Acceptance Rate: 0.7300 (219/300)
+           Best Expectation:   -4.490730  ||  Acceptance Rate: 0.7157 (214/299)
+           Best Expectation:   -4.490730  ||  Acceptance Rate: 0.7367 (221/300)
+           Best Expectation:   -4.490730  ||  Acceptance Rate: 0.6133 (184/300)
+           Best Expectation:   -4.490731  ||  Acceptance Rate: 0.5920 (177/299)
+           Best Expectation:   -4.490732  ||  Acceptance Rate: 0.6154 (184/299)
+           Best Expectation:   -4.490732  ||  Acceptance Rate: 0.6367 (191/300)
+           Best Expectation:   -4.490732  ||  Acceptance Rate: 0.6333 (190/300)
+           Best Expectation:   -4.490732  ||  Acceptance Rate: 0.6000 (180/300)
+           Best Expectation:   -4.490732  ||  Acceptance Rate: 0.6067 (182/300)
+           Best Expectation:   -4.490737  ||  Acceptance Rate: 0.6027 (179/297)
+           Best Expectation:   -4.490737  ||  Acceptance Rate: 0.5833 (175/300)
+           Best Expectation:   -4.490737  ||  Acceptance Rate: 0.5600 (168/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.5753 (172/299)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.6200 (186/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.5833 (175/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             2 ||
+|| TAU_MAX:       0.8000 || TAU:            0.0500 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.490710  ||  Acceptance Rate: 0.4510 (129/286)
+           Best Expectation:   -4.490734  ||  Acceptance Rate: 0.4377 (130/297)
+           Best Expectation:   -4.490734  ||  Acceptance Rate: 0.4567 (137/300)
+           Best Expectation:   -4.490735  ||  Acceptance Rate: 0.4448 (133/299)
+           Best Expectation:   -4.490735  ||  Acceptance Rate: 0.4367 (131/300)
+           Best Expectation:   -4.490735  ||  Acceptance Rate: 0.4367 (131/300)
+           Best Expectation:   -4.490735  ||  Acceptance Rate: 0.4667 (140/300)
+           Best Expectation:   -4.490735  ||  Acceptance Rate: 0.5167 (155/300)
+           Best Expectation:   -4.490735  ||  Acceptance Rate: 0.4181 (125/299)
+           Best Expectation:   -4.490735  ||  Acceptance Rate: 0.4467 (134/300)
+           Best Expectation:   -4.490735  ||  Acceptance Rate: 0.4667 (140/300)
+           Best Expectation:   -4.490739  ||  Acceptance Rate: 0.5050 (151/299)
+           Best Expectation:   -4.490739  ||  Acceptance Rate: 0.4367 (131/300)
+           Best Expectation:   -4.490739  ||  Acceptance Rate: 0.4267 (128/300)
+           Best Expectation:   -4.490739  ||  Acceptance Rate: 0.4100 (123/300)
+           Best Expectation:   -4.490739  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.490739  ||  Acceptance Rate: 0.4080 (122/299)
+           Best Expectation:   -4.490739  ||  Acceptance Rate: 0.4047 (121/299)
+           Best Expectation:   -4.490739  ||  Acceptance Rate: 0.4467 (134/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4314 (129/299)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             3 ||
+|| TAU_MAX:       0.8000 || TAU:            0.0500 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.490673  ||  Acceptance Rate: 0.4345 (126/290)
+           Best Expectation:   -4.490673  ||  Acceptance Rate: 0.4000 (120/300)
+           Best Expectation:   -4.490681  ||  Acceptance Rate: 0.3859 (115/298)
+           Best Expectation:   -4.490720  ||  Acceptance Rate: 0.4262 (127/298)
+           Best Expectation:   -4.490731  ||  Acceptance Rate: 0.4849 (145/299)
+           Best Expectation:   -4.490731  ||  Acceptance Rate: 0.4467 (134/300)
+           Best Expectation:   -4.490731  ||  Acceptance Rate: 0.4300 (129/300)
+           Best Expectation:   -4.490731  ||  Acceptance Rate: 0.5100 (153/300)
+           Best Expectation:   -4.490731  ||  Acceptance Rate: 0.4300 (129/300)
+           Best Expectation:   -4.490733  ||  Acceptance Rate: 0.4482 (134/299)
+           Best Expectation:   -4.490733  ||  Acceptance Rate: 0.4833 (145/300)
+           Best Expectation:   -4.490733  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.490733  ||  Acceptance Rate: 0.4400 (132/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4515 (135/299)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4700 (141/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4200 (126/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4500 (135/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4482 (134/299)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4515 (135/299)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4900 (147/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             4 ||
+|| TAU_MAX:       0.8000 || TAU:            0.0500 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.490635  ||  Acceptance Rate: 0.4639 (135/291)
+           Best Expectation:   -4.490736  ||  Acceptance Rate: 0.4329 (129/298)
+           Best Expectation:   -4.490736  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.490736  ||  Acceptance Rate: 0.3667 (110/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.3779 (113/299)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4300 (129/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.3433 (103/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4000 (120/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.3813 (114/299)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4067 (122/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4367 (131/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.3600 (108/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4300 (129/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4333 (130/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4147 (124/299)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4033 (121/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4133 (124/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.3980 (119/299)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4433 (133/300)
+           Best Expectation:   -4.490740  ||  Acceptance Rate: 0.4295 (128/298)
+############################################################################
+BEST ENERGY=    -4.490740
+TARGET ENERGY=  -4.534119
+INITIAL ENERGY= -4.483920
+OLD DISTANCNCE=  1.000000
+NEW DISTANCNCE=  0.864148
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       0.8000 || TAU:            0.0650 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0024 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.489907  ||  Acceptance Rate: 0.8287 (237/286)
+           Best Expectation:   -4.489907  ||  Acceptance Rate: 0.8667 (260/300)
+           Best Expectation:   -4.492207  ||  Acceptance Rate: 0.7752 (231/298)
+           Best Expectation:   -4.494878  ||  Acceptance Rate: 0.6566 (195/297)
+           Best Expectation:   -4.495073  ||  Acceptance Rate: 0.6397 (190/297)
+           Best Expectation:   -4.495073  ||  Acceptance Rate: 0.5867 (176/300)
+           Best Expectation:   -4.495073  ||  Acceptance Rate: 0.6567 (197/300)
+           Best Expectation:   -4.495085  ||  Acceptance Rate: 0.6288 (188/299)
+           Best Expectation:   -4.495085  ||  Acceptance Rate: 0.6567 (197/300)
+           Best Expectation:   -4.495085  ||  Acceptance Rate: 0.6500 (195/300)
+           Best Expectation:   -4.495086  ||  Acceptance Rate: 0.5987 (179/299)
+           Best Expectation:   -4.495086  ||  Acceptance Rate: 0.5800 (174/300)
+           Best Expectation:   -4.495086  ||  Acceptance Rate: 0.5500 (165/300)
+           Best Expectation:   -4.495109  ||  Acceptance Rate: 0.6107 (182/298)
+           Best Expectation:   -4.495109  ||  Acceptance Rate: 0.5800 (174/300)
+           Best Expectation:   -4.495109  ||  Acceptance Rate: 0.6200 (186/300)
+           Best Expectation:   -4.495109  ||  Acceptance Rate: 0.6100 (183/300)
+           Best Expectation:   -4.495109  ||  Acceptance Rate: 0.6300 (189/300)
+           Best Expectation:   -4.495109  ||  Acceptance Rate: 0.6254 (187/299)
+           Best Expectation:   -4.495109  ||  Acceptance Rate: 0.6433 (193/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             2 ||
+|| TAU_MAX:       0.8000 || TAU:            0.0650 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.492118  ||  Acceptance Rate: 0.3936 (111/282)
+           Best Expectation:   -4.495024  ||  Acceptance Rate: 0.4286 (126/294)
+           Best Expectation:   -4.495035  ||  Acceptance Rate: 0.4281 (128/299)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4799 (143/298)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4133 (124/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4200 (126/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.5000 (150/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4167 (125/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4700 (141/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4600 (138/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.5133 (154/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4716 (141/299)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4167 (125/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4100 (123/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.3800 (114/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.3867 (116/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4800 (144/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4396 (131/298)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4267 (128/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             3 ||
+|| TAU_MAX:       0.8000 || TAU:            0.0650 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.494862  ||  Acceptance Rate: 0.4375 (126/288)
+           Best Expectation:   -4.495099  ||  Acceptance Rate: 0.4613 (137/297)
+           Best Expectation:   -4.495101  ||  Acceptance Rate: 0.4415 (132/299)
+           Best Expectation:   -4.495101  ||  Acceptance Rate: 0.4333 (130/300)
+           Best Expectation:   -4.495102  ||  Acceptance Rate: 0.4548 (136/299)
+           Best Expectation:   -4.495102  ||  Acceptance Rate: 0.4567 (137/300)
+           Best Expectation:   -4.495102  ||  Acceptance Rate: 0.4733 (142/300)
+           Best Expectation:   -4.495106  ||  Acceptance Rate: 0.4548 (136/299)
+           Best Expectation:   -4.495106  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.495106  ||  Acceptance Rate: 0.4800 (144/300)
+           Best Expectation:   -4.495106  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.495106  ||  Acceptance Rate: 0.4433 (133/300)
+           Best Expectation:   -4.495106  ||  Acceptance Rate: 0.5167 (155/300)
+           Best Expectation:   -4.495106  ||  Acceptance Rate: 0.4415 (132/299)
+           Best Expectation:   -4.495106  ||  Acceptance Rate: 0.4567 (137/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4749 (142/299)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4733 (142/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4500 (135/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4515 (135/299)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4631 (138/298)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             4 ||
+|| TAU_MAX:       0.8000 || TAU:            0.0650 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.494674  ||  Acceptance Rate: 0.4605 (134/291)
+           Best Expectation:   -4.495069  ||  Acceptance Rate: 0.4223 (125/296)
+           Best Expectation:   -4.495069  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.495069  ||  Acceptance Rate: 0.4367 (131/300)
+           Best Expectation:   -4.495069  ||  Acceptance Rate: 0.3967 (119/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4515 (135/299)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4467 (134/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.3767 (113/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4367 (131/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.4400 (132/300)
+           Best Expectation:   -4.495110  ||  Acceptance Rate: 0.3926 (117/298)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4482 (134/299)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4133 (124/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4267 (128/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4067 (122/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4333 (130/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4300 (129/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.3867 (116/300)
+           Best Expectation:   -4.495111  ||  Acceptance Rate: 0.3980 (119/299)
+############################################################################
+BEST ENERGY=    -4.495111
+TARGET ENERGY=  -4.534119
+INITIAL ENERGY= -4.483920
+OLD DISTANCNCE=  0.864148
+NEW DISTANCNCE=  0.777082
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1170 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0095 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.514412  ||  Acceptance Rate: 0.7902 (226/286)
+           Best Expectation:   -4.514429  ||  Acceptance Rate: 0.8194 (245/299)
+           Best Expectation:   -4.514429  ||  Acceptance Rate: 0.7533 (226/300)
+           Best Expectation:   -4.514456  ||  Acceptance Rate: 0.7358 (220/299)
+           Best Expectation:   -4.514456  ||  Acceptance Rate: 0.7100 (213/300)
+           Best Expectation:   -4.514476  ||  Acceptance Rate: 0.7625 (228/299)
+           Best Expectation:   -4.514476  ||  Acceptance Rate: 0.7567 (227/300)
+           Best Expectation:   -4.514476  ||  Acceptance Rate: 0.7433 (223/300)
+           Best Expectation:   -4.514476  ||  Acceptance Rate: 0.6867 (206/300)
+           Best Expectation:   -4.514485  ||  Acceptance Rate: 0.5940 (177/298)
+           Best Expectation:   -4.514485  ||  Acceptance Rate: 0.6100 (183/300)
+           Best Expectation:   -4.514485  ||  Acceptance Rate: 0.6500 (195/300)
+           Best Expectation:   -4.514485  ||  Acceptance Rate: 0.6867 (206/300)
+           Best Expectation:   -4.514485  ||  Acceptance Rate: 0.7367 (221/300)
+           Best Expectation:   -4.514485  ||  Acceptance Rate: 0.6767 (203/300)
+           Best Expectation:   -4.514485  ||  Acceptance Rate: 0.7067 (212/300)
+           Best Expectation:   -4.514485  ||  Acceptance Rate: 0.6733 (202/300)
+           Best Expectation:   -4.514494  ||  Acceptance Rate: 0.6120 (183/299)
+           Best Expectation:   -4.514496  ||  Acceptance Rate: 0.6355 (190/299)
+           Best Expectation:   -4.514496  ||  Acceptance Rate: 0.6567 (197/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             2 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1170 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0001 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.514438  ||  Acceptance Rate: 0.4685 (134/286)
+           Best Expectation:   -4.514478  ||  Acceptance Rate: 0.4329 (129/298)
+           Best Expectation:   -4.514478  ||  Acceptance Rate: 0.4500 (135/300)
+           Best Expectation:   -4.514478  ||  Acceptance Rate: 0.5100 (153/300)
+           Best Expectation:   -4.514478  ||  Acceptance Rate: 0.4300 (129/300)
+           Best Expectation:   -4.514492  ||  Acceptance Rate: 0.4564 (136/298)
+           Best Expectation:   -4.514492  ||  Acceptance Rate: 0.4633 (139/300)
+           Best Expectation:   -4.514492  ||  Acceptance Rate: 0.5333 (160/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.3946 (118/299)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4833 (145/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4733 (142/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.5067 (152/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4133 (124/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4367 (131/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4400 (132/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4967 (149/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4500 (135/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.3700 (111/300)
+           Best Expectation:   -4.514498  ||  Acceptance Rate: 0.4396 (131/298)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             3 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1170 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.512175  ||  Acceptance Rate: 0.5018 (142/283)
+           Best Expectation:   -4.514271  ||  Acceptance Rate: 0.4444 (132/297)
+           Best Expectation:   -4.514422  ||  Acceptance Rate: 0.4147 (124/299)
+           Best Expectation:   -4.514422  ||  Acceptance Rate: 0.4000 (120/300)
+           Best Expectation:   -4.514422  ||  Acceptance Rate: 0.3867 (116/300)
+           Best Expectation:   -4.514424  ||  Acceptance Rate: 0.4348 (130/299)
+           Best Expectation:   -4.514424  ||  Acceptance Rate: 0.4100 (123/300)
+           Best Expectation:   -4.514424  ||  Acceptance Rate: 0.4567 (137/300)
+           Best Expectation:   -4.514424  ||  Acceptance Rate: 0.3833 (115/300)
+           Best Expectation:   -4.514424  ||  Acceptance Rate: 0.4200 (126/300)
+           Best Expectation:   -4.514424  ||  Acceptance Rate: 0.3900 (117/300)
+           Best Expectation:   -4.514424  ||  Acceptance Rate: 0.3500 (105/300)
+           Best Expectation:   -4.514477  ||  Acceptance Rate: 0.4411 (131/297)
+           Best Expectation:   -4.514494  ||  Acceptance Rate: 0.4060 (121/298)
+           Best Expectation:   -4.514494  ||  Acceptance Rate: 0.4100 (123/300)
+           Best Expectation:   -4.514495  ||  Acceptance Rate: 0.3946 (118/299)
+           Best Expectation:   -4.514495  ||  Acceptance Rate: 0.4448 (133/299)
+           Best Expectation:   -4.514498  ||  Acceptance Rate: 0.4415 (132/299)
+           Best Expectation:   -4.514498  ||  Acceptance Rate: 0.4147 (124/299)
+           Best Expectation:   -4.514498  ||  Acceptance Rate: 0.4267 (128/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             4 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1170 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.514208  ||  Acceptance Rate: 0.5141 (146/284)
+           Best Expectation:   -4.514209  ||  Acceptance Rate: 0.5318 (159/299)
+           Best Expectation:   -4.514376  ||  Acceptance Rate: 0.5518 (165/299)
+           Best Expectation:   -4.514376  ||  Acceptance Rate: 0.5433 (163/300)
+           Best Expectation:   -4.514376  ||  Acceptance Rate: 0.5767 (173/300)
+           Best Expectation:   -4.514477  ||  Acceptance Rate: 0.6020 (180/299)
+           Best Expectation:   -4.514477  ||  Acceptance Rate: 0.5500 (165/300)
+           Best Expectation:   -4.514491  ||  Acceptance Rate: 0.5418 (162/299)
+           Best Expectation:   -4.514496  ||  Acceptance Rate: 0.5318 (159/299)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.5452 (163/299)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.5200 (156/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.5333 (160/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.5200 (156/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.4933 (148/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.5633 (169/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.5733 (172/300)
+           Best Expectation:   -4.514497  ||  Acceptance Rate: 0.5300 (159/300)
+           Best Expectation:   -4.514498  ||  Acceptance Rate: 0.5184 (155/299)
+           Best Expectation:   -4.514498  ||  Acceptance Rate: 0.5533 (166/300)
+           Best Expectation:   -4.514498  ||  Acceptance Rate: 0.5033 (151/300)
+############################################################################
+BEST ENERGY=    -4.514498
+TARGET ENERGY=  -4.534119
+INITIAL ENERGY= -4.483920
+OLD DISTANCNCE=  0.777082
+NEW DISTANCNCE=  0.390864
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1521 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0155 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.526735  ||  Acceptance Rate: 0.8379 (243/290)
+           Best Expectation:   -4.526735  ||  Acceptance Rate: 0.8367 (251/300)
+           Best Expectation:   -4.526735  ||  Acceptance Rate: 0.7600 (228/300)
+           Best Expectation:   -4.526743  ||  Acceptance Rate: 0.7037 (209/297)
+           Best Expectation:   -4.526758  ||  Acceptance Rate: 0.8027 (240/299)
+           Best Expectation:   -4.526758  ||  Acceptance Rate: 0.7367 (221/300)
+           Best Expectation:   -4.526758  ||  Acceptance Rate: 0.7533 (226/300)
+           Best Expectation:   -4.526758  ||  Acceptance Rate: 0.7533 (226/300)
+           Best Expectation:   -4.526758  ||  Acceptance Rate: 0.6900 (207/300)
+           Best Expectation:   -4.526759  ||  Acceptance Rate: 0.7525 (225/299)
+           Best Expectation:   -4.526759  ||  Acceptance Rate: 0.6700 (201/300)
+           Best Expectation:   -4.526765  ||  Acceptance Rate: 0.6054 (181/299)
+           Best Expectation:   -4.526772  ||  Acceptance Rate: 0.6789 (203/299)
+           Best Expectation:   -4.526772  ||  Acceptance Rate: 0.7200 (216/300)
+           Best Expectation:   -4.526772  ||  Acceptance Rate: 0.5767 (173/300)
+           Best Expectation:   -4.526772  ||  Acceptance Rate: 0.6400 (192/300)
+           Best Expectation:   -4.526772  ||  Acceptance Rate: 0.6567 (197/300)
+           Best Expectation:   -4.526772  ||  Acceptance Rate: 0.6633 (199/300)
+           Best Expectation:   -4.526773  ||  Acceptance Rate: 0.6555 (196/299)
+           Best Expectation:   -4.526773  ||  Acceptance Rate: 0.6933 (208/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             2 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1521 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0002 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.522061  ||  Acceptance Rate: 0.5517 (160/290)
+           Best Expectation:   -4.526767  ||  Acceptance Rate: 0.5102 (150/294)
+           Best Expectation:   -4.526767  ||  Acceptance Rate: 0.4533 (136/300)
+           Best Expectation:   -4.526767  ||  Acceptance Rate: 0.5133 (154/300)
+           Best Expectation:   -4.526771  ||  Acceptance Rate: 0.4448 (133/299)
+           Best Expectation:   -4.526785  ||  Acceptance Rate: 0.4448 (133/299)
+           Best Expectation:   -4.526785  ||  Acceptance Rate: 0.4633 (139/300)
+           Best Expectation:   -4.526785  ||  Acceptance Rate: 0.5367 (161/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4047 (121/299)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4833 (145/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4767 (143/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.5067 (152/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4200 (126/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4533 (136/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4633 (139/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4967 (149/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4500 (135/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.3733 (112/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4548 (136/299)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             3 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1521 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.520136  ||  Acceptance Rate: 0.4653 (134/288)
+           Best Expectation:   -4.526788  ||  Acceptance Rate: 0.4310 (128/297)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4114 (123/299)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.3967 (119/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4267 (128/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4533 (136/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4433 (133/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.3567 (107/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4000 (120/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4033 (121/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4533 (136/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.3867 (116/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4033 (121/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.3900 (117/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4633 (139/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4700 (141/300)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4348 (130/299)
+           Best Expectation:   -4.526789  ||  Acceptance Rate: 0.4267 (128/300)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4181 (125/299)
+           Best Expectation:   -4.526790  ||  Acceptance Rate: 0.4415 (132/299)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             4 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1521 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.520284  ||  Acceptance Rate: 0.4132 (119/288)
+           Best Expectation:   -4.521055  ||  Acceptance Rate: 0.3737 (111/297)
+           Best Expectation:   -4.525567  ||  Acceptance Rate: 0.4130 (121/293)
+           Best Expectation:   -4.526763  ||  Acceptance Rate: 0.3973 (118/297)
+           Best Expectation:   -4.526763  ||  Acceptance Rate: 0.4200 (126/300)
+           Best Expectation:   -4.526772  ||  Acceptance Rate: 0.3645 (109/299)
+           Best Expectation:   -4.526786  ||  Acceptance Rate: 0.3926 (117/298)
+           Best Expectation:   -4.526786  ||  Acceptance Rate: 0.3900 (117/300)
+           Best Expectation:   -4.526786  ||  Acceptance Rate: 0.4233 (127/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4262 (127/298)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4267 (128/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.3900 (117/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.3733 (112/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4167 (125/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4400 (132/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4033 (121/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4167 (125/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.3600 (108/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4433 (133/300)
+           Best Expectation:   -4.526791  ||  Acceptance Rate: 0.4333 (130/300)
+############################################################################
+BEST ENERGY=    -4.526791
+TARGET ENERGY=  -4.534119
+INITIAL ENERGY= -4.483920
+OLD DISTANCNCE=  0.390864
+NEW DISTANCNCE=  0.145992
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1749 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0194 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.532008  ||  Acceptance Rate: 0.8527 (249/292)
+           Best Expectation:   -4.532008  ||  Acceptance Rate: 0.8100 (243/300)
+           Best Expectation:   -4.532008  ||  Acceptance Rate: 0.7433 (223/300)
+           Best Expectation:   -4.532008  ||  Acceptance Rate: 0.7267 (218/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.6902 (205/297)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.6833 (205/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.6700 (201/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.6600 (198/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.6555 (196/299)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.6933 (208/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.6433 (193/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.6033 (181/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.6333 (190/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.7033 (211/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.6067 (182/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.5933 (178/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.6133 (184/300)
+           Best Expectation:   -4.532114  ||  Acceptance Rate: 0.5867 (176/300)
+           Best Expectation:   -4.532124  ||  Acceptance Rate: 0.5786 (173/299)
+           Best Expectation:   -4.532124  ||  Acceptance Rate: 0.5967 (179/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             2 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1749 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0002 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.528502  ||  Acceptance Rate: 0.6259 (179/286)
+           Best Expectation:   -4.529343  ||  Acceptance Rate: 0.6136 (181/295)
+           Best Expectation:   -4.529388  ||  Acceptance Rate: 0.5117 (153/299)
+           Best Expectation:   -4.530974  ||  Acceptance Rate: 0.4949 (146/295)
+           Best Expectation:   -4.531525  ||  Acceptance Rate: 0.4664 (139/298)
+           Best Expectation:   -4.532109  ||  Acceptance Rate: 0.5338 (158/296)
+           Best Expectation:   -4.532109  ||  Acceptance Rate: 0.5433 (163/300)
+           Best Expectation:   -4.532109  ||  Acceptance Rate: 0.5900 (177/300)
+           Best Expectation:   -4.532111  ||  Acceptance Rate: 0.5786 (173/299)
+           Best Expectation:   -4.532119  ||  Acceptance Rate: 0.5452 (163/299)
+           Best Expectation:   -4.532119  ||  Acceptance Rate: 0.5167 (155/300)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.5485 (164/299)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.5385 (161/299)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.4767 (143/300)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.4967 (149/300)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.4700 (141/300)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.5000 (150/300)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.4500 (135/300)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.4000 (120/300)
+           Best Expectation:   -4.532125  ||  Acceptance Rate: 0.4682 (140/299)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             3 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1749 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.525537  ||  Acceptance Rate: 0.4653 (134/288)
+           Best Expectation:   -4.525802  ||  Acceptance Rate: 0.3779 (113/299)
+           Best Expectation:   -4.526755  ||  Acceptance Rate: 0.3926 (117/298)
+           Best Expectation:   -4.527175  ||  Acceptance Rate: 0.3121 (93/298)
+           Best Expectation:   -4.529335  ||  Acceptance Rate: 0.3064 (91/297)
+           Best Expectation:   -4.529335  ||  Acceptance Rate: 0.3733 (112/300)
+           Best Expectation:   -4.529335  ||  Acceptance Rate: 0.3633 (109/300)
+           Best Expectation:   -4.531036  ||  Acceptance Rate: 0.4262 (127/298)
+           Best Expectation:   -4.532116  ||  Acceptance Rate: 0.3605 (106/294)
+           Best Expectation:   -4.532120  ||  Acceptance Rate: 0.4482 (134/299)
+           Best Expectation:   -4.532120  ||  Acceptance Rate: 0.4100 (123/300)
+           Best Expectation:   -4.532120  ||  Acceptance Rate: 0.4433 (133/300)
+           Best Expectation:   -4.532120  ||  Acceptance Rate: 0.4100 (123/300)
+           Best Expectation:   -4.532120  ||  Acceptance Rate: 0.4314 (129/299)
+           Best Expectation:   -4.532121  ||  Acceptance Rate: 0.4448 (133/299)
+           Best Expectation:   -4.532122  ||  Acceptance Rate: 0.4649 (139/299)
+           Best Expectation:   -4.532122  ||  Acceptance Rate: 0.4381 (131/299)
+           Best Expectation:   -4.532122  ||  Acceptance Rate: 0.4300 (129/300)
+           Best Expectation:   -4.532122  ||  Acceptance Rate: 0.4367 (131/300)
+           Best Expectation:   -4.532125  ||  Acceptance Rate: 0.4214 (126/299)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             4 ||
+|| TAU_MAX:       0.8000 || TAU:            0.1749 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.531900  ||  Acceptance Rate: 0.4669 (134/287)
+           Best Expectation:   -4.531994  ||  Acceptance Rate: 0.4664 (139/298)
+           Best Expectation:   -4.532066  ||  Acceptance Rate: 0.3645 (109/299)
+           Best Expectation:   -4.532066  ||  Acceptance Rate: 0.3600 (108/300)
+           Best Expectation:   -4.532066  ||  Acceptance Rate: 0.3500 (105/300)
+           Best Expectation:   -4.532066  ||  Acceptance Rate: 0.4167 (125/300)
+           Best Expectation:   -4.532075  ||  Acceptance Rate: 0.3512 (105/299)
+           Best Expectation:   -4.532077  ||  Acceptance Rate: 0.3344 (100/299)
+           Best Expectation:   -4.532082  ||  Acceptance Rate: 0.3423 (102/298)
+           Best Expectation:   -4.532093  ||  Acceptance Rate: 0.3401 (101/297)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.3557 (106/298)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.3967 (119/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.3567 (107/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.3300 (99/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.2967 (89/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.3300 (99/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.3200 (96/300)
+           Best Expectation:   -4.532100  ||  Acceptance Rate: 0.3233 (97/300)
+           Best Expectation:   -4.532107  ||  Acceptance Rate: 0.2852 (85/298)
+           Best Expectation:   -4.532125  ||  Acceptance Rate: 0.3926 (117/298)
+############################################################################
+BEST ENERGY=    -4.532125
+TARGET ENERGY=  -4.534119
+INITIAL ENERGY= -4.483920
+OLD DISTANCNCE=  0.145992
+NEW DISTANCNCE=  0.039723
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       0.8000 || TAU:            0.2012 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0235 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.533980  ||  Acceptance Rate: 0.8527 (249/292)
+           Best Expectation:   -4.533980  ||  Acceptance Rate: 0.7733 (232/300)
+           Best Expectation:   -4.534061  ||  Acceptance Rate: 0.7993 (239/299)
+           Best Expectation:   -4.534061  ||  Acceptance Rate: 0.7367 (221/300)
+           Best Expectation:   -4.534061  ||  Acceptance Rate: 0.7300 (219/300)
+           Best Expectation:   -4.534061  ||  Acceptance Rate: 0.7433 (223/300)
+           Best Expectation:   -4.534061  ||  Acceptance Rate: 0.7667 (230/300)
+           Best Expectation:   -4.534061  ||  Acceptance Rate: 0.7433 (223/300)
+           Best Expectation:   -4.534061  ||  Acceptance Rate: 0.6933 (208/300)
+           Best Expectation:   -4.534066  ||  Acceptance Rate: 0.7391 (221/299)
+           Best Expectation:   -4.534103  ||  Acceptance Rate: 0.7525 (225/299)
+           Best Expectation:   -4.534103  ||  Acceptance Rate: 0.7400 (222/300)
+           Best Expectation:   -4.534103  ||  Acceptance Rate: 0.6633 (199/300)
+           Best Expectation:   -4.534103  ||  Acceptance Rate: 0.7000 (210/300)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6823 (204/299)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6767 (203/300)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6400 (192/300)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6500 (195/300)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6300 (189/300)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.7067 (212/300)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             2 ||
+|| TAU_MAX:       0.8000 || TAU:            0.2012 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0003 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.533860  ||  Acceptance Rate: 0.6138 (178/290)
+           Best Expectation:   -4.533860  ||  Acceptance Rate: 0.5933 (178/300)
+           Best Expectation:   -4.533960  ||  Acceptance Rate: 0.5973 (178/298)
+           Best Expectation:   -4.533960  ||  Acceptance Rate: 0.5467 (164/300)
+           Best Expectation:   -4.533960  ||  Acceptance Rate: 0.5200 (156/300)
+           Best Expectation:   -4.533960  ||  Acceptance Rate: 0.6067 (182/300)
+           Best Expectation:   -4.534003  ||  Acceptance Rate: 0.5819 (174/299)
+           Best Expectation:   -4.534086  ||  Acceptance Rate: 0.5839 (174/298)
+           Best Expectation:   -4.534089  ||  Acceptance Rate: 0.5953 (178/299)
+           Best Expectation:   -4.534114  ||  Acceptance Rate: 0.6054 (181/299)
+           Best Expectation:   -4.534115  ||  Acceptance Rate: 0.5886 (176/299)
+           Best Expectation:   -4.534115  ||  Acceptance Rate: 0.5567 (167/300)
+           Best Expectation:   -4.534115  ||  Acceptance Rate: 0.5987 (179/299)
+           Best Expectation:   -4.534115  ||  Acceptance Rate: 0.5300 (159/300)
+           Best Expectation:   -4.534115  ||  Acceptance Rate: 0.6087 (182/299)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6007 (179/298)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6388 (191/299)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6333 (190/300)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.6107 (182/298)
+           Best Expectation:   -4.534117  ||  Acceptance Rate: 0.5953 (178/299)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             3 ||
+|| TAU_MAX:       0.8000 || TAU:            0.2012 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.534000  ||  Acceptance Rate: 0.5347 (154/288)
+           Best Expectation:   -4.534000  ||  Acceptance Rate: 0.4833 (145/300)
+           Best Expectation:   -4.534104  ||  Acceptance Rate: 0.4916 (147/299)
+           Best Expectation:   -4.534104  ||  Acceptance Rate: 0.4883 (146/299)
+           Best Expectation:   -4.534104  ||  Acceptance Rate: 0.5300 (159/300)
+           Best Expectation:   -4.534113  ||  Acceptance Rate: 0.4783 (143/299)
+           Best Expectation:   -4.534113  ||  Acceptance Rate: 0.4883 (146/299)
+           Best Expectation:   -4.534116  ||  Acceptance Rate: 0.4749 (142/299)
+           Best Expectation:   -4.534116  ||  Acceptance Rate: 0.4933 (148/300)
+           Best Expectation:   -4.534116  ||  Acceptance Rate: 0.4567 (137/300)
+           Best Expectation:   -4.534116  ||  Acceptance Rate: 0.5351 (160/299)
+           Best Expectation:   -4.534116  ||  Acceptance Rate: 0.5167 (155/300)
+           Best Expectation:   -4.534116  ||  Acceptance Rate: 0.5333 (160/300)
+           Best Expectation:   -4.534119  ||  Acceptance Rate: 0.5185 (154/297)
+           Best Expectation:   -4.534119  ||  Acceptance Rate: 0.4267 (128/300)
+           Best Expectation:   -4.534119  ||  Acceptance Rate: 0.4247 (127/299)
+           Best Expectation:   -4.534119  ||  Acceptance Rate: 0.4314 (129/299)
+           Best Expectation:   -4.534119  ||  Acceptance Rate: 0.3779 (113/299)
+           Best Expectation:   -4.534119  ||  Acceptance Rate: 0.4080 (122/299)
+           Best Expectation:   -4.534119  ||  Acceptance Rate: 0.4515 (135/299)
+############################################################################
+################### THE  MONTE-CARLO BANG-BANG METHOD ######################
+############################################################################
+|| OCCUPANTS:          7 || DIMENSION:          36 || SEED:             4 ||
+|| TAU_MAX:       0.8000 || TAU:            0.2012 || TOTAL_SWEEPS:   300 ||
+|| TEMPERATURE:   0.0000 || TEMP_DECAYS:        20 ||                     ||
+|| J_INITIAL:     0.9500 || K_INITIAL:      0.0500 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.8000 || K_TARGET:       0.3500 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -4.5341 || INITIAL_E:     -4.4839 ||                     ||
+
+INITIAL_STATE: [-0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.143+0.000i; -0.188+0.000i; -0.188+0.000i; -0.143+0.000i; -0.143+0.000i; -0.143+0.000i; ]
+############################################################################
+           Best Expectation:   -4.530800  ||  Acceptance Rate: 0.3788 (111/293)
+           Best Expectation:   -4.530898  ||  Acceptance Rate: 0.3478 (104/299)
+           Best Expectation:   -4.530898  ||  Acceptance Rate: 0.4100 (123/300)
+           Best Expectation:   -4.531700  ||  Acceptance Rate: 0.3691 (110/298)
+           Best Expectation:   -4.531836  ||  Acceptance Rate: 0.3569 (106/297)
+           Best Expectation:   -4.533254  ||  Acceptance Rate: 0.5288 (156/295)
+           Best Expectation:   -4.533379  ||  Acceptance Rate: 0.5118 (152/297)
+           Best Expectation:   -4.533382  ||  Acceptance Rate: 0.3211 (96/299)
+           Best Expectation:   -4.533382  ||  Acceptance Rate: 0.4033 (121/300)
+           Best Expectation:   -4.533449  ||  Acceptance Rate: 0.4295 (128/298)
+           Best Expectation:   -4.533452  ||  Acceptance Rate: 0.4040 (120/297)
+           Best Expectation:   -4.533452  ||  Acceptance Rate: 0.3833 (115/300)
+           Best Expectation:   -4.533452  ||  Acceptance Rate: 0.3633 (109/300)
+           Best Expectation:   -4.533452  ||  Acceptance Rate: 0.3478 (104/299)
+           Best Expectation:   -4.533662  ||  Acceptance Rate: 0.3412 (101/296)
+           Best Expectation:   -4.533812  ||  Acceptance Rate: 0.3242 (95/293)
+           Best Expectation:   -4.533914  ||  Acceptance Rate: 0.3129 (92/294)
+           Best Expectation:   -4.533915  ||  Acceptance Rate: 0.3758 (112/298)
+           Best Expectation:   -4.533946  ||  Acceptance Rate: 0.3490 (104/298)
+           Best Expectation:   -4.533970  ||  Acceptance Rate: 0.3776 (111/294)
+############################################################################
+BEST ENERGY=    -4.534119
+TARGET ENERGY=  -4.534119
+INITIAL ENERGY= -4.483920
+OLD DISTANCNCE=  0.039723
+NEW DISTANCNCE=  0.000001
+############################################################################
+
+

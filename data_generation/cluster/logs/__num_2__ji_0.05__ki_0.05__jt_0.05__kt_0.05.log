@@ -1,0 +1,56 @@
+000 (2060.000.000) 03/05 20:07:43 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=1229063_9141_4>
+...
+009 (2060.000.000) 03/05 20:07:52 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2067.000.000) 03/05 20:16:27 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=1229063_9141_4>
+...
+001 (2067.000.000) 03/08 06:37:13 Job executing on host: <140.160.143.147:9618?addrs=140.160.143.147-9618&noUDP&sock=28833_9e45_3>
+...
+006 (2067.000.000) 03/08 06:37:14 Image size of job updated: 175
+	0  -  MemoryUsage of job (MB)
+	0  -  ResidentSetSize of job (KB)
+...
+005 (2067.000.000) 03/08 06:37:14 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :                 4         4 
+	   Disk (KB)            :      175      175    197501 
+	   Memory (MB)          :        0        1       128 
+...
+000 (2134.000.000) 03/25 11:02:21 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3219958_f11d_13>
+...
+009 (2134.000.000) 03/25 11:05:05 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2135.000.000) 03/25 11:05:14 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3219958_f11d_13>
+...
+001 (2135.000.000) 03/25 19:50:18 Job executing on host: <140.160.143.147:9618?addrs=140.160.143.147-9618&noUDP&sock=29188_1e64_3>
+...
+006 (2135.000.000) 03/25 19:50:19 Image size of job updated: 3824
+	1  -  MemoryUsage of job (MB)
+	4  -  ResidentSetSize of job (KB)
+...
+005 (2135.000.000) 03/25 19:50:19 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:01, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:01, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :                 4         4 
+	   Disk (KB)            :      175      175    197290 
+	   Memory (MB)          :        1        1       128 
+...

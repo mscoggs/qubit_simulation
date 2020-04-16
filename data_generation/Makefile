@@ -6,10 +6,8 @@ compile:
 
 
 submit:
-	cd cluster	
-	$(CC) -o make_submit make_submit.cpp -std=gnu++11
-	./make_submit
-	cd ..
+	$(CC) -o cluster/make_submit cluster/make_submit.cpp -std=gnu++11
+	cluster/make_submit
 	condor_submit submit_file.txt
 
 compile_gap:

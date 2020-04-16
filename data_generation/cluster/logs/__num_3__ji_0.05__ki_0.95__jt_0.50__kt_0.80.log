@@ -1,0 +1,47 @@
+000 (2059.075.000) 03/05 16:54:49 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=1229063_9141_4>
+...
+009 (2059.075.000) 03/05 19:47:05 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2065.026.000) 03/05 20:07:44 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=1229063_9141_4>
+...
+009 (2065.026.000) 03/05 20:07:53 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2105.005.000) 03/05 20:16:31 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=1229063_9141_4>
+...
+009 (2105.005.000) 03/15 01:14:48 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2131.075.000) 03/15 01:18:29 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=1229063_9141_4>
+...
+001 (2131.075.000) 03/18 15:31:32 Job executing on host: <140.160.143.153:9618?addrs=140.160.143.153-9618&noUDP&sock=18020_ccb5_3>
+...
+006 (2131.075.000) 03/18 15:31:40 Image size of job updated: 2484
+	3  -  MemoryUsage of job (MB)
+	2484  -  ResidentSetSize of job (KB)
+...
+006 (2131.075.000) 03/18 15:46:41 Image size of job updated: 2488
+	3  -  MemoryUsage of job (MB)
+	2488  -  ResidentSetSize of job (KB)
+...
+006 (2131.075.000) 03/18 16:01:42 Image size of job updated: 2596
+	3  -  MemoryUsage of job (MB)
+	2596  -  ResidentSetSize of job (KB)
+...
+005 (2131.075.000) 03/19 00:19:46 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 1 00:06:16, Sys 0 11:04:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 1 00:06:16, Sys 0 11:04:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     4.00        4         4 
+	   Disk (KB)            :   175         175    870367 
+	   Gpus                 :                           0 
+	   Memory (MB)          :     3           1       128 
+...
