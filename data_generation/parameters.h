@@ -15,7 +15,7 @@
 
 
 //Physical Simulation_Parameters
-const bool PERIODIC = true;
+const bool PERIODIC = false;
 const bool UNIFORM_SITES = true;
 const int DEVICE_DIMENSION = 2;
 const double MAX_PARAM = 1.0;
@@ -28,7 +28,7 @@ const double LOWK = MIN_PARAM;
 const double LOWB = MIN_PARAM;
 const double T = 1;
 const double V = 2;
-const int NX = 3;
+const int NX = 4;
 const int NY = NX;
 const int NUMBER_OF_SITES = NX*NY;
 
@@ -37,10 +37,10 @@ const int NUMBER_OF_SITES = NX*NY;
 //Non-Physical Simulation_Parameters
 const bool MCBF = false;
 const bool MCBF_DATA = false;
-const bool MCBB = true;
-const bool MCBB_DATA = true;
-const bool MCDB = false;
-const bool MCDB_DATA = false;
+const bool MCBB = false;
+const bool MCBB_DATA = false;
+const bool MCDB = true;
+const bool MCDB_DATA = true;
 const bool ADIA = false;
 const bool ADIA_DATA= false;
 const int  NUM_SEEDS = 2;
@@ -50,8 +50,8 @@ const bool DIAG = false;
 
 //MCBF method parameters
 const double DISTANCE_LIMIT_MCBF = 0.02;
-const double TAU_INIT_MCBF = 0.37;
-const double MAX_TAU_MCBF = 0.6;
+const double TAU_INIT_MCBF = 1.2;
+const double MAX_TAU_MCBF = 5.0;
 const double TAU_SCALAR_MCBF = 1.1;
 const double TAU_SCALAR_MCBF_TINY = 1.05;
 const double TAU_SCALAR_MCBF_BIG = 1.2;
@@ -99,7 +99,7 @@ const double ACCEPTANCE_PROB_MCBB = ACCEPTANCE_PROB_MC;
 const double TEMP_EXP_DECAY_MCBB = TEMP_EXP_DECAY_MC;
 const double BINARY_SEARCH_TAU_LIMIT_MCBB =BINARY_SEARCH_TAU_LIMIT_MCBF;
 const int RANDOM_STATES_MCBB = RANDOM_STATES_MC;
-const int NUMBER_OF_BANGS = 3;
+const int NUMBER_OF_BANGS = 8;
 const int SWEEPS_MCBB = 200;
 const int TEMP_DECAY_ITERATIONS_MCBB = TEMP_DECAY_ITERATIONS_MC;;
 const int TEMP_DECAY_LIMIT_MCBB = TEMP_DECAY_LIMIT_MC;
@@ -119,8 +119,8 @@ const double ACCEPTANCE_PROB_MCDB = ACCEPTANCE_PROB_MC;
 const double TEMP_EXP_DECAY_MCDB = TEMP_EXP_DECAY_MC;
 const double BINARY_SEARCH_TAU_LIMIT_MCDB =BINARY_SEARCH_TAU_LIMIT_MCBF;
 const int RANDOM_STATES_MCDB = RANDOM_STATES_MC;
-const double TIME_STEP_MCDB = 0.005;
-const int SWEEPS_MCDB = 100;
+const double TIME_STEP_MCDB = 0.02;
+const int SWEEPS_MCDB = 60;
 const int TEMP_DECAY_ITERATIONS_MCDB = TEMP_DECAY_ITERATIONS_MC;;
 const int TEMP_DECAY_LIMIT_MCDB = TEMP_DECAY_LIMIT_MC;
 const int MAX_TAU_STEPS_MCDB = ceil(log(MAX_TAU_MCDB/TAU_INIT_MCDB)/log(TAU_SCALAR_MCDB));
