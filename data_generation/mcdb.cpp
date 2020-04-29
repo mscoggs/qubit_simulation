@@ -20,6 +20,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.initial_E -sim_params.ground_E < 0.001){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
+		if(PRINT) print_mcdb_info(sim_params);
 		if(MCDB_DATA) save_mcdb_data_fixed_tau(sim_params);
 		sim_params.clear_mcdb_params();
 		return;

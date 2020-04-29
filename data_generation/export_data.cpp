@@ -290,6 +290,7 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file << "j_target =         " << sim_params.j_target << "\n";
 	file << "k_target =         " << sim_params.k_target << "\n";
 	file << "b_target =         " << sim_params.b_target << "\n";
+	file << "state_overlap_squared =    " << sim_params.state_overlap_squared << "\n";
 	file << "PERIODIC =         " << std::boolalpha << PERIODIC << "\n";
 	file << "UNIFORM_SITES =    " << std::boolalpha << UNIFORM_SITES << "\n";
 	file << "DEVICE_DIMENSION = " << DEVICE_DIMENSION << "\n";

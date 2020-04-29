@@ -43,18 +43,18 @@ const bool MCDB = false;
 const bool MCDB_DATA = false;
 const bool ADIA = false;
 const bool ADIA_DATA= false;
-const int  NUM_SEEDS = 4;
+const int  NUM_SEEDS = 2;
 const bool DIAG = false;
 
 
 
 //MCBF method parameters
 const double DISTANCE_LIMIT_MCBF = 0.02;
-const double TAU_INIT_MCBF = 0.05;
-const double MAX_TAU_MCBF = 1.0;
-const double TAU_SCALAR_MCBF = 1.3;
-const double TAU_SCALAR_MCBF_TINY = 1.15;
-const double TAU_SCALAR_MCBF_BIG = 1.8;
+const double TAU_INIT_MCBF = 0.37;
+const double MAX_TAU_MCBF = 0.6;
+const double TAU_SCALAR_MCBF = 1.1;
+const double TAU_SCALAR_MCBF_TINY = 1.05;
+const double TAU_SCALAR_MCBF_BIG = 1.2;
 const double MAX_CHANGE_MCBF_INIT = 0.5*(MAX_PARAM-MIN_PARAM);
 const double MIN_CHANGE_MCBF_INIT = 0.1*(MAX_PARAM-MIN_PARAM);
 const double ACCEPTANCE_PROB_MC = 0.80;
@@ -93,14 +93,14 @@ const double MAX_TAU_MCBB = MAX_TAU_MCBF;
 const double TAU_SCALAR_MCBB = TAU_SCALAR_MCBF;
 const double TAU_SCALAR_MCBB_TINY = TAU_SCALAR_MCBF_TINY;
 const double TAU_SCALAR_MCBB_BIG = TAU_SCALAR_MCBF_BIG;
-const double MAX_CHANGE_FRACTION_MCBB = 0.8;
-const double MIN_CHANGE_FRACTION_MCBB = 0.02;
+const double MAX_CHANGE_FRACTION_MCBB = 0.9;
+const double MIN_CHANGE_FRACTION_MCBB = 0.01;
 const double ACCEPTANCE_PROB_MCBB = ACCEPTANCE_PROB_MC;
 const double TEMP_EXP_DECAY_MCBB = TEMP_EXP_DECAY_MC;
 const double BINARY_SEARCH_TAU_LIMIT_MCBB =BINARY_SEARCH_TAU_LIMIT_MCBF;
 const int RANDOM_STATES_MCBB = RANDOM_STATES_MC;
 const int NUMBER_OF_BANGS = 3;
-const int SWEEPS_MCBB = 100;
+const int SWEEPS_MCBB = 200;
 const int TEMP_DECAY_ITERATIONS_MCBB = TEMP_DECAY_ITERATIONS_MC;;
 const int TEMP_DECAY_LIMIT_MCBB = TEMP_DECAY_LIMIT_MC;
 const int MAX_TAU_STEPS_MCBB = ceil(log(MAX_TAU_MCBB/TAU_INIT_MCBB)/log(TAU_SCALAR_MCBB));
@@ -150,8 +150,8 @@ const bool PRINT_COMMUTATOR = false;
 
 class Simulation_Parameters{
 public:
-	double *ham_target, *ham_initial, *start_state, *state, *jkb_initial, *jkb_target, *E_array_fixed_tau, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10;
-	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, time_step, temperature, best_E,initial_E, old_distance, new_distance, temp_distance;
+	double *ham_target, *ham_initial, *start_state, *target_state, *state, *jkb_initial, *jkb_target, *E_array_fixed_tau, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10;
+	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, time_step, temperature, best_E,initial_E, old_distance, new_distance, temp_distance, state_overlap_squared;
 	unsigned long long int *b;
 	int lattice[NX][NY], num_occupants,N,*table, *bonds, seed, total_steps, temp_iteration, max_steps_mcdb, sweeps_multiplier;
 	gsl_rng * rng;

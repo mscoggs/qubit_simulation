@@ -4,6 +4,7 @@
 #include "operations.h"
 #include "check.h"
 #include "hamiltonian.h"
+#include "linear_algebra.h"
 
 
 
@@ -17,6 +18,7 @@ void Simulation_Parameters::initialize_lattice(int number_of_occupants, Simulati
 	ham_target    = new double[2*N*N]();
 	ham_initial   = new double[2*N*N]();
 	start_state   = new double[2*N]();
+	target_state  = new double[2*N]();
 	jkb_initial   = new double[3]();
 	jkb_target    = new double[3]();
 	table 	      = new int[num_occupants*N]();
@@ -31,6 +33,9 @@ void Simulation_Parameters::initialize_lattice(int number_of_occupants, Simulati
 }
 
 void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double jt, double kt, Simulation_Parameters& sim_params){
+	int INCX = 1,INCY = 1;
+
+
 	j_initial = ji;
 	k_initial = ki;
 	b_initial = 0;
@@ -51,8 +56,23 @@ void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double
 	construct_device_hamiltonian_uniform(sim_params, ham_target, jkb_target);
 
 	get_ground_state(N, ham_initial, start_state);
+	get_ground_state(N, ham_target, target_state);
 	ground_E = get_ground_E(N, ham_target);
 	initial_E = cost(N, start_state, ham_target);
+	state_overlap_squared = pow(zdotc_(&N, target_state, &INCX, start_state, &INCY),2);
+
+
+	//TESTEST
+	get_ground_state(N, ham_initial, start_state);
+	get_ground_state(N, ham_target, target_state);
+	int i;
+	double real=0, im=0;
+	for(i=0; i<N; i++){
+		real += start_state[2*i]*target_state[2*i] + start_state[2*i+1]*target_state[2*i+1];
+		im   += start_state[2*i+1]*target_state[2*i] - start_state[2*i]*target_state[2*i+1];
+	}
+	printf("real, im, state_overlap_squared: %f, %f, %f \n\n", real, im, state_overlap_squared);
+
 
 	if(CHECK) check_norm(start_state, N);
 }
