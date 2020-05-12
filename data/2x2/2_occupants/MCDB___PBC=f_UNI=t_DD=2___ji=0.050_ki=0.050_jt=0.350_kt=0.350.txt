@@ -1,0 +1,43 @@
+START_PARAMETERS
+NUM_SEEDS =                    4
+DISTANCE_LIMIT_MCDB =          0.02
+TAU_INIT_MCDB =                0.05
+MAX_TAU_MCDB =                 1
+TAU_SCALAR_MCDB =              1.1
+TAU_SCALAR_MCDB_TINY =         1.05
+TAU_SCALAR_MCDB_BIG =          1.2
+ACCEPTANCE_PROB_MCDB =         0.8
+TEMP_EXP_DECAY_MCDB =          0.8
+BINARY_SEARCH_TAU_LIMIT_MCDB = 0.0005
+RANDOM_STATES_MCDB =           3
+TIME_STEP_MCDB =               0.01
+SWEEPS_MCDB =                  70
+TEMP_DECAY_ITERATIONS_MCDB =   20
+TEMP_DECAY_LIMIT_MCDB =        7
+MAX_TAU_STEPS_MCDB =           32
+MAX_BS_STEPS_MCDB =            8
+GROUND_E =                   -1.91244
+INITIAL_E =                  -1.91244
+j_initial =        0.05
+k_initial =        0.05
+b_initial =        0
+j_target =         0.35
+k_target =         0.35
+b_target =         0
+state_overlap_squared =    1
+PERIODIC =         false
+UNIFORM_SITES =    true
+DEVICE_DIMENSION = 2
+MAX_PARAM =        1
+MIN_PARAM =        0
+END_PARAMETERS
+##############################################################################
+tau =               0
+total_steps =       5
+time_step =         0.01
+best_E =            0
+distance =          0
+j_protocol =  [[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],]
+k_protocol =  [[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],]
+b_protocol =  [[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, ],]
+best_E_fixed_tau =   [0, 0, 0, 0, ]
