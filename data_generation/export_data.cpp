@@ -173,7 +173,8 @@ void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params){
 		file << "TEMP_EXP_DECAY_MCDB =          " <<  TEMP_EXP_DECAY_MCDB << "\n";
 		file << "BINARY_SEARCH_TAU_LIMIT_MCDB = " <<  BINARY_SEARCH_TAU_LIMIT_MCDB << "\n";
 		file << "RANDOM_STATES_MCDB =           " <<  RANDOM_STATES_MCDB  << "\n";
-		file << "TIME_STEP_MCDB =               " <<  TIME_STEP_MCDB << "\n";
+		file << "MAX_STEPS_MCDB =               " <<  MAX_STEPS_MCDB << "\n";
+		file << "MIN_STEPS_MCDB =               " <<  MIN_STEPS_MCDB << "\n";
 		file << "SWEEPS_MCDB =                  " <<  SWEEPS_MCDB << "\n";
 		file << "TEMP_DECAY_ITERATIONS_MCDB =   " <<  TEMP_DECAY_ITERATIONS_MCDB  << "\n";
 		file << "TEMP_DECAY_LIMIT_MCDB =        " <<  TEMP_DECAY_LIMIT_MCDB << "\n";

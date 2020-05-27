@@ -83,6 +83,16 @@ void copy_arrays_mcdb(Simulation_Parameters& sim_params, double* j_to,  double* 
 
 
 /**
+    scale the arrays, cutting each block in half and maintaining the previous values 
+
+    @param sim_params contains all of the variables for the simulation
+*/
+void scale_best_arrays_mcdb(Simulation_Parameters& sim_params, double* j_best,  double* k_best, double* b_best);
+
+
+
+
+/**
     Changes the arrays according randomly based on the random_time_index
 
     @param j_array the protocol of the j parameter, where each odd-index holds the time of a jump (j=1) and the even-index holds the time of a drop(j=0)

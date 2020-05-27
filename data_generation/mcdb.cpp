@@ -26,35 +26,48 @@ void mcdb_method(Simulation_Parameters& sim_params){
 		return;
 	}
 
-	pre_exponentiate(sim_params);
 
 	while(sim_params.tau<MAX_TAU_MCDB){
 
-		gsl_rng_set(sim_params.rng, 1);
-		calc_initial_temp_mcdb(sim_params);
+		sim_params.total_steps = MIN_STEPS_MCDB;
+		sim_params.time_step = sim_params.tau/sim_params.total_steps;
 
-		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
-			gsl_rng_set(sim_params.rng, sim_params.seed);
-			mcdb_simulation(sim_params);
+		while(sim_params.total_steps <= MAX_STEPS_MCDB){
 
-			sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
-			copy_arrays_mcdb(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*sim_params.total_steps, 0);
+			pre_exponentiate(sim_params);
+			gsl_rng_set(sim_params.rng, 0);
+			calc_initial_temp_mcdb(sim_params);
+
+			for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
+				gsl_rng_set(sim_params.rng, sim_params.seed);
+				mcdb_simulation(sim_params);
+
+				sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
+				copy_arrays_mcdb(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*sim_params.total_steps, 0);
+			}
+
+			for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
+				if(sim_params.E_array_fixed_tau[sim_params.seed-1] <= sim_params.best_E){
+				       	sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
+					copy_arrays_mcdb(sim_params,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,  0,(sim_params.seed-1)*sim_params.total_steps);
+				}
+			}
+
+			sim_params.total_steps = sim_params.total_steps*2;
+			sim_params.time_step = sim_params.tau/sim_params.total_steps;
+			if (sim_params.new_distance > 0.2 and sim_params.total_steps > MIN_STEPS_MCDB*2) sim_params.total_steps = MAX_STEPS_MCDB*2;
+			if (sim_params.total_steps <= MAX_STEPS_MCDB)scale_best_arrays_mcdb(sim_params, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled);
+
 		}
-		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
 
+		if(sim_params.total_steps > MAX_STEPS_MCDB) sim_params.total_steps = MAX_STEPS_MCDB;
 		if(!update_distances(sim_params)) continue;
-
 		if(PRINT) print_mc_results(sim_params);
-    if(MCDB_DATA) save_mcdb_data_fixed_tau(sim_params);
-
+		if(MCDB_DATA) save_mcdb_data_fixed_tau(sim_params);
 		if(sim_params.new_distance < DISTANCE_LIMIT_MCDB) break;
-		else{
-      calc_tau_mcdb(sim_params);
-      sim_params.total_steps = (int)floor(sim_params.tau/sim_params.time_step);
-		}
+		calc_tau_mcdb(sim_params);
 	}
 	sim_params.clear_mcdb_params();
-
 }
 
 
@@ -76,7 +89,9 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 
 	std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
 
-	init_arrays_mcdb(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best);
+	if(sim_params.total_steps == MIN_STEPS_MCDB) init_arrays_mcdb(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best);
+	else copy_arrays_mcdb(sim_params,sim_params.j_best,sim_params.k_best,sim_params.b_best, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled,0,0);
+
 	copy_arrays_mcdb(sim_params, j_array, k_array, b_array,sim_params.j_best,sim_params.k_best,sim_params.b_best,0,0);//a temporary array, used in the undoing of the changes
 
 	evolve_mcdb(sim_params, j_array,k_array,b_array);
@@ -84,6 +99,9 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 	old_E = sim_params.best_E;
 
 	if(PRINT) print_mcdb_info(sim_params);
+
+
+	sim_params.temperature = sim_params.initial_temperature;
 
 	for (i=0;i<TEMP_DECAY_ITERATIONS_MCDB;i++){
 
@@ -178,6 +196,7 @@ void calc_initial_temp_mcdb(Simulation_Parameters& sim_params){
 		}
 	}
 	sim_params.temperature = -(sum/(count*log(ACCEPTANCE_PROB_MC)));
+	sim_params.initial_temperature = sim_params.temperature;
 
 	delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] sim_params.state, delete[] state_random;
 }
@@ -186,9 +205,11 @@ void calc_initial_temp_mcdb(Simulation_Parameters& sim_params){
 
 void calc_tau_mcdb(Simulation_Parameters& sim_params){
 	double tau_scalar;
-
-
-	if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_MCDB_TINY;
+	if(sim_params.tau == TAU_INIT_MCDB){
+		tau_scalar = 0.6/(1-sim_params.new_distance);
+		if(tau_scalar < TAU_SCALAR_MCDB) tau_scalar = TAU_SCALAR_MCDB;
+	}	
+	else if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_MCDB_TINY;
 	else if((abs(sim_params.old_distance - sim_params.new_distance) < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_MCDB_BIG;
 	else tau_scalar = TAU_SCALAR_MCDB;
 
@@ -219,6 +240,18 @@ void copy_arrays_mcdb(Simulation_Parameters& sim_params, double* j_to,  double* 
 }
 
 
+void scale_best_arrays_mcdb(Simulation_Parameters& sim_params, double* j_best,double* k_best, double* b_best){
+	int i;
+
+	for(i=0;i<sim_params.total_steps/2;i++){
+		j_best[(sim_params.total_steps-1)-2*i]     = j_best[(sim_params.total_steps/2-1)-i];
+		j_best[(sim_params.total_steps-1)-(2*i+1)] = j_best[(sim_params.total_steps/2-1)-i];
+		k_best[(sim_params.total_steps-1)-2*i]     = k_best[(sim_params.total_steps/2-1)-i];
+		k_best[(sim_params.total_steps-1)-(2*i+1)] = k_best[(sim_params.total_steps/2-1)-i];
+		b_best[(sim_params.total_steps-1)-2*i]     = b_best[(sim_params.total_steps/2-1)-i];
+		b_best[(sim_params.total_steps-1)-(2*i+1)] = b_best[(sim_params.total_steps/2-1)-i];
+	}
+}
 
 
 void change_array_mcdb(double *j_array, double *k_array, double *b_array, int random_time_index, int i){

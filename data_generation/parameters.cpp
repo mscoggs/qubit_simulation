@@ -116,7 +116,7 @@ void Simulation_Parameters::clear_mcbb_params(){
 
 
 void Simulation_Parameters::init_mcdb_params(){
-	max_steps_mcdb    = floor(MAX_TAU_MCDB/TIME_STEP_MCDB);
+	max_steps_mcdb    = MAX_STEPS_MCDB; 
 
 	E_array_fixed_tau = new double[NUM_SEEDS]();
 	j_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
@@ -127,9 +127,13 @@ void Simulation_Parameters::init_mcdb_params(){
 	k_best  	  = new double[max_steps_mcdb]();
 	b_best 		  = new double[max_steps_mcdb]();
 
+	j_best_scaled     = new double[max_steps_mcdb]();
+	k_best_scaled 	  = new double[max_steps_mcdb]();
+	b_best_scaled	  = new double[max_steps_mcdb]();
+
 	tau		            = TAU_INIT_MCDB;
-	time_step         = TIME_STEP_MCDB;
-	total_steps       = floor(tau/time_step);
+	total_steps       = MIN_STEPS_MCDB;
+	time_step         = tau/total_steps;
 	old_distance      = 1;
 	new_distance      = 1;
 	sweeps_multiplier = 1;
@@ -151,6 +155,9 @@ void Simulation_Parameters::clear_mcdb_params(){
 	delete[] j_best;
 	delete[] k_best;
 	delete[] b_best;
+	delete[] j_best_scaled;
+	delete[] k_best_scaled;
+	delete[] b_best_scaled;
 	delete[] e10;
 	delete[] e01;
 	delete[] e11;
