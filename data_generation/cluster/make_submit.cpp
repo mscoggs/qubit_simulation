@@ -11,11 +11,11 @@
 main(int argc, char *argv[]){
 
 	int ji_i, ki_i, jt_i, kt_i, occ_i;
-	int num_occupants[1] = {2};
+	int num_occupants[1] = {3};
 	double j_init[2] = {0.05, 0.95};
 	double k_init[2] = {0.05, 0.95};
-	double j_targ[7] = {0.05, 0.2, 0.35, 0.5, 0.65, 0.8, 0.95};
-	double k_targ[7] = {0.05, 0.2, 0.35, 0.5, 0.65, 0.8, 0.95};
+	double j_targ[13] = {0.05, 0.125, 0.2,0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
+	double k_targ[13] = {0.05, 0.125, 0.2,0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
 	std::string ji, ki, jt, kt, num, identifier;
 	std::ofstream submit_file;
 
@@ -28,20 +28,21 @@ main(int argc, char *argv[]){
 			for(ki_i=0;ki_i<(sizeof(k_init)/sizeof(double));ki_i++){
 				for(jt_i=0;jt_i<(sizeof(j_targ)/sizeof(double));jt_i++){
 					for(kt_i=0;kt_i<(sizeof(k_targ)/sizeof(double));kt_i++){
-
 						num = std::to_string(num_occupants[occ_i]);
-						ji = std::to_string(j_init[ji_i]).substr(0,4);
-						ki = std::to_string(k_init[ki_i]).substr(0,4);
-						jt = std::to_string(j_targ[jt_i]).substr(0,4);
-						kt = std::to_string(k_targ[kt_i]).substr(0,4);
+						ji = std::to_string(j_init[ji_i]).substr(0,5);
+						ki = std::to_string(k_init[ki_i]).substr(0,5);
+						jt = std::to_string(j_targ[jt_i]).substr(0,5);
+						kt = std::to_string(k_targ[kt_i]).substr(0,5);
+
+//						if(ji == ki) continue;
 
 
 						identifier = "_num_"+num+"__ji_"+ji+"__ki_"+ki+"__jt_"+jt+"__kt_"+kt;
-						submit_file << "Executable        = main_4x4\n";
+						submit_file << "Executable        = main\n";
 						submit_file << "Arguments         = " << num << " " << ji << " " << ki << " " << jt << " " << kt << "\n";
 						submit_file << "Log               = cluster/logs/_" << identifier  << ".log\n";
 						submit_file << "Output            = cluster/outputs/_" << identifier << "\n";
-						submit_file << "request_cpus      = 4\n";
+						submit_file << "request_cpus      = 1\n";
 						//submit_file << "request_memory    = 20 GB\n";
 						submit_file << "queue\n";
 	}}}}}

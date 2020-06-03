@@ -49,7 +49,7 @@ const bool DIAG = false;
 
 
 //MCBF method parameters
-const double DISTANCE_LIMIT_MCBF = 0.04;
+const double DISTANCE_LIMIT_MCBF = 0.05;
 const double TAU_INIT_MCBF = 0.5;
 const double MAX_TAU_MCBF = 5.0;
 const double TAU_SCALAR_MCBF = 1.3;
@@ -66,7 +66,7 @@ const int TOTAL_STEPS_INIT_MC =  5;
 const int TEMP_DECAY_ITERATIONS_MC = 10;
 const int TEMP_DECAY_LIMIT_MC = 7;
 const int MAX_EVOLVE_STEPS_MC = 4*TOTAL_STEPS_INIT_MC;
-const int MAX_TAU_STEPS_MCBF = ceil(log(MAX_TAU_MCBF/TAU_INIT_MCBF)/log(TAU_SCALAR_MCBF));
+const int MAX_TAU_STEPS_MCBF = ceil(log(MAX_TAU_MCBF/TAU_INIT_MCBF)/log(TAU_SCALAR_MCBF_TINY));
 const int MAX_BS_STEPS_MCBF = ceil(log(BINARY_SEARCH_TAU_LIMIT_MCBF/((TAU_SCALAR_MCBF-1)*MAX_TAU_MCBF))/log(0.5));
 const int ARRAY_SCALAR = 2;
 const int ROW = 0;  //The change_array_mcbf variables. If 0 -> This method will not be used, if n -> use this method on every nth iteration of change_array_mcbf
@@ -103,7 +103,7 @@ const int NUMBER_OF_BANGS = 8;
 const int SWEEPS_MCBB = 200;
 const int TEMP_DECAY_ITERATIONS_MCBB = TEMP_DECAY_ITERATIONS_MC;;
 const int TEMP_DECAY_LIMIT_MCBB = TEMP_DECAY_LIMIT_MC;
-const int MAX_TAU_STEPS_MCBB = ceil(log(MAX_TAU_MCBB/TAU_INIT_MCBB)/log(TAU_SCALAR_MCBB));
+const int MAX_TAU_STEPS_MCBB = ceil(log(MAX_TAU_MCBB/TAU_INIT_MCBB)/log(TAU_SCALAR_MCBB_TINY));
 const int MAX_BS_STEPS_MCBB = ceil(log(BINARY_SEARCH_TAU_LIMIT_MCBB/((TAU_SCALAR_MCBB-1)*MAX_TAU_MCBB))/log(0.5));
 
 
@@ -119,12 +119,12 @@ const double ACCEPTANCE_PROB_MCDB = ACCEPTANCE_PROB_MC;
 const double TEMP_EXP_DECAY_MCDB = TEMP_EXP_DECAY_MC;
 const double BINARY_SEARCH_TAU_LIMIT_MCDB =BINARY_SEARCH_TAU_LIMIT_MCBF;
 const int RANDOM_STATES_MCDB = RANDOM_STATES_MC;
-const int MAX_STEPS_MCDB = 128;
+const int MAX_STEPS_MCDB = 64;
 const int MIN_STEPS_MCDB = 8;
-const int SWEEPS_MCDB = 20;
+const int SWEEPS_MCDB = 25;
 const int TEMP_DECAY_ITERATIONS_MCDB = TEMP_DECAY_ITERATIONS_MC;;
 const int TEMP_DECAY_LIMIT_MCDB = TEMP_DECAY_LIMIT_MC;
-const int MAX_TAU_STEPS_MCDB = ceil(log(MAX_TAU_MCDB/TAU_INIT_MCDB)/log(TAU_SCALAR_MCDB));
+const int MAX_TAU_STEPS_MCDB = ceil(log(MAX_TAU_MCDB/TAU_INIT_MCDB)/log(TAU_SCALAR_MCDB_TINY));
 const int MAX_BS_STEPS_MCDB = ceil(log(BINARY_SEARCH_TAU_LIMIT_MCDB/((TAU_SCALAR_MCDB-1)*MAX_TAU_MCDB))/log(0.5));
 
 

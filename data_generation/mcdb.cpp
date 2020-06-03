@@ -53,17 +53,19 @@ void mcdb_method(Simulation_Parameters& sim_params){
 				}
 			}
 
+			if(sim_params.total_steps == MAX_STEPS_MCDB) break;
+
+			if(sim_params.new_distance > 0.2 and sim_params.total_steps >= MIN_STEPS_MCDB*2) break;
 			sim_params.total_steps = sim_params.total_steps*2;
 			sim_params.time_step = sim_params.tau/sim_params.total_steps;
-			if (sim_params.new_distance > 0.2 and sim_params.total_steps > MIN_STEPS_MCDB*2) sim_params.total_steps = MAX_STEPS_MCDB*2;
-			if (sim_params.total_steps <= MAX_STEPS_MCDB)scale_best_arrays_mcdb(sim_params, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled);
+			if(sim_params.total_steps <= MAX_STEPS_MCDB) scale_best_arrays_mcdb(sim_params, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled);
 
 		}
 
-		if(sim_params.total_steps > MAX_STEPS_MCDB) sim_params.total_steps = MAX_STEPS_MCDB;
 		if(!update_distances(sim_params)) continue;
 		if(PRINT) print_mc_results(sim_params);
 		if(MCDB_DATA) save_mcdb_data_fixed_tau(sim_params);
+		if(sim_params.old_distance < sim_params.new_distance) break;
 		if(sim_params.new_distance < DISTANCE_LIMIT_MCDB) break;
 		calc_tau_mcdb(sim_params);
 	}
@@ -207,6 +209,7 @@ void calc_tau_mcdb(Simulation_Parameters& sim_params){
 	double tau_scalar;
 	if(sim_params.tau == TAU_INIT_MCDB){
 		tau_scalar = 0.6/(1-sim_params.new_distance);
+		if(tau_scalar > 5) tau_scalar = 5;
 		if(tau_scalar < TAU_SCALAR_MCDB) tau_scalar = TAU_SCALAR_MCDB;
 	}	
 	else if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_MCDB_TINY;
