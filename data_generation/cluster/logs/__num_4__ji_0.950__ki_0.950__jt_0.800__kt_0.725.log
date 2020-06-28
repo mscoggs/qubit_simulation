@@ -1,0 +1,44 @@
+000 (2267.1998.000) 04/28 23:44:47 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+009 (2267.1998.000) 05/11 12:17:55 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2400.1322.000) 05/11 12:37:10 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+001 (2400.1322.000) 05/13 21:20:20 Job executing on host: <140.160.143.142:9618?addrs=140.160.143.142-9618&noUDP&sock=8883_93de_3>
+...
+006 (2400.1322.000) 05/13 21:20:29 Image size of job updated: 4016
+	4  -  MemoryUsage of job (MB)
+	4016  -  ResidentSetSize of job (KB)
+...
+006 (2400.1322.000) 05/15 12:33:30 Image size of job updated: 109552
+	4  -  MemoryUsage of job (MB)
+	4016  -  ResidentSetSize of job (KB)
+...
+004 (2400.1322.000) 05/15 12:33:30 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 1 15:12:18, Sys 0 00:00:04  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    881178 
+	   Memory (MB)          :     4           1       128 
+...
+001 (2400.1322.000) 05/15 18:22:49 Job executing on host: <140.160.143.146:9618?addrs=140.160.143.146-9618&noUDP&sock=13727_28a1_3>
+...
+004 (2400.1322.000) 05/19 07:17:37 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 3 07:27:02, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    881271 
+	   Memory (MB)          :     5           5       128 
+...
+009 (2400.1322.000) 05/19 07:17:39 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...

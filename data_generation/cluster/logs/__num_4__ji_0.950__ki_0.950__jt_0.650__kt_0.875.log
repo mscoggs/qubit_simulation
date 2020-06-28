@@ -1,0 +1,52 @@
+000 (2267.1974.000) 04/28 23:44:46 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+009 (2267.1974.000) 05/11 12:17:55 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2400.1298.000) 05/11 12:37:10 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+001 (2400.1298.000) 05/13 14:47:41 Job executing on host: <140.160.143.152:9618?addrs=140.160.143.152-9618&noUDP&sock=21978_a88e_3>
+...
+006 (2400.1298.000) 05/13 14:47:49 Image size of job updated: 4040
+	4  -  MemoryUsage of job (MB)
+	4024  -  ResidentSetSize of job (KB)
+...
+006 (2400.1298.000) 05/13 16:47:59 Image size of job updated: 4068
+	4  -  MemoryUsage of job (MB)
+	4024  -  ResidentSetSize of job (KB)
+...
+006 (2400.1298.000) 05/15 00:01:16 Image size of job updated: 4084
+	4  -  MemoryUsage of job (MB)
+	4024  -  ResidentSetSize of job (KB)
+...
+006 (2400.1298.000) 05/16 13:50:13 Image size of job updated: 4864
+	4  -  MemoryUsage of job (MB)
+	4024  -  ResidentSetSize of job (KB)
+...
+006 (2400.1298.000) 05/16 14:15:15 Image size of job updated: 4924
+	4  -  MemoryUsage of job (MB)
+	4024  -  ResidentSetSize of job (KB)
+...
+006 (2400.1298.000) 05/16 17:30:38 Image size of job updated: 4980
+	4  -  MemoryUsage of job (MB)
+	4024  -  ResidentSetSize of job (KB)
+...
+006 (2400.1298.000) 05/17 06:26:58 Image size of job updated: 4988
+	4  -  MemoryUsage of job (MB)
+	4024  -  ResidentSetSize of job (KB)
+...
+004 (2400.1298.000) 05/19 07:17:37 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 5 16:09:30, Sys 0 00:00:41  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    874593 
+	   Gpus                 :                           0 
+	   Memory (MB)          :     4           1       128 
+...
+009 (2400.1298.000) 05/19 07:17:37 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...

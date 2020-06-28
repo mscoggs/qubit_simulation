@@ -1,0 +1,123 @@
+000 (2267.879.000) 04/28 23:44:32 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+000 (2268.879.000) 04/28 23:46:21 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+001 (2267.879.000) 05/04 09:50:28 Job executing on host: <140.160.143.167:9618?addrs=140.160.143.167-9618&noUDP&sock=15487_5f50_3>
+...
+006 (2267.879.000) 05/04 09:50:37 Image size of job updated: 2720
+	3  -  MemoryUsage of job (MB)
+	2720  -  ResidentSetSize of job (KB)
+...
+005 (2267.879.000) 05/04 22:22:59 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 1 07:16:52, Sys 0 18:52:21  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 1 07:16:52, Sys 0 18:52:21  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     4.00        4         4 
+	   Disk (KB)            :   175         175    844734 
+	   Memory (MB)          :     3           1       128 
+...
+009 (2268.879.000) 05/11 09:58:43 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2400.203.000) 05/11 12:37:09 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+001 (2400.203.000) 05/11 20:01:54 Job executing on host: <140.160.143.140:9618?addrs=140.160.143.140-9618&noUDP&sock=13320_fd95_3>
+...
+006 (2400.203.000) 05/11 20:02:02 Image size of job updated: 2044
+	2  -  MemoryUsage of job (MB)
+	2044  -  ResidentSetSize of job (KB)
+...
+006 (2400.203.000) 05/11 20:27:03 Image size of job updated: 2048
+	2  -  MemoryUsage of job (MB)
+	2048  -  ResidentSetSize of job (KB)
+...
+005 (2400.203.000) 05/13 12:56:23 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 1 16:50:12, Sys 0 00:00:04  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 1 16:50:12, Sys 0 00:00:04  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    881636 
+	   Memory (MB)          :     2           1       128 
+...
+000 (2511.879.000) 05/27 15:03:38 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+001 (2511.879.000) 05/28 08:24:26 Job executing on host: <140.160.143.162:9618?addrs=140.160.143.162-9618&noUDP&sock=38396_0a74_3>
+...
+006 (2511.879.000) 05/28 08:24:35 Image size of job updated: 36624
+	36  -  MemoryUsage of job (MB)
+	36624  -  ResidentSetSize of job (KB)
+...
+006 (2511.879.000) 05/28 09:24:41 Image size of job updated: 41524
+	41  -  MemoryUsage of job (MB)
+	41524  -  ResidentSetSize of job (KB)
+...
+006 (2511.879.000) 05/31 13:14:21 Image size of job updated: 145796
+	41  -  MemoryUsage of job (MB)
+	41524  -  ResidentSetSize of job (KB)
+...
+004 (2511.879.000) 05/31 13:14:21 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 3 04:49:49, Sys 0 00:00:02  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    844690 
+	   Memory (MB)          :    41           1       128 
+...
+009 (2511.879.000) 05/31 13:14:21 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2516.203.000) 06/02 11:26:48 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+009 (2516.203.000) 06/03 01:05:38 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2523.203.000) 06/03 01:09:45 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+009 (2523.203.000) 06/03 01:12:02 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2524.203.000) 06/03 01:12:07 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+009 (2524.203.000) 06/03 11:11:23 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2525.203.000) 06/03 11:11:41 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+001 (2525.203.000) 06/08 05:05:23 Job executing on host: <140.160.143.140:9618?addrs=140.160.143.140-9618&noUDP&sock=16192_f195_3>
+...
+006 (2525.203.000) 06/08 05:05:32 Image size of job updated: 62560
+	61  -  MemoryUsage of job (MB)
+	62168  -  ResidentSetSize of job (KB)
+...
+005 (2525.203.000) 06/10 01:01:25 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 1 19:50:52, Sys 0 00:00:13  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 1 19:50:52, Sys 0 00:00:13  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    881228 
+	   Memory (MB)          :    61           1       128 
+...

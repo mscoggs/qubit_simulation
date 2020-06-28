@@ -1,0 +1,57 @@
+000 (2267.1395.000) 04/28 23:44:33 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+009 (2267.1395.000) 05/11 12:17:52 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
+000 (2400.719.000) 05/11 12:37:09 Job submitted from host: <140.160.143.131:9618?addrs=140.160.143.131-9618&noUDP&sock=3131910_565e_30>
+...
+001 (2400.719.000) 05/12 15:13:33 Job executing on host: <140.160.143.166:9618?addrs=140.160.143.166-9618&noUDP&sock=14230_2cc4_3>
+...
+006 (2400.719.000) 05/12 15:13:42 Image size of job updated: 4028
+	4  -  MemoryUsage of job (MB)
+	4028  -  ResidentSetSize of job (KB)
+...
+006 (2400.719.000) 05/15 12:15:00 Image size of job updated: 109552
+	4  -  MemoryUsage of job (MB)
+	4028  -  ResidentSetSize of job (KB)
+...
+004 (2400.719.000) 05/15 12:15:00 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 2 21:01:24, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    844602 
+	   Memory (MB)          :     4           1       128 
+...
+001 (2400.719.000) 05/15 12:16:26 Job executing on host: <140.160.143.141:9618?addrs=140.160.143.141-9618&noUDP&sock=23151_3d25_3>
+...
+004 (2400.719.000) 05/15 12:26:00 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 0 00:09:32, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    880963 
+	   Memory (MB)          :     5           5       128 
+...
+001 (2400.719.000) 05/15 18:21:48 Job executing on host: <140.160.143.142:9618?addrs=140.160.143.142-9618&noUDP&sock=19098_37cd_3>
+...
+004 (2400.719.000) 05/19 07:17:37 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    881307 
+	   Memory (MB)          :     5           5       128 
+...
+009 (2400.719.000) 05/19 07:17:41 Job was aborted by the user.
+	via condor_rm (by user scoggim)
+...
