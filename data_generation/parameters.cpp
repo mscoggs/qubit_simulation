@@ -1,4 +1,5 @@
 #include <gsl/gsl_rng.h>
+#include <ctime>
 
 #include "parameters.h"
 #include "operations.h"
@@ -62,18 +63,6 @@ void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double
 	state_overlap_squared = pow(zdotc_(&N, target_state, &INCX, start_state, &INCY),2);
 
 
-	//TESTEST
-	get_ground_state(N, ham_initial, start_state);
-	get_ground_state(N, ham_target, target_state);
-	int i;
-	double real=0, im=0;
-	for(i=0; i<N; i++){
-		real += start_state[2*i]*target_state[2*i] + start_state[2*i+1]*target_state[2*i+1];
-		im   += start_state[2*i+1]*target_state[2*i] - start_state[2*i]*target_state[2*i+1];
-	}
-	printf("real, im, state_overlap_squared: %f, %f, %f \n\n", real, im, state_overlap_squared);
-
-
 	if(CHECK) check_norm(start_state, N);
 }
 
@@ -94,6 +83,8 @@ void Simulation_Parameters::init_mcbb_params(){
 	new_distance      = 1;
 	temp_iteration    = 0;
 	sweeps_multiplier = 1;
+
+	start = std::clock();
 }
 
 
@@ -116,7 +107,7 @@ void Simulation_Parameters::clear_mcbb_params(){
 
 
 void Simulation_Parameters::init_mcdb_params(){
-	max_steps_mcdb    = MAX_STEPS_MCDB; 
+	max_steps_mcdb    = MAX_STEPS_MCDB;
 
 	E_array_fixed_tau = new double[NUM_SEEDS]();
 	j_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
@@ -142,6 +133,8 @@ void Simulation_Parameters::init_mcdb_params(){
 	e11  = new double[2*N*N]();
 	e01  = new double[2*N*N]();
 	e10  = new double[2*N*N]();
+
+	start = std::clock();
 }
 
 
@@ -182,6 +175,8 @@ void Simulation_Parameters::init_mcbf_params(){
 	old_distance      = 1;
 	new_distance      = 1;
 	sweeps_multiplier = 1;
+
+	start = std::clock();
 }
 
 

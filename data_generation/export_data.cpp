@@ -45,6 +45,7 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
 	file.open(path, std::ios::app);
 
 	file << "##############################################################################\n";
+	file << "clock_duration  =         " << sim_params.duration  << "\n";
 	file << "tau =               " << sim_params.tau   << "\n";
 	file << "total_steps =       " << sim_params.total_steps << "\n";
 	file << "time_step =       " << sim_params.time_step << "\n";
@@ -116,6 +117,7 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 	file.open(path, std::ios::app);
 
 	file << "##############################################################################\n";
+	file << "clock_duration  =         " << sim_params.duration  << "\n";
 	file << "tau =               " << sim_params.tau   << "\n";
 	file << "best_E =          " << sim_params.best_E << "\n";
 	file << "distance =          " << sim_params.new_distance << "\n";
@@ -186,6 +188,7 @@ void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params){
 	file.open(path, std::ios::app);
 
 	file << "##############################################################################\n";
+	file << "clock_duration  =         " << sim_params.duration  << "\n";
 	file << "tau =               " << sim_params.tau   << "\n";
 	file << "total_steps =       " << sim_params.total_steps << "\n";
 	file << "time_step =         " << sim_params.time_step << "\n";
@@ -249,6 +252,7 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	file << "time_step  =        " << sim_params.time_step  << "\n";
 	file << "best_E  =           " << sim_params.best_E  << "\n";
 	file << "distance  =         " << sim_params.new_distance  << "\n";
+	file << "clock_duration  =         " << sim_params.duration  << "\n";
 	file.close();
 }
 
@@ -271,7 +275,7 @@ std::string make_path(Simulation_Parameters sim_params, std::string type){
 	if (UNIFORM_SITES) uni = 't';
 	else uni = 'f';
 
-	std::string dir = "../data/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
+	std::string dir = "../data_from_q_cluster/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
 	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ji=" + ji + "_ki=" + ki +"_jt=" + jt +  "_kt="+ kt +".txt";
 	std::string path = dir+file_name;
 

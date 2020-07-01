@@ -1,6 +1,7 @@
 #ifndef __PARAMS_H_INCLUDED__
 #define __PARAMS_H_INCLUDED__
 
+#include <ctime>
 #include <math.h>
 #include <gsl/gsl_rng.h>
 
@@ -50,11 +51,11 @@ const bool DIAG = false;
 
 //MCBF method parameters
 const double DISTANCE_LIMIT_MCBF = 0.05;
-const double TAU_INIT_MCBF = 0.5;
+const double TAU_INIT_MCBF = 0.50;
 const double MAX_TAU_MCBF = 5.0;
-const double TAU_SCALAR_MCBF = 1.3;
+const double TAU_SCALAR_MCBF = 1.2;
 const double TAU_SCALAR_MCBF_TINY = 1.1;
-const double TAU_SCALAR_MCBF_BIG = 1.5;
+const double TAU_SCALAR_MCBF_BIG = 1.3;
 const double MAX_CHANGE_MCBF_INIT = 0.5*(MAX_PARAM-MIN_PARAM);
 const double MIN_CHANGE_MCBF_INIT = 0.1*(MAX_PARAM-MIN_PARAM);
 const double ACCEPTANCE_PROB_MC = 0.80;
@@ -119,8 +120,8 @@ const double ACCEPTANCE_PROB_MCDB = ACCEPTANCE_PROB_MC;
 const double TEMP_EXP_DECAY_MCDB = TEMP_EXP_DECAY_MC;
 const double BINARY_SEARCH_TAU_LIMIT_MCDB =BINARY_SEARCH_TAU_LIMIT_MCBF;
 const int RANDOM_STATES_MCDB = RANDOM_STATES_MC;
-const int MAX_STEPS_MCDB = 64;
-const int MIN_STEPS_MCDB = 8;
+const int MAX_STEPS_MCDB = 32;
+const int MIN_STEPS_MCDB = 4;
 const int SWEEPS_MCDB = 25;
 const int TEMP_DECAY_ITERATIONS_MCDB = TEMP_DECAY_ITERATIONS_MC;;
 const int TEMP_DECAY_LIMIT_MCDB = TEMP_DECAY_LIMIT_MC;
@@ -151,8 +152,9 @@ const bool PRINT_COMMUTATOR = false;
 
 class Simulation_Parameters{
 public:
+	std::clock_t start;
 	double *ham_target, *ham_initial, *start_state, *target_state, *state, *jkb_initial, *jkb_target, *E_array_fixed_tau, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10, *j_best_scaled, *k_best_scaled, *b_best_scaled;
-	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, time_step, temperature,initial_temperature, best_E,initial_E, old_distance, new_distance, temp_distance, state_overlap_squared;
+	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, time_step, temperature,initial_temperature, best_E,initial_E, old_distance, new_distance, temp_distance, state_overlap_squared, duration;
 	unsigned long long int *b;
 	int lattice[NX][NY], num_occupants,N,*table, *bonds, seed, total_steps, temp_iteration, max_steps_mcdb, sweeps_multiplier;
 	gsl_rng * rng;

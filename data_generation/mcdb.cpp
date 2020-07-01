@@ -55,7 +55,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 			if(sim_params.total_steps == MAX_STEPS_MCDB) break;
 
-			if(sim_params.new_distance > 0.2 and sim_params.total_steps >= MIN_STEPS_MCDB*2) break;
+			if(sim_params.new_distance > 0.2 and sim_params.total_steps >= MAX_STEPS_MCDB/2) break;
 			sim_params.total_steps = sim_params.total_steps*2;
 			sim_params.time_step = sim_params.tau/sim_params.total_steps;
 			if(sim_params.total_steps <= MAX_STEPS_MCDB) scale_best_arrays_mcdb(sim_params, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled);
@@ -64,7 +64,10 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 		if(!update_distances(sim_params)) continue;
 		if(PRINT) print_mc_results(sim_params);
-		if(MCDB_DATA) save_mcdb_data_fixed_tau(sim_params);
+		if(MCDB_DATA) {
+			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
+			save_mcdb_data_fixed_tau(sim_params);
+		}
 		if(sim_params.old_distance < sim_params.new_distance) break;
 		if(sim_params.new_distance < DISTANCE_LIMIT_MCDB) break;
 		calc_tau_mcdb(sim_params);
@@ -132,7 +135,7 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 		if(PRINT) printf("           Best Expectation:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_E,acceptance_rate,proposal_accepted, proposal_count);
 
 		if(poor_acceptance_streak>TEMP_DECAY_LIMIT_MCDB){
-			printf("NO MC PROGRESS FOR %i TEMP DECAY LIMIT MCDB, TERMINATING\n", TEMP_DECAY_LIMIT_MCDB);
+			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY LIMIT MCDB, TERMINATING\n", TEMP_DECAY_LIMIT_MCDB);
 			break;
 		}
 
@@ -211,7 +214,7 @@ void calc_tau_mcdb(Simulation_Parameters& sim_params){
 		tau_scalar = 0.6/(1-sim_params.new_distance);
 		if(tau_scalar > 5) tau_scalar = 5;
 		if(tau_scalar < TAU_SCALAR_MCDB) tau_scalar = TAU_SCALAR_MCDB;
-	}	
+	}
 	else if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_MCDB_TINY;
 	else if((abs(sim_params.old_distance - sim_params.new_distance) < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_MCDB_BIG;
 	else tau_scalar = TAU_SCALAR_MCDB;
@@ -265,8 +268,8 @@ void change_array_mcdb(double *j_array, double *k_array, double *b_array, int ra
 	//if(i%3 == 2) pointer = b_array;
 
   *(pointer+random_time_index) =  fmod(*(pointer+random_time_index) + 1.0, 2.0);
-	if(*(pointer+random_time_index)+*(pointer2+random_time_index)> 0.01) return;
-	else *(pointer+random_time_index) += 1;
+	// if(*(pointer+random_time_index)+*(pointer2+random_time_index)> 0.01) return;
+	// else *(pointer+random_time_index) += 1;
 }
 
 

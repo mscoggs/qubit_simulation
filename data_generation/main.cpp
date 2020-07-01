@@ -34,6 +34,7 @@ make run
 
 
 main (int argc, char *argv[]){
+
 	Simulation_Parameters sim_params;
 	int num_occupants;
 	double ji,ki,jt,kt;
@@ -45,6 +46,7 @@ main (int argc, char *argv[]){
 
 	sim_params.initialize_lattice(num_occupants,sim_params);
 	sim_params.initialize_hamiltonians(ji,ki,jt,kt, sim_params);
+	
 	if(ADIA)  adiabatic_method(sim_params);
 	if(MCDB) mcdb_method(sim_params);
 	if(MCBB) mcbb_method(sim_params);

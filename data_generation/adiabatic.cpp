@@ -23,7 +23,7 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 
 
 	sim_params.state        = new double[2*sim_params.N]();
-
+	sim_params.start        = std::clock();
 	memcpy(sim_params.state,  sim_params.start_state,  2*sim_params.N*sizeof(double));
 
 	sim_params.tau         = TAU_INIT_ADIA;
@@ -42,7 +42,10 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E, sim_params.best_E);
 		printf("       Tau: %5.2f  ||  Expectation-Value:  %7.4f  ||  Distance: %f \n", sim_params.tau, sim_params.best_E,sim_params.new_distance);
 
-		if (ADIA_DATA) save_adiabatic_data(sim_params);
+		if (ADIA_DATA){
+			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
+			save_adiabatic_data(sim_params);
+		}
 
 		if(sim_params.new_distance < DISTANCE_LIMIT_ADIA) break;
 

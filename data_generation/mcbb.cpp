@@ -45,7 +45,11 @@ void mcbb_method(Simulation_Parameters& sim_params){
 		if(!update_distances(sim_params)) continue;
 
 		if(PRINT) print_mc_results(sim_params);
-		if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
+		if(MCBB_DATA){
+			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
+			save_mcbb_data_fixed_tau(sim_params);
+		}
+
 
 		if(sim_params.new_distance < DISTANCE_LIMIT_MCBB) break;
 		else calc_tau_mcbb(sim_params);
@@ -108,7 +112,7 @@ void mcbb_simulation(Simulation_Parameters& sim_params){
 		if(PRINT) printf("           Best Expectation:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_E,acceptance_rate,proposal_accepted, proposal_count);
 
 		if(poor_acceptance_streak>TEMP_DECAY_LIMIT_MCBB){
-			printf("NO MC PROGRESS FOR %i TEMP DECAY LIMIT MCBB, TERMINATING\n", TEMP_DECAY_LIMIT_MCBB);
+			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY LIMIT MCBB, TERMINATING\n", TEMP_DECAY_LIMIT_MCBB);
 			break;
 		}
 
@@ -222,7 +226,7 @@ void binary_search_mcbb(Simulation_Parameters& sim_params){
 	sim_params.tau = (tau_max + tau_min) / 2.0;
 	sim_params.new_distance = sim_params.old_distance;
 
-	printf("\nUsing binary search method to look for optimal ground state...");
+	if(PRINT) printf("\nUsing binary search method to look for optimal ground state...");
 
 	while((tau_max - tau_min) >BINARY_SEARCH_TAU_LIMIT_MCBB){
 
@@ -244,12 +248,12 @@ void binary_search_mcbb(Simulation_Parameters& sim_params){
 		if(PRINT) print_mc_results(sim_params);
 
 		if(sim_params.new_distance < DISTANCE_LIMIT_MCBB){
-			printf("\nIn binary_search_mcbb....\nStepping backward....\n");
+			if(PRINT) printf("\nIn binary_search_mcbb....\nStepping backward....\n");
 			tau_max = sim_params.tau;
 			sim_params.tau = (tau_max+tau_min)/2.0;
 
 		}else{
-			printf("\nIn binary_search_mcbb....\nStepping forward....\n");
+			if(PRINT) printf("\nIn binary_search_mcbb....\nStepping forward....\n");
 			sim_params.old_distance = sim_params.new_distance;
 			if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
 
@@ -257,7 +261,7 @@ void binary_search_mcbb(Simulation_Parameters& sim_params){
 			sim_params.tau = (tau_min+tau_max)/2;
 		}
 	}
-	printf("\nUpper and lower tau are close enough, exiting binary_search_mcbb\n");
+	if(PRINT) printf("\nUpper and lower tau are close enough, exiting binary_search_mcbb\n");
 }
 
 
