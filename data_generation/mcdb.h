@@ -32,8 +32,9 @@ void mcdb_simulation(Simulation_Parameters& sim_params);
     @param j_array the protocol of the j parameter, where each odd-index holds the time of a jump (j=1) and the even-index holds the time of a drop(j=0)
     @param k_array the protocol of the k parameter, where each odd-index holds the time of a jump (k=1) and the even-index holds the time of a drop(k=0)
     @param b_array the protocol of the b parameter, where each odd-index holds the time of a jump (b=1) and the even-index holds the time of a drop(b=0)
+    @param random_time_index this is the index that was changed, and we skip the evolution prior to the change by pulling from the saved_states
 */
-void evolve_mcdb(Simulation_Parameters& sim_params, double *j_array, double *k_array, double *b_array);
+void evolve_mcdb(Simulation_Parameters& sim_params, double *j_array, double *k_array, double *b_array, int random_time_index);
 
 
 /**
@@ -83,7 +84,7 @@ void copy_arrays_mcdb(Simulation_Parameters& sim_params, double* j_to,  double* 
 
 
 /**
-    scale the arrays, cutting each block in half and maintaining the previous values 
+    scale the arrays, cutting each block in half and maintaining the previous values
 
     @param sim_params contains all of the variables for the simulation
 */
@@ -95,15 +96,13 @@ void scale_best_arrays_mcdb(Simulation_Parameters& sim_params, double* j_best,  
 /**
     Changes the arrays according randomly based on the random_time_index
 
+    @param sim_params contains all of the variables for the simulation
     @param j_array the protocol of the j parameter, where each odd-index holds the time of a jump (j=1) and the even-index holds the time of a drop(j=0)
     @param k_array the protocol of the k parameter, where each odd-index holds the time of a jump (k=1) and the even-index holds the time of a drop(k=0)
     @param b_array the protocol of the b parameter, where each odd-index holds the time of a jump (b=1) and the even-index holds the time of a drop(b=0)
-    @param change the amount the protocols will be changed by
-    @param random_time_index the rng generated index which will pick the index of the array that gets changed (changing a row corresponds to changing all sites for a given timestep)
     @param i the iterator variable which cycles the type of change
-    @param tau the total time allowed during evolution
 */
-void change_array_mcdb(double *j_array, double *k_array, double *b_array, int random_time_index, int i);
+double change_array_mcdb(Simulation_Parameters& sim_params, double *j_array, double *k_array, double *b_array, int i);
 
 
 
@@ -116,4 +115,11 @@ void change_array_mcdb(double *j_array, double *k_array, double *b_array, int ra
 void pre_exponentiate(Simulation_Parameters& sim_params);
 
 
+/**
+    scales the total sweeps, 'crunching' them in the beginning, then increasing them as total steps increase
+
+    @param sim_params contains all of the variables for the simulation
+
+*/
+void get_sweeps_mcdb(Simulation_Parameters& sim_params);
 #endif

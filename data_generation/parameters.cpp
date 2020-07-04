@@ -1,5 +1,6 @@
 #include <gsl/gsl_rng.h>
 #include <ctime>
+#include <cstring>
 
 #include "parameters.h"
 #include "operations.h"
@@ -109,6 +110,7 @@ void Simulation_Parameters::clear_mcbb_params(){
 void Simulation_Parameters::init_mcdb_params(){
 	max_steps_mcdb    = MAX_STEPS_MCDB;
 
+  saved_states      = new double[2*N*(MAX_STEPS_MCDB+1)]();
 	E_array_fixed_tau = new double[NUM_SEEDS]();
 	j_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
 	k_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
@@ -135,6 +137,7 @@ void Simulation_Parameters::init_mcdb_params(){
 	e10  = new double[2*N*N]();
 
 	start = std::clock();
+	for(int k=0; k<2*N; k++) saved_states[k] = start_state[k];
 }
 
 
