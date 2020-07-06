@@ -22,7 +22,7 @@ main(int argc, char *argv[]){
 	for(job_num=0;job_num<num_jobs;job_num++){
 		jt = floor((job_num*1000.0)/num_jobs)/1000.0;
 		printf("jt: %f\n", jt);
-		job_file << "./main 2 0.5 0.1 0.95 " <<std::to_string(jt) << "&\n";
+		job_file << "./main 2 0.8 0.2 0.2 " <<std::to_string(jt) << "&\n";
 
 	}
 }

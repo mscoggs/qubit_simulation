@@ -29,7 +29,7 @@ const double LOWK = MIN_PARAM;
 const double LOWB = MIN_PARAM;
 const double T = 1;
 const double V = 2;
-const int NX = 3;
+const int NX = 4;
 const int NY = NX;
 const int NUMBER_OF_SITES = NX*NY;
 
@@ -44,15 +44,15 @@ const bool MCDB = true;
 const bool MCDB_DATA = true;
 const bool ADIA = false;
 const bool ADIA_DATA= false;
-const int  NUM_SEEDS = 1;
+const int  NUM_SEEDS = 3;
 const bool DIAG = false;
 
 
 
 //MCBF method parameters
 const double DISTANCE_LIMIT_MCBF = 0.10;
-const double TAU_INIT_MCBF = 0.05;
-const double MAX_TAU_MCBF = 2.0;
+const double TAU_INIT_MCBF = 0.5;
+const double MAX_TAU_MCBF = 5.0;
 const double TAU_SCALAR_MCBF = 1.3;
 const double TAU_SCALAR_MCBF_TINY = 1.1;
 const double TAU_SCALAR_MCBF_BIG = 1.5;
@@ -64,7 +64,7 @@ const double BINARY_SEARCH_TAU_LIMIT_MCBF = TAU_INIT_MCBF/100.0;
 const int RANDOM_STATES_MC = 3;
 const int SWEEPS_MC = 50;
 const int TOTAL_STEPS_INIT_MC =  5;
-const int TEMP_DECAY_ITERATIONS_MC = 10;
+const int TEMP_DECAY_ITERATIONS_MC = 13;
 const int TEMP_DECAY_LIMIT_MC = 7;
 const int MAX_EVOLVE_STEPS_MC = 4*TOTAL_STEPS_INIT_MC;
 const int MAX_TAU_STEPS_MCBF = ceil(log(MAX_TAU_MCBF/TAU_INIT_MCBF)/log(TAU_SCALAR_MCBF_TINY));
@@ -120,7 +120,7 @@ const double ACCEPTANCE_PROB_MCDB = ACCEPTANCE_PROB_MC;
 const double TEMP_EXP_DECAY_MCDB = TEMP_EXP_DECAY_MC;
 const double BINARY_SEARCH_TAU_LIMIT_MCDB =BINARY_SEARCH_TAU_LIMIT_MCBF;
 const int RANDOM_STATES_MCDB = RANDOM_STATES_MC;
-const int MAX_STEPS_MCDB = 64;
+const int MAX_STEPS_MCDB = 128;
 const int MIN_STEPS_MCDB = 4;
 const double STEPS_CRUNCH_MCDB = 4.0;
 const int SWEEPS_MCDB = 25;

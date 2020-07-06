@@ -97,7 +97,8 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 
 	if(sim_params.total_steps == MIN_STEPS_MCDB) init_arrays_mcdb(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best);
 	else copy_arrays_mcdb(sim_params,sim_params.j_best,sim_params.k_best,sim_params.b_best, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled,0,0);
-
+	printf("ARRAYS BEFORE:\n\n");
+	print_arrays_mcdb(sim_params.j_best,sim_params.k_best,sim_params.b_best, sim_params.total_steps);
 	copy_arrays_mcdb(sim_params, j_array, k_array, b_array,sim_params.j_best,sim_params.k_best,sim_params.b_best,0,0);//a temporary array, used in the undoing of the changes
 
 	std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
@@ -146,6 +147,8 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 
 		sim_params.temperature=sim_params.temperature*TEMP_EXP_DECAY_MCDB;
 	}
+	printf("ARRAYS AFTER:\n\n");
+	print_arrays_mcdb(sim_params.j_best,sim_params.k_best,sim_params.b_best, sim_params.total_steps);
 	delete[] k_array, delete[] j_array, delete[] b_array, delete[] k_temp, delete[] j_temp, delete[] b_temp, delete[] sim_params.state, delete[] temp_saved_states;
 }
 
