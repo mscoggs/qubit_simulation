@@ -50,7 +50,7 @@ const bool DIAG = false;
 
 
 //MCBF method parameters
-const double DISTANCE_LIMIT_MCBF = 0.05;
+const double DISTANCE_LIMIT_MCBF = 0.10;
 const double TAU_INIT_MCBF = 0.05;
 const double MAX_TAU_MCBF = 2.0;
 const double TAU_SCALAR_MCBF = 1.3;

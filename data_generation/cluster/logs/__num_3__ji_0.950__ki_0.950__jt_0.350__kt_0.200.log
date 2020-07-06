@@ -63,3 +63,19 @@
 	66  -  MemoryUsage of job (MB)
 	67028  -  ResidentSetSize of job (KB)
 ...
+005 (2525.561.000) 06/30 19:04:11 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 11 04:36:20, Sys 0 00:09:57  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 11 04:36:20, Sys 0 00:09:57  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     1.00        1         1 
+	   Disk (KB)            :   175         175    870398 
+	   Gpus                 :                           0 
+	   Memory (MB)          :    66           1       128 
+...

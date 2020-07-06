@@ -1,0 +1,842 @@
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.0500 || TIME_STEP    0.0125 ||
+|| TOTAL_STEPS:        4 || TOTAL_SWEEPS:       25 ||                     ||
+|| TEMPERATURE:   0.0063 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.695839  ||  Acceptance Rate: 0.8667 (13/15)
+           Best Expectation:   -0.695842  ||  Acceptance Rate: 0.8000 (12/15)
+           Best Expectation:   -0.695842  ||  Acceptance Rate: 0.9000 (9/10)
+           Best Expectation:   -0.695842  ||  Acceptance Rate: 0.7857 (11/14)
+           Best Expectation:   -0.695842  ||  Acceptance Rate: 0.5714 (8/14)
+           Best Expectation:   -0.696261  ||  Acceptance Rate: 0.9286 (13/14)
+           Best Expectation:   -0.697511  ||  Acceptance Rate: 0.5556 (10/18)
+           Best Expectation:   -0.697511  ||  Acceptance Rate: 0.5625 (9/16)
+           Best Expectation:   -0.697511  ||  Acceptance Rate: 0.4500 (9/20)
+           Best Expectation:   -0.697511  ||  Acceptance Rate: 0.5000 (8/16)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.0500 || TIME_STEP    0.0063 ||
+|| TOTAL_STEPS:        8 || TOTAL_SWEEPS:      150 ||                     ||
+|| TEMPERATURE:   0.0021 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.7561 (62/82)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.8171 (67/82)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.8354 (66/79)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.6042 (58/96)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.5361 (52/97)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.4706 (48/102)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.5046 (55/109)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.4095 (43/105)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.3565 (41/115)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.2903 (36/124)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.0500 || TIME_STEP    0.0031 ||
+|| TOTAL_STEPS:       16 || TOTAL_SWEEPS:      350 ||                     ||
+|| TEMPERATURE:   0.0009 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.8137 (166/204)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.7402 (151/204)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.7437 (148/199)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.7198 (149/207)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.5981 (128/214)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.5104 (123/241)
+           Best Expectation:   -0.697645  ||  Acceptance Rate: 0.5064 (119/235)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.4453 (110/247)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.2941 (80/272)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.2754 (76/276)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.0500 || TIME_STEP    0.0016 ||
+|| TOTAL_STEPS:       32 || TOTAL_SWEEPS:      775 ||                     ||
+|| TEMPERATURE:   0.0002 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.6154 (304/494)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.6326 (303/479)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.4650 (246/529)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.4170 (226/542)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.3746 (209/558)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.2822 (171/606)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.2167 (135/623)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.2194 (140/638)
+           Best Expectation:   -0.697671  ||  Acceptance Rate: 0.1374 (93/677)
+           Best Expectation:   -0.697688  ||  Acceptance Rate: 0.1160 (81/698)
+############################################################################
+BEST ENERGY=    -0.697688
+TARGET ENERGY=  -0.733229
+INITIAL ENERGY= -0.694692
+OLD DISTANCNCE=  1.000000
+NEW DISTANCNCE=  0.922246
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.2500 || TIME_STEP    0.0625 ||
+|| TOTAL_STEPS:        4 || TOTAL_SWEEPS:       25 ||                     ||
+|| TEMPERATURE:   0.1359 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.714728  ||  Acceptance Rate: 0.8667 (13/15)
+           Best Expectation:   -0.718569  ||  Acceptance Rate: 0.8182 (9/11)
+           Best Expectation:   -0.718569  ||  Acceptance Rate: 0.8125 (13/16)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.7692 (10/13)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.8667 (13/15)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.6923 (9/13)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.7143 (10/14)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.6923 (9/13)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.6111 (11/18)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.4737 (9/19)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.2500 || TIME_STEP    0.0312 ||
+|| TOTAL_STEPS:        8 || TOTAL_SWEEPS:      150 ||                     ||
+|| TEMPERATURE:   0.0442 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.8554 (71/83)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.7590 (63/83)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.6979 (67/96)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.6383 (60/94)
+           Best Expectation:   -0.721606  ||  Acceptance Rate: 0.6264 (57/91)
+           Best Expectation:   -0.721951  ||  Acceptance Rate: 0.6667 (60/90)
+           Best Expectation:   -0.722276  ||  Acceptance Rate: 0.5876 (57/97)
+           Best Expectation:   -0.722276  ||  Acceptance Rate: 0.5429 (57/105)
+           Best Expectation:   -0.722276  ||  Acceptance Rate: 0.4271 (41/96)
+           Best Expectation:   -0.722276  ||  Acceptance Rate: 0.5048 (53/105)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.2500 || TIME_STEP    0.0156 ||
+|| TOTAL_STEPS:       16 || TOTAL_SWEEPS:      350 ||                     ||
+|| TEMPERATURE:   0.0216 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.722276  ||  Acceptance Rate: 0.8776 (172/196)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.8065 (150/186)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.7979 (150/188)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.7320 (142/194)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.6452 (140/217)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.5570 (127/228)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.6190 (130/210)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.6244 (138/221)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.5511 (124/225)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.4728 (113/239)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.2500 || TIME_STEP    0.0078 ||
+|| TOTAL_STEPS:       32 || TOTAL_SWEEPS:      775 ||                     ||
+|| TEMPERATURE:   0.0048 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.7761 (357/460)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.7449 (327/439)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.7087 (326/460)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.6004 (290/483)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.6418 (310/483)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.5460 (273/500)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.4922 (251/510)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.5039 (259/514)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.4727 (242/512)
+           Best Expectation:   -0.722584  ||  Acceptance Rate: 0.4347 (233/536)
+############################################################################
+BEST ENERGY=    -0.722584
+TARGET ENERGY=  -0.733229
+INITIAL ENERGY= -0.694692
+OLD DISTANCNCE=  0.922246
+NEW DISTANCNCE=  0.276219
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.3250 || TIME_STEP    0.0813 ||
+|| TOTAL_STEPS:        4 || TOTAL_SWEEPS:       25 ||                     ||
+|| TEMPERATURE:   0.2074 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.719310  ||  Acceptance Rate: 0.9333 (14/15)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 1.0000 (13/13)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 0.8750 (14/16)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 0.6429 (9/14)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 0.8125 (13/16)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 0.7059 (12/17)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 0.7857 (11/14)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 0.6429 (9/14)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 0.5882 (10/17)
+           Best Expectation:   -0.720281  ||  Acceptance Rate: 0.3529 (6/17)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.3250 || TIME_STEP    0.0406 ||
+|| TOTAL_STEPS:        8 || TOTAL_SWEEPS:      150 ||                     ||
+|| TEMPERATURE:   0.0683 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.721428  ||  Acceptance Rate: 0.8235 (70/85)
+           Best Expectation:   -0.721927  ||  Acceptance Rate: 0.8182 (72/88)
+           Best Expectation:   -0.721927  ||  Acceptance Rate: 0.8556 (77/90)
+           Best Expectation:   -0.722320  ||  Acceptance Rate: 0.6897 (60/87)
+           Best Expectation:   -0.722320  ||  Acceptance Rate: 0.7701 (67/87)
+           Best Expectation:   -0.722320  ||  Acceptance Rate: 0.5889 (53/90)
+           Best Expectation:   -0.722647  ||  Acceptance Rate: 0.6739 (62/92)
+           Best Expectation:   -0.723048  ||  Acceptance Rate: 0.5876 (57/97)
+           Best Expectation:   -0.723048  ||  Acceptance Rate: 0.4184 (41/98)
+           Best Expectation:   -0.723048  ||  Acceptance Rate: 0.4950 (50/101)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.3250 || TIME_STEP    0.0203 ||
+|| TOTAL_STEPS:       16 || TOTAL_SWEEPS:      350 ||                     ||
+|| TEMPERATURE:   0.0335 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.723048  ||  Acceptance Rate: 0.8426 (166/197)
+           Best Expectation:   -0.723048  ||  Acceptance Rate: 0.8351 (162/194)
+           Best Expectation:   -0.723162  ||  Acceptance Rate: 0.8218 (166/202)
+           Best Expectation:   -0.723162  ||  Acceptance Rate: 0.7857 (154/196)
+           Best Expectation:   -0.723162  ||  Acceptance Rate: 0.7108 (145/204)
+           Best Expectation:   -0.723162  ||  Acceptance Rate: 0.6905 (145/210)
+           Best Expectation:   -0.723162  ||  Acceptance Rate: 0.6912 (150/217)
+           Best Expectation:   -0.723162  ||  Acceptance Rate: 0.6301 (138/219)
+           Best Expectation:   -0.723162  ||  Acceptance Rate: 0.5991 (130/217)
+           Best Expectation:   -0.723162  ||  Acceptance Rate: 0.5244 (118/225)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.3250 || TIME_STEP    0.0102 ||
+|| TOTAL_STEPS:       32 || TOTAL_SWEEPS:      775 ||                     ||
+|| TEMPERATURE:   0.0077 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.7723 (329/426)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.7648 (335/438)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.7483 (336/449)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.6723 (318/473)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.6834 (313/458)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.6373 (297/466)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.5740 (291/507)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.5622 (280/498)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.5498 (276/502)
+           Best Expectation:   -0.723406  ||  Acceptance Rate: 0.5030 (253/503)
+############################################################################
+BEST ENERGY=    -0.723406
+TARGET ENERGY=  -0.733229
+INITIAL ENERGY= -0.694692
+OLD DISTANCNCE=  0.276219
+NEW DISTANCNCE=  0.254903
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.4875 || TIME_STEP    0.1219 ||
+|| TOTAL_STEPS:        4 || TOTAL_SWEEPS:       25 ||                     ||
+|| TEMPERATURE:   0.3403 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.715359  ||  Acceptance Rate: 0.7333 (11/15)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.7857 (11/14)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.7143 (10/14)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.7500 (12/16)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.6250 (10/16)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.6250 (10/16)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.4375 (7/16)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.7500 (9/12)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.5294 (9/17)
+           Best Expectation:   -0.720772  ||  Acceptance Rate: 0.3684 (7/19)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.4875 || TIME_STEP    0.0609 ||
+|| TOTAL_STEPS:        8 || TOTAL_SWEEPS:      150 ||                     ||
+|| TEMPERATURE:   0.1172 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.8372 (72/86)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.8795 (73/83)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.7471 (65/87)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.6848 (63/92)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.6628 (57/86)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.6556 (59/90)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.6304 (58/92)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.5312 (51/96)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.4811 (51/106)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.5046 (55/109)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.4875 || TIME_STEP    0.0305 ||
+|| TOTAL_STEPS:       16 || TOTAL_SWEEPS:      350 ||                     ||
+|| TEMPERATURE:   0.0640 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.8466 (160/189)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.7959 (156/196)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.7449 (146/196)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.7598 (155/204)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.7228 (146/202)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.6765 (138/204)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.6329 (131/207)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.6763 (140/207)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.6393 (140/219)
+           Best Expectation:   -0.727178  ||  Acceptance Rate: 0.5270 (117/222)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.4875 || TIME_STEP    0.0152 ||
+|| TOTAL_STEPS:       32 || TOTAL_SWEEPS:      775 ||                     ||
+|| TEMPERATURE:   0.0148 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.8261 (361/437)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.7675 (340/443)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.7106 (329/463)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.7159 (320/447)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.7303 (325/445)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.6711 (304/453)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.6597 (316/479)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.5825 (286/491)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.5480 (274/500)
+           Best Expectation:   -0.728084  ||  Acceptance Rate: 0.5514 (279/506)
+############################################################################
+BEST ENERGY=    -0.728084
+TARGET ENERGY=  -0.733229
+INITIAL ENERGY= -0.694692
+OLD DISTANCNCE=  0.254903
+NEW DISTANCNCE=  0.133502
+############################################################################
+
+
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.1341 ||
+|| TOTAL_STEPS:        4 || TOTAL_SWEEPS:       25 ||                     ||
+|| TEMPERATURE:   0.3660 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.717932  ||  Acceptance Rate: 0.6667 (10/15)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.8000 (12/15)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.8462 (11/13)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.8000 (12/15)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.6250 (10/16)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.6429 (9/14)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.5625 (9/16)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.7692 (10/13)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.5333 (8/15)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.2105 (4/19)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0670 ||
+|| TOTAL_STEPS:        8 || TOTAL_SWEEPS:      150 ||                     ||
+|| TEMPERATURE:   0.1339 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.721572  ||  Acceptance Rate: 0.7901 (64/81)
+           Best Expectation:   -0.724553  ||  Acceptance Rate: 0.8395 (68/81)
+           Best Expectation:   -0.725285  ||  Acceptance Rate: 0.8046 (70/87)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.6818 (60/88)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.6667 (58/87)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.6154 (56/91)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.6322 (55/87)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.5152 (51/99)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.4434 (47/106)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.4423 (46/104)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0335 ||
+|| TOTAL_STEPS:       16 || TOTAL_SWEEPS:      350 ||                     ||
+|| TEMPERATURE:   0.0715 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.8223 (162/197)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.8466 (160/189)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.7817 (154/197)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.7340 (149/203)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.7500 (150/200)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.6743 (147/218)
+           Best Expectation:   -0.726799  ||  Acceptance Rate: 0.6150 (139/226)
+           Best Expectation:   -0.726799  ||  Acceptance Rate: 0.6209 (131/211)
+           Best Expectation:   -0.726799  ||  Acceptance Rate: 0.5856 (130/222)
+           Best Expectation:   -0.726799  ||  Acceptance Rate: 0.5636 (124/220)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0168 ||
+|| TOTAL_STEPS:       32 || TOTAL_SWEEPS:      775 ||                     ||
+|| TEMPERATURE:   0.0170 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.7821 (341/436)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.8115 (353/435)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.7735 (338/437)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.7506 (334/445)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.6960 (316/454)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.6830 (306/448)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.5943 (293/493)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.5833 (280/480)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.5996 (289/482)
+           Best Expectation:   -0.726937  ||  Acceptance Rate: 0.5517 (283/513)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0084 ||
+|| TOTAL_STEPS:       64 || TOTAL_SWEEPS:     1600 ||                     ||
+|| TEMPERATURE:   0.0156 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.8843 (757/856)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.8674 (752/867)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.8754 (759/867)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.8200 (720/878)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.7868 (701/891)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.8074 (717/888)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.7718 (700/907)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.7560 (697/922)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.7229 (668/924)
+           Best Expectation:   -0.726939  ||  Acceptance Rate: 0.6914 (652/943)
+############################################################################
+BEST ENERGY=    -0.726939
+TARGET ENERGY=  -0.733229
+INITIAL ENERGY= -0.694692
+OLD DISTANCNCE=  0.133502
+NEW DISTANCNCE=  0.163203
+############################################################################
+
+
+############################################################################
+POOR CONVERGENCE DURING THE LAST SIMULATION FOR TAU: 0.536250
+RUNNING AGAIN WITH TWICE THE SWEEPS
+############################################################################
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.1341 ||
+|| TOTAL_STEPS:        4 || TOTAL_SWEEPS:       50 ||                     ||
+|| TEMPERATURE:   0.1877 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.717932  ||  Acceptance Rate: 0.6000 (18/30)
+           Best Expectation:   -0.717932  ||  Acceptance Rate: 0.7931 (23/29)
+           Best Expectation:   -0.717932  ||  Acceptance Rate: 0.6897 (20/29)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.6452 (20/31)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.5294 (18/34)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.3143 (11/35)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.3947 (15/38)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.3438 (11/32)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.1628 (7/43)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.1795 (7/39)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0670 ||
+|| TOTAL_STEPS:        8 || TOTAL_SWEEPS:      300 ||                     ||
+|| TEMPERATURE:   0.1487 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.724673  ||  Acceptance Rate: 0.8272 (134/162)
+           Best Expectation:   -0.724673  ||  Acceptance Rate: 0.7861 (136/173)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.7988 (131/164)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.7627 (135/177)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.6536 (117/179)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.6740 (122/181)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.5208 (100/192)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.5829 (109/187)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.5440 (105/193)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.4900 (98/200)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0335 ||
+|| TOTAL_STEPS:       16 || TOTAL_SWEEPS:      700 ||                     ||
+|| TEMPERATURE:   0.0659 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.8443 (320/379)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.8172 (313/383)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.7552 (293/388)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.7450 (298/400)
+           Best Expectation:   -0.726729  ||  Acceptance Rate: 0.7012 (284/405)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7395 (298/403)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.6194 (262/423)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.6336 (268/423)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.5852 (261/446)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.5388 (250/464)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0168 ||
+|| TOTAL_STEPS:       32 || TOTAL_SWEEPS:     1550 ||                     ||
+|| TEMPERATURE:   0.0373 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.8762 (722/824)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.8366 (717/857)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.8305 (691/832)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7948 (697/877)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7904 (690/873)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7497 (659/879)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7807 (680/871)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.6904 (631/914)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.6997 (643/919)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.6652 (604/908)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0084 ||
+|| TOTAL_STEPS:       64 || TOTAL_SWEEPS:     3200 ||                     ||
+|| TEMPERATURE:   0.0108 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.8475 (1462/1725)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.8223 (1425/1733)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.8194 (1438/1755)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.8136 (1445/1776)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7824 (1395/1783)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7552 (1391/1842)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7337 (1372/1870)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.7022 (1330/1894)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.6928 (1315/1898)
+           Best Expectation:   -0.727574  ||  Acceptance Rate: 0.6632 (1258/1897)
+############################################################################
+BEST ENERGY=    -0.727574
+TARGET ENERGY=  -0.733229
+INITIAL ENERGY= -0.694692
+OLD DISTANCNCE=  0.133502
+NEW DISTANCNCE=  0.146747
+############################################################################
+
+
+############################################################################
+POOR CONVERGENCE DURING THE LAST SIMULATION FOR TAU: 0.536250
+RUNNING AGAIN WITH TWICE THE SWEEPS
+############################################################################
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.1341 ||
+|| TOTAL_STEPS:        4 || TOTAL_SWEEPS:      100 ||                     ||
+|| TEMPERATURE:   0.2062 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.7241 (42/58)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.7667 (46/60)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.6154 (40/65)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.6452 (40/62)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.5077 (33/65)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.4559 (31/68)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.5000 (35/70)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.3467 (26/75)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.2987 (23/77)
+           Best Expectation:   -0.718272  ||  Acceptance Rate: 0.2625 (21/80)
+
+
+
+
+...Calculating initial temperature based on 3 random starting states...
+############################################################################
+################# THE  MONTE-CARLO DISCRETE-BANG METHOD ####################
+############################################################################
+|| OCCUPANTS:          2 || DIMENSION:          36 || SEED:             1 ||
+|| TAU_MAX:       2.0000 || TAU:            0.5363 || TIME_STEP    0.0670 ||
+|| TOTAL_STEPS:        8 || TOTAL_SWEEPS:      600 ||                     ||
+|| TEMPERATURE:   0.0705 || TEMP_DECAYS:        10 ||                     ||
+|| J_INITIAL:     0.8000 || K_INITIAL:      0.2000 || B_INITIAL:   0.0000 ||
+|| J_TARGET:      0.2000 || K_TARGET:       0.2000 || B_TARGET:    0.0000 ||
+|| GROUND_E:     -0.7332 || INITIAL_E:     -0.6947 ||                     ||
+
+INITIAL_STATE: [-0.083+0.000i; -0.092+0.000i; -0.083+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.212+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.245+0.000i; -0.212+0.000i; -0.092+0.000i; -0.173+0.000i; -0.125+0.000i; -0.173+0.000i; -0.206+0.000i; -0.083+0.000i; -0.173+0.000i; -0.245+0.000i; -0.173+0.000i; -0.206+0.000i; -0.212+0.000i; -0.206+0.000i; -0.083+0.000i; -0.125+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; -0.206+0.000i; -0.173+0.000i; -0.092+0.000i; -0.083+0.000i; ]
+############################################################################
+           Best Expectation:   -0.724696  ||  Acceptance Rate: 0.6863 (245/357)
+           Best Expectation:   -0.728395  ||  Acceptance Rate: 0.6838 (240/351)
+           Best Expectation:   -0.728395  ||  Acceptance Rate: 0.6243 (231/370)
+           Best Expectation:   -0.728395  ||  Acceptance Rate: 0.5957 (224/376)
+           Best Expectation:   -0.728395  ||  Acceptance Rate: 0.5375 (215/400)
+           Best Expectation:   -0.728395  ||  Acceptanc
