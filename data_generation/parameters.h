@@ -29,7 +29,7 @@ const double LOWK = MIN_PARAM;
 const double LOWB = MIN_PARAM;
 const double T = 1;
 const double V = 2;
-const int NX = 4;
+const int NX = 3;
 const int NY = NX;
 const int NUMBER_OF_SITES = NX*NY;
 
