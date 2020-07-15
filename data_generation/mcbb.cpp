@@ -19,16 +19,17 @@ void mcbb_method(Simulation_Parameters& sim_params){
 
 
 	sim_params.init_mcbb_params();
+
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.initial_E -sim_params.ground_E < 0.001){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
 		if(PRINT) print_mcbb_info(sim_params);
-		if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
+		if(SAVE_DATA) save_mcbb_data_fixed_tau(sim_params);
 		sim_params.clear_mcbb_params();
 		return;
 	}
 
 
-	while(sim_params.tau<MAX_TAU_MCBB){
+	while(sim_params.tau<MAX_TAU){
 
 		gsl_rng_set(sim_params.rng, 1);
 		calc_initial_temp_mcbb(sim_params);
@@ -45,14 +46,14 @@ void mcbb_method(Simulation_Parameters& sim_params){
 		if(!update_distances(sim_params)) continue;
 
 		if(PRINT) print_mc_results(sim_params);
-		if(MCBB_DATA){
+		if(SAVE_DATA){
 			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
 			save_mcbb_data_fixed_tau(sim_params);
 		}
 
 
-		if(sim_params.new_distance < DISTANCE_LIMIT_MCBB) break;
-		else calc_tau_mcbb(sim_params);
+		if(sim_params.new_distance < DISTANCE_LIMIT) break;
+		else calc_tau(sim_params);
 	}
 	sim_params.clear_mcbb_params();
 }
@@ -83,7 +84,7 @@ void mcbb_simulation(Simulation_Parameters& sim_params){
 
 	if(PRINT) print_mcbb_info(sim_params);
 
-	for (i=0;i<TEMP_DECAY_ITERATIONS_MCBB;i++){
+	for (i=0;i<TEMP_DECAY_ITERATIONS;i++){
 
 		proposal_accepted = 0, proposal_count = 0;
 		sim_params.temp_iteration = i;
@@ -111,12 +112,12 @@ void mcbb_simulation(Simulation_Parameters& sim_params){
 
 		if(PRINT) printf("           Best Expectation:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_E,acceptance_rate,proposal_accepted, proposal_count);
 
-		if(poor_acceptance_streak>TEMP_DECAY_LIMIT_MCBB){
-			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY LIMIT MCBB, TERMINATING\n", TEMP_DECAY_LIMIT_MCBB);
+		if(poor_acceptance_streak>TEMP_DECAY_LIMIT){
+			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY LIMIT MCBB, TERMINATING\n", TEMP_DECAY_LIMIT);
 			break;
 		}
 
-		sim_params.temperature=sim_params.temperature*TEMP_EXP_DECAY_MC;
+		sim_params.temperature=sim_params.temperature*TEMP_EXP_DECAY;
 	}
 	delete[] k_array, delete[] j_array, delete[] b_array, delete[] k_temp, delete[] j_temp, delete[] b_temp, delete[] sim_params.state;
 }
@@ -184,9 +185,9 @@ void calc_initial_temp_mcbb(Simulation_Parameters& sim_params){
 	state_random     = new double[2*sim_params.N]();
 
 
-	if(PRINT) printf("\n\n\n\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES_MCBB);
+	if(PRINT) printf("\n\n\n\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
 
-	for (j=0;j<RANDOM_STATES_MCBB;j++){
+	for (j=0;j<RANDOM_STATES;j++){
 		for (i=0; i<sim_params.N*2;i++) state_random[i] =0.0;
 		start_state_index = floor(get_random_double(0,sim_params.N,sim_params.rng));
 		state_random[start_state_index*2] = 1;
@@ -209,74 +210,11 @@ void calc_initial_temp_mcbb(Simulation_Parameters& sim_params){
 			old_E=new_E;
 		}
 	}
-	sim_params.temperature = -(sum/(count*log(ACCEPTANCE_PROB_MC)));
+	sim_params.temperature = -(sum/(count*log(ACCEPTANCE_PROB)));
 
 	delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] sim_params.state, delete[] state_random;
 }
 
-
-
-
-void binary_search_mcbb(Simulation_Parameters& sim_params){
-	int i;
-	double tau_max = sim_params.tau, tau_min, distance_temp;
-
-
-	tau_min = sim_params.tau/TAU_SCALAR_MCBB_TINY;
-	sim_params.tau = (tau_max + tau_min) / 2.0;
-	sim_params.new_distance = sim_params.old_distance;
-
-	if(PRINT) printf("\nUsing binary search method to look for optimal ground state...");
-
-	while((tau_max - tau_min) >BINARY_SEARCH_TAU_LIMIT_MCBB){
-
-		gsl_rng_set(sim_params.rng, 1);
-		calc_initial_temp_mcbb(sim_params);
-
-		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
-			gsl_rng_set(sim_params.rng, sim_params.seed);
-			mcbb_simulation(sim_params);
-
-			sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
-			copy_arrays_mcbb(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*2*NUMBER_OF_BANGS, 0);
-		}
-		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
-
-		distance_temp	= sim_params.new_distance;
-		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
-
-		if(PRINT) print_mc_results(sim_params);
-
-		if(sim_params.new_distance < DISTANCE_LIMIT_MCBB){
-			if(PRINT) printf("\nIn binary_search_mcbb....\nStepping backward....\n");
-			tau_max = sim_params.tau;
-			sim_params.tau = (tau_max+tau_min)/2.0;
-
-		}else{
-			if(PRINT) printf("\nIn binary_search_mcbb....\nStepping forward....\n");
-			sim_params.old_distance = sim_params.new_distance;
-			if(MCBB_DATA) save_mcbb_data_fixed_tau(sim_params);
-
-			tau_min = sim_params.tau;
-			sim_params.tau = (tau_min+tau_max)/2;
-		}
-	}
-	if(PRINT) printf("\nUpper and lower tau are close enough, exiting binary_search_mcbb\n");
-}
-
-
-
-
-void calc_tau_mcbb(Simulation_Parameters& sim_params){
-	double tau_scalar;
-
-
-	if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_MCBB_TINY;
-	else if((abs(sim_params.old_distance - sim_params.new_distance) < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_MCBB_BIG;
-	else tau_scalar = TAU_SCALAR_MCBB;
-
-	sim_params.tau = sim_params.tau*tau_scalar;
-}
 
 
 
@@ -315,9 +253,9 @@ void init_arrays_mcbb(Simulation_Parameters& sim_params, double *j_array,double 
 	j_array[0] = 0, k_array[0] = 0, b_array[0] = 0;
 	j_array[2*NUMBER_OF_BANGS-1] = sim_params.tau, k_array[2*NUMBER_OF_BANGS-1] = sim_params.tau, b_array[2*NUMBER_OF_BANGS-1] = sim_params.tau;
 	for (i=1; i<NUMBER_OF_BANGS*2-1;i++){
-		random_time1 = get_random_double(0,TAU_INIT_MCBB,sim_params.rng);
-	       	random_time2 = get_random_double(0,TAU_INIT_MCBB,sim_params.rng);
-	       	random_time3 = get_random_double(0,TAU_INIT_MCBB,sim_params.rng);
+		random_time1 = get_random_double(0,TAU_INIT,sim_params.rng);
+	       	random_time2 = get_random_double(0,TAU_INIT,sim_params.rng);
+	       	random_time3 = get_random_double(0,TAU_INIT,sim_params.rng);
 		j_array[i] = random_time1, k_array[i] = random_time2, b_array[i] = random_time3;
 	}
 	std::sort(j_array, j_array + NUMBER_OF_BANGS*2), std::sort(k_array, k_array + NUMBER_OF_BANGS*2), std::sort(b_array, b_array + NUMBER_OF_BANGS*2);
@@ -367,7 +305,7 @@ double get_change_mcbb(Simulation_Parameters& sim_params){
 	int sign;
 	double max_change, abs_change, temp_scalar;
 
-	temp_scalar = sim_params.temp_iteration/(double)TEMP_DECAY_ITERATIONS_MCBB;
+	temp_scalar = sim_params.temp_iteration/(double)TEMP_DECAY_ITERATIONS;
 
 	sign       = pow(-1,(int)floor(get_random_double(0,10,sim_params.rng)));
 	max_change = sim_params.tau*(MAX_CHANGE_FRACTION_MCBB*(1-temp_scalar) + MIN_CHANGE_FRACTION_MCBB*temp_scalar);
@@ -386,6 +324,59 @@ void scale_arrays_mcbb(double *j_array, double *k_array, double *b_array, double
 	for(i=0;i<NUMBER_OF_BANGS*2;i++) j_array[i] = j_array[i]*scalar ,k_array[i] = k_array[i]*scalar, b_array[i] = b_array[i]*scalar;
 }
 
+
+
+
+
+
+
+
+void binary_search_mcbb(Simulation_Parameters& sim_params){
+	// int i;
+	// double tau_max = sim_params.tau, tau_min, distance_temp;
+	//
+	//
+	// tau_min = sim_params.tau/TAU_SCALAR_TINY;
+	// sim_params.tau = (tau_max + tau_min) / 2.0;
+	// sim_params.new_distance = sim_params.old_distance;
+	//
+	// if(PRINT) printf("\nUsing binary search method to look for optimal ground state...");
+	//
+	// while((tau_max - tau_min) >BINARY_SEARCH_TAU_LIMIT_MCBB){
+	//
+	// 	gsl_rng_set(sim_params.rng, 1);
+	// 	calc_initial_temp_mcbb(sim_params);
+	//
+	// 	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
+	// 		gsl_rng_set(sim_params.rng, sim_params.seed);
+	// 		mcbb_simulation(sim_params);
+	//
+	// 		sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
+	// 		copy_arrays_mcbb(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*2*NUMBER_OF_BANGS, 0);
+	// 	}
+	// 	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
+	//
+	// 	distance_temp	= sim_params.new_distance;
+	// 	sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
+	//
+	// 	if(PRINT) print_mc_results(sim_params);
+	//
+	// 	if(sim_params.new_distance < DISTANCE_LIMIT){
+	// 		if(PRINT) printf("\nIn binary_search_mcbb....\nStepping backward....\n");
+	// 		tau_max = sim_params.tau;
+	// 		sim_params.tau = (tau_max+tau_min)/2.0;
+	//
+	// 	}else{
+	// 		if(PRINT) printf("\nIn binary_search_mcbb....\nStepping forward....\n");
+	// 		sim_params.old_distance = sim_params.new_distance;
+	// 		if(SAVE_DATA) save_mcbb_data_fixed_tau(sim_params);
+	//
+	// 		tau_min = sim_params.tau;
+	// 		sim_params.tau = (tau_min+tau_max)/2;
+	// 	}
+	// }
+	// if(PRINT) printf("\nUpper and lower tau are close enough, exiting binary_search_mcbb\n");
+}
 
 
 

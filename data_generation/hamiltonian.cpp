@@ -105,7 +105,7 @@ void construct_device_hamiltonian_uniform(Simulation_Parameters sim_params, doub
 void construct_model_hamiltonian(Simulation_Parameters sim_params, double *hamiltonian){
 	int i,ii,j,state,site,neighbor,sign,neighbor_count, *neighbors ;
 	unsigned long long int *v,comparison;
-
+	int T=1, V=1;
 	v         = new unsigned long long int[1]();
 	neighbors = new int[4]();
 

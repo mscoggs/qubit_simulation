@@ -14,30 +14,14 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
 	std::string path = make_path(sim_params, type);
 
 
-	if(sim_params.tau == TAU_INIT_MCBF || sim_params.tau == 0.0){
+	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
-		file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
-		file << "NUM_SEEDS =                  " <<  NUM_SEEDS << "\n";
-		file << "DISTANCE_LIMIT_MCBF =        " <<  DISTANCE_LIMIT_MCBF << "\n";
-		file << "TAU_INIT_MCBF =              " <<  TAU_INIT_MCBF << "\n";
-		file << "MAX_TAU_MCBF =               " <<  MAX_TAU_MCBF << "\n";
-		file << "TAU_SCALAR_MCBF =            " <<  TAU_SCALAR_MCBF << "\n";
-		file << "TAU_SCALAR_MCBF_TINY =       " <<  TAU_SCALAR_MCBF_TINY << "\n";
-		file << "TAU_SCALAR_MCBF_BIG =        " <<  TAU_SCALAR_MCBF_BIG << "\n";
 		file << "MAX_CHANGE_MCBF_INIT =       " <<  MAX_CHANGE_MCBF_INIT << "\n";
 		file << "MIN_CHANGE_MCBF_INIT =       " <<  MIN_CHANGE_MCBF_INIT << "\n";
-		file << "ACCEPTANCE_PROB_MC =         " <<  ACCEPTANCE_PROB_MC << "\n";
-		file << "TEMP_EXP_DECAY_MC =          " <<  TEMP_EXP_DECAY_MC << "\n";
-		file << "BINARY_SEARCH_TAU_LIMIT_MCBF = " <<  BINARY_SEARCH_TAU_LIMIT_MCBF << "\n";
-		file << "RANDOM_STATES_MC =           " <<  RANDOM_STATES_MC  << "\n";
 		file << "SWEEPS_MC =                  " <<  SWEEPS_MC << "\n";
 		file << "TOTAL_STEPS_INIT_MC =        " <<  TOTAL_STEPS_INIT_MC << "\n";
-		file << "TEMP_DECAY_ITERATIONS_MC =   " <<  TEMP_DECAY_ITERATIONS_MC  << "\n";
-		file << "TEMP_DECAY_LIMIT_MC =        " <<  TEMP_DECAY_LIMIT_MC << "\n";
 		file << "MAX_EVOLVE_STEPS_MC =        " <<  MAX_EVOLVE_STEPS_MC << "\n";
-		file << "MAX_TAU_STEPS_MCBF =         " <<  MAX_TAU_STEPS_MCBF << "\n";
-		file << "MAX_BS_STEPS_MCBB =          " <<  MAX_BS_STEPS_MCBB << "\n";
 		file << "ARRAY_SCALAR =               " <<  ARRAY_SCALAR << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
@@ -88,29 +72,13 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 	std::string type = "MCBB";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT_MCBB || sim_params.tau == 0.0){
+	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
-		file << "DIAG =                         " <<  std::boolalpha << DIAG << "\n";
-		file << "NUM_SEEDS =                    " <<  NUM_SEEDS << "\n";
-		file << "DISTANCE_LIMIT_MCBB =          " <<  DISTANCE_LIMIT_MCBB << "\n";
-		file << "TAU_INIT_MCBB =                " <<  TAU_INIT_MCBB << "\n";
-		file << "MAX_TAU_MCBB =                 " <<  MAX_TAU_MCBB << "\n";
-		file << "TAU_SCALAR_MCBB =              " <<  TAU_SCALAR_MCBB << "\n";
-		file << "TAU_SCALAR_MCBB_TINY =         " <<  TAU_SCALAR_MCBB_TINY << "\n";
-		file << "TAU_SCALAR_MCBB_BIG =          " <<  TAU_SCALAR_MCBB_BIG << "\n";
 		file << "MAX_CHANGE_FRACTION_MCBB =     " <<  MAX_CHANGE_FRACTION_MCBB << "\n";
 		file << "MIN_CHANGE_FRACTION_MCBB =     " <<  MIN_CHANGE_FRACTION_MCBB << "\n";
-		file << "ACCEPTANCE_PROB_MCBB =         " <<  ACCEPTANCE_PROB_MCBB << "\n";
-		file << "TEMP_EXP_DECAY_MCBB =          " <<  TEMP_EXP_DECAY_MCBB << "\n";
-		file << "BINARY_SEARCH_TAU_LIMIT_MCBB = " <<  BINARY_SEARCH_TAU_LIMIT_MCBB << "\n";
-		file << "RANDOM_STATES_MCBB =           " <<  RANDOM_STATES_MCBB  << "\n";
 		file << "NUMBER_OF_BANGS =              " <<  NUMBER_OF_BANGS << "\n";
 		file << "SWEEPS_MCBB =                  " <<  SWEEPS_MCBB << "\n";
-		file << "TEMP_DECAY_ITERATIONS_MCBB =   " <<  TEMP_DECAY_ITERATIONS_MCBB  << "\n";
-		file << "TEMP_DECAY_LIMIT_MCBB =        " <<  TEMP_DECAY_LIMIT_MCBB << "\n";
-		file << "MAX_TAU_STEPS_MCBB =           " <<  MAX_TAU_STEPS_MCBB << "\n";
-		file << "MAX_BS_STEPS_MCDB =            " <<  MAX_BS_STEPS_MCDB << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
 	}
@@ -161,27 +129,13 @@ void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params){
 	std::string type = "MCDB";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT_MCDB || sim_params.tau == 0.0){
+	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
-		file << "NUM_SEEDS =                    " <<  NUM_SEEDS << "\n";
-		file << "DISTANCE_LIMIT_MCDB =          " <<  DISTANCE_LIMIT_MCDB << "\n";
-		file << "TAU_INIT_MCDB =                " <<  TAU_INIT_MCDB << "\n";
-		file << "MAX_TAU_MCDB =                 " <<  MAX_TAU_MCDB << "\n";
-		file << "TAU_SCALAR_MCDB =              " <<  TAU_SCALAR_MCDB << "\n";
-		file << "TAU_SCALAR_MCDB_TINY =         " <<  TAU_SCALAR_MCDB_TINY << "\n";
-		file << "TAU_SCALAR_MCDB_BIG =          " <<  TAU_SCALAR_MCDB_BIG << "\n";
-		file << "ACCEPTANCE_PROB_MCDB =         " <<  ACCEPTANCE_PROB_MCDB << "\n";
-		file << "TEMP_EXP_DECAY_MCDB =          " <<  TEMP_EXP_DECAY_MCDB << "\n";
-		file << "BINARY_SEARCH_TAU_LIMIT_MCDB = " <<  BINARY_SEARCH_TAU_LIMIT_MCDB << "\n";
-		file << "RANDOM_STATES_MCDB =           " <<  RANDOM_STATES_MCDB  << "\n";
 		file << "MAX_STEPS_MCDB =               " <<  MAX_STEPS_MCDB << "\n";
 		file << "MIN_STEPS_MCDB =               " <<  MIN_STEPS_MCDB << "\n";
+		file << "STEPS_CRUNCH_MCDB =               " <<  STEPS_CRUNCH_MCDB << "\n";
 		file << "SWEEPS_MCDB =                  " <<  SWEEPS_MCDB << "\n";
-		file << "TEMP_DECAY_ITERATIONS_MCDB =   " <<  TEMP_DECAY_ITERATIONS_MCDB  << "\n";
-		file << "TEMP_DECAY_LIMIT_MCDB =        " <<  TEMP_DECAY_LIMIT_MCDB << "\n";
-		file << "MAX_TAU_STEPS_MCDB =           " <<  MAX_TAU_STEPS_MCDB << "\n";
-		file << "MAX_BS_STEPS_MCDB =            " <<  MAX_BS_STEPS_MCDB << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
 	}
@@ -232,14 +186,14 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	std::string type = "ADIA";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT_ADIA || sim_params.tau == 0.0){
+	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
-		file << "DISTANCE_LIMIT_ADIA =        " <<  DISTANCE_LIMIT_ADIA << "\n";
-		file << "TAU_INIT_ADIA =              " <<  TAU_INIT_ADIA << "\n";
-		file << "MAX_TAU_ADIA =               " <<  MAX_TAU_ADIA << "\n";
-		file << "TAU_SCALAR_ADIA =            " <<  TAU_SCALAR_ADIA << "\n";
+		file << "DISTANCE_LIMIT =        " <<  DISTANCE_LIMIT << "\n";
+		file << "TAU_INIT =              " <<  TAU_INIT << "\n";
+		file << "MAX_TAU =               " <<  MAX_TAU << "\n";
+		file << "TAU_SCALAR =            " <<  TAU_SCALAR << "\n";
 		file << "TIME_STEP_ADIA =             " <<  TIME_STEP_ADIA << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
@@ -301,6 +255,20 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file << "DEVICE_DIMENSION = " << DEVICE_DIMENSION << "\n";
 	file << "MAX_PARAM =        " << MAX_PARAM << "\n";
 	file << "MIN_PARAM =        " << MIN_PARAM << "\n";
+	file << "MIN_PARAM =        " << MIN_PARAM << "\n";
+	file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
+	file << "NUM_SEEDS =                  " <<  NUM_SEEDS << "\n";
+	file << "DISTANCE_LIMIT =        " <<  DISTANCE_LIMIT << "\n";
+	file << "TAU_INIT =              " <<  TAU_INIT << "\n";
+	file << "MAX_TAU =               " <<  MAX_TAU << "\n";
+	file << "TAU_SCALAR =            " <<  TAU_SCALAR << "\n";
+	file << "TAU_SCALAR_TINY =       " <<  TAU_SCALAR_TINY << "\n";
+	file << "TAU_SCALAR_BIG =        " <<  TAU_SCALAR_BIG << "\n";
+	file << "ACCEPTANCE_PROB =         " <<  ACCEPTANCE_PROB << "\n";
+	file << "TEMP_EXP_DECAY =          " <<  TEMP_EXP_DECAY << "\n";
+	file << "TEMP_DECAY_ITERATIONS =   " <<  TEMP_DECAY_ITERATIONS  << "\n";
+	file << "TEMP_DECAY_LIMIT =        " <<  TEMP_DECAY_LIMIT << "\n";
+	file << "RANDOM_STATES =           " <<  RANDOM_STATES  << "\n";
 	file << "END_PARAMETERS\n";
 	file.close();
 }

@@ -37,7 +37,7 @@ void evolve_mcbb(Simulation_Parameters& sim_params, double *j_array, double *k_a
 
 
 /**
-    Calculates the initial temperature that will start the monte carlo simulation with roughly an acceptance rate of ACCEPTANCE_PROB_MCBB (in parameters.h).
+    Calculates the initial temperature that will start the monte carlo simulation with roughly an acceptance rate of ACCEPTANCE_PROB (in parameters.h).
 
     @param sim_params contains all of the variables for the simulation
 */
@@ -53,12 +53,6 @@ void calc_initial_temp_mcbb(Simulation_Parameters& sim_params);
 void binary_search_mcbb(Simulation_Parameters& sim_params);
 
 
-/**
-    Calculates the tau for the next mcbb_simulation
-
-    @param sim_params contains all of the variables for the simulation
-*/
-void calc_tau_mcbb(Simulation_Parameters& sim_params);
 
 
 /**

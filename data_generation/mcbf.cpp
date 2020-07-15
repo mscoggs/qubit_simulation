@@ -19,12 +19,12 @@ void mcbf_method(Simulation_Parameters& sim_params){
 
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.initial_E -sim_params.ground_E < 0.001){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
-		if(MCBF_DATA) save_mcbf_data_fixed_tau(sim_params);
+		if(SAVE_DATA) save_mcbf_data_fixed_tau(sim_params);
 		sim_params.clear_mcbf_params();
 		return;
 	}
 
-	while(sim_params.tau<MAX_TAU_MCBF){
+	while(sim_params.tau<MAX_TAU){
 
 		gsl_rng_set(sim_params.rng, 1);
 		calc_initial_temp_mcbf(sim_params);
@@ -41,14 +41,14 @@ void mcbf_method(Simulation_Parameters& sim_params){
 		if(!update_distances(sim_params)) continue;
 
 		if(PRINT) print_mc_results(sim_params);
-		if(MCBF_DATA){
+		if(SAVE_DATA){
 			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
 		       	save_mcbf_data_fixed_tau(sim_params);
 		}
 
-		if(sim_params.new_distance < DISTANCE_LIMIT_MCBF) break;
+		if(sim_params.new_distance < DISTANCE_LIMIT) break;
 		else{
-			calc_tau_mcbf(sim_params);
+			calc_tau(sim_params);
 			calc_total_steps_mcbf(sim_params);
 			sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
 		}
@@ -80,7 +80,7 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 
 	if(PRINT) print_mcbf_info(sim_params);
 
-	for (i=0;i<TEMP_DECAY_ITERATIONS_MC;i++){
+	for (i=0;i<TEMP_DECAY_ITERATIONS;i++){
 
 		proposal_accepted = 0,proposal_count = 0;
 
@@ -109,12 +109,12 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 
 		if(PRINT) printf("           Best Expectation:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_E,acceptance_rate,proposal_accepted, proposal_count);
 
-		if(poor_acceptance_streak>TEMP_DECAY_LIMIT_MC){
-			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY ITERATIONS, TERMINATING\n", TEMP_DECAY_LIMIT_MC);
+		if(poor_acceptance_streak>TEMP_DECAY_LIMIT){
+			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY ITERATIONS, TERMINATING\n", TEMP_DECAY_LIMIT);
 			break;
 		}
 
-		sim_params.temperature=sim_params.temperature*TEMP_EXP_DECAY_MC;
+		sim_params.temperature=sim_params.temperature*TEMP_EXP_DECAY;
 	}
 	delete[] j_array, delete[] k_array, delete[] b_array, delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] sim_params.state;
 }
@@ -172,9 +172,9 @@ void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 	state_random     = new double[2*sim_params.N]();
 
 
-	if(PRINT) printf("\n\n\n\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES_MC);
+	if(PRINT) printf("\n\n\n\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
 
-	for (i=0;i<RANDOM_STATES_MC;i++){
+	for (i=0;i<RANDOM_STATES;i++){
 		for (j=0; j<sim_params.N*2;j++) state_random[j] =0.0;
 		start_state_index = (int) floor(get_random_double(0,sim_params.N,sim_params.rng));
 		state_random[start_state_index*2] = 1;
@@ -197,74 +197,12 @@ void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 			old_E=new_E;
 		}
 	}
-	sim_params.temperature = -(sum/(count*log(ACCEPTANCE_PROB_MC)));
+	sim_params.temperature = -(sum/(count*log(ACCEPTANCE_PROB)));
 
 	delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] state_random, delete[] sim_params.state;
 }
 
 
-
-
-void binary_search_mcbf(Simulation_Parameters& sim_params){
-	int i;
-	double tau_max = sim_params.tau, tau_min;
-
-	tau_min = sim_params.tau/TAU_SCALAR_MCBF_TINY;
-	sim_params.tau = (tau_max + tau_min) / 2.0;
-	sim_params.new_distance = sim_params.old_distance;
-
-	if(PRINT) printf("\nUsing binary search method to look for optimal ground state...");
-
-	while((tau_max - tau_min) >BINARY_SEARCH_TAU_LIMIT_MCBF){
-
-		gsl_rng_set(sim_params.rng, 1);
-		calc_initial_temp_mcbf(sim_params);
-
-		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
-			gsl_rng_set(sim_params.rng, sim_params.seed);
-			mcbf_simulation(sim_params);
-
-			sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
-			copy_arrays_mcbf(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*NUMBER_OF_SITES*sim_params.total_steps, 0);
-		}
-		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
-
-		sim_params.old_distance = sim_params.new_distance;
-		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
-
-		if(PRINT) print_mc_results(sim_params);
-
-		if(sim_params.new_distance < DISTANCE_LIMIT_MCBF){
-			if(PRINT) printf("\nIn binary_search_mcbf....\nStepping backward....\n");
-			tau_max = sim_params.tau;
-			sim_params.tau = (tau_max+tau_min)/2.0;
-			sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
-
-		}else{
-			if(PRINT) printf("\nIn binary_search_mcbf....\nStepping forward....\n");
-			tau_min = sim_params.tau;
-			sim_params.tau = (tau_min+tau_max)/2;
-			calc_total_steps_mcbf(sim_params);
-			sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
-			if(MCBF_DATA) save_mcbf_data_fixed_tau(sim_params);
-		}
-	}
-	if(PRINT) printf("\nUpper and lower tau are close enough, exiting binary_search_mcbf\n");
-}
-
-
-
-
-void calc_tau_mcbf(Simulation_Parameters& sim_params){
-	double tau_scalar;
-
-
-	if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_MCBF_TINY;
-	else if((abs(sim_params.old_distance - sim_params.new_distance) < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_MCBF_BIG;
-	else tau_scalar = TAU_SCALAR_MCBF;
-
-	sim_params.tau = sim_params.tau*tau_scalar;
-}
 
 
 
@@ -284,9 +222,9 @@ void init_arrays_mcbf(Simulation_Parameters& sim_params, double *j_array, double
 
 	if(UNIFORM_SITES){
 		for (i=0; i<sim_params.total_steps;i++){
-			random_val1 = get_random_double(LOWJ,UPJ,sim_params.rng);
-		       	random_val2 = get_random_double(LOWK,UPK,sim_params.rng);
-		       	random_val3 = get_random_double(LOWB,UPB,sim_params.rng);
+			random_val1 = get_random_double(MIN_PARAM,MAX_PARAM,sim_params.rng);
+		       	random_val2 = get_random_double(MIN_PARAM,MAX_PARAM,sim_params.rng);
+		       	random_val3 = get_random_double(MIN_PARAM,MAX_PARAM,sim_params.rng);
 			for (j=0; j<NUMBER_OF_SITES*2; j++){
 			       	j_array[i*NUMBER_OF_SITES*2+j] = random_val2;
 			       	k_array[i*NUMBER_OF_SITES*2+j] = random_val3;
@@ -296,10 +234,10 @@ void init_arrays_mcbf(Simulation_Parameters& sim_params, double *j_array, double
 	}else{
 		for (i=0; i<sim_params.total_steps;i++){
 			for (j=0; j<NUMBER_OF_SITES*2; j++){
-			       	j_array[i*NUMBER_OF_SITES*2+j] = get_random_double(LOWJ,UPJ,sim_params.rng);
-			       	k_array[i*NUMBER_OF_SITES*2+j] = get_random_double(LOWK,UPK,sim_params.rng);
+			       	j_array[i*NUMBER_OF_SITES*2+j] = get_random_double(MIN_PARAM,MAX_PARAM,sim_params.rng);
+			       	k_array[i*NUMBER_OF_SITES*2+j] = get_random_double(MIN_PARAM,MAX_PARAM,sim_params.rng);
 			}
-			for (j=0; j<NUMBER_OF_SITES; j++) b_array[i*NUMBER_OF_SITES+j]= get_random_double(LOWB,UPB,sim_params.rng);
+			for (j=0; j<NUMBER_OF_SITES; j++) b_array[i*NUMBER_OF_SITES+j]= get_random_double(MIN_PARAM,MAX_PARAM,sim_params.rng);
 		}
 	}
 }
@@ -321,7 +259,7 @@ double get_change_mcbf(Simulation_Parameters& sim_params){
 	double max_change, abs_change, temp_scalar;
 
   sign       = pow(-1,(int)floor(get_random_double(0,10,sim_params.rng)));
-	max_change = MAX_CHANGE_MCBF_INIT * (TAU_INIT_MCBF/sim_params.tau);
+	max_change = MAX_CHANGE_MCBF_INIT * (TAU_INIT/sim_params.tau);
 	abs_change = get_random_double(0,max_change, sim_params.rng);
 
 	return sign*abs_change;
@@ -357,9 +295,9 @@ void change_row_mcbf(double *j_array,double *k_array,double *b_array, int row, d
 	int i;
 
 
-	if(k) for (i=offset; i<NUMBER_OF_SITES*2; i+=jump){if ((LOWK < k_array[NUMBER_OF_SITES*2*row+i] + change) &&  (k_array[NUMBER_OF_SITES*2*row+i] + change < UPK)) k_array[NUMBER_OF_SITES*2*row+i] += change;}
-	if(j) for (i=offset; i<NUMBER_OF_SITES*2; i+=jump){if ((LOWJ < j_array[NUMBER_OF_SITES*2*row+i] + change) && (j_array[NUMBER_OF_SITES*2*row+i] + change < UPJ)) j_array[NUMBER_OF_SITES*2*row+i] += change;}
-	if(b) for (i=offset; i<NUMBER_OF_SITES; i+=jump){if ((LOWB < b_array[NUMBER_OF_SITES*row+i] + change) && (b_array[NUMBER_OF_SITES*row+i] + change < UPB)) b_array[NUMBER_OF_SITES*row+i] += change;}
+	if(k) for (i=offset; i<NUMBER_OF_SITES*2; i+=jump){if ((MIN_PARAM < k_array[NUMBER_OF_SITES*2*row+i] + change) &&  (k_array[NUMBER_OF_SITES*2*row+i] + change < MAX_PARAM)) k_array[NUMBER_OF_SITES*2*row+i] += change;}
+	if(j) for (i=offset; i<NUMBER_OF_SITES*2; i+=jump){if ((MIN_PARAM < j_array[NUMBER_OF_SITES*2*row+i] + change) && (j_array[NUMBER_OF_SITES*2*row+i] + change < MAX_PARAM)) j_array[NUMBER_OF_SITES*2*row+i] += change;}
+	if(b) for (i=offset; i<NUMBER_OF_SITES; i+=jump){if ((MIN_PARAM < b_array[NUMBER_OF_SITES*row+i] + change) && (b_array[NUMBER_OF_SITES*row+i] + change < MAX_PARAM)) b_array[NUMBER_OF_SITES*row+i] += change;}
 }
 
 
@@ -368,9 +306,9 @@ void change_col_mcbf(int total_steps,double *j_array,double *k_array,double *b_a
 	int i;
 
 
-	if(j) for (i=offset; i<total_steps; i+=jump){if ((LOWJ < j_array[NUMBER_OF_SITES*2*i+col] + change) && (j_array[NUMBER_OF_SITES*2*i+col] + change < UPJ)) j_array[NUMBER_OF_SITES*2*i+col] += change;}
-	if(k) for (i=offset; i<total_steps; i+=jump){if ((LOWK < k_array[NUMBER_OF_SITES*2*i+col] + change) && (k_array[NUMBER_OF_SITES*2*i+col] + change  < UPK)) k_array[NUMBER_OF_SITES*2*i+col] += change;}
-	if(b) for (i=offset; i<total_steps; i+=jump){if ((LOWB < b_array[NUMBER_OF_SITES*i+(int)floor(col/2.0)] + change) && (b_array[NUMBER_OF_SITES*i+(int)floor(col/2.0)] + change < UPB)) b_array[NUMBER_OF_SITES*i+(int)floor(col/2.0)] += change;}
+	if(j) for (i=offset; i<total_steps; i+=jump){if ((MIN_PARAM < j_array[NUMBER_OF_SITES*2*i+col] + change) && (j_array[NUMBER_OF_SITES*2*i+col] + change < MAX_PARAM)) j_array[NUMBER_OF_SITES*2*i+col] += change;}
+	if(k) for (i=offset; i<total_steps; i+=jump){if ((MIN_PARAM < k_array[NUMBER_OF_SITES*2*i+col] + change) && (k_array[NUMBER_OF_SITES*2*i+col] + change  < MAX_PARAM)) k_array[NUMBER_OF_SITES*2*i+col] += change;}
+	if(b) for (i=offset; i<total_steps; i+=jump){if ((MIN_PARAM < b_array[NUMBER_OF_SITES*i+(int)floor(col/2.0)] + change) && (b_array[NUMBER_OF_SITES*i+(int)floor(col/2.0)] + change < MAX_PARAM)) b_array[NUMBER_OF_SITES*i+(int)floor(col/2.0)] += change;}
 }
 
 
@@ -378,28 +316,82 @@ void change_col_mcbf(int total_steps,double *j_array,double *k_array,double *b_a
 void change_single_mcbf(double *j_array,double *k_array,double *b_array, int row,int col, double change){
 
 
-	if ((LOWJ < j_array[NUMBER_OF_SITES*2*row+col] + change) && (j_array[NUMBER_OF_SITES*2*row+col] + change < UPJ)) j_array[NUMBER_OF_SITES*2*row+col] += change;
- 	if ((LOWK < k_array[NUMBER_OF_SITES*2*row+col] + change) && (k_array[NUMBER_OF_SITES*2*row+col] + change < UPK)) k_array[NUMBER_OF_SITES*2*row+col] += change;
-	if ((LOWB < b_array[NUMBER_OF_SITES*row+(int)floor(col/2.0)] + change) && (b_array[NUMBER_OF_SITES*row+(int)floor(col/2.0)] + change  < UPB)) b_array[NUMBER_OF_SITES*row+(int)floor(col/2.0)] += change;
+	if ((MIN_PARAM < j_array[NUMBER_OF_SITES*2*row+col] + change) && (j_array[NUMBER_OF_SITES*2*row+col] + change < MAX_PARAM)) j_array[NUMBER_OF_SITES*2*row+col] += change;
+ 	if ((MIN_PARAM < k_array[NUMBER_OF_SITES*2*row+col] + change) && (k_array[NUMBER_OF_SITES*2*row+col] + change < MAX_PARAM)) k_array[NUMBER_OF_SITES*2*row+col] += change;
+	if ((MIN_PARAM < b_array[NUMBER_OF_SITES*row+(int)floor(col/2.0)] + change) && (b_array[NUMBER_OF_SITES*row+(int)floor(col/2.0)] + change  < MAX_PARAM)) b_array[NUMBER_OF_SITES*row+(int)floor(col/2.0)] += change;
 }
 
 
 
 
 void scale_arrays_mcbf(double* j_array, double* k_array,double* b_array, int total_steps){
-	int i, j;
+	// int i, j;
+	//
+	//
+	// for(i=total_steps;i>0;i--){
+	// 	for(j=0;j<NUMBER_OF_SITES*2;j++){
+	// 		j_array[NUMBER_OF_SITES*2*(ARRAY_SCALAR*i-1)+j] = j_array[NUMBER_OF_SITES*2*(i-1)+j];
+	// 		j_array[NUMBER_OF_SITES*2*(ARRAY_SCALAR*i-2)+j] = j_array[NUMBER_OF_SITES*2*(i-1)+j];
+	// 		k_array[NUMBER_OF_SITES*2*(ARRAY_SCALAR*i-1)+j] = k_array[NUMBER_OF_SITES*2*(i-1)+j];
+	// 		k_array[NUMBER_OF_SITES*2*(ARRAY_SCALAR*i-2)+j] = k_array[NUMBER_OF_SITES*2*(i-1)+j];
+	// 	}
+	// 	for(j=0;j<NUMBER_OF_SITES;j++){
+	// 		b_array[NUMBER_OF_SITES*(ARRAY_SCALAR*i-1)+j] = 	b_array[NUMBER_OF_SITES*(i-1)+j];
+	// 		b_array[NUMBER_OF_SITES*(ARRAY_SCALAR*i-2)+j] = 	b_array[NUMBER_OF_SITES*(i-1)+j];
+	// 	}
+	// }
+}
 
 
-	for(i=total_steps;i>0;i--){
-		for(j=0;j<NUMBER_OF_SITES*2;j++){
-			j_array[NUMBER_OF_SITES*2*(ARRAY_SCALAR*i-1)+j] = j_array[NUMBER_OF_SITES*2*(i-1)+j];
-			j_array[NUMBER_OF_SITES*2*(ARRAY_SCALAR*i-2)+j] = j_array[NUMBER_OF_SITES*2*(i-1)+j];
-			k_array[NUMBER_OF_SITES*2*(ARRAY_SCALAR*i-1)+j] = k_array[NUMBER_OF_SITES*2*(i-1)+j];
-			k_array[NUMBER_OF_SITES*2*(ARRAY_SCALAR*i-2)+j] = k_array[NUMBER_OF_SITES*2*(i-1)+j];
-		}
-		for(j=0;j<NUMBER_OF_SITES;j++){
-			b_array[NUMBER_OF_SITES*(ARRAY_SCALAR*i-1)+j] = 	b_array[NUMBER_OF_SITES*(i-1)+j];
-			b_array[NUMBER_OF_SITES*(ARRAY_SCALAR*i-2)+j] = 	b_array[NUMBER_OF_SITES*(i-1)+j];
-		}
-	}
+
+
+
+
+
+
+void binary_search_mcbf(Simulation_Parameters& sim_params){
+	// int i;
+	// double tau_max = sim_params.tau, tau_min;
+	//
+	// tau_min = sim_params.tau/TAU_SCALAR_TINY;
+	// sim_params.tau = (tau_max + tau_min) / 2.0;
+	// sim_params.new_distance = sim_params.old_distance;
+	//
+	// if(PRINT) printf("\nUsing binary search method to look for optimal ground state...");
+	//
+	// while((tau_max - tau_min) >BINARY_SEARCH_TAU_LIMIT_MCBF){
+	//
+	// 	gsl_rng_set(sim_params.rng, 1);
+	// 	calc_initial_temp_mcbf(sim_params);
+	//
+	// 	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
+	// 		gsl_rng_set(sim_params.rng, sim_params.seed);
+	// 		mcbf_simulation(sim_params);
+	//
+	// 		sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
+	// 		copy_arrays_mcbf(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*NUMBER_OF_SITES*sim_params.total_steps, 0);
+	// 	}
+	// 	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
+	//
+	// 	sim_params.old_distance = sim_params.new_distance;
+	// 	sim_params.new_distance = calc_distance(sim_params.intial_state, sim_params.state);
+	//
+	// 	if(PRINT) print_mc_results(sim_params);
+	//
+	// 	if(sim_params.new_distance < DISTANCE_LIMIT){
+	// 		if(PRINT) printf("\nIn binary_search_mcbf....\nStepping backward....\n");
+	// 		tau_max = sim_params.tau;
+	// 		sim_params.tau = (tau_max+tau_min)/2.0;
+	// 		sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
+	//
+	// 	}else{
+	// 		if(PRINT) printf("\nIn binary_search_mcbf....\nStepping forward....\n");
+	// 		tau_min = sim_params.tau;
+	// 		sim_params.tau = (tau_min+tau_max)/2;
+	// 		calc_total_steps_mcbf(sim_params);
+	// 		sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
+	// 		if(SAVE_DATA) save_mcbf_data_fixed_tau(sim_params);
+	// 	}
+	// }
+	// if(PRINT) printf("\nUpper and lower tau are close enough, exiting binary_search_mcbf\n");
 }

@@ -79,7 +79,8 @@ void Simulation_Parameters::init_mcbb_params(){
 	k_best  	  = new double[2*NUMBER_OF_BANGS]();
 	b_best 		  = new double[2*NUMBER_OF_BANGS]();
 
-	tau		  = TAU_INIT_MCBB;
+	tau		  = TAU_INIT;
+	tau_previous		  = tau;
 	old_distance      = 1;
 	new_distance      = 1;
 	temp_iteration    = 0;
@@ -124,7 +125,8 @@ void Simulation_Parameters::init_mcdb_params(){
 	k_best_scaled 	  = new double[max_steps_mcdb]();
 	b_best_scaled	  = new double[max_steps_mcdb]();
 
-	tau		            = TAU_INIT_MCDB;
+	tau		            = TAU_INIT;
+	tau_previous		  = tau;
 	total_steps       = MIN_STEPS_MCDB;
 	time_step         = tau/total_steps;
 	old_distance      = 1;
@@ -172,7 +174,8 @@ void Simulation_Parameters::init_mcbf_params(){
 	k_best            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
 	b_best            = new double[NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
 
-	tau               = TAU_INIT_MCBF;
+	tau               = TAU_INIT;
+	tau_previous		  = tau;
 	total_steps       = TOTAL_STEPS_INIT_MC;
 	time_step         = tau/total_steps;
 	old_distance      = 1;

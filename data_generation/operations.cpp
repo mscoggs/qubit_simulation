@@ -152,6 +152,22 @@ double calc_distance(double initial, double target, double current){
 }
 
 
+void calc_tau(Simulation_Parameters& sim_params){
+	double tau_scalar;
+	if(sim_params.tau == TAU_INIT){
+		tau_scalar = 0.6/(1-sim_params.new_distance);
+		if(tau_scalar > 2*TAU_SCALAR_BIG) tau_scalar = 2*TAU_SCALAR_BIG;
+		if(tau_scalar < TAU_SCALAR) tau_scalar = TAU_SCALAR;
+	}
+	else if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_TINY;
+	else if((abs(sim_params.old_distance - sim_params.new_distance) < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_BIG;
+	else tau_scalar = TAU_SCALAR;
+
+	sim_params.tau_previous = sim_params.tau;
+	sim_params.tau = sim_params.tau*tau_scalar;
+}
+
+
 
 void construct_lattice(int lattice[NX][NY]){
 	int x,y;

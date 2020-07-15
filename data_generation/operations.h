@@ -112,6 +112,13 @@ double calc_distance(double initial, double target, double current);
 
 
 /**
+    Calculates the tau for the next simulation
+
+    @param sim_params contains all of the variables for the simulation
+*/
+void calc_tau(Simulation_Parameters& sim_params);
+
+/**
 		Build a NX*NY lattice, with sites 1 through NX*NY listed in a snaking pattern
 
 		@param lattice the empty lattice to be filled with site numbers
