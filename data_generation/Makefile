@@ -18,11 +18,16 @@ submit:
 	cluster/make_submit
 	condor_submit submit_file.txt
 
-compile_gap:
-	$(CC) -o gap gap.cpp hamiltonian.cpp check.cpp export_data.cpp operations.cpp parameters.cpp print.cpp linear_algebra.cpp -lgsl -llapack -lblas -std=gnu++11
+submit_unfinished:
+	python cluster/make_submit_unfinished.py
+	condor_submit submit_file.txt
 
 submit_q:
 	$(CC) -o q_cluster/make_q_submits q_cluster/make_q_submits.cpp -std=gnu++11
 	q_cluster/make_q_submits 10
 	chmod 700 submit_q_file.txt
 	./submit_q_file.txt
+
+
+compile_gap:
+	$(CC) -o gap gap.cpp hamiltonian.cpp check.cpp export_data.cpp operations.cpp parameters.cpp print.cpp linear_algebra.cpp -lgsl -llapack -lblas -std=gnu++11
