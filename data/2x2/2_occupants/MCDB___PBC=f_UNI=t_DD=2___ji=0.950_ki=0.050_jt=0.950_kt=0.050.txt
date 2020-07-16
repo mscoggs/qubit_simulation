@@ -1,8 +1,8 @@
 START_PARAMETERS
-NUM_SEEDS =                    4
-DISTANCE_LIMIT_MCDB =          0.1
+NUM_SEEDS =                    3
+DISTANCE_LIMIT_MCDB =          0.01
 TAU_INIT_MCDB =                0.05
-MAX_TAU_MCDB =                 1
+MAX_TAU_MCDB =                 0.9
 TAU_SCALAR_MCDB =              1.1
 TAU_SCALAR_MCDB_TINY =         1.05
 TAU_SCALAR_MCDB_BIG =          1.2
@@ -14,8 +14,8 @@ MAX_STEPS_MCDB =               256
 MIN_STEPS_MCDB =               4
 SWEEPS_MCDB =                  25
 TEMP_DECAY_ITERATIONS_MCDB =   20
-TEMP_DECAY_LIMIT_MCDB =        7
-MAX_TAU_STEPS_MCDB =           62
+TEMP_DECAY_LIMIT_MCDB =        5
+MAX_TAU_STEPS_MCDB =           60
 MAX_BS_STEPS_MCDB =            8
 GROUND_E =                   -2.78887
 INITIAL_E =                  -2.78887
@@ -33,13 +33,13 @@ MAX_PARAM =        1
 MIN_PARAM =        0
 END_PARAMETERS
 ##############################################################################
-clock_duration  =         4.66731e-310
+clock_duration  =         4.68374e-310
 tau =               0
 total_steps =       4
 time_step =         0.0125
 best_E =            0
 distance =          0
-j_protocol =  [[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],]
-k_protocol =  [[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],]
-b_protocol =  [[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],]
-best_E_fixed_tau =   [0, 0, 0, 0, ]
+j_protocol =  [[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],]
+k_protocol =  [[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],]
+b_protocol =  [[0, 0, 0, 0, ],[0, 0, 0, 0, ],[0, 0, 0, 0, ],]
+best_E_fixed_tau =   [0, 0, 0, ]
