@@ -1,6 +1,9 @@
 import os, glob, re, numpy as np
 from shutil import copyfile
-dir_name = ["4x4/2_occupants/","4x4/3_occupants/"]
+#dir_name = ["4x4/2_occupants/","4x4/3_occupants/"] 
+dir_name = ["3x3/2_occupants/","3x3/3_occupants/", "3x3/4_occupants/"]
+#dir_name = ["2x2/2_occupants/"]
+
 
 total_files, finished_files, unfinished_files, unfinished_taus, unfinished_dist = 0,0,[],[],[]
 
@@ -46,7 +49,6 @@ print("average distance for unfinished files: ", average_dist)
 
 for dir_ in dir_name:
     unfinished_parameters = open("unfinished_files/"+dir_+"unfinished_parameters.txt", "w")
-    unfinished_parameters.write("ji ki jt kt\n")
 
     for fname in glob.glob("unfinished_files/"+dir_ +"MC*.txt"):
 

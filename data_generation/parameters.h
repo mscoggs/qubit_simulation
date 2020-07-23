@@ -34,17 +34,17 @@ const int    NUMBER_OF_SITES       = NX*NY;
 
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = false;
-const int    NUM_SEEDS             = 1;
-const double DISTANCE_LIMIT        = 0.05;
-const double TAU_INIT              = 0.5;
-const double MAX_TAU               = 5.0;
-const double TAU_SCALAR            = 1.3;
-const double TAU_SCALAR_TINY       = 1.1;
-const double TAU_SCALAR_BIG        = 1.5;
-const double ACCEPTANCE_PROB       = 0.80;
+const int    NUM_SEEDS             = 3;
+const double DISTANCE_LIMIT        = 0.10;
+const double TAU_INIT              = 0.1;
+const double MAX_TAU               = 1.5;
+const double TAU_SCALAR            = 1.1;
+const double TAU_SCALAR_TINY       = 1.05;
+const double TAU_SCALAR_BIG        = 1.2;
+const double ACCEPTANCE_PROB       = 0.85;
 const double TEMP_EXP_DECAY        = 0.80;
-const int    TEMP_DECAY_LIMIT      = 7;
-const int    TEMP_DECAY_ITERATIONS = 10;
+const int    TEMP_DECAY_LIMIT      = 10;
+const int    TEMP_DECAY_ITERATIONS = 25;
 const int    RANDOM_STATES         = 3;
 
 
@@ -56,8 +56,8 @@ const int    SWEEPS_MCBB              = 30;
 
 /*MCDB METHOD PARAMETERS*/
 const int    MAX_STEPS_MCDB    = 128;
-const int    MIN_STEPS_MCDB    = 8;
-const int    SWEEPS_MCDB       = 100;
+const int    MIN_STEPS_MCDB    = 4;
+const int    SWEEPS_MCDB       = 150;
 const double STEPS_CRUNCH_MCDB = 1.0;
 
 /*MCBF METHOD PARAMETERS*/
@@ -89,7 +89,7 @@ const double TIME_STEP_ADIA = 1/1000.0;
 
 //Tests and debugging help
 const bool CHECK            = false;
-const bool PRINT            = true;
+const bool PRINT            = false;
 const bool PRINT_COMMUTATOR = false;
 
 
