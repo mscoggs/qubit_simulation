@@ -20,7 +20,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 	sim_params.init_mcdb_params();
 
-	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.state_overlap_squared > 0.99){
+	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.init_target_dot_squared > 0.99){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
 		if(PRINT) print_mcdb_info(sim_params);
 		if(SAVE_DATA) save_mcdb_data_fixed_tau(sim_params);
@@ -46,15 +46,12 @@ void mcdb_method(Simulation_Parameters& sim_params){
 				mcdb_simulation(sim_params);
 
 				sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
+				std::memcpy(&sim_params.evolved_state_fixed_tau[(sim_params.seed-1)*2*sim_params.N],sim_params.best_evolved_state, 2*sim_params.N*sizeof(double));
 				copy_arrays_mcdb(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*sim_params.total_steps, 0);
 			}
 
-			for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
-				if(sim_params.E_array_fixed_tau[sim_params.seed-1] <= sim_params.best_E){
-				       	sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
-					copy_arrays_mcdb(sim_params,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,  0,(sim_params.seed-1)*sim_params.total_steps);
-				}
-			}
+			get_best_seed(sim_params);
+			for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] <= sim_params.best_E) copy_arrays_mcdb(sim_params,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,  0,(sim_params.seed-1)*sim_params.total_steps);
 
 			if(sim_params.total_steps == MAX_STEPS_MCDB) break;
 
@@ -101,7 +98,7 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 	else copy_arrays_mcdb(sim_params,sim_params.j_best,sim_params.k_best,sim_params.b_best, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled,0,0);
 	copy_arrays_mcdb(sim_params, j_array, k_array, b_array,sim_params.j_best,sim_params.k_best,sim_params.b_best,0,0);//a temporary array, used in the undoing of the changes
 
-	std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
+	std::memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));
 	evolve_mcdb(sim_params, j_array,k_array,b_array,0);
 	sim_params.best_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);
 	old_E = sim_params.best_E;
@@ -128,7 +125,7 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 
 			new_E = cost(sim_params.N,sim_params.state, sim_params.ham_target);
 
-			if (new_E<sim_params.best_E) sim_params.best_E=new_E, old_E=new_E,  copy_arrays_mcdb(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), poor_acceptance_streak = 0;
+			if (new_E<sim_params.best_E) sim_params.best_E=new_E, old_E=new_E,  copy_arrays_mcdb(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), std::memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double)), poor_acceptance_streak = 0;
 			else if (new_E<=old_E) old_E=new_E;
 			else if (get_random_double(0,1,sim_params.rng)<exp(-(new_E-old_E)/(sim_params.temperature))) old_E=new_E, proposal_accepted++, proposal_count++;
 			else copy_arrays_mcdb(sim_params, j_array, k_array, b_array,  j_temp, k_temp, b_temp, 0,0), std::memcpy(sim_params.saved_states, temp_saved_states,sim_params.total_steps*2*sim_params.N*sizeof(double)), proposal_count++;//undoing the change
@@ -172,7 +169,7 @@ void evolve_mcdb(Simulation_Parameters& sim_params, double *j_array, double *k_a
 
 
 void calc_initial_temp_mcdb(Simulation_Parameters& sim_params){
-	int i, j, random_time_index, start_state_index, count=0;
+	int i, j, random_time_index, init_state_index, count=0;
 	double *state_random, *j_temp, *k_temp, *b_temp, sum=0, change, old_E, new_E;
 
 	j_temp           = new double[sim_params.total_steps]();
@@ -185,8 +182,8 @@ void calc_initial_temp_mcdb(Simulation_Parameters& sim_params){
 
 	for (j=0;j<RANDOM_STATES;j++){
 		for (i=0; i<sim_params.N*2;i++) state_random[i] =0.0;
-		start_state_index = floor(get_random_double(0,sim_params.N,sim_params.rng));
-		state_random[start_state_index*2] = 1;
+		init_state_index = floor(get_random_double(0,sim_params.N,sim_params.rng));
+		state_random[init_state_index*2] = 1;
 		std::memcpy(sim_params.state,state_random, 2*sim_params.N*sizeof(double));
 
 		init_arrays_mcdb(sim_params, j_temp, k_temp, b_temp);
@@ -263,14 +260,14 @@ double change_array_mcdb(Simulation_Parameters& sim_params, double *j_array, dou
 	//if(i%3 == 2) pointer = b_array;
 
 	//rerolling the index if our current index has similar neighbors
-	
+
 	if(sim_params.total_steps == MAX_STEPS_MCDB and random_time_index > 0 and random_time_index < sim_params.total_steps-1){
 		if(fmod(pointer[random_time_index] + pointer[random_time_index+1] + pointer[random_time_index-1], 3.0) <0.01){
 			random_time_index = (int)floor(get_random_double(0, sim_params.total_steps, sim_params.rng));
 		}
 	}
-	
-	
+
+
 	pointer[random_time_index] =  fmod(pointer[random_time_index] + 1.0, 2.0);
 	if(pointer[random_time_index]<0.01 and pointer2[random_time_index] <0.01) pointer[random_time_index] = 1;
 

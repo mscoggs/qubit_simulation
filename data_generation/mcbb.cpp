@@ -39,10 +39,11 @@ void mcbb_method(Simulation_Parameters& sim_params){
 			mcbb_simulation(sim_params);
 
 			sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
+			std::memcpy(&sim_params.evolved_state_fixed_tau[(sim_params.seed-1)*2*sim_params.N],sim_params.best_evolved_state, 2*sim_params.N*sizeof(double));
 			copy_arrays_mcbb(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*2*NUMBER_OF_BANGS, 0);
 		}
-		for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E) sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
 
+		get_best_seed(sim_params);
 		if(!update_distances(sim_params)) continue;
 
 		if(PRINT) print_mc_results(sim_params);
@@ -74,7 +75,7 @@ void mcbb_simulation(Simulation_Parameters& sim_params){
 	sim_params.state = new double[2*sim_params.N]();
 
 
-	std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
+	std::memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));
 	init_arrays_mcbb(sim_params, sim_params.j_best,sim_params.k_best,sim_params.b_best);
 	copy_arrays_mcbb(sim_params, j_array, k_array, b_array,sim_params.j_best,sim_params.k_best,sim_params.b_best,0,0);//a temporary array, used in the undoing of the changes
 
@@ -96,12 +97,12 @@ void mcbb_simulation(Simulation_Parameters& sim_params){
 			random_time_index = (int)floor(get_random_double(0, 2*NUMBER_OF_BANGS, sim_params.rng));
 			change_array_mcbb(j_array, k_array, b_array,change,random_time_index,j, sim_params.tau);
 
-			std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));//resetting state
+			std::memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));//resetting state
 			evolve_mcbb(sim_params, j_array, k_array, b_array);
 			new_E = cost(sim_params.N,sim_params.state, sim_params.ham_target);
 
-			if (new_E<sim_params.best_E) sim_params.best_E=new_E, old_E=new_E,  copy_arrays_mcbb(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), poor_acceptance_streak = 0;
-			//else if (new_E<=old_E) old_E=new_E;
+			if (new_E<sim_params.best_E) sim_params.best_E=new_E, old_E=new_E,  copy_arrays_mcbb(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), std::memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double)), poor_acceptance_streak = 0;
+			else if (new_E<=old_E) old_E=new_E;
 			else if (get_random_double(0,1,sim_params.rng)<exp(-(new_E-old_E)/(sim_params.temperature))) old_E=new_E, proposal_accepted++, proposal_count++;
 			else copy_arrays_mcbb(sim_params, j_array, k_array, b_array,  j_temp, k_temp, b_temp, 0,0), proposal_count++;//undoing the change
 		}
@@ -175,7 +176,7 @@ void evolve_mcbb(Simulation_Parameters& sim_params, double *j_array, double *k_a
 
 
 void calc_initial_temp_mcbb(Simulation_Parameters& sim_params){
-	int i, j, random_time_index, start_state_index, count=0;
+	int i, j, random_time_index, init_state_index, count=0;
 	double *state_random, *j_temp, *k_temp, *b_temp, sum=0, change, old_E, new_E;
 
 	j_temp           = new double[2*NUMBER_OF_BANGS]();
@@ -189,8 +190,8 @@ void calc_initial_temp_mcbb(Simulation_Parameters& sim_params){
 
 	for (j=0;j<RANDOM_STATES;j++){
 		for (i=0; i<sim_params.N*2;i++) state_random[i] =0.0;
-		start_state_index = floor(get_random_double(0,sim_params.N,sim_params.rng));
-		state_random[start_state_index*2] = 1;
+		init_state_index = floor(get_random_double(0,sim_params.N,sim_params.rng));
+		state_random[init_state_index*2] = 1;
 		std::memcpy(sim_params.state,state_random, 2*sim_params.N*sizeof(double));
 
 		init_arrays_mcbb(sim_params, j_temp, k_temp, b_temp);
@@ -388,7 +389,7 @@ void evolve_fixed_protocol(Simulation_Parameters& sim_params){
 	// sim_params.init_mcbb_params();
 	// sim_params.state                = new double[2*sim_params.N]();
 	//
-	// std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
+	// std::memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));
 	//
 
 	//
@@ -399,7 +400,7 @@ void evolve_fixed_protocol(Simulation_Parameters& sim_params){
 	// 	sim_params.j_best[1] =	j_fraction_end*sim_params.tau;
 	// 	sim_params.k_best[1] =	k_fraction_end*sim_params.tau;
 	//
-	// 	std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
+	// 	std::memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));
 	// 	evolve_mcbb(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best);
 	// 	new_E = cost(sim_params.N,sim_params.state, sim_params.ham_target);
 	// 	printf("tau: %f, E: %f\n", sim_params.tau, new_E);

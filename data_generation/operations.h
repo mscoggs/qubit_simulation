@@ -157,4 +157,12 @@ int get_neighbors(int site, int *neighbors, int lattice[NX][NY]);
 */
 bool update_distances(Simulation_Parameters& sim_params);
 
+
+/**
+    between all seeds, get the best energy, best evolved state, and best overlap squared between the evolved state and target state
+
+		@param sim_params an object that contains all of the parameters for the simulation
+*/
+void get_best_seed(Simulation_Parameters& sim_params);
+
 #endif

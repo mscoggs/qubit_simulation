@@ -19,12 +19,14 @@ void Simulation_Parameters::initialize_lattice(int number_of_occupants, Simulati
 	b 	      = new unsigned long long int[N]();
 	ham_target    = new double[2*N*N]();
 	ham_initial   = new double[2*N*N]();
-	start_state   = new double[2*N]();
+	init_state   = new double[2*N]();
 	target_state  = new double[2*N]();
 	jkb_initial   = new double[3]();
 	jkb_target    = new double[3]();
 	table 	      = new int[num_occupants*N]();
-	bonds	      = new int[NUMBER_OF_SITES*NUMBER_OF_SITES]();
+	bonds	        = new int[NUMBER_OF_SITES*NUMBER_OF_SITES]();
+	evolved_state_fixed_tau = new double[2*N*NUM_SEEDS]();
+	best_evolved_state  = new double[2*N]();
 
 	construct_lattice(lattice);
 	assign_bonds(bonds, lattice);
@@ -57,27 +59,27 @@ void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double
 	construct_device_hamiltonian_uniform(sim_params, ham_initial, jkb_initial);
 	construct_device_hamiltonian_uniform(sim_params, ham_target, jkb_target);
 
-	get_ground_state(N, ham_initial, start_state);
+	get_ground_state(N, ham_initial, init_state);
 	get_ground_state(N, ham_target, target_state);
 	ground_E = get_ground_E(N, ham_target);
-	initial_E = cost(N, start_state, ham_target);
-	state_overlap_squared = pow(zdotc_(&N, target_state, &INCX, start_state, &INCY),2);
+	initial_E = cost(N, init_state, ham_target);
+	init_target_dot_squared = pow(zdotc_(&N, target_state, &INCX, init_state, &INCY),2);
+	evolved_target_dot_squared = 0;
 
-
-	if(CHECK) check_norm(start_state, N);
+	if(CHECK) check_norm(init_state, N);
 }
 
 
 
 void Simulation_Parameters::init_mcbb_params(){
-	E_array_fixed_tau = new double[NUM_SEEDS]();
-	j_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
-	k_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
-	b_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
+	E_array_fixed_tau      = new double[NUM_SEEDS]();
+	j_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
+	k_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
+	b_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
 
-	j_best		  = new double[2*NUMBER_OF_BANGS]();
-	k_best  	  = new double[2*NUMBER_OF_BANGS]();
-	b_best 		  = new double[2*NUMBER_OF_BANGS]();
+	j_best		          = new double[2*NUMBER_OF_BANGS]();
+	k_best  	          = new double[2*NUMBER_OF_BANGS]();
+	b_best 		          = new double[2*NUMBER_OF_BANGS]();
 
 	tau		  = TAU_INIT;
 	tau_previous		  = tau;
@@ -110,7 +112,6 @@ void Simulation_Parameters::clear_mcbb_params(){
 
 void Simulation_Parameters::init_mcdb_params(){
 	max_steps_mcdb    = MAX_STEPS_MCDB;
-
   saved_states      = new double[2*N*(MAX_STEPS_MCDB+1)]();
 	E_array_fixed_tau = new double[NUM_SEEDS]();
 	j_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
@@ -139,7 +140,7 @@ void Simulation_Parameters::init_mcdb_params(){
 	e10  = new double[2*N*N]();
 
 	start = std::clock();
-	for(int k=0; k<2*N; k++) saved_states[k] = start_state[k];
+	for(int k=0; k<2*N; k++) saved_states[k] = init_state[k];
 }
 
 

@@ -29,7 +29,7 @@ main (int argc, char *argv[]){
 	std::ofstream file;
 
 	file.open("../data/overlap.txt");
-	file << "num_occupants[a]  ji[b] ki[c]  jt[d]  kt[e]  sim_params.state_overlap_squared\n";
+	file << "num_occupants[a]  ji[b] ki[c]  jt[d]  kt[e]  sim_params.init_target_dot_squared\n";
 
 	// int num_occupants[4] = {2,3,4,7};
 	// double ji[2] = {0.050, 0.95};
@@ -63,7 +63,7 @@ main (int argc, char *argv[]){
 						std::string kts = std::to_string(kt[e]);
 						kts.erase(kts.find_last_not_of('0') + 2, std::string::npos);
 
-						file << num_occupants[a] << " " << jis << " " << kis << " " << jts << " " << kts << " " << sim_params.state_overlap_squared <<"\n";
+						file << num_occupants[a] << " " << jis << " " << kis << " " << jts << " " << kts << " " << sim_params.init_target_dot_squared <<"\n";
 					}
 				}
 			}

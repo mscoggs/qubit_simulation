@@ -20,11 +20,9 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 		return;
 	}
 
-
-
 	sim_params.state        = new double[2*sim_params.N]();
 	sim_params.start        = std::clock();
-	memcpy(sim_params.state,  sim_params.start_state,  2*sim_params.N*sizeof(double));
+	memcpy(sim_params.state,  sim_params.init_state,  2*sim_params.N*sizeof(double));
 
 	sim_params.tau         = TAU_INIT;
 	sim_params.time_step   = TIME_STEP_ADIA;
@@ -35,12 +33,12 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 	if(PRINT) print_adiabatic_info(sim_params);
 
 	while(sim_params.tau<MAX_TAU){
-		memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));//resetting state
+		memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));//resetting state
 		evolve_adiabatic(sim_params);
 		sim_params.best_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);
   	sim_params.old_distance = sim_params.new_distance;
 		sim_params.new_distance = calc_distance(sim_params.initial_E, sim_params.ground_E, sim_params.best_E);
-		printf("       Tau: %5.2f  ||  Expectation-Value:  %7.4f  ||  Distance: %f \n", sim_params.tau, sim_params.best_E,sim_params.new_distance);
+		if(PRINT) printf("       Tau: %5.2f  ||  Expectation-Value:  %7.4f  ||  Distance: %f \n", sim_params.tau, sim_params.best_E,sim_params.new_distance);
 
 		if (SAVE_DATA){
 			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
@@ -58,7 +56,7 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 
 
 void evolve_adiabatic(Simulation_Parameters& sim_params){
-	int i,j;
+	int i,j, INCX = 1,INCY = 1;
 	double *hamiltonian,*ham_t_i, *ham_real,*exp_matrix,*v_diag, *e_vals,*jkb,j_,k_;
 
 	hamiltonian        = new double[2*sim_params.N*sim_params.N]();
@@ -98,6 +96,11 @@ void evolve_adiabatic(Simulation_Parameters& sim_params){
 		}
 
 		if(CHECK) check_norm(sim_params.state, sim_params.N);
+
 	}
+
+	memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double));
+	sim_params.evolved_target_dot_squared = pow(zdotc_(&sim_params.N, sim_params.target_state, &INCX, sim_params.best_evolved_state, &INCY),2);
+
 	delete[] hamiltonian, delete[] ham_t_i, delete[] ham_real, delete[] exp_matrix, delete[] v_diag, delete[] e_vals, delete[] jkb;
 }

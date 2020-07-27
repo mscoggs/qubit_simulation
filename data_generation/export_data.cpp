@@ -34,6 +34,10 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
 	file << "total_steps =       " << sim_params.total_steps << "\n";
 	file << "time_step =       " << sim_params.time_step << "\n";
 	file << "best_E =          " << sim_params.best_E << "\n";
+	file << "evolved_target_dot_squared =   " << sim_params.evolved_target_dot_squared << "\n";
+	file << "best_evolved_state = [";
+	for(i=0;i<2*sim_params.N;i++) file << sim_params.best_evolved_state[i] << ", ";
+	file << "]\n";
 	file << "distance =          " << sim_params.new_distance << "\n";
 
 	file << "j_protocol =  [";
@@ -59,7 +63,15 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
 
 	file << "]\nbest_E_fixed_tau =   [";
 	for(i=0;i<NUM_SEEDS;i++) file << sim_params.E_array_fixed_tau[i] << ", ";
-	file <<"]\n";
+
+	file << "]\nevolved_state_fixed_tau =   [";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<sim_params.N*2;j++) file << sim_params.evolved_state_fixed_tau[i*sim_params.N*2 + j] << ", ";
+		file << "],";
+	}
+	file << "]\n";
+
 	file.close();
 }
 
@@ -88,6 +100,10 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 	file << "clock_duration  =         " << sim_params.duration  << "\n";
 	file << "tau =               " << sim_params.tau   << "\n";
 	file << "best_E =          " << sim_params.best_E << "\n";
+	file << "evolved_target_dot_squared =   " << sim_params.evolved_target_dot_squared << "\n";
+	file << "best_evolved_state = [";
+	for(i=0;i<2*sim_params.N;i++) file << sim_params.best_evolved_state[i] << ", ";
+	file << "]\n";
 	file << "distance =          " << sim_params.new_distance << "\n";
 
 	file << "j_protocol =  [";
@@ -116,7 +132,15 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 
 	file << "]\nbest_E_fixed_tau =   [";
 	for(i=0;i<NUM_SEEDS;i++) file << sim_params.E_array_fixed_tau[i] << ", ";
-	file <<"]\n";
+
+	file << "]\nevolved_state_fixed_tau =   [";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<sim_params.N*2;j++) file << sim_params.evolved_state_fixed_tau[i*sim_params.N*2 + j] << ", ";
+		file << "],";
+	}
+	file << "]\n";
+
 	file.close();
 }
 
@@ -147,8 +171,11 @@ void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params){
 	file << "total_steps =       " << sim_params.total_steps << "\n";
 	file << "time_step =         " << sim_params.time_step << "\n";
 	file << "best_E =            " << sim_params.best_E << "\n";
+	file << "evolved_target_dot_squared =   " << sim_params.evolved_target_dot_squared << "\n";
+	file << "best_evolved_state = [";
+	for(i=0;i<2*sim_params.N;i++) file << sim_params.best_evolved_state[i] << ", ";
+	file << "]\n";
 	file << "distance =          " << sim_params.new_distance << "\n";
-
 
 	file << "j_protocol =  [";
 	for(i=0;i<NUM_SEEDS;i++){
@@ -173,7 +200,14 @@ void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params){
 
 	file << "]\nbest_E_fixed_tau =   [";
 	for(i=0;i<NUM_SEEDS;i++) file << sim_params.E_array_fixed_tau[i] << ", ";
-	file <<"]\n";
+
+	file << "]\nevolved_state_fixed_tau =   [";
+	for(i=0;i<NUM_SEEDS;i++){
+		file << "[";
+		for(j=0;j<sim_params.N*2;j++) file << sim_params.evolved_state_fixed_tau[i*sim_params.N*2 + j] << ", ";
+		file << "],";
+	}
+	file << "]\n";
 	file.close();
 }
 
@@ -189,11 +223,6 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
-		file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
-		file << "DISTANCE_LIMIT =        " <<  DISTANCE_LIMIT << "\n";
-		file << "TAU_INIT =              " <<  TAU_INIT << "\n";
-		file << "MAX_TAU =               " <<  MAX_TAU << "\n";
-		file << "TAU_SCALAR =            " <<  TAU_SCALAR << "\n";
 		file << "TIME_STEP_ADIA =             " <<  TIME_STEP_ADIA << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
@@ -205,6 +234,10 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	file << "total_steps =       " << sim_params.total_steps << "\n";
 	file << "time_step  =        " << sim_params.time_step  << "\n";
 	file << "best_E  =           " << sim_params.best_E  << "\n";
+	file << "evolved_target_dot_squared =   " << sim_params.evolved_target_dot_squared << "\n";
+	file << "best_evolved_state = [";
+	for(i=0;i<2*sim_params.N;i++) file << sim_params.best_evolved_state[i] << ", ";
+	file << "]\n";
 	file << "distance  =         " << sim_params.new_distance  << "\n";
 	file << "clock_duration  =         " << sim_params.duration  << "\n";
 	file.close();
@@ -239,31 +272,40 @@ std::string make_path(Simulation_Parameters sim_params, std::string type){
 
 
 void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string path){
+	int i;
 	std::ofstream file;
+
+
 	file.open(path, std::ios::app);
-	file << "GROUND_E =                   " <<  sim_params.ground_E << "\n";
-	file << "INITIAL_E =                  " <<  sim_params.initial_E << "\n";
-	file << "j_initial =        " << sim_params.j_initial << "\n";
-	file << "k_initial =        " << sim_params.k_initial << "\n";
-	file << "b_initial =        " << sim_params.b_initial << "\n";
-	file << "j_target =         " << sim_params.j_target << "\n";
-	file << "k_target =         " << sim_params.k_target << "\n";
-	file << "b_target =         " << sim_params.b_target << "\n";
-	file << "state_overlap_squared =    " << sim_params.state_overlap_squared << "\n";
-	file << "PERIODIC =         " << std::boolalpha << PERIODIC << "\n";
-	file << "UNIFORM_SITES =    " << std::boolalpha << UNIFORM_SITES << "\n";
-	file << "DEVICE_DIMENSION = " << DEVICE_DIMENSION << "\n";
-	file << "MAX_PARAM =        " << MAX_PARAM << "\n";
-	file << "MIN_PARAM =        " << MIN_PARAM << "\n";
-	file << "MIN_PARAM =        " << MIN_PARAM << "\n";
-	file << "DIAG =                       " <<  std::boolalpha << DIAG << "\n";
-	file << "NUM_SEEDS =                  " <<  NUM_SEEDS << "\n";
-	file << "DISTANCE_LIMIT =        " <<  DISTANCE_LIMIT << "\n";
-	file << "TAU_INIT =              " <<  TAU_INIT << "\n";
-	file << "MAX_TAU =               " <<  MAX_TAU << "\n";
-	file << "TAU_SCALAR =            " <<  TAU_SCALAR << "\n";
-	file << "TAU_SCALAR_TINY =       " <<  TAU_SCALAR_TINY << "\n";
-	file << "TAU_SCALAR_BIG =        " <<  TAU_SCALAR_BIG << "\n";
+	file << "GROUND_E =                " <<  sim_params.ground_E << "\n";
+	file << "INITIAL_E =               " <<  sim_params.initial_E << "\n";
+	file << "j_initial =               " << sim_params.j_initial << "\n";
+	file << "k_initial =               " << sim_params.k_initial << "\n";
+	file << "b_initial =               " << sim_params.b_initial << "\n";
+	file << "j_target =                " << sim_params.j_target << "\n";
+	file << "k_target =                " << sim_params.k_target << "\n";
+	file << "b_target =                " << sim_params.b_target << "\n";
+	file << "init_target_dot_squared = " << sim_params.init_target_dot_squared << "\n";
+	file << "init_state = [";
+	for(i=0;i<2*sim_params.N;i++) file << sim_params.init_state[i] << ", ";
+	file << "]\n";
+	file << "target_state = [";
+	for(i=0;i<2*sim_params.N;i++) file << sim_params.target_state[i] << ", ";
+	file << "]\n";
+	file << "PERIODIC =                " << std::boolalpha << PERIODIC << "\n";
+	file << "UNIFORM_SITES =           " << std::boolalpha << UNIFORM_SITES << "\n";
+	file << "DEVICE_DIMENSION =        " << DEVICE_DIMENSION << "\n";
+	file << "MAX_PARAM =               " << MAX_PARAM << "\n";
+	file << "MIN_PARAM =               " << MIN_PARAM << "\n";
+	file << "MIN_PARAM =               " << MIN_PARAM << "\n";
+	file << "DIAG =                    " <<  std::boolalpha << DIAG << "\n";
+	file << "NUM_SEEDS =               " <<  NUM_SEEDS << "\n";
+	file << "DISTANCE_LIMIT =          " <<  DISTANCE_LIMIT << "\n";
+	file << "TAU_INIT =                " <<  TAU_INIT << "\n";
+	file << "MAX_TAU =                 " <<  MAX_TAU << "\n";
+	file << "TAU_SCALAR =              " <<  TAU_SCALAR << "\n";
+	file << "TAU_SCALAR_TINY =         " <<  TAU_SCALAR_TINY << "\n";
+	file << "TAU_SCALAR_BIG =          " <<  TAU_SCALAR_BIG << "\n";
 	file << "ACCEPTANCE_PROB =         " <<  ACCEPTANCE_PROB << "\n";
 	file << "TEMP_EXP_DECAY =          " <<  TEMP_EXP_DECAY << "\n";
 	file << "TEMP_DECAY_ITERATIONS =   " <<  TEMP_DECAY_ITERATIONS  << "\n";

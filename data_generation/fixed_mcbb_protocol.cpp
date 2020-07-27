@@ -50,7 +50,7 @@ main (int argc, char *argv[]){
 	sim_params.tau = 0.5259985;
 
 
-	std::memcpy(sim_params.state,sim_params.start_state, 2*sim_params.N*sizeof(double));
+	std::memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));
 	double j_array[6] = {0,0,0.053341200000000005, 0.207361, 0.2827445, 0.42718500000000004};
 	double k_array[6] = {0,0,0,0,0, 0.51};
 	double b_array[6] = {0,0,0,0,0, 0};

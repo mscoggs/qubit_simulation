@@ -258,3 +258,16 @@ bool update_distances(Simulation_Parameters& sim_params){
 	sim_params.sweeps_multiplier = 1;
 	return true;
 }
+
+
+void get_best_seed(Simulation_Parameters& sim_params){
+	int INCX = 1,INCY = 1;
+
+	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
+		if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E){
+			sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
+			memcpy(sim_params.best_evolved_state, &sim_params.evolved_state_fixed_tau[(sim_params.seed-1)*2*sim_params.N], 2*sim_params.N*sizeof(double));
+			sim_params.evolved_target_dot_squared = pow(zdotc_(&sim_params.N, sim_params.target_state, &INCX, sim_params.best_evolved_state, &INCY),2);
+		}
+	}
+}
