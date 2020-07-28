@@ -262,12 +262,33 @@ bool update_distances(Simulation_Parameters& sim_params){
 
 void get_best_seed(Simulation_Parameters& sim_params){
 	int INCX = 1,INCY = 1;
+	double result, result2;
 
 	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
-		if(sim_params.E_array_fixed_tau[sim_params.seed-1] < sim_params.best_E){
+		if(sim_params.E_array_fixed_tau[sim_params.seed-1] <= sim_params.best_E){
 			sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
 			memcpy(sim_params.best_evolved_state, &sim_params.evolved_state_fixed_tau[(sim_params.seed-1)*2*sim_params.N], 2*sim_params.N*sizeof(double));
-			sim_params.evolved_target_dot_squared = pow(zdotc_(&sim_params.N, sim_params.target_state, &INCX, sim_params.best_evolved_state, &INCY),2);
+			sim_params.evolved_target_dot_squared = complex_dot_squared(sim_params.N*2, sim_params.target_state, sim_params.best_evolved_state);
+			// result2 = complex_dot_squared(sim_params.N*2, sim_params.target_state, sim_params.best_evolved_state);
+			// result = zdotc_(&sim_params.N, sim_params.target_state, &INCX, sim_params.best_evolved_state, &INCY);
+			// printf("r1 r2 %f %f \n\n", result, result2);
+			//printf("r1 %f \n\n",sim_params.evolved_target_dot_squared);
+			// printf("cost: %f\n", cost(sim_params.N, sim_params.best_evolved_state, sim_params.ham_target));
+			// print_state(sim_params.target_state, sim_params.N);
+			// print_state(sim_params.best_evolved_state, sim_params.N);
+			// exit(0);
 		}
 	}
+}
+
+
+double complex_dot_squared(int size, double *v1, double *v2){
+	int i;
+	double re =0, im = 0;
+
+	for(i=0;i<size;i+=2){
+		re += v1[i]*v2[i] + v1[i+1]*v2[i+1];
+		im += v1[i]*v2[i+1] - v1[i+1]*v2[i];
+	}
+	return re*re + im*im;
 }

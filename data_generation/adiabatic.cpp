@@ -100,7 +100,7 @@ void evolve_adiabatic(Simulation_Parameters& sim_params){
 	}
 
 	memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double));
-	sim_params.evolved_target_dot_squared = pow(zdotc_(&sim_params.N, sim_params.target_state, &INCX, sim_params.best_evolved_state, &INCY),2);
+	sim_params.evolved_target_dot_squared = complex_dot_squared(sim_params.N*2, sim_params.target_state, sim_params.best_evolved_state);
 
 	delete[] hamiltonian, delete[] ham_t_i, delete[] ham_real, delete[] exp_matrix, delete[] v_diag, delete[] e_vals, delete[] jkb;
 }
