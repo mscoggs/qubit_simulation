@@ -32,7 +32,7 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 
 	if(PRINT) print_adiabatic_info(sim_params);
 
-	while(sim_params.tau<MAX_TAU){
+	while(sim_params.tau<MAX_TAU*100){
 		memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));//resetting state
 		evolve_adiabatic(sim_params);
 		sim_params.best_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);

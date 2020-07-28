@@ -17,7 +17,7 @@
 /*SWITCHES FOR EACH TYPE OF SIMULATION METHOD*/
  const bool MCBF      = false;
  const bool MCBB      = false;
- const bool MCDB      = true;
+ const bool MCDB      = false;
  const bool ADIA      = true;
  const bool SAVE_DATA = true;
 
@@ -35,18 +35,18 @@ const int    NUMBER_OF_SITES       = NX*NY;
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = false;
 const int    NUM_SEEDS             = 4;
-const double DISTANCE_LIMIT        = 0.01;
+const double DISTANCE_LIMIT        = 0.05;
 const double TAU_INIT              = 0.1;
-const double MAX_TAU               = 5.5;
-const double TAU_SCALAR            = 1.2;
-const double TAU_SCALAR_TINY       = 1.1;
-const double TAU_SCALAR_BIG        = 1.3;
+const double MAX_TAU               = 5.0;
+const double TAU_SCALAR            = 1.1;
+const double TAU_SCALAR_TINY       = 1.05;
+const double TAU_SCALAR_BIG        = 1.2;
 const double ACCEPTANCE_PROB       = 0.85;
 const double TEMP_EXP_DECAY        = 0.80;
 const int    TEMP_DECAY_LIMIT      = 15;
 const int    TEMP_DECAY_ITERATIONS = 25;
 const int    RANDOM_STATES         = 3;
-const double INIT_OVERLAP_LIMIT   = 0.9999;
+const double INIT_OVERLAP_LIMIT   = 0.99999;
 
 
 /*MCBB METHOD PARAMETERS*/
@@ -58,7 +58,7 @@ const int    SWEEPS_MCBB              = 30;
 /*MCDB METHOD PARAMETERS*/
 const int    MAX_STEPS_MCDB    = 128;
 const int    MIN_STEPS_MCDB    = 8;
-const int    SWEEPS_MCDB       = 50;
+const int    SWEEPS_MCDB       = 150;
 const double STEPS_CRUNCH_MCDB = 1.0;
 
 /*MCBF METHOD PARAMETERS*/
