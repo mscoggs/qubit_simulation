@@ -2,7 +2,7 @@ START_PARAMETERS
 MAX_STEPS_MCDB =               128
 MIN_STEPS_MCDB =               8
 STEPS_CRUNCH_MCDB =               1
-SWEEPS_MCDB =                  80
+SWEEPS_MCDB =                  50
 GROUND_E =                -1.87193
 INITIAL_E =               -1.84904
 j_initial =               0.95
@@ -31,16 +31,16 @@ TAU_SCALAR_BIG =          1.3
 ACCEPTANCE_PROB =         0.85
 TEMP_EXP_DECAY =          0.8
 TEMP_DECAY_ITERATIONS =   25
-TEMP_DECAY_LIMIT =        10
+TEMP_DECAY_LIMIT =        15
 RANDOM_STATES =           3
 END_PARAMETERS
 ##############################################################################
-clock_duration  =         0.910597
+clock_duration  =         0.908236
 tau =               0
 total_steps =       8
 time_step =         0.0125
 best_E =            0
-evolved_target_dot_squared =   0.76189
+evolved_target_dot_squared =   0.999667
 best_evolved_state = [-0.230082, -0.136844, -0.524559, -0.285499, -0.230082, -0.136844, -0.230082, -0.136844, -0.524559, -0.285499, -0.230082, -0.136844, ]
 distance =          0
 j_protocol =  [[0, 0, 0, 0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, 0, 0, 0, ],[0, 0, 0, 0, 0, 0, 0, 0, ],]

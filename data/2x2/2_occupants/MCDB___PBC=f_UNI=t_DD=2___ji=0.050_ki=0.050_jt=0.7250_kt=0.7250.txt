@@ -2,7 +2,7 @@ START_PARAMETERS
 MAX_STEPS_MCDB =               128
 MIN_STEPS_MCDB =               8
 STEPS_CRUNCH_MCDB =               1
-SWEEPS_MCDB =                  80
+SWEEPS_MCDB =                  50
 GROUND_E =                -3.96147
 INITIAL_E =               -3.96147
 j_initial =               0.05
@@ -31,11 +31,11 @@ TAU_SCALAR_BIG =          1.3
 ACCEPTANCE_PROB =         0.85
 TEMP_EXP_DECAY =          0.8
 TEMP_DECAY_ITERATIONS =   25
-TEMP_DECAY_LIMIT =        10
+TEMP_DECAY_LIMIT =        15
 RANDOM_STATES =           3
 END_PARAMETERS
 ##############################################################################
-clock_duration  =         4.68608e-310
+clock_duration  =         4.63679e-310
 tau =               0
 total_steps =       8
 time_step =         0.0125
