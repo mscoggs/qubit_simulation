@@ -19,8 +19,8 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 
 	sim_params.init_mcdb_params();
-
-	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.init_target_dot_squared > 0.99){
+	
+	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.init_target_dot_squared > INIT_OVERLAP_LIMIT){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
 		if(PRINT) print_mcdb_info(sim_params);
 		if(SAVE_DATA) save_mcdb_data_fixed_tau(sim_params);
