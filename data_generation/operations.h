@@ -165,4 +165,6 @@ bool update_distances(Simulation_Parameters& sim_params);
 */
 void get_best_seed(Simulation_Parameters& sim_params);
 
+
+double complex_dot_squared(int size, double *v1, double *v2);
 #endif

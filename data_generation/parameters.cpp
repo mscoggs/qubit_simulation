@@ -64,6 +64,7 @@ void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double
 	ground_E = get_ground_E(N, ham_target);
 	initial_E = cost(N, init_state, ham_target);
 	init_target_dot_squared = pow(zdotc_(&N, target_state, &INCX, init_state, &INCY),2);
+
 	evolved_target_dot_squared = 0;
 
 	if(CHECK) check_norm(init_state, N);

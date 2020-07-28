@@ -15,8 +15,8 @@
 
 
 /*SWITCHES FOR EACH TYPE OF SIMULATION METHOD*/
- const bool MCBF      = true;
- const bool MCBB      = true;
+ const bool MCBF      = false;
+ const bool MCBB      = false;
  const bool MCDB      = true;
  const bool ADIA      = true;
  const bool SAVE_DATA = true;
@@ -34,10 +34,10 @@ const int    NUMBER_OF_SITES       = NX*NY;
 
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = false;
-const int    NUM_SEEDS             = 3;
-const double DISTANCE_LIMIT        = 0.04;
+const int    NUM_SEEDS             = 1;
+const double DISTANCE_LIMIT        = 0.01;
 const double TAU_INIT              = 0.1;
-const double MAX_TAU               = 1.5;
+const double MAX_TAU               = 5.5;
 const double TAU_SCALAR            = 1.3;
 const double TAU_SCALAR_TINY       = 1.1;
 const double TAU_SCALAR_BIG        = 1.5;
