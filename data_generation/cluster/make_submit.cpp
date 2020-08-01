@@ -11,12 +11,12 @@
 main(int argc, char *argv[]){
 
 	int ji_i, ki_i, jt_i, kt_i, occ_i;
-	int num_occupants[1] = {2};
+	int num_occupants[2] = {2,3};
 	std::string ji, ki, jt, kt, num, identifier;
 	double j_init[2] = {0.05, 0.95};
 	double k_init[2] = {0.05, 0.95};
-	double j_targ[13] = {0.05, 0.125, 0.2,0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
-	double k_targ[13] = {0.05, 0.125, 0.2,0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
+	double j_targ[13] = {0.05, 0.125, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
+	double k_targ[13] = {0.05, 0.125, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
 	std::ofstream submit_file;
 
 	submit_file.open("submit_file.txt");
