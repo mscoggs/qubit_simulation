@@ -1,0 +1,54 @@
+START_PARAMETERS
+DIAG =                         false
+NUM_SEEDS =                    2
+DISTANCE_LIMIT_MCBB =          0.02
+TAU_INIT_MCBB =                0.37
+MAX_TAU_MCBB =                 0.6
+TAU_SCALAR_MCBB =              1.1
+TAU_SCALAR_MCBB_TINY =         1.05
+TAU_SCALAR_MCBB_BIG =          1.2
+MAX_CHANGE_FRACTION_MCBB =     0.9
+MIN_CHANGE_FRACTION_MCBB =     0.01
+ACCEPTANCE_PROB_MCBB =         0.8
+TEMP_EXP_DECAY_MCBB =          0.8
+BINARY_SEARCH_TAU_LIMIT_MCBB = 0.0037
+RANDOM_STATES_MCBB =           3
+NUMBER_OF_BANGS =              3
+SWEEPS_MCBB =                  200
+TEMP_DECAY_ITERATIONS_MCBB =   20
+TEMP_DECAY_LIMIT_MCBB =        7
+MAX_TAU_STEPS_MCBB =           6
+MAX_BS_STEPS_MCDB =            5
+GROUND_E =                   -8.30898
+INITIAL_E =                  -8.20338
+j_initial =        0.05
+k_initial =        0.05
+b_initial =        0
+j_target =         0.8
+k_target =         0.5
+b_target =         0
+state_overlap_squared =    0.982472
+PERIODIC =         true
+UNIFORM_SITES =    true
+DEVICE_DIMENSION = 2
+MAX_PARAM =        1
+MIN_PARAM =        0
+END_PARAMETERS
+##############################################################################
+tau =               0.37
+best_E =          -8.30679
+distance =          0.0207427
+j_protocol =  [[0, 0.234365, 0.316436, 0.321807, 0.354256, 0.354256, ],[0, 0.0970233, 0.145691, 0.350501, 0.350501, 0.365375, ],]
+k_protocol = [[0.0248513, 0.156441, 0.200889, 0.22802, 0.242078, 0.284086, ],[0.020908, 0.0434353, 0.0774413, 0.194521, 0.2544, 0.37, ],]
+b_protocol = [[0, 0.047406, 0.0542997, 0.146735, 0.26652, 0.37, ],[0, 0.0095927, 0.0571379, 0.155536, 0.35066, 0.37, ],]
+j/k/b =   [1, 0, 1, 0, 1, 0, ]
+best_E_fixed_tau =   [-8.29896, -8.30679, ]
+##############################################################################
+tau =               0.3885
+best_E =          -8.30776
+distance =          0.011563
+j_protocol =  [[0, 0.0602481, 0.0602481, 0.0602481, 0.0602481, 0.380256, ],[0, 0.0985294, 0.128228, 0.345606, 0.345606, 0.374232, ],]
+k_protocol = [[0.0284096, 0.0321902, 0.0321902, 0.217958, 0.262536, 0.374893, ],[0.0383272, 0.0968016, 0.100202, 0.188883, 0.244751, 0.371723, ],]
+b_protocol = [[0, 0.047406, 0.0542997, 0.146735, 0.26652, 0.3885, ],[0, 0.0095927, 0.0571379, 0.155536, 0.35066, 0.3885, ],]
+j/k/b =   [1, 0, 1, 0, 1, 0, ]
+best_E_fixed_tau =   [-8.30776, -8.30755, ]
