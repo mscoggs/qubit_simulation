@@ -8,11 +8,6 @@ fixed_protocol:
 	$(CC) -o fixed fixed_mcbb_protocol.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 	./fixed
 
-state_overlap_squared:
-	$(CC) -o state_overlap_squared state_overlap_squared.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
-	./state_overlap_squared
-
-
 submit:
 	$(CC) -o cluster/make_submit cluster/make_submit.cpp -std=gnu++11
 	cluster/make_submit
