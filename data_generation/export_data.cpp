@@ -19,9 +19,9 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
 		file << "START_PARAMETERS\n";
 		file << "MAX_CHANGE_MCBF_INIT =       " <<  MAX_CHANGE_MCBF_INIT << "\n";
 		file << "MIN_CHANGE_MCBF_INIT =       " <<  MIN_CHANGE_MCBF_INIT << "\n";
-		file << "SWEEPS_MC =                  " <<  SWEEPS_MC << "\n";
-		file << "TOTAL_STEPS_INIT_MC =        " <<  TOTAL_STEPS_INIT_MC << "\n";
-		file << "MAX_EVOLVE_STEPS_MC =        " <<  MAX_EVOLVE_STEPS_MC << "\n";
+		file << "SWEEPS_MCBF =                  " <<  SWEEPS_MCBF << "\n";
+		file << "TOTAL_STEPS_INIT_MCBF =        " <<  TOTAL_STEPS_INIT_MCBF << "\n";
+		file << "MAX_EVOLVE_STEPS_MCBF =        " <<  MAX_EVOLVE_STEPS_MCBF << "\n";
 		file << "ARRAY_SCALAR =               " <<  ARRAY_SCALAR << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
@@ -311,6 +311,7 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file << "TEMP_DECAY_ITERATIONS =   " <<  TEMP_DECAY_ITERATIONS  << "\n";
 	file << "TEMP_DECAY_LIMIT =        " <<  TEMP_DECAY_LIMIT << "\n";
 	file << "RANDOM_STATES =           " <<  RANDOM_STATES  << "\n";
+	file << "INIT_OVERLAP_LIMIT =      " <<  INIT_OVERLAP_LIMIT  << "\n";
 	file << "END_PARAMETERS\n";
 	file.close();
 }

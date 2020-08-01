@@ -168,17 +168,17 @@ void Simulation_Parameters::clear_mcdb_params(){
 
 void Simulation_Parameters::init_mcbf_params(){
 	E_array_fixed_tau = new double[NUM_SEEDS]();
-	j_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
-	k_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
-	b_best_fixed_tau  = new double[NUM_SEEDS*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
+	j_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
+	k_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
+	b_best_fixed_tau  = new double[NUM_SEEDS*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
 
-	j_best            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
-	k_best            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
-	b_best            = new double[NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MC]();
+	j_best            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
+	k_best            = new double[2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
+	b_best            = new double[NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
 
 	tau               = TAU_INIT;
 	tau_previous		  = tau;
-	total_steps       = TOTAL_STEPS_INIT_MC;
+	total_steps       = TOTAL_STEPS_INIT_MCBF;
 	time_step         = tau/total_steps;
 	old_distance      = 1;
 	new_distance      = 1;

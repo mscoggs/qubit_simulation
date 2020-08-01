@@ -147,7 +147,7 @@ void print_mcbf_info(Simulation_Parameters& sim_params){
 		printf("############################################################################\n");
 		printf("|| OCCUPANTS:       %4i || DIMENSION:        %4i || SEED:          %4i ||\n", sim_params.num_occupants, sim_params.N, sim_params.seed);
 		printf("|| TAU_MAX:       %4.4f || TAU:            %4.4f || TIME_STEP    %4.4f ||\n", double(MAX_TAU), sim_params.tau, sim_params.time_step);
-		printf("|| TOTAL_STEPS:     %4i || TOTAL_SWEEPS:     %4i ||                     ||\n", sim_params.total_steps, SWEEPS_MC*sim_params.total_steps*sim_params.sweeps_multiplier);
+		printf("|| TOTAL_STEPS:     %4i || TOTAL_SWEEPS:     %4i ||                     ||\n", sim_params.total_steps, SWEEPS_MCBF*sim_params.total_steps*sim_params.sweeps_multiplier);
 		printf("|| TEMPERATURE:   %4.4f || TEMP_DECAYS:      %4i ||                     ||\n", sim_params.temperature, TEMP_DECAY_ITERATIONS);
 		printf("|| J_INITIAL:     %4.4f || K_INITIAL:      %4.4f || B_INITIAL:   %4.4f ||\n", sim_params.j_initial,     sim_params.k_initial,   sim_params.b_initial);
 		printf("|| J_TARGET:      %4.4f || K_TARGET:       %4.4f || B_TARGET:    %4.4f ||\n", sim_params.j_target,      sim_params.k_target,    sim_params.b_target);

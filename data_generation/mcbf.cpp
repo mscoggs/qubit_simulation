@@ -85,7 +85,7 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 
 		proposal_accepted = 0,proposal_count = 0;
 
-		for (j=0; j<SWEEPS_MC*sim_params.total_steps*sim_params.sweeps_multiplier;j++){
+		for (j=0; j<SWEEPS_MCBF*sim_params.total_steps*sim_params.sweeps_multiplier;j++){
 
 			copy_arrays_mcbf(sim_params, j_temp, k_temp,b_temp,j_array, k_array, b_array,0,0);//a temporary array, used in the undoing of the changes
 
@@ -185,7 +185,7 @@ void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 		evolve_mcbf(sim_params, j_temp,k_temp,b_temp);
 		old_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);
 
-		for (j=0; j<SWEEPS_MC*sim_params.total_steps;j++){
+		for (j=0; j<SWEEPS_MCBF*sim_params.total_steps;j++){
 			change = get_change_mcbf(sim_params);
 			random_row = floor(get_random_double(0,sim_params.total_steps,sim_params.rng));
 			random_col = floor(get_random_double(0,NUMBER_OF_SITES*2,sim_params.rng));
@@ -211,7 +211,7 @@ void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 void calc_total_steps_mcbf(Simulation_Parameters& sim_params){
 
 
-	sim_params.total_steps = ceil((1-sim_params.new_distance)*MAX_EVOLVE_STEPS_MC + sim_params.new_distance*TOTAL_STEPS_INIT_MC);
+	sim_params.total_steps = ceil((1-sim_params.new_distance)*MAX_EVOLVE_STEPS_MCBF + sim_params.new_distance*TOTAL_STEPS_INIT_MCBF);
 }
 
 

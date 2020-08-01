@@ -64,9 +64,9 @@ const double STEPS_CRUNCH_MCDB = 1.0;
 /*MCBF METHOD PARAMETERS*/
 const double MAX_CHANGE_MCBF_INIT = 0.5*(MAX_PARAM-MIN_PARAM);
 const double MIN_CHANGE_MCBF_INIT = 0.1*(MAX_PARAM-MIN_PARAM);
-const int    SWEEPS_MC            = 50;
-const int    TOTAL_STEPS_INIT_MC  = 5;
-const int    MAX_EVOLVE_STEPS_MC  = 4*TOTAL_STEPS_INIT_MC;
+const int    SWEEPS_MCBF            = 50;
+const int    TOTAL_STEPS_INIT_MCBF  = 5;
+const int    MAX_EVOLVE_STEPS_MCBF  = 4*TOTAL_STEPS_INIT_MCBF;
 const int    ARRAY_SCALAR         = 2;
 const int ROW        = 0;  //The change_array_mcbf variables. If 0 -> This method will not be used, if n -> use this method on every nth iteration of change_array_mcbf
 const int COL        = 0;
