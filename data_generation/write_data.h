@@ -1,5 +1,5 @@
-#ifndef __EXPORT_H_INCLUDED__
-#define __EXPORT_H_INCLUDED__
+#ifndef __WRITE_H_INCLUDED__
+#define __WRITE_H_INCLUDED__
 
 #include <string>
 
