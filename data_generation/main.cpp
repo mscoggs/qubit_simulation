@@ -12,7 +12,7 @@
 
 #include "adiabatic.h"
 #include "check.h"
-#include "export_data.h"
+#include "write_data.h"
 #include "hamiltonian.h"
 #include "mcbb.h"
 #include "mcdb.h"
@@ -23,7 +23,7 @@
 #include "linear_algebra.h"
 
 /*
-g++ -o main main.cpp adiabatic.cpp check.cpp export_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
+g++ -o main main.cpp adiabatic.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 ./main j_initial(double) k_initial(double) j_target(double) k_target(double)
 
 OR
