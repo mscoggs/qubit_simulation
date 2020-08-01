@@ -1,15 +1,15 @@
 CC=g++
 
 compile:
-	$(CC) -o main main.cpp adiabatic.cpp check.cpp export_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp mcdb.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
+	$(CC) -o main main.cpp adiabatic.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp mcdb.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 
 
 fixed_protocol:
-	$(CC) -o fixed fixed_mcbb_protocol.cpp check.cpp export_data.cpp hamiltonian.cpp linear_algebra.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
+	$(CC) -o fixed fixed_mcbb_protocol.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 	./fixed
 
 state_overlap_squared:
-	$(CC) -o state_overlap_squared state_overlap_squared.cpp check.cpp export_data.cpp hamiltonian.cpp linear_algebra.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
+	$(CC) -o state_overlap_squared state_overlap_squared.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 	./state_overlap_squared
 
 
@@ -30,4 +30,4 @@ submit_q:
 
 
 compile_gap:
-	$(CC) -o gap gap.cpp hamiltonian.cpp check.cpp export_data.cpp operations.cpp parameters.cpp print.cpp linear_algebra.cpp -lgsl -llapack -lblas -std=gnu++11
+	$(CC) -o gap gap.cpp hamiltonian.cpp check.cpp write_data.cpp operations.cpp parameters.cpp print.cpp linear_algebra.cpp -lgsl -llapack -lblas -std=gnu++11
