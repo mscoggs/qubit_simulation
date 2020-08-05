@@ -28,13 +28,14 @@ void get_ground_state(int N, double *hamiltonian, double* ground_state);
 
 
 /**
-		Return the expectation value between an evolved state state and the target hamiltonian , expressed as <state|hamiltonian|state>
+		Return the expectation value between an evolved state state and the target hamiltonian , expressed as <state|hamiltonian|state> if USE_ENERGY_DISTANCE is true,
+    otherwise it returns the complex_dot_squared between the target state and the best state after evolution (state)
 
 		@param N the dimension of our system
 		@param state the evolved state
 		@param hamiltonian the complex hamiltonian of dimension 2*Nx2*N
 
-		@return result the expectation value of <state|H|state>
+		@return result the expectation value of <state|H|state> OR the complex_dot_squared
 */
 double cost(double *target_state, int N, double *state, double *ham_target, bool energy = USE_ENERGY_DISTANCE);
 

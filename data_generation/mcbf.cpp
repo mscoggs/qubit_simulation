@@ -108,7 +108,7 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 		if(acceptance_rate<0.1) poor_acceptance_streak++;
 		else poor_acceptance_streak = 0;
 
-		if(PRINT) printf("           Best Expectation:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_mc_result,acceptance_rate,proposal_accepted, proposal_count);
+		if(PRINT) printf("           Best Cost:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_mc_result,acceptance_rate,proposal_accepted, proposal_count);
 
 		if(poor_acceptance_streak>TEMP_DECAY_LIMIT){
 			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY ITERATIONS, TERMINATING\n", TEMP_DECAY_LIMIT);

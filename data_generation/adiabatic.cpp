@@ -14,7 +14,7 @@
 void adiabatic_method(Simulation_Parameters& sim_params){
 
 
-	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.init_target_dot_squared > INIT_OVERLAP_LIMIT){
+	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || (sim_params.init_target_dot_squared > INIT_OVERLAP_LIMIT && USE_ENERGY_DISTANCE) || (1-sim_params.init_target_dot_squared < DISTANCE_LIMIT && !USE_ENERGY_DISTANCE)){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
 		if(SAVE_DATA) save_adiabatic_data(sim_params);
 		return;
@@ -38,14 +38,13 @@ void adiabatic_method(Simulation_Parameters& sim_params){
 		sim_params.best_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
   	sim_params.old_distance = sim_params.new_distance;
 		sim_params.new_distance = calc_distance(sim_params);
-		if(PRINT) printf("       Tau: %5.2f  ||  Expectation-Value:  %7.4f  ||  Distance: %f \n", sim_params.tau, sim_params.best_mc_result,sim_params.new_distance);
+		if(PRINT) printf("       Tau: %5.2f  ||  Cost Output:  %7.4f  ||  Distance: %f \n", sim_params.tau, sim_params.best_mc_result,sim_params.new_distance);
 
 		if (SAVE_DATA){
 			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
 			save_adiabatic_data(sim_params);
 		}
-
-		if(sim_params.new_distance < DISTANCE_LIMIT) break;
+		if((sim_params.new_distance < DISTANCE_LIMIT && USE_ENERGY_DISTANCE) || (1-sim_params.evolved_target_dot_squared < DISTANCE_LIMIT && !USE_ENERGY_DISTANCE)) break;
 
 		sim_params.tau         = sim_params.tau*TAU_SCALAR;
 		sim_params.total_steps = floor(sim_params.tau/sim_params.time_step);
