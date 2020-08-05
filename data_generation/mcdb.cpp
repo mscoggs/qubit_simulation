@@ -20,8 +20,8 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 	sim_params.init_mcdb_params();
 
-	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.init_target_dot_squared > INIT_OVERLAP_LIMIT){
-		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_E = 0.0;
+	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || (sim_params.init_target_dot_squared > INIT_OVERLAP_LIMIT && USE_ENERGY_DISTANCE) || (1-sim_params.init_target_dot_squared < DISTANCE_LIMIT && !USE_ENERGY_DISTANCE)){
+		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
 		if(PRINT) print_mcdb_info(sim_params);
 		if(SAVE_DATA) save_mcdb_data_fixed_tau(sim_params);
 		sim_params.clear_mcdb_params();
@@ -45,17 +45,17 @@ void mcdb_method(Simulation_Parameters& sim_params){
 				gsl_rng_set(sim_params.rng, sim_params.seed);
 				mcdb_simulation(sim_params);
 
-				sim_params.E_array_fixed_tau[sim_params.seed-1] = sim_params.best_E;
+				sim_params.best_mc_result_fixed_tau[sim_params.seed-1] = sim_params.best_mc_result;
 				std::memcpy(&sim_params.evolved_state_fixed_tau[(sim_params.seed-1)*2*sim_params.N],sim_params.best_evolved_state, 2*sim_params.N*sizeof(double));
 				copy_arrays_mcdb(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*sim_params.total_steps, 0);
 			}
 
 			get_best_seed(sim_params);
-			for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.E_array_fixed_tau[sim_params.seed-1] <= sim_params.best_E) copy_arrays_mcdb(sim_params,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,  0,(sim_params.seed-1)*sim_params.total_steps);
+			for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.best_mc_result_fixed_tau[sim_params.seed-1] <= sim_params.best_mc_result) copy_arrays_mcdb(sim_params,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,  0,(sim_params.seed-1)*sim_params.total_steps);
 
 			if(sim_params.total_steps == MAX_STEPS_MCDB) break;
 
-			if(sim_params.new_distance > 0.2 and sim_params.total_steps >= MIN_STEPS_MCDB*4 and sim_params.total_steps <= MAX_STEPS_MCDB/2) break;
+			if(sim_params.new_distance > 0.3 and sim_params.total_steps >= MIN_STEPS_MCDB*4 and sim_params.total_steps <= MAX_STEPS_MCDB/2) break;
 			sim_params.total_steps = sim_params.total_steps*2;
 			sim_params.time_step = sim_params.tau/sim_params.total_steps;
 			if(sim_params.total_steps <= MAX_STEPS_MCDB) scale_best_arrays_mcdb(sim_params, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled);
@@ -69,7 +69,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 			save_mcdb_data_fixed_tau(sim_params);
 		}
 		if(sim_params.old_distance < sim_params.new_distance) break;
-		if(sim_params.new_distance < DISTANCE_LIMIT) break;
+		if((sim_params.new_distance < DISTANCE_LIMIT && USE_ENERGY_DISTANCE) || (1-sim_params.evolved_target_dot_squared < DISTANCE_LIMIT && !USE_ENERGY_DISTANCE)) break;
 		calc_tau(sim_params);
 	}
 	sim_params.clear_mcdb_params();
@@ -80,7 +80,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 void mcdb_simulation(Simulation_Parameters& sim_params){
 	int i,j, k,random_time_index, proposal_accepted,proposal_count, poor_acceptance_streak;
-	double *j_array, *k_array,*b_array,*j_temp, *k_temp, *b_temp,*temp_saved_states, acceptance_rate, old_E, new_E, change;
+	double *j_array, *k_array,*b_array,*j_temp, *k_temp, *b_temp,*temp_saved_states, acceptance_rate, old_mc_result, new_mc_result, change;
 
 
 	j_array          = new double[sim_params.total_steps]();
@@ -100,8 +100,8 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 
 	std::memcpy(sim_params.state,sim_params.init_state, 2*sim_params.N*sizeof(double));
 	evolve_mcdb(sim_params, j_array,k_array,b_array,0);
-	sim_params.best_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);
-	old_E = sim_params.best_E;
+	sim_params.best_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
+	old_mc_result = sim_params.best_mc_result;
 
 	if(PRINT) print_mcdb_info(sim_params);
 
@@ -123,11 +123,11 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 			for(k=0; k<2*sim_params.N; k++) sim_params.state[k] = sim_params.saved_states[(random_time_index)*2*sim_params.N +k];
 			evolve_mcdb(sim_params, j_array, k_array, b_array, random_time_index);
 
-			new_E = cost(sim_params.N,sim_params.state, sim_params.ham_target);
+			new_mc_result = cost(sim_params.target_state, sim_params.N,sim_params.state, sim_params.ham_target);
 
-			if (new_E<sim_params.best_E) sim_params.best_E=new_E, old_E=new_E,  copy_arrays_mcdb(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), std::memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double)), poor_acceptance_streak = 0;
-			else if (new_E<=old_E) old_E=new_E;
-			else if (get_random_double(0,1,sim_params.rng)<exp(-(new_E-old_E)/(sim_params.temperature))) old_E=new_E, proposal_accepted++, proposal_count++;
+			if (new_mc_result<sim_params.best_mc_result) sim_params.best_mc_result=new_mc_result, old_mc_result=new_mc_result,  copy_arrays_mcdb(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), std::memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double)), poor_acceptance_streak = 0;
+			else if (new_mc_result<=old_mc_result) old_mc_result=new_mc_result;
+			else if (get_random_double(0,1,sim_params.rng)<exp(-(new_mc_result-old_mc_result)/(sim_params.temperature))) old_mc_result=new_mc_result, proposal_accepted++, proposal_count++;
 			else copy_arrays_mcdb(sim_params, j_array, k_array, b_array,  j_temp, k_temp, b_temp, 0,0), std::memcpy(sim_params.saved_states, temp_saved_states,sim_params.total_steps*2*sim_params.N*sizeof(double)), proposal_count++;//undoing the change
 		}
 
@@ -135,7 +135,7 @@ void mcdb_simulation(Simulation_Parameters& sim_params){
 		if(acceptance_rate<0.1) poor_acceptance_streak++;
 		else poor_acceptance_streak = 0;
 
-		if(PRINT) printf("           Best Expectation:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_E,acceptance_rate,proposal_accepted, proposal_count);
+		if(PRINT) printf("           Best Expectation:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_mc_result,acceptance_rate,proposal_accepted, proposal_count);
 
 		if(poor_acceptance_streak>TEMP_DECAY_LIMIT){
 			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY LIMIT MCDB, TERMINATING\n", TEMP_DECAY_LIMIT);
@@ -170,7 +170,7 @@ void evolve_mcdb(Simulation_Parameters& sim_params, double *j_array, double *k_a
 
 void calc_initial_temp_mcdb(Simulation_Parameters& sim_params){
 	int i, j, random_time_index, init_state_index, count=0;
-	double *state_random, *j_temp, *k_temp, *b_temp, sum=0, change, old_E, new_E;
+	double *state_random, *j_temp, *k_temp, *b_temp, sum=0, change, old_mc_result, new_mc_result;
 
 	j_temp           = new double[sim_params.total_steps]();
 	k_temp           = new double[sim_params.total_steps]();
@@ -189,17 +189,17 @@ void calc_initial_temp_mcdb(Simulation_Parameters& sim_params){
 		init_arrays_mcdb(sim_params, j_temp, k_temp, b_temp);
 
 		evolve_mcdb(sim_params,j_temp, k_temp, b_temp, 0);
-		old_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);
+		old_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
 
 		for (i=0; i<sim_params.total_sweeps*sim_params.sweeps_multiplier;i++){
 		      random_time_index = change_array_mcdb(sim_params, j_temp, k_temp, b_temp, i);
 
 			std::memcpy(sim_params.state,state_random, 2*sim_params.N*sizeof(double));//resetting state
 			evolve_mcdb(sim_params,j_temp, k_temp, b_temp, 0);
-			new_E = cost(sim_params.N, sim_params.state, sim_params.ham_target);
+			new_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
 
-			if (new_E>=old_E) sum += (new_E-old_E), count++;
-			old_E=new_E;
+			if (new_mc_result>=old_mc_result) sum += (new_mc_result-old_mc_result), count++;
+			old_mc_result=new_mc_result;
 		}
 	}
 	sim_params.temperature = -(sum/(count*log(ACCEPTANCE_PROB)));

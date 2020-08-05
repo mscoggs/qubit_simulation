@@ -158,7 +158,7 @@ void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params){
 		file << "START_PARAMETERS\n";
 		file << "MAX_STEPS_MCDB =               " <<  MAX_STEPS_MCDB << "\n";
 		file << "MIN_STEPS_MCDB =               " <<  MIN_STEPS_MCDB << "\n";
-		file << "STEPS_CRUNCH_MCDB =            " <<  STEPS_CRUNCH_MCDB << "\n";
+		file << "STEPS_CRUNCH_MCDB =               " <<  STEPS_CRUNCH_MCDB << "\n";
 		file << "SWEEPS_MCDB =                  " <<  SWEEPS_MCDB << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
@@ -167,11 +167,11 @@ void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params){
 
 	file << "##############################################################################\n";
 	file << "clock_duration  =         " << sim_params.duration  << "\n";
-	file << "tau =                     " << sim_params.tau   << "\n";
-	file << "total_steps =             " << sim_params.total_steps << "\n";
-	file << "time_step =               " << sim_params.time_step << "\n";
-	file << "best_mc_result =          " << sim_params.best_mc_result << "\n";
-	file << "evolved_target_dot_squared =  " << sim_params.evolved_target_dot_squared << "\n";
+	file << "tau =               " << sim_params.tau   << "\n";
+	file << "total_steps =       " << sim_params.total_steps << "\n";
+	file << "time_step =         " << sim_params.time_step << "\n";
+	file << "best_mc_result =            " << sim_params.best_mc_result << "\n";
+	file << "evolved_target_dot_squared =   " << sim_params.evolved_target_dot_squared << "\n";
 	file << "best_evolved_state = [";
 	for(i=0;i<2*sim_params.N;i++) file << sim_params.best_evolved_state[i] << ", ";
 	file << "]\n";

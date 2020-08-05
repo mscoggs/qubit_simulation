@@ -116,7 +116,7 @@ void print_arrays_mcbf(double *j_array, double *k_array, double *b_array, int to
 
 void print_mc_results(Simulation_Parameters& sim_params){
 	printf("############################################################################\n");
-	printf("BEST ENERGY=    %9.6f\n",sim_params.best_E);
+	printf("BEST ENERGY=    %9.6f\n",sim_params.best_mc_result);
 	printf("TARGET ENERGY=  %9.6f\n",sim_params.ground_E);
 	printf("INITIAL ENERGY= %9.6f\n",sim_params.initial_E);
 	printf("OLD DISTANCNCE= %9.6f\n",sim_params.old_distance);

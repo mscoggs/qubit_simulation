@@ -17,12 +17,13 @@
 /*SWITCHES FOR EACH TYPE OF SIMULATION METHOD*/
  const bool MCBF      = false;
  const bool MCBB      = false;
- const bool MCDB      = false;
- const bool ADIA      = true;
+ const bool MCDB      = true;
+ const bool ADIA      = false;
  const bool SAVE_DATA = true;
 
 
 /*LATTICE PARAMETERS*/
+const bool   USE_ENERGY_DISTANCE   = false;
 const bool   PERIODIC              = false;
 const bool   UNIFORM_SITES         = true;
 const double MAX_PARAM             = 1.0;
@@ -34,9 +35,9 @@ const int    NUMBER_OF_SITES       = NX*NY;
 
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = false;
-const int    NUM_SEEDS             = 4;
-const double DISTANCE_LIMIT        = 0.05;
-const double TAU_INIT              = 0.1;
+const int    NUM_SEEDS             = 1;
+const double DISTANCE_LIMIT        = 0.001;
+const double TAU_INIT              = 0.05;
 const double MAX_TAU               = 5.0;
 const double TAU_SCALAR            = 1.1;
 const double TAU_SCALAR_TINY       = 1.05;
@@ -99,8 +100,8 @@ const bool PRINT_COMMUTATOR = false;
 class Simulation_Parameters{
 public:
 	std::clock_t start;
-	double *ham_target, *ham_initial, *init_state, *target_state, *state, *jkb_initial, *jkb_target, *E_array_fixed_tau, *evolved_state_fixed_tau, *best_evolved_state, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10, *j_best_scaled, *k_best_scaled, *b_best_scaled, *saved_states;
-	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, tau_previous, time_step, temperature,initial_temperature, best_E,initial_E, old_distance, new_distance, temp_distance, init_target_dot_squared, evolved_target_dot_squared, duration;
+	double *ham_target, *ham_initial, *init_state, *target_state, *state, *jkb_initial, *jkb_target, *best_mc_result_fixed_tau, *evolved_state_fixed_tau, *best_evolved_state, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10, *j_best_scaled, *k_best_scaled, *b_best_scaled, *saved_states;
+	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, tau_previous, time_step, temperature,initial_temperature, best_mc_result,initial_E, old_distance, new_distance, temp_distance, init_target_dot_squared, evolved_target_dot_squared, duration;
 	unsigned long long int *b;
 	int lattice[NX][NY], num_occupants,N,*table, *bonds, seed, total_steps, temp_iteration, max_steps_mcdb, sweeps_multiplier, total_sweeps;
 	gsl_rng * rng;

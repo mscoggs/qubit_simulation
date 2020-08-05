@@ -61,8 +61,8 @@ void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double
 
 	get_ground_state(N, ham_initial, init_state);
 	get_ground_state(N, ham_target, target_state);
-	ground_E = get_ground_E(N, ham_target);
-	initial_E = cost(N, init_state, ham_target);
+	ground_E = cost(target_state, N, target_state, ham_target, true);
+	initial_E = cost(target_state, N, init_state, ham_target, true);
 	init_target_dot_squared = pow(zdotc_(&N, target_state, &INCX, init_state, &INCY),2);
 
 	evolved_target_dot_squared = 0;
@@ -73,7 +73,7 @@ void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double
 
 
 void Simulation_Parameters::init_mcbb_params(){
-	E_array_fixed_tau      = new double[NUM_SEEDS]();
+	best_mc_result_fixed_tau      = new double[NUM_SEEDS]();
 	j_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
 	k_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
 	b_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
@@ -97,7 +97,7 @@ void Simulation_Parameters::init_mcbb_params(){
 
 
 void Simulation_Parameters::clear_mcbb_params(){
-	delete[] E_array_fixed_tau;
+	delete[] best_mc_result_fixed_tau;
 	delete[] j_best_fixed_tau;
 	delete[] k_best_fixed_tau;
 	delete[] b_best_fixed_tau;
@@ -114,7 +114,7 @@ void Simulation_Parameters::clear_mcbb_params(){
 void Simulation_Parameters::init_mcdb_params(){
 	max_steps_mcdb    = MAX_STEPS_MCDB;
   saved_states      = new double[2*N*(MAX_STEPS_MCDB+1)]();
-	E_array_fixed_tau = new double[NUM_SEEDS]();
+	best_mc_result_fixed_tau = new double[NUM_SEEDS]();
 	j_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
 	k_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
 	b_best_fixed_tau  = new double[NUM_SEEDS*max_steps_mcdb]();
@@ -148,7 +148,7 @@ void Simulation_Parameters::init_mcdb_params(){
 
 
 void Simulation_Parameters::clear_mcdb_params(){
-	delete[] E_array_fixed_tau;
+	delete[] best_mc_result_fixed_tau;
 	delete[] j_best_fixed_tau;
 	delete[] k_best_fixed_tau;
 	delete[] b_best_fixed_tau;
@@ -167,7 +167,7 @@ void Simulation_Parameters::clear_mcdb_params(){
 
 
 void Simulation_Parameters::init_mcbf_params(){
-	E_array_fixed_tau = new double[NUM_SEEDS]();
+	best_mc_result_fixed_tau = new double[NUM_SEEDS]();
 	j_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
 	k_best_fixed_tau  = new double[NUM_SEEDS*2*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
 	b_best_fixed_tau  = new double[NUM_SEEDS*NUMBER_OF_SITES*MAX_EVOLVE_STEPS_MCBF]();
@@ -191,7 +191,7 @@ void Simulation_Parameters::init_mcbf_params(){
 
 
 void Simulation_Parameters::clear_mcbf_params(){
-	delete[] E_array_fixed_tau;
+	delete[] best_mc_result_fixed_tau;
 	delete[] j_best_fixed_tau;
 	delete[] k_best_fixed_tau;
 	delete[] b_best_fixed_tau;

@@ -36,7 +36,7 @@ void get_ground_state(int N, double *hamiltonian, double* ground_state);
 
 		@return result the expectation value of <state|H|state>
 */
-double cost(int N, double *state, double *ham_target);
+double cost(double *target_state, int N, double *state, double *ham_target, bool energy = USE_ENERGY_DISTANCE);
 
 
 /**
@@ -108,7 +108,7 @@ double get_random_double(double lower, double upper, gsl_rng *rng);
 
 		@return distance the distance, in [0,1]
 */
-double calc_distance(double initial, double target, double current);
+double calc_distance(Simulation_Parameters& sim_params);
 
 
 /**

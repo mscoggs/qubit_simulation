@@ -11,7 +11,7 @@
 #include <ctime>
 
 #include "check.h"
-#include "export_data.h"
+#include "write_data.h"
 #include "hamiltonian.h"
 #include "operations.h"
 #include "parameters.h"

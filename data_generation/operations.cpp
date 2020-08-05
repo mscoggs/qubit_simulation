@@ -53,20 +53,28 @@ double get_ground_E(int N, double *hamiltonian){
 
 
 
-double cost(int N, double *state, double *hamiltonian){
-	int INCX = 1,INCY = 1;
+double cost(double *target_state, int N, double *state, double *hamiltonian, bool energy){
 	double *state_conj, *state_temp, result;
 
 	state_conj = new double[2*N]();
 	state_temp = new double[2*N]();
-	memcpy(state_conj, state, 2*N*sizeof(double)), memcpy(state_temp, state, 2*N*sizeof(double));
 
+	if(energy){
 
-	if(CHECK) check_norm(state_temp, N), check_weights(state_temp, hamiltonian, N);
+		int INCX = 1,INCY = 1;
+		memcpy(state_conj, state, 2*N*sizeof(double)), memcpy(state_temp, state, 2*N*sizeof(double));
 
-	matrix_vector_mult(hamiltonian, state_temp, N);//H*state, the operator acting on the ket, storing in state
-	result = zdotc_(&N, state_conj, &INCX, state_temp, &INCY);//state* * state, the dot between the complex conj and the result of H*state
+		if(CHECK) check_norm(state_temp, N), check_weights(state_temp, hamiltonian, N);
 
+		matrix_vector_mult(hamiltonian, state_temp, N);//H*state, the operator acting on the ket, storing in state
+		result = zdotc_(&N, state_conj, &INCX, state_temp, &INCY);//state* * state, the dot between the complex conj and the result of H*state
+
+	}else{
+
+		memcpy(state_conj, target_state, 2*N*sizeof(double)), memcpy(state_temp, state, 2*N*sizeof(double));
+		result = 1-complex_dot_squared(N*2, state_conj, state_temp);
+
+	}
 	delete[] state_conj, delete[] state_temp;
 	return result;
 }
@@ -142,14 +150,6 @@ double get_random_double(double lower, double upper, gsl_rng * rng){
 	return lower_to_upper;
 }
 
-
-
-double calc_distance(double initial, double target, double current){
-	double distance;
-	if(initial==target) return 0.0;
-	distance = ((current - target) / (initial - target));
-	return distance;
-}
 
 
 void calc_tau(Simulation_Parameters& sim_params){
@@ -237,10 +237,24 @@ int get_neighbors(int site, int *neighbors, int lattice[NX][NY]){
 }
 
 
+
+double calc_distance(Simulation_Parameters& sim_params){
+	double initial, target, current, distance;
+
+	if(USE_ENERGY_DISTANCE) initial = sim_params.initial_E, target = sim_params.ground_E;
+	else initial = 1-sim_params.init_target_dot_squared, target = 0;
+	current = sim_params.best_mc_result;
+	if(initial==target) return 0.0;
+	distance = ((current - target) / (initial - target));
+	return distance;
+}
+
+
+
 bool update_distances(Simulation_Parameters& sim_params){
 	sim_params.temp_distance = sim_params.old_distance;
 	sim_params.old_distance = sim_params.new_distance;
-	sim_params.new_distance  = calc_distance(sim_params.initial_E, sim_params.ground_E,  sim_params.best_E);
+	sim_params.new_distance  = calc_distance(sim_params);
 
 	if(sim_params.new_distance > sim_params.old_distance && sim_params.sweeps_multiplier <= 2){
 		if(PRINT){
@@ -265,18 +279,10 @@ void get_best_seed(Simulation_Parameters& sim_params){
 	double result, result2;
 
 	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
-		if(sim_params.E_array_fixed_tau[sim_params.seed-1] <= sim_params.best_E){
-			sim_params.best_E = sim_params.E_array_fixed_tau[sim_params.seed-1];
+		if(sim_params.best_mc_result_fixed_tau[sim_params.seed-1] <= sim_params.best_mc_result){
+			sim_params.best_mc_result = sim_params.best_mc_result_fixed_tau[sim_params.seed-1];
 			memcpy(sim_params.best_evolved_state, &sim_params.evolved_state_fixed_tau[(sim_params.seed-1)*2*sim_params.N], 2*sim_params.N*sizeof(double));
 			sim_params.evolved_target_dot_squared = complex_dot_squared(sim_params.N*2, sim_params.target_state, sim_params.best_evolved_state);
-			// result2 = complex_dot_squared(sim_params.N*2, sim_params.target_state, sim_params.best_evolved_state);
-			// result = zdotc_(&sim_params.N, sim_params.target_state, &INCX, sim_params.best_evolved_state, &INCY);
-			// printf("r1 r2 %f %f \n\n", result, result2);
-			//printf("r1 %f \n\n",sim_params.evolved_target_dot_squared);
-			// printf("cost: %f\n", cost(sim_params.N, sim_params.best_evolved_state, sim_params.ham_target));
-			// print_state(sim_params.target_state, sim_params.N);
-			// print_state(sim_params.best_evolved_state, sim_params.N);
-			// exit(0);
 		}
 	}
 }
