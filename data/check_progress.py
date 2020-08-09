@@ -1,7 +1,7 @@
 import os, glob, re, numpy as np
 from shutil import copyfile
-#dir_name = ["4x4/2_occupants/","4x4/3_occupants/"] 
-dir_name = ["3x3/2_occupants/","3x3/3_occupants/", "3x3/4_occupants/"]
+dir_name = ["2x2/2_occupants/"]#,"4x4/3_occupants/"] 
+#dir_name = ["3x3/2_occupants/","3x3/3_occupants/", "3x3/4_occupants/"]
 #dir_name = ["2x2/2_occupants/"]
 
 
@@ -18,9 +18,11 @@ for dir_ in dir_name:
         with open(fname) as f:
             last_tau = 0
             for line in f:
-                if "distance" in line:
+                #if "distance" in line:
+                if "best_mc_result" in line and "fixed" not in line:
+                    print(line)
                     distance = min(float(line.split(" ")[-1]), distance)
-                if "tau" in line and "arr" not in line and "best" not in line:
+                if "tau" in line and "arr" not in line and "best" not in line and "state" not in line:
                     last_tau = float(line.split(" ")[-1])
 
         if distance > 1 or distance < 0:
