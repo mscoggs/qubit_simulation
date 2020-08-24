@@ -2,7 +2,7 @@ START_PARAMETERS
 MAX_STEPS_MCDB =               128
 MIN_STEPS_MCDB =               8
 STEPS_CRUNCH_MCDB =            1
-SWEEPS_MCDB =                  100
+SWEEPS_MCDB =                  300
 GROUND_E =                7.58946
 INITIAL_E =               7.58946
 j_initial =               0.05
@@ -26,18 +26,18 @@ NUM_SEEDS =               3
 DISTANCE_LIMIT =          0.01
 TAU_INIT =                0.5
 MAX_TAU =                 5
-TAU_SCALAR =              1.2
-TAU_SCALAR_TINY =         1.1
-TAU_SCALAR_BIG =          1.3
+TAU_SCALAR =              1.05
+TAU_SCALAR_TINY =         1.025
+TAU_SCALAR_BIG =          1.1
 ACCEPTANCE_PROB =         0.85
 TEMP_EXP_DECAY =          0.8
-TEMP_DECAY_ITERATIONS =   25
-TEMP_DECAY_LIMIT =        10
+TEMP_DECAY_ITERATIONS =   40
+TEMP_DECAY_LIMIT =        15
 RANDOM_STATES =           3
 INIT_OVERLAP_LIMIT =      0.99999
 END_PARAMETERS
 ##############################################################################
-clock_duration  =         1.11045e-310
+clock_duration  =         1.10649e-310
 tau =                     0
 total_steps =             8
 time_step =               0.0625

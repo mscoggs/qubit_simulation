@@ -223,7 +223,8 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
-		file << "TIME_STEP_ADIA =             " <<  TIME_STEP_ADIA << "\n";
+		file << "MAX_TAU_ADIA =             " <<  MAX_TAU_ADIA << "\n";
+		file << "TOTAL_STEPS_ADIA =             " <<  TOTAL_STEPS_ADIA << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
 	}

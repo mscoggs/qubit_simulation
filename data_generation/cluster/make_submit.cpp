@@ -11,12 +11,14 @@
 main(int argc, char *argv[]){
 
 	int ji_i, ki_i, jt_i, kt_i, occ_i;
-	int num_occupants[2] = {2,3};
+	int num_occupants[1] = {5};
 	std::string ji, ki, jt, kt, num, identifier;
 	double j_init[2] = {0.05, 0.95};
 	double k_init[2] = {0.05, 0.95};
-	double j_targ[13] = {0.05, 0.125, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
-	double k_targ[13] = {0.05, 0.125, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
+	//double j_targ[13] = {0.05, 0.125, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
+	double j_targ[2] = {0.05, 0.95};
+	//double k_targ[13] = {0.05, 0.125, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
+	double k_targ[19] = {0.05, 0.10, 0.15, 0.2, 0.25, 0.3,0.35, 0.4,0.45, 0.5, 0.55,0.6,  0.65, 0.7,0.75, 0.8, 0.85, 0.9,0.95};
 	std::ofstream submit_file;
 
 	submit_file.open("submit_file.txt");
@@ -38,11 +40,11 @@ main(int argc, char *argv[]){
 
 
 						identifier = "_num_"+num+"__ji_"+ji+"__ki_"+ki+"__jt_"+jt+"__kt_"+kt;
-						submit_file << "Executable        = main\n";
+						submit_file << "Executable        = main_4x4_mcdb\n";
 						submit_file << "Arguments         = " << num << " " << ji << " " << ki << " " << jt << " " << kt << "\n";
 						//submit_file << "Log               = cluster/logs/_" << identifier  << ".log\n";
 						//submit_file << "Output            = cluster/outputs/_" << identifier << "\n";
-						submit_file << "request_cpus      = 1\n";
+						submit_file << "request_cpus      = 4\n";
 						//submit_file << "request_memory    = 20 GB\n";
 						submit_file << "queue\n";
 	}}}}}
