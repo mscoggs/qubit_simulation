@@ -1,5 +1,6 @@
 START_PARAMETERS
-TIME_STEP_ADIA =             0.0005
+MAX_TAU_ADIA =             200
+TOTAL_STEPS_ADIA =             50
 GROUND_E =                -0.458268
 INITIAL_E =               -0.458268
 j_initial =               0.05
@@ -21,24 +22,24 @@ MIN_PARAM =               0
 DIAG =                    false
 NUM_SEEDS =               3
 DISTANCE_LIMIT =          0.01
-TAU_INIT =                0.5
-MAX_TAU =                 5
-TAU_SCALAR =              1.05
-TAU_SCALAR_TINY =         1.025
-TAU_SCALAR_BIG =          1.1
+TAU_INIT =                0.1
+MAX_TAU =                 3
+TAU_SCALAR =              1.1
+TAU_SCALAR_TINY =         1.05
+TAU_SCALAR_BIG =          1.2
 ACCEPTANCE_PROB =         0.85
 TEMP_EXP_DECAY =          0.8
-TEMP_DECAY_ITERATIONS =   40
-TEMP_DECAY_LIMIT =        15
+TEMP_DECAY_ITERATIONS =   25
+TEMP_DECAY_LIMIT =        10
 RANDOM_STATES =           3
 INIT_OVERLAP_LIMIT =      0.99999
 END_PARAMETERS
 ##############################################################################
 tau =               0
 total_steps =       0
-time_step  =        1.13852e-310
+time_step  =        1.1369e-310
 best_mc_result  =           0
 evolved_target_dot_squared =   0
 best_evolved_state = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
 distance  =         0
-clock_duration  =         4.67382e-310
+clock_duration  =         4.67798e-310

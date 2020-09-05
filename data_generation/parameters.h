@@ -29,23 +29,23 @@ const bool   UNIFORM_SITES         = true;
 const double MAX_PARAM             = 1.0;
 const double MIN_PARAM             = 0.0;
 const int    DEVICE_DIMENSION      = 2;
-const int    NX                    = 4;
+const int    NX                    = 2;
 const int    NY                    = NX;
 const int    NUMBER_OF_SITES       = NX*NY;
 
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = false;
-const int    NUM_SEEDS             = 3;
-const double DISTANCE_LIMIT        = 0.01;
-const double TAU_INIT              = 0.5;
-const double MAX_TAU               = 10;
-const double TAU_SCALAR            = 1.25;
-const double TAU_SCALAR_TINY       = 1.1;
-const double TAU_SCALAR_BIG        = 1.4;
+const int    NUM_SEEDS             = 1;
+const double DISTANCE_LIMIT        = 0.005;
+const double TAU_INIT              = 0.05;
+const double MAX_TAU               = 3;
+const double TAU_SCALAR            = 1.1;
+const double TAU_SCALAR_TINY       = 1.05;
+const double TAU_SCALAR_BIG        = 1.2;
 const double ACCEPTANCE_PROB       = 0.85;
 const double TEMP_EXP_DECAY        = 0.80;
-const int    TEMP_DECAY_ITERATIONS = 25;
-const int    TEMP_DECAY_LIMIT      = 10;
+const int    TEMP_DECAY_ITERATIONS = 20;
+const int    TEMP_DECAY_LIMIT      = 5;
 const int    RANDOM_STATES         = 3;
 const double INIT_OVERLAP_LIMIT    = 0.99999;
 
@@ -59,7 +59,7 @@ const int    SWEEPS_MCBB              = 30;
 /*MCDB METHOD PARAMETERS*/
 const int    MAX_STEPS_MCDB    = 128;
 const int    MIN_STEPS_MCDB    = 8;
-const int    SWEEPS_MCDB       = 100;
+const int    SWEEPS_MCDB       = 50;
 const double STEPS_CRUNCH_MCDB = 1.0;
 
 /*MCBF METHOD PARAMETERS*/

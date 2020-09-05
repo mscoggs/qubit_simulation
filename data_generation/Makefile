@@ -1,7 +1,7 @@
 CC=g++
 
 compile:
-	$(CC) -o main_4x4_mcdb main.cpp adiabatic.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp mcdb.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
+	$(CC) -o main_ratios main.cpp adiabatic.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp mcdb.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 
 
 fixed_protocol:
@@ -11,6 +11,11 @@ fixed_protocol:
 submit:
 	$(CC) -o cluster/make_submit cluster/make_submit.cpp -std=gnu++11
 	cluster/make_submit
+	condor_submit submit_file.txt
+
+submit_ratios:
+	$(CC) -o cluster/make_submit_ratios cluster/make_submit_ratios.cpp -std=gnu++11
+	cluster/make_submit_ratios
 	condor_submit submit_file.txt
 
 submit_unfinished:

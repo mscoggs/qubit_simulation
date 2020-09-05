@@ -247,7 +247,7 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 
 
 std::string make_path(Simulation_Parameters sim_params, std::string type){
-	std::string uni, pbc, ji, ki, jt, kt;
+	std::string uni, pbc, ji, ki, jt, kt, ri, rt;
 
 	ji = std::to_string(sim_params.j_initial);
 	ji.erase(ji.find_last_not_of('0') + 2, std::string::npos);
@@ -258,13 +258,18 @@ std::string make_path(Simulation_Parameters sim_params, std::string type){
 	kt = std::to_string(sim_params.k_target);
 	kt.erase(kt.find_last_not_of('0') + 2, std::string::npos);
 
+	ri = std::to_string(sim_params.j_initial/sim_params.k_initial);
+	rt = std::to_string(sim_params.j_target/sim_params.k_target);
+
 	if (PERIODIC) pbc = 't';
 	else pbc = 'f';
 	if (UNIFORM_SITES) uni = 't';
 	else uni = 'f';
 
-	std::string dir = "../data/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
-	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ji=" + ji + "_ki=" + ki +"_jt=" + jt +  "_kt="+ kt +".txt";
+	//std::string dir = "../data/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
+	//std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ji=" + ji + "_ki=" + ki +"_jt=" + jt +  "_kt="+ kt +".txt";
+	std::string dir = "../data_ratios/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
+	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ri=" + ri +  "_rt="+ rt +".txt";
 	std::string path = dir+file_name;
 
 	return path;
