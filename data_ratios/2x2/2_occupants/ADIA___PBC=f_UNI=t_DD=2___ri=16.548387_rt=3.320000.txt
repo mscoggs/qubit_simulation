@@ -1,0 +1,99 @@
+START_PARAMETERS
+MAX_TAU_ADIA =             200
+TOTAL_STEPS_ADIA =             100
+GROUND_E =                -2.90025
+INITIAL_E =               -2.8668
+j_initial =               0.513
+k_initial =               0.031
+b_initial =               0
+j_target =                0.83
+k_target =                0.25
+b_target =                0
+init_target_dot_squared = 0.993032
+init_state = [0.345924, 0, 0.510561, 0, 0.345924, 0, 0.345924, 0, 0.510561, 0, 0.345924, 0, ]
+target_state = [0.314581, 0, 0.549616, 0, 0.314581, 0, 0.314581, 0, 0.549616, 0, 0.314581, 0, ]
+USE_ENERGY_DISTANCE =     false
+PERIODIC =                false
+UNIFORM_SITES =           true
+DEVICE_DIMENSION =        2
+MAX_PARAM =               1
+MIN_PARAM =               0
+MIN_PARAM =               0
+DIAG =                    false
+NUM_SEEDS =               1
+DISTANCE_LIMIT =          0.005
+TAU_INIT =                0.05
+MAX_TAU =                 3
+TAU_SCALAR =              1.1
+TAU_SCALAR_TINY =         1.05
+TAU_SCALAR_BIG =          1.2
+ACCEPTANCE_PROB =         0.85
+TEMP_EXP_DECAY =          0.8
+TEMP_DECAY_ITERATIONS =   20
+TEMP_DECAY_LIMIT =        5
+RANDOM_STATES =           3
+INIT_OVERLAP_LIMIT =      0.99999
+END_PARAMETERS
+##############################################################################
+tau =               0.05
+total_steps =       100
+time_step  =        0.0005
+best_mc_result  =           0.00694802
+evolved_target_dot_squared =   0.993052
+best_evolved_state = [0.34396, 0.0342945, 0.507269, 0.0609024, 0.34396, 0.0342945, 0.34396, 0.0342945, 0.507269, 0.0609024, 0.34396, 0.0342945, ]
+distance  =         0.997119
+clock_duration  =         0.002249
+##############################################################################
+tau =               0.075
+total_steps =       100
+time_step  =        0.00075
+best_mc_result  =           0.006923
+evolved_target_dot_squared =   0.993077
+best_evolved_state = [0.34151, 0.0513097, 0.503164, 0.0911225, 0.34151, 0.0513097, 0.34151, 0.0513097, 0.503164, 0.0911225, 0.34151, 0.0513097, ]
+distance  =         0.993528
+clock_duration  =         0.005427
+##############################################################################
+tau =               0.1125
+total_steps =       100
+time_step  =        0.001125
+best_mc_result  =           0.00686698
+evolved_target_dot_squared =   0.993133
+best_evolved_state = [0.336019, 0.0765196, 0.493965, 0.135905, 0.336019, 0.0765196, 0.336019, 0.0765196, 0.493965, 0.135905, 0.336019, 0.0765196, ]
+distance  =         0.985489
+clock_duration  =         0.007893
+##############################################################################
+tau =               0.16875
+total_steps =       100
+time_step  =        0.0016875
+best_mc_result  =           0.00674235
+evolved_target_dot_squared =   0.993258
+best_evolved_state = [0.323779, 0.113286, 0.473462, 0.201246, 0.323779, 0.113286, 0.323779, 0.113286, 0.473462, 0.201246, 0.323779, 0.113286, ]
+distance  =         0.967604
+clock_duration  =         0.010295
+##############################################################################
+tau =               0.253125
+total_steps =       100
+time_step  =        0.00253125
+best_mc_result  =           0.00646901
+evolved_target_dot_squared =   0.993531
+best_evolved_state = [0.296807, 0.164954, 0.428306, 0.293165, 0.296807, 0.164954, 0.296807, 0.164954, 0.428306, 0.293165, 0.296807, 0.164954, ]
+distance  =         0.928376
+clock_duration  =         0.012748
+##############################################################################
+tau =               0.379688
+total_steps =       100
+time_step  =        0.00379688
+best_mc_result  =           0.00588851
+evolved_target_dot_squared =   0.994111
+best_evolved_state = [0.238937, 0.231112, 0.331531, 0.411193, 0.238937, 0.231112, 0.238937, 0.231112, 0.331531, 0.411193, 0.238937, 0.231112, ]
+distance  =         0.845068
+clock_duration  =         0.015201
+##############################################################################
+tau =               0.569531
+total_steps =       100
+time_step  =        0.00569531
+best_mc_result  =           0.0047438
+evolved_target_dot_squared =   0.995256
+best_evolved_state = [0.12231, 0.295062, 0.137064, 0.526471, 0.12231, 0.295062, 0.12231, 0.295062, 0.137064, 0.526471, 0.12231, 0.295062, ]
+distance  =         0.680788
+clock_duration  =         0.017574
