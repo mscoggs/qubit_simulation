@@ -42,7 +42,7 @@ const double MAX_TAU               = 3;
 const double TAU_SCALAR            = 1.15;
 const double TAU_SCALAR_TINY       = 1.05;
 const double TAU_SCALAR_BIG        = 1.3;
-const double ACCEPTANCE_PROB       = 0.65;
+const double ACCEPTANCE_PROB       = 0.55;
 const double TEMP_EXP_DECAY        = 0.90;
 const double MIN_TEMP_FRACTION     = 0.01;
 const int    TEMP_DECAY_ITERATIONS = ceil(log(MIN_TEMP_FRACTION)/log(TEMP_EXP_DECAY)); //30 for our given values
@@ -60,9 +60,9 @@ const int    SWEEPS_MCBB              = 90;
 /*MCDB METHOD PARAMETERS*/
 const int    MAX_STEPS_MCDB    = 128;
 const int    MIN_STEPS_MCDB    = 4; //MAKE SURE THIS IS LESS THAN OR EQUAL TO THE NUMBER OF BANGS
-const int    NUMBER_OF_BANGS_MCDB     = MIN_STEPS_MCDB;
+const int    NUMBER_OF_BANGS_MCDB     = MIN_STEPS_MCDB+1;
 const int    TOTAL_STEP_CHANGES= (int)round((log2(MAX_STEPS_MCDB))) + 1;
-const int    SWEEPS_MCDB       = 50;
+const int    SWEEPS_MCDB       = 150;
 const double STEPS_CRUNCH_MCDB = 1.0;
 
 /*MCBF METHOD PARAMETERS*/
