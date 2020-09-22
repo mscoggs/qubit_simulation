@@ -7,7 +7,7 @@
 
 
 
-void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params);
+void save_mcbf_data(Simulation_Parameters& sim_params);
 
 
 /**
@@ -15,7 +15,7 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params);
 
     @param sim_params contains all of the variables for the simulation
 */
-void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params);
+void save_mcbb_data(Simulation_Parameters& sim_params);
 
 
 /**
@@ -23,7 +23,7 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params);
 
     @param sim_params contains all of the variables for the simulation
 */
-void save_mcdb_data_fixed_tau(Simulation_Parameters& sim_params);
+void save_mcdb_data(Simulation_Parameters& sim_params);
 
 
 /**

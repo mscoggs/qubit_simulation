@@ -45,13 +45,13 @@ void print_arrays_mcbb(double* j_times, double* k_times, double* b_times){
 	int i;
 	printf("\nj_time=[");
 
-	for (i=0; i<2*NUMBER_OF_BANGS_MCBB; i++) printf(" %5.4f |", j_times[i]);
+	for (i=0; i<2*NUMBER_OF_BANGS; i++) printf(" %5.4f |", j_times[i]);
 
 	printf("]\nk_times=[");
-	for (i=0; i<2*NUMBER_OF_BANGS_MCBB; i++) printf(" %5.4f |", k_times[i]);
+	for (i=0; i<2*NUMBER_OF_BANGS; i++) printf(" %5.4f |", k_times[i]);
 
 	//printf("]\nb_times=[");
-	//for (i=0; i<2*NUMBER_OF_BANGS_MCBB; i++) printf(" %5.4f |", b_times[i]);
+	//for (i=0; i<2*NUMBER_OF_BANGS; i++) printf(" %5.4f |", b_times[i]);
 	printf("\n");
 }
 
@@ -161,7 +161,7 @@ void print_mcbb_info(Simulation_Parameters& sim_params){
 		printf("################### THE  MONTE-CARLO BANG-BANG METHOD ######################\n");
 		printf("############################################################################\n");
 		printf("|| OCCUPANTS:       %4i || DIMENSION:        %4i || SEED:          %4i ||\n", sim_params.num_occupants, sim_params.N, sim_params.seed);
-		printf("|| TAU_MAX:       %4.4f || TAU:            %4.4f || TOTAL_SWEEPS:  %4i ||\n", double(MAX_TAU), sim_params.tau, SWEEPS_MCBB*NUMBER_OF_BANGS_MCBB*sim_params.sweeps_multiplier);
+		printf("|| TAU_MAX:       %4.4f || TAU:            %4.4f || TOTAL_SWEEPS:  %4i ||\n", double(MAX_TAU), sim_params.tau, SWEEPS_MCBB*NUMBER_OF_BANGS*sim_params.sweeps_multiplier);
 		printf("|| TEMPERATURE:   %4.4f || TEMP_DECAYS:      %4i ||                     ||\n", sim_params.temperature, TEMP_DECAY_ITERATIONS);
 		printf("|| J_INITIAL:     %4.4f || K_INITIAL:      %4.4f || B_INITIAL:   %4.4f ||\n", sim_params.j_initial,     sim_params.k_initial,   sim_params.b_initial);
 		printf("|| J_TARGET:      %4.4f || K_TARGET:       %4.4f || B_TARGET:    %4.4f ||\n", sim_params.j_target,      sim_params.k_target,    sim_params.b_target);

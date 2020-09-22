@@ -19,7 +19,7 @@ void mcbf_method(Simulation_Parameters& sim_params){
 
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || sim_params.init_target_dot_squared > INIT_OVERLAP_LIMIT){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
-		if(SAVE_DATA) save_mcbf_data_fixed_tau(sim_params);
+		if(SAVE_DATA) save_mcbf_data(sim_params);
 		sim_params.clear_mcbf_params();
 		return;
 	}
@@ -44,10 +44,10 @@ void mcbf_method(Simulation_Parameters& sim_params){
 		if(PRINT) print_mc_results(sim_params);
 		if(SAVE_DATA){
 			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
-		       	save_mcbf_data_fixed_tau(sim_params);
+		       	save_mcbf_data(sim_params);
 		}
 
-		if(sim_params.new_distance < DISTANCE_LIMIT) break;
+		if(exit_simulation(sim_params)) break;
 		else{
 			calc_tau(sim_params);
 			calc_total_steps_mcbf(sim_params);
@@ -154,8 +154,12 @@ void evolve_mcbf(Simulation_Parameters& sim_params, double *j_array, double *k_a
 
 void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 	int i, j, random_row, random_col, init_state_index, count=0;
-	double *state_random,*j_temp, *k_temp, *b_temp, sum=0, change, old_mc_result, new_mc_result;
+	double *state_random,*j_temp, *k_temp, *b_temp,*j_array, *k_array, *b_array, sum=0, change, old_mc_result, new_mc_result;
 
+
+	j_array           = new double[2*NUMBER_OF_SITES*sim_params.total_steps]();
+	k_array          = new double[2*NUMBER_OF_SITES*sim_params.total_steps]();
+	b_array          = new double[NUMBER_OF_SITES*sim_params.total_steps]();
 	j_temp           = new double[2*NUMBER_OF_SITES*sim_params.total_steps]();
 	k_temp           = new double[2*NUMBER_OF_SITES*sim_params.total_steps]();
 	b_temp           = new double[NUMBER_OF_SITES*sim_params.total_steps]();
@@ -166,31 +170,38 @@ void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 	if(PRINT) printf("\n\n\n\n...Calculating initial temperature based on %i random starting states...\n", RANDOM_STATES);
 
 	for (i=0;i<RANDOM_STATES;i++){
-		for (j=0; j<sim_params.N*2;j++) state_random[j] =0.0;
-		init_state_index = (int) floor(get_random_double(0,sim_params.N,sim_params.rng));
-		state_random[init_state_index*2] = 1;
+		for (i=0; i<sim_params.N*2;i++) state_random[i] = get_random_double(0,1,sim_params.rng);
+    normalize_state(state_random, sim_params.N);
 		std::memcpy(sim_params.state,state_random, 2*sim_params.N*sizeof(double));
 
-		init_arrays_mcbf(sim_params, j_temp, k_temp, b_temp);
-		evolve_mcbf(sim_params, j_temp,k_temp,b_temp);
-		old_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
+		init_arrays_mcbf(sim_params, j_array,k_array,b_array);
+		evolve_mcbf(sim_params, j_array,k_array,b_array);
+		sim_params.best_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
+    old_mc_result = sim_params.best_mc_result;
 
 		for (j=0; j<SWEEPS_MCBF*sim_params.total_steps;j++){
+			copy_arrays_mcbf(sim_params, j_temp, k_temp,b_temp,j_array, k_array, b_array,0,0);//a temporary array, used in the undoing of the changes
+
 			change = get_change_mcbf(sim_params, 0);
 			random_row = floor(get_random_double(0,sim_params.total_steps,sim_params.rng));
 			random_col = floor(get_random_double(0,NUMBER_OF_SITES*2,sim_params.rng));
-			change_array_mcbf(j_temp,k_temp,b_temp,random_row,random_col,change,j, sim_params.total_steps);
+			change_array_mcbf(j_array, k_array, b_array,random_row,random_col,change,j, sim_params.total_steps);
 
 			std::memcpy(sim_params.state,state_random, 2*sim_params.N*sizeof(double));//resetting state
-			evolve_mcbf(sim_params, j_temp,k_temp,b_temp);
+			evolve_mcbf(sim_params, j_array, k_array, b_array);
 			new_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
-			if (new_mc_result>old_mc_result) sum += (new_mc_result-old_mc_result), count++;
-			old_mc_result=new_mc_result;
+
+			if (new_mc_result<=sim_params.best_mc_result) sim_params.best_mc_result=new_mc_result, old_mc_result=new_mc_result;
+			else if (new_mc_result<old_mc_result) old_mc_result=new_mc_result;
+      else{
+          sum += (new_mc_result-old_mc_result), count++;
+          copy_arrays_mcbf(sim_params, j_array, k_array, b_array,  j_temp, k_temp, b_temp, 0,0);//undoing the change
+      }
 		}
 	}
 	sim_params.initial_temperature = -(sum/(count*log(ACCEPTANCE_PROB)));
 
-	delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] state_random, delete[] sim_params.state;
+	delete[] j_array, delete[] k_array, delete[] b_array, delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] state_random, delete[] sim_params.state;
 }
 
 
@@ -383,7 +394,7 @@ void binary_search_mcbf(Simulation_Parameters& sim_params){
 	// 		sim_params.tau = (tau_min+tau_max)/2;
 	// 		calc_total_steps_mcbf(sim_params);
 	// 		sim_params.time_step = sim_params.tau/((double) sim_params.total_steps);
-	// 		if(SAVE_DATA) save_mcbf_data_fixed_tau(sim_params);
+	// 		if(SAVE_DATA) save_mcbf_data(sim_params);
 	// 	}
 	// }
 	// if(PRINT) printf("\nUpper and lower tau are close enough, exiting binary_search_mcbf\n");

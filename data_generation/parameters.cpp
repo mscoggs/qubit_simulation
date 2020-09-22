@@ -74,13 +74,13 @@ void Simulation_Parameters::initialize_hamiltonians(double ji, double ki, double
 
 void Simulation_Parameters::init_mcbb_params(Simulation_Parameters& sim_params){
 	best_mc_result_fixed_tau      = new double[NUM_SEEDS]();
-	j_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS_MCBB]();
-	k_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS_MCBB]();
-	b_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS_MCBB]();
+	j_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
+	k_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
+	b_best_fixed_tau       = new double[NUM_SEEDS*2*NUMBER_OF_BANGS]();
 
-	j_best		          = new double[2*NUMBER_OF_BANGS_MCBB]();
-	k_best  	          = new double[2*NUMBER_OF_BANGS_MCBB]();
-	b_best 		          = new double[2*NUMBER_OF_BANGS_MCBB]();
+	j_best		          = new double[2*NUMBER_OF_BANGS]();
+	k_best  	          = new double[2*NUMBER_OF_BANGS]();
+	b_best 		          = new double[2*NUMBER_OF_BANGS]();
 
 
 	tau		  = TAU_INIT;
@@ -89,7 +89,7 @@ void Simulation_Parameters::init_mcbb_params(Simulation_Parameters& sim_params){
 	sweeps_multiplier = 1;
 
 	start = std::clock();
-	
+
 	if(DIAG){
 		int i,j;
 		double *filler_ham, *real_ham;
@@ -161,7 +161,7 @@ void Simulation_Parameters::clear_mcbb_params(){
 
 
 
-void Simulation_Parameters::init_mcdb_params(){
+void Simulation_Parameters::init_mcdb_params(Simulation_Parameters& sim_params){
 	max_steps_mcdb    = MAX_STEPS_MCDB;
     saved_states      = new double[2*N*(MAX_STEPS_MCDB+1)]();
 	best_mc_result_fixed_tau = new double[NUM_SEEDS]();
@@ -183,7 +183,6 @@ void Simulation_Parameters::init_mcdb_params(){
 	old_distance      = 1;
 	new_distance      = 1;
 	sweeps_multiplier = 1;
-    max_jumps         = NUMBER_OF_BANGS_MCDB*2-1;
 
 	e10  = new double[2*N*N*(TOTAL_STEP_CHANGES+1)]();
 	e01  = new double[2*N*N*(TOTAL_STEP_CHANGES+1)]();
@@ -191,6 +190,61 @@ void Simulation_Parameters::init_mcdb_params(){
 
 	start = std::clock();
 	for(int k=0; k<2*N; k++) saved_states[k] = init_state[k];
+	if(MCBB_SECONDARY){
+		j_best_secondary      = new double[2*NUMBER_OF_BANGS]();
+		k_best_secondary      = new double[2*NUMBER_OF_BANGS]();
+		b_best_secondary      = new double[2*NUMBER_OF_BANGS]();
+		if(DIAG){
+			int i,j;
+			double *filler_ham, *real_ham;
+			filler_ham                = new double[2*N*N]();
+			real_ham                  = new double[N*N]();
+			P_11 		          = new double[2*N*N]();
+			P_11_inv                  = new double[2*N*N]();
+			D_11                      = new double[N]();
+			P_10 		          = new double[2*N*N]();
+			P_10_inv                  = new double[2*N*N]();
+			D_10                      = new double[N]();
+			P_01 		          = new double[2*N*N]();
+			P_01_inv                  = new double[2*N*N]();
+			D_01                      = new double[N]();
+
+			double jkb_11[3] = {1,1,0};
+			double jkb_10[3] = {1,0,0};
+			double jkb_01[3] = {0,1,0};
+			construct_device_hamiltonian_uniform(sim_params, filler_ham, jkb_11);
+			for(i=0;i<N*N;i++) real_ham[i] = filler_ham[i*2];
+			diag_hermitian_real_double(N, real_ham,P_11,D_11);
+			construct_device_hamiltonian_uniform(sim_params, filler_ham, jkb_10);
+			for(i=0;i<N*N;i++) real_ham[i] = filler_ham[i*2];
+			diag_hermitian_real_double(N, real_ham,P_10,D_10);
+			construct_device_hamiltonian_uniform(sim_params, filler_ham, jkb_01);
+			for(i=0;i<N*N;i++) real_ham[i] = filler_ham[i*2];
+			diag_hermitian_real_double(N, real_ham,P_01,D_01);
+			for(i=0;i<N;i++){
+				for(j=0;j<N;j++){
+					P_11_inv[i+j*N] = P_11[i*N+j];
+					P_10_inv[i+j*N] = P_10[i*N+j];
+					P_01_inv[i+j*N] = P_01[i*N+j];
+				}
+			}
+			for(i=0;i<N*N;i++){
+				P_11_inv[2*N*N-(i+1)*2] = P_11_inv[N*N-(i+1)];
+				P_11_inv[2*N*N-(i+1)*2+1] = 0;
+				P_01_inv[2*N*N-(i+1)*2] = P_01_inv[N*N-(i+1)];
+				P_01_inv[2*N*N-(i+1)*2+1] = 0;
+				P_10_inv[2*N*N-(i+1)*2] = P_10_inv[N*N-(i+1)];
+				P_10_inv[2*N*N-(i+1)*2+1] = 0;
+				P_11[2*N*N-(i+1)*2] = P_11[N*N-(i+1)];
+				P_11[2*N*N-(i+1)*2+1] = 0;
+				P_01[2*N*N-(i+1)*2] = P_01[N*N-(i+1)];
+				P_01[2*N*N-(i+1)*2+1] = 0;
+				P_10[2*N*N-(i+1)*2] = P_10[N*N-(i+1)];
+				P_10[2*N*N-(i+1)*2+1] = 0;
+			}
+
+		}
+	}
 }
 
 

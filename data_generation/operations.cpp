@@ -315,3 +315,17 @@ void normalize_state(double *state, int N){
     for(i = 0; i<2*N;i++) state[i] = state[i]/sqrt(sum);
     if(CHECK) check_norm(state, N);
 }
+
+
+
+
+bool exit_simulation(Simulation_Parameters& sim_params){
+	bool backwards, energy_distance, state_distance;
+
+
+	backwards = (sim_params.old_distance < sim_params.new_distance);
+	energy_distance = ((sim_params.new_distance < DISTANCE_LIMIT) && USE_ENERGY_DISTANCE);
+	state_distance =  ((1-sim_params.evolved_target_dot_squared < DISTANCE_LIMIT) && !USE_ENERGY_DISTANCE);
+	if(backwards || energy_distance || state_distance) return true;
+	else return false;
+}

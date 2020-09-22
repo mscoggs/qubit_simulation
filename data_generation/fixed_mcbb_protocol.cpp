@@ -108,9 +108,9 @@ double find_next_time(double time, double tau,double* j_array, double* k_array,d
 
 
 	jkb[0] = fmod(jkb_index[0],2), jkb[1] = fmod(jkb_index[1],2), jkb[2] = fmod(jkb_index[2],2);
-	if(jkb_index[0] == NUMBER_OF_BANGS_MCBB*2) j =false;
-	if(jkb_index[1] == NUMBER_OF_BANGS_MCBB*2) k =false;
-	if(jkb_index[2] == NUMBER_OF_BANGS_MCBB*2) b =false;
+	if(jkb_index[0] == NUMBER_OF_BANGS*2) j =false;
+	if(jkb_index[1] == NUMBER_OF_BANGS*2) k =false;
+	if(jkb_index[2] == NUMBER_OF_BANGS*2) b =false;
 
 	if(!(j || k ||b)) return tau;
 
@@ -121,6 +121,6 @@ double find_next_time(double time, double tau,double* j_array, double* k_array,d
 	if(newtime == k_array[jkb_index[1]]) jkb_index[1] += 1;
 	if(newtime == b_array[jkb_index[2]]) jkb_index[2] += 1;
 
-	if(jkb_index[0] > 2*NUMBER_OF_BANGS_MCBB ||  jkb_index[1] > 2*NUMBER_OF_BANGS_MCBB || jkb_index[2] > 2*NUMBER_OF_BANGS_MCBB) printf("ERROR: FIND_NEXT_TIME INDEX OUT OF BOUNDS"), exit(0);
+	if(jkb_index[0] > 2*NUMBER_OF_BANGS ||  jkb_index[1] > 2*NUMBER_OF_BANGS || jkb_index[2] > 2*NUMBER_OF_BANGS) printf("ERROR: FIND_NEXT_TIME INDEX OUT OF BOUNDS"), exit(0);
 	return newtime;
 }

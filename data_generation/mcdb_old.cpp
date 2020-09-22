@@ -23,7 +23,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || (sim_params.init_target_dot_squared > INIT_OVERLAP_LIMIT && USE_ENERGY_DISTANCE) || (1-sim_params.init_target_dot_squared < DISTANCE_LIMIT && !USE_ENERGY_DISTANCE)){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
 		if(PRINT) print_mcdb_info(sim_params);
-		if(SAVE_DATA) save_mcdb_data_fixed_tau(sim_params);
+		if(SAVE_DATA) save_mcdb_data(sim_params);
 		sim_params.clear_mcdb_params();
 		return;
 	}
@@ -66,7 +66,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 		if(PRINT) print_mc_results(sim_params);
 		if(SAVE_DATA) {
 			sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC;
-			save_mcdb_data_fixed_tau(sim_params);
+			save_mcdb_data(sim_params);
 		}
 		if(sim_params.old_distance < sim_params.new_distance) break;
 		if((sim_params.new_distance < DISTANCE_LIMIT && USE_ENERGY_DISTANCE) || (1-sim_params.evolved_target_dot_squared < DISTANCE_LIMIT && !USE_ENERGY_DISTANCE)) break;

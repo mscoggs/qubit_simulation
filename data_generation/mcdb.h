@@ -4,6 +4,7 @@
 #include <gsl/gsl_rng.h>
 
 #include "parameters.h"
+#include "mcbb.h"
 
 /**
 		Runs the monte carlo discrete bang method, iterating over each seed. For each seed, the total time (tau) increased iteratively
@@ -21,7 +22,9 @@ void mcdb_method(Simulation_Parameters& sim_params);
 */
 void mcdb_simulation(Simulation_Parameters& sim_params);
 
-
+void convert_mcdb_to_mcbb(Simulation_Parameters& sim_params, double *j_mcbb, double *k_mcbb, double *b_mcbb, double *j_mcdb, double *k_mcdb, double *b_mcdb);
+void mcbb_secondary_simulation(Simulation_Parameters& sim_params);
+double get_change_mcbb_secondary(Simulation_Parameters& sim_params, int iteration);
 /**
     Evolves the starting state (the ground state of our initial hamiltonian) according to exp^(iH) where H is the hamiltonian which is
         a function of the j/k/b protocols

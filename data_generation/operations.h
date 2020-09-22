@@ -171,4 +171,6 @@ void get_best_seed(Simulation_Parameters& sim_params);
 
 double complex_dot_squared(int size, double *v1, double *v2);
 void normalize_state(double *state, int N);
+bool exit_simulation(Simulation_Parameters& sim_params);
+
 #endif
