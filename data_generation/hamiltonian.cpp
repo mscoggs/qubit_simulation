@@ -42,11 +42,11 @@ void construct_device_hamiltonian(Simulation_Parameters sim_params, double *hami
 				}
 			}
 		}
-		for (j=0; j<NUMBER_OF_SITES;j++){//The sim_params.b term calculation
+		/*for (j=0; j<NUMBER_OF_SITES;j++){//The sim_params.b term calculation
 			sign = -1;
 			if(((1ULL<<j)&sim_params.b[i])>0) sign=1;
 			hamiltonian[((sim_params.N*i)+i)*2] += b_array[index*NUMBER_OF_SITES+j]*sign;
-		}
+		}*/
 	}
 	delete[] neighbors, delete[] v;
 	if(CHECK) check_hermicity(hamiltonian, sim_params.N);
@@ -90,11 +90,11 @@ void construct_device_hamiltonian_uniform(Simulation_Parameters sim_params, doub
 				}
 			}
 		}
-		for (j=0; j<NUMBER_OF_SITES;j++){//The B term calculation
+		/*for (j=0; j<NUMBER_OF_SITES;j++){//The B term calculation
 			sign = -1;
 			if(((1ULL<<j)&sim_params.b[i])>0) sign=1;
 			hamiltonian[((sim_params.N*i)+i)*2] += jkb[2]*sign;
-		}
+		}*/
 	}
 	delete[] neighbors, delete[] v;
 	if(CHECK) check_hermicity(hamiltonian, sim_params.N);

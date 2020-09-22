@@ -72,7 +72,7 @@ double cost(double *target_state, int N, double *state, double *hamiltonian, boo
 	}else{
 
 		memcpy(state_conj, target_state, 2*N*sizeof(double)), memcpy(state_temp, state, 2*N*sizeof(double));
-		result = 1-complex_dot_squared(N*2, state_conj, state_temp);
+		result = (1-complex_dot_squared(N*2, state_conj, state_temp));
 
 	}
 	delete[] state_conj, delete[] state_temp;
@@ -163,10 +163,17 @@ void calc_tau(Simulation_Parameters& sim_params){
 	else if((abs(sim_params.old_distance - sim_params.new_distance) < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_BIG;
 	else tau_scalar = TAU_SCALAR;
 
-	sim_params.tau_previous = sim_params.tau;
 	sim_params.tau = sim_params.tau*tau_scalar;
 }
 
+
+
+double calc_new_temperature(Simulation_Parameters& sim_params, int temp_index){
+	double scalar = pow(TEMP_EXP_DECAY,(double)(1.0*temp_index));
+
+	if(temp_index < TEMP_DECAY_ITERATIONS) sim_params.temperature = scalar*sim_params.initial_temperature;
+	else sim_params.temperature = 0;
+}
 
 
 void construct_lattice(int lattice[NX][NY]){
@@ -278,6 +285,7 @@ void get_best_seed(Simulation_Parameters& sim_params){
 	int INCX = 1,INCY = 1;
 	double result, result2;
 
+    sim_params.best_mc_result = sim_params.best_mc_result_fixed_tau[0];
 	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
 		if(sim_params.best_mc_result_fixed_tau[sim_params.seed-1] <= sim_params.best_mc_result){
 			sim_params.best_mc_result = sim_params.best_mc_result_fixed_tau[sim_params.seed-1];
@@ -297,4 +305,13 @@ double complex_dot_squared(int size, double *v1, double *v2){
 		im += v1[i]*v2[i+1] - v1[i+1]*v2[i];
 	}
 	return re*re + im*im;
+}
+
+
+void normalize_state(double *state, int N){
+    int i;
+    double sum = 0;
+    for(i = 0; i<2*N;i++) sum += state[i]*state[i];
+    for(i = 0; i<2*N;i++) state[i] = state[i]/sqrt(sum);
+    if(CHECK) check_norm(state, N);
 }

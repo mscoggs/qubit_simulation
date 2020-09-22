@@ -119,6 +119,8 @@ double calc_distance(Simulation_Parameters& sim_params);
 */
 void calc_tau(Simulation_Parameters& sim_params);
 
+double calc_new_temperature(Simulation_Parameters& sim_params, int temp_index);
+
 /**
 		Build a NX*NY lattice, with sites 1 through NX*NY listed in a snaking pattern
 
@@ -168,4 +170,5 @@ void get_best_seed(Simulation_Parameters& sim_params);
 
 
 double complex_dot_squared(int size, double *v1, double *v2);
+void normalize_state(double *state, int N);
 #endif

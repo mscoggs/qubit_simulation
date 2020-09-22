@@ -15,9 +15,9 @@
 
 
 /*SWITCHES FOR EACH TYPE OF SIMULATION METHOD*/
- const bool MCBF      = false;
- const bool MCBB      = false;
  const bool MCDB      = true;
+ const bool MCBB      = false;
+ const bool MCBF      = false;
  const bool ADIA      = false;
  const bool SAVE_DATA = true;
 
@@ -29,42 +29,45 @@ const bool   UNIFORM_SITES         = true;
 const double MAX_PARAM             = 1.0;
 const double MIN_PARAM             = 0.0;
 const int    DEVICE_DIMENSION      = 2;
-const int    NX                    = 2;
+const int    NX                    = 3;
 const int    NY                    = NX;
 const int    NUMBER_OF_SITES       = NX*NY;
 
 /*SIMULATION PARAMETERS*/
-const bool   DIAG                  = false;
+const bool   DIAG                  = true;
 const int    NUM_SEEDS             = 1;
-const double DISTANCE_LIMIT        = 0.005;
-const double TAU_INIT              = 0.05;
+const double DISTANCE_LIMIT        = 0.01;
+const double TAU_INIT              = 0.1;
 const double MAX_TAU               = 3;
-const double TAU_SCALAR            = 1.1;
+const double TAU_SCALAR            = 1.15;
 const double TAU_SCALAR_TINY       = 1.05;
-const double TAU_SCALAR_BIG        = 1.2;
-const double ACCEPTANCE_PROB       = 0.85;
-const double TEMP_EXP_DECAY        = 0.80;
-const int    TEMP_DECAY_ITERATIONS = 20;
-const int    TEMP_DECAY_LIMIT      = 5;
-const int    RANDOM_STATES         = 3;
+const double TAU_SCALAR_BIG        = 1.3;
+const double ACCEPTANCE_PROB       = 0.65;
+const double TEMP_EXP_DECAY        = 0.90;
+const double MIN_TEMP_FRACTION     = 0.01;
+const int    TEMP_DECAY_ITERATIONS = ceil(log(MIN_TEMP_FRACTION)/log(TEMP_EXP_DECAY)); //30 for our given values
+const int    ZERO_TEMP_ITERATIONS  = 15;
+const int    RANDOM_STATES         = 4;
 const double INIT_OVERLAP_LIMIT    = 0.99999;
 
 
 /*MCBB METHOD PARAMETERS*/
 const double MAX_CHANGE_FRACTION_MCBB = 0.9;
-const double MIN_CHANGE_FRACTION_MCBB = 0.01;
-const int    NUMBER_OF_BANGS          = 3;
-const int    SWEEPS_MCBB              = 30;
+const double MIN_CHANGE_FRACTION_MCBB = 0.02;
+const int    NUMBER_OF_BANGS_MCBB     = 6;
+const int    SWEEPS_MCBB              = 90;
 
 /*MCDB METHOD PARAMETERS*/
 const int    MAX_STEPS_MCDB    = 128;
-const int    MIN_STEPS_MCDB    = 8;
+const int    MIN_STEPS_MCDB    = 4; //MAKE SURE THIS IS LESS THAN OR EQUAL TO THE NUMBER OF BANGS
+const int    NUMBER_OF_BANGS_MCDB     = MIN_STEPS_MCDB;
+const int    TOTAL_STEP_CHANGES= (int)round((log2(MAX_STEPS_MCDB))) + 1;
 const int    SWEEPS_MCDB       = 50;
 const double STEPS_CRUNCH_MCDB = 1.0;
 
 /*MCBF METHOD PARAMETERS*/
-const double MAX_CHANGE_MCBF_INIT = 0.5*(MAX_PARAM-MIN_PARAM);
-const double MIN_CHANGE_MCBF_INIT = 0.1*(MAX_PARAM-MIN_PARAM);
+const double MAX_CHANGE_MCBF = 0.6*(MAX_PARAM-MIN_PARAM);
+const double MIN_CHANGE_MCBF = 0.05*(MAX_PARAM-MIN_PARAM);
 const int    SWEEPS_MCBF            = 50;
 const int    TOTAL_STEPS_INIT_MCBF  = 5;
 const int    MAX_EVOLVE_STEPS_MCBF  = 4*TOTAL_STEPS_INIT_MCBF;
@@ -92,8 +95,8 @@ const int TOTAL_STEPS_ADIA   = 50;
 
 
 //Tests and debugging help
-const bool CHECK            = false;
-const bool PRINT            = false;
+const bool CHECK            = true;
+const bool PRINT            = true;
 const bool PRINT_COMMUTATOR = false;
 
 
@@ -102,10 +105,10 @@ const bool PRINT_COMMUTATOR = false;
 class Simulation_Parameters{
 public:
 	std::clock_t start;
-	double *ham_target, *ham_initial, *init_state, *target_state, *state, *jkb_initial, *jkb_target, *best_mc_result_fixed_tau, *evolved_state_fixed_tau, *best_evolved_state, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10, *j_best_scaled, *k_best_scaled, *b_best_scaled, *saved_states;
-	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, tau_previous, time_step, temperature,initial_temperature, best_mc_result,initial_E, old_distance, new_distance, temp_distance, init_target_dot_squared, evolved_target_dot_squared, duration;
+	double *ham_target, *ham_initial, *init_state, *target_state, *state, *jkb_initial, *jkb_target, *best_mc_result_fixed_tau, *evolved_state_fixed_tau, *best_evolved_state, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10, *j_best_scaled, *k_best_scaled, *b_best_scaled, *saved_states, *P_11, *P_11_inv, *D_11, *P_10, *P_10_inv, *D_10, *P_01, *P_01_inv, *D_01;
+	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, time_step, temperature,initial_temperature, best_mc_result,initial_E, old_distance, new_distance, temp_distance, init_target_dot_squared, evolved_target_dot_squared, duration;
 	unsigned long long int *b;
-	int lattice[NX][NY], num_occupants,N,*table, *bonds, seed, total_steps, temp_iteration, max_steps_mcdb, sweeps_multiplier, total_sweeps;
+	int lattice[NX][NY], num_occupants,N,*table, *bonds, seed, total_steps, max_steps_mcdb, sweeps_multiplier, total_sweeps, j_bangs, k_bangs, max_jumps;
 	gsl_rng * rng;
 
 
@@ -138,7 +141,7 @@ public:
 	/**
 		Initializing/clearing the arrays for the simulations
 	*/
-	void init_mcbb_params();
+	void init_mcbb_params(Simulation_Parameters& sim_params);
 	void clear_mcbb_params();
 	void init_mcdb_params();
 	void clear_mcdb_params();

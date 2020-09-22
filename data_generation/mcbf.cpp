@@ -59,8 +59,8 @@ void mcbf_method(Simulation_Parameters& sim_params){
 
 
 void mcbf_simulation(Simulation_Parameters& sim_params){
-	int i,j, random_row, random_col, proposal_accepted,proposal_count, poor_acceptance_streak;
-	double *j_array, *k_array,*b_array,*j_temp, *k_temp, *b_temp, acceptance_rate, old_mc_result, new_mc_result, change;
+	int i,j, random_row, random_col, proposal_accepted,proposal_count;
+	double *j_array, *k_array,*b_array,*j_temp, *k_temp, *b_temp, old_mc_result, new_mc_result, change;
 
 	j_array          = new double[2*NUMBER_OF_SITES*sim_params.total_steps]();
 	k_array          = new double[2*NUMBER_OF_SITES*sim_params.total_steps]();
@@ -81,15 +81,16 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 
 	if(PRINT) print_mcbf_info(sim_params);
 
-	for (i=0;i<TEMP_DECAY_ITERATIONS;i++){
+	for (i=0;i<TEMP_DECAY_ITERATIONS+ZERO_TEMP_ITERATIONS;i++){
 
+		calc_new_temperature(sim_params, i);
 		proposal_accepted = 0,proposal_count = 0;
 
 		for (j=0; j<SWEEPS_MCBF*sim_params.total_steps*sim_params.sweeps_multiplier;j++){
 
 			copy_arrays_mcbf(sim_params, j_temp, k_temp,b_temp,j_array, k_array, b_array,0,0);//a temporary array, used in the undoing of the changes
 
-			change = get_change_mcbf(sim_params);
+			change = get_change_mcbf(sim_params,i);
 			random_row = floor(get_random_double(0,sim_params.total_steps,sim_params.rng));
 			random_col = floor(get_random_double(0,NUMBER_OF_SITES*2,sim_params.rng));
 			change_array_mcbf(j_array,k_array,b_array,random_row,random_col,change,j, sim_params.total_steps);
@@ -98,24 +99,13 @@ void mcbf_simulation(Simulation_Parameters& sim_params){
 			evolve_mcbf(sim_params, j_array,k_array,b_array);
 			new_mc_result = cost(sim_params.target_state, sim_params.N,sim_params.state, sim_params.ham_target);
 
-			if (new_mc_result<sim_params.best_mc_result) sim_params.best_mc_result=new_mc_result, old_mc_result=new_mc_result,  copy_arrays_mcbf(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), std::memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double)), poor_acceptance_streak = 0;
+			if (new_mc_result<sim_params.best_mc_result) sim_params.best_mc_result=new_mc_result, old_mc_result=new_mc_result,  copy_arrays_mcbf(sim_params, sim_params.j_best, sim_params.k_best, sim_params.b_best,j_array, k_array, b_array, 0, 0), std::memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double));
 			else if (new_mc_result<=old_mc_result) old_mc_result=new_mc_result;
 			else if (get_random_double(0,1,sim_params.rng)<exp(-(new_mc_result-old_mc_result)/(sim_params.temperature))) old_mc_result=new_mc_result, proposal_accepted++, proposal_count++;
 			else copy_arrays_mcbf(sim_params, j_array, k_array, b_array,  j_temp, k_temp, b_temp, 0,0), proposal_count++;//undoing the change
 		}
 
-		acceptance_rate = (double)proposal_accepted/proposal_count;
-		if(acceptance_rate<0.1) poor_acceptance_streak++;
-		else poor_acceptance_streak = 0;
-
-		if(PRINT) printf("           Best Cost:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_mc_result,acceptance_rate,proposal_accepted, proposal_count);
-
-		if(poor_acceptance_streak>TEMP_DECAY_LIMIT){
-			if(PRINT) printf("NO MC PROGRESS FOR %i TEMP DECAY ITERATIONS, TERMINATING\n", TEMP_DECAY_LIMIT);
-			break;
-		}
-
-		sim_params.temperature=sim_params.temperature*TEMP_EXP_DECAY;
+		if(PRINT) printf("           Best Cost:   %3.6f  ||  Acceptance Rate: %3.4f (%i/%i)\n",sim_params.best_mc_result,(double)proposal_accepted/proposal_count,proposal_accepted, proposal_count);
 	}
 	delete[] j_array, delete[] k_array, delete[] b_array, delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] sim_params.state;
 }
@@ -186,7 +176,7 @@ void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 		old_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
 
 		for (j=0; j<SWEEPS_MCBF*sim_params.total_steps;j++){
-			change = get_change_mcbf(sim_params);
+			change = get_change_mcbf(sim_params, 0);
 			random_row = floor(get_random_double(0,sim_params.total_steps,sim_params.rng));
 			random_col = floor(get_random_double(0,NUMBER_OF_SITES*2,sim_params.rng));
 			change_array_mcbf(j_temp,k_temp,b_temp,random_row,random_col,change,j, sim_params.total_steps);
@@ -198,7 +188,7 @@ void calc_initial_temp_mcbf(Simulation_Parameters& sim_params){
 			old_mc_result=new_mc_result;
 		}
 	}
-	sim_params.temperature = -(sum/(count*log(ACCEPTANCE_PROB)));
+	sim_params.initial_temperature = -(sum/(count*log(ACCEPTANCE_PROB)));
 
 	delete[] j_temp, delete[] k_temp, delete[] b_temp, delete[] state_random, delete[] sim_params.state;
 }
@@ -255,12 +245,14 @@ void copy_arrays_mcbf(Simulation_Parameters& sim_params, double* j_to,  double* 
 
 
 
-double get_change_mcbf(Simulation_Parameters& sim_params){
+double get_change_mcbf(Simulation_Parameters& sim_params, int temp_iteration){
 	int sign;
 	double max_change, abs_change, temp_scalar;
 
+	temp_scalar = (double)temp_iteration/(double)TEMP_DECAY_ITERATIONS;
+
   sign       = pow(-1,(int)floor(get_random_double(0,10,sim_params.rng)));
-	max_change = MAX_CHANGE_MCBF_INIT * (TAU_INIT/sim_params.tau);
+	max_change = MAX_CHANGE_MCBF * (1-temp_scalar) + MIN_CHANGE_MCBF * temp_scalar;
 	abs_change = get_random_double(0,max_change, sim_params.rng);
 
 	return sign*abs_change;

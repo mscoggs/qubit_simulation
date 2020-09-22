@@ -8,7 +8,6 @@
 /**
 		Runs the monte carlo discrete bang method, iterating over each seed. For each seed, the total time (tau) increased iteratively
         until the target ground state is met in the monte carlo bang bang simulation.
-
     @param sim_params contains all of the variables for the simulation
 */
 void mcdb_method(Simulation_Parameters& sim_params);
@@ -18,7 +17,6 @@ void mcdb_method(Simulation_Parameters& sim_params);
 		Runs the monte carlo bang bang simluation for a fixed total time (tau). The temperature is annealed over each  iteration. This
         temperature dictactes the chance the a change in the j-k-b protocls (which drives us away from our desired state) is allowed.
         This process allows the protocls to get out of local minimum and hopefully find the global min.
-
     @param sim_params contains all of the variables for the simulation
 */
 void mcdb_simulation(Simulation_Parameters& sim_params);
@@ -27,7 +25,6 @@ void mcdb_simulation(Simulation_Parameters& sim_params);
 /**
     Evolves the starting state (the ground state of our initial hamiltonian) according to exp^(iH) where H is the hamiltonian which is
         a function of the j/k/b protocols
-
     @param sim_params contains all of the variables for the simulation
     @param j_array the protocol of the j parameter, where each odd-index holds the time of a jump (j=1) and the even-index holds the time of a drop(j=0)
     @param k_array the protocol of the k parameter, where each odd-index holds the time of a jump (k=1) and the even-index holds the time of a drop(k=0)
@@ -39,7 +36,6 @@ void evolve_mcdb(Simulation_Parameters& sim_params, double *j_array, double *k_a
 
 /**
     Calculates the initial temperature that will start the monte carlo simulation with roughly an acceptance rate of ACCEPTANCE_PROB (in parameters.h).
-
     @param sim_params contains all of the variables for the simulation
 */
 void calc_initial_temp_mcdb(Simulation_Parameters& sim_params);
@@ -48,7 +44,6 @@ void calc_initial_temp_mcdb(Simulation_Parameters& sim_params);
 
 /**
     Initializes the protocols to random values that are determined by the seed.
-
     @param sim_params contains all of the variables for the simulation
     @param j_array the protocol of the j parameter, where each odd-index holds the time of a jump (j=1) and the even-index holds the time of a drop(j=0)
     @param k_array the protocol of the k parameter, where each odd-index holds the time of a jump (k=1) and the even-index holds the time of a drop(k=0)
@@ -59,7 +54,6 @@ void init_arrays_mcdb(Simulation_Parameters& sim_params, double *j_array,double 
 
 /**
     Copies the info from a set of j/k/b arrays to another set, allowing for an offset to and from each
-
     @param sim_params contains all of the variables for the simulation
     @param j_to the protocol of the j parameter which will get written to, starting at destination_index
     @param k_to the protocol of the k parameter which will get written to, starting at destination_index
@@ -75,7 +69,6 @@ void copy_arrays_mcdb(Simulation_Parameters& sim_params, double* j_to,  double* 
 
 /**
     scale the arrays, cutting each block in half and maintaining the previous values
-
     @param sim_params contains all of the variables for the simulation
 */
 void scale_best_arrays_mcdb(Simulation_Parameters& sim_params, double* j_best,  double* k_best, double* b_best);
@@ -85,7 +78,6 @@ void scale_best_arrays_mcdb(Simulation_Parameters& sim_params, double* j_best,  
 
 /**
     Changes the arrays according randomly based on the random_time_index
-
     @param sim_params contains all of the variables for the simulation
     @param j_array the protocol of the j parameter, where each odd-index holds the time of a jump (j=1) and the even-index holds the time of a drop(j=0)
     @param k_array the protocol of the k parameter, where each odd-index holds the time of a jump (k=1) and the even-index holds the time of a drop(k=0)
@@ -98,18 +90,15 @@ double change_array_mcdb(Simulation_Parameters& sim_params, double *j_array, dou
 
 /**
     loads up the exponentiate matrices
-
     @param sim_params contains all of the variables for the simulation
-
 */
 void pre_exponentiate(Simulation_Parameters& sim_params);
 
 
 /**
     scales the total sweeps, 'crunching' them in the beginning, then increasing them as total steps increase
-
     @param sim_params contains all of the variables for the simulation
-
 */
 void get_sweeps_mcdb(Simulation_Parameters& sim_params);
+int calc_num_jumps(Simulation_Parameters& sim_params, double*a);
 #endif

@@ -17,8 +17,8 @@ void save_mcbf_data_fixed_tau(Simulation_Parameters& sim_params){
 	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
-		file << "MAX_CHANGE_MCBF_INIT =       " <<  MAX_CHANGE_MCBF_INIT << "\n";
-		file << "MIN_CHANGE_MCBF_INIT =       " <<  MIN_CHANGE_MCBF_INIT << "\n";
+		file << "MAX_CHANGE_MCBF =       " <<  MAX_CHANGE_MCBF << "\n";
+		file << "MIN_CHANGE_MCBF =       " <<  MIN_CHANGE_MCBF << "\n";
 		file << "SWEEPS_MCBF =                  " <<  SWEEPS_MCBF << "\n";
 		file << "TOTAL_STEPS_INIT_MCBF =        " <<  TOTAL_STEPS_INIT_MCBF << "\n";
 		file << "MAX_EVOLVE_STEPS_MCBF =        " <<  MAX_EVOLVE_STEPS_MCBF << "\n";
@@ -89,7 +89,7 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 		file << "START_PARAMETERS\n";
 		file << "MAX_CHANGE_FRACTION_MCBB =     " <<  MAX_CHANGE_FRACTION_MCBB << "\n";
 		file << "MIN_CHANGE_FRACTION_MCBB =     " <<  MIN_CHANGE_FRACTION_MCBB << "\n";
-		file << "NUMBER_OF_BANGS =              " <<  NUMBER_OF_BANGS << "\n";
+		file << "NUMBER_OF_BANGS_MCBB =              " <<  NUMBER_OF_BANGS_MCBB << "\n";
 		file << "SWEEPS_MCBB =                  " <<  SWEEPS_MCBB << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
@@ -109,26 +109,26 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 	file << "j_protocol =  [";
 	for(i=0;i<NUM_SEEDS;i++){
 		file << "[";
-		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.j_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		for(j=0;j<2*NUMBER_OF_BANGS_MCBB;j++) file << sim_params.j_best_fixed_tau[i*2*NUMBER_OF_BANGS_MCBB + j] << ", ";
 		file << "],";
 	}
 
 	file << "]\nk_protocol = [";
 	for(i=0;i<NUM_SEEDS;i++){
 		file << "[";
-		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.k_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		for(j=0;j<2*NUMBER_OF_BANGS_MCBB;j++) file << sim_params.k_best_fixed_tau[i*2*NUMBER_OF_BANGS_MCBB + j] << ", ";
 		file << "],";
 	}
 
 	file << "]\nb_protocol = [";
 	for(i=0;i<NUM_SEEDS;i++){
 		file << "[";
-		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.b_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		for(j=0;j<2*NUMBER_OF_BANGS_MCBB;j++) file << sim_params.b_best_fixed_tau[i*2*NUMBER_OF_BANGS_MCBB + j] << ", ";
 		file << "],";
 	}
 
 	file << "]\nj/k/b =   [";
-	for(i=1;i<2*NUMBER_OF_BANGS+1;i++) file << i%2 << ", ";
+	for(i=1;i<2*NUMBER_OF_BANGS_MCBB+1;i++) file << i%2 << ", ";
 
 	file << "]\nbest_mc_result_fixed_tau =   [";
 	for(i=0;i<NUM_SEEDS;i++) file << sim_params.best_mc_result_fixed_tau[i] << ", ";
@@ -268,7 +268,7 @@ std::string make_path(Simulation_Parameters sim_params, std::string type){
 
 	//std::string dir = "../data/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
 	//std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ji=" + ji + "_ki=" + ki +"_jt=" + jt +  "_kt="+ kt +".txt";
-	std::string dir = "../data_ratios/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
+	std::string dir = "../data_ratios_test/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
 	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ri=" + ri +  "_rt="+ rt +".txt";
 	std::string path = dir+file_name;
 
@@ -315,8 +315,9 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file << "TAU_SCALAR_BIG =          " <<  TAU_SCALAR_BIG << "\n";
 	file << "ACCEPTANCE_PROB =         " <<  ACCEPTANCE_PROB << "\n";
 	file << "TEMP_EXP_DECAY =          " <<  TEMP_EXP_DECAY << "\n";
+	file << "MIN_TEMP_FRACTION =       " <<  MIN_TEMP_FRACTION << "\n";
 	file << "TEMP_DECAY_ITERATIONS =   " <<  TEMP_DECAY_ITERATIONS  << "\n";
-	file << "TEMP_DECAY_LIMIT =        " <<  TEMP_DECAY_LIMIT << "\n";
+	file << "ZERO_TEMP_ITREATIONS =    " <<  ZERO_TEMP_ITERATIONS  << "\n";
 	file << "RANDOM_STATES =           " <<  RANDOM_STATES  << "\n";
 	file << "INIT_OVERLAP_LIMIT =      " <<  INIT_OVERLAP_LIMIT  << "\n";
 	file << "END_PARAMETERS\n";

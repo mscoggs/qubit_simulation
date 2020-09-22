@@ -166,7 +166,7 @@ void change_single_mcbf(double *j_array,double *k_array,double *b_array, int row
 
     @return change the amount the protcol will be changed by
 */
-double get_change_mcbf(Simulation_Parameters& sim_params);
+double get_change_mcbf(Simulation_Parameters& sim_params, int temp_index);
 
 
 /**

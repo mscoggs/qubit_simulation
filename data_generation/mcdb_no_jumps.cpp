@@ -52,8 +52,6 @@ void mcdb_method(Simulation_Parameters& sim_params){
 				sim_params.best_mc_result_fixed_tau[sim_params.seed-1] = sim_params.best_mc_result;
 				std::memcpy(&sim_params.evolved_state_fixed_tau[(sim_params.seed-1)*2*sim_params.N],sim_params.best_evolved_state, 2*sim_params.N*sizeof(double));
 				copy_arrays_mcdb(sim_params,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,sim_params.j_best,  sim_params.k_best,  sim_params.b_best,  (sim_params.seed-1)*sim_params.total_steps, 0);
-                if(calc_num_jumps(sim_params, sim_params.j_best) > sim_params.max_jumps) printf("TOO MANY J JUMPS?!?!\n"), exit(0);
-                if(calc_num_jumps(sim_params, sim_params.k_best) > sim_params.max_jumps) printf("TOO MANY K JUMPS?!?!\n"), exit(0);
 			}
 			get_best_seed(sim_params);
 
@@ -199,8 +197,7 @@ void calc_initial_temp_mcdb(Simulation_Parameters& sim_params){
 		for (i=0; i<sim_params.N*2;i++) state_random[i] = get_random_double(0,1,sim_params.rng);
         normalize_state(state_random, sim_params.N);
 		std::memcpy(sim_params.state,state_random, 2*sim_params.N*sizeof(double));
-		if(sim_params.total_steps == MIN_STEPS_MCDB) init_arrays_mcdb(sim_params, j_array, k_array, b_array);
-        else copy_arrays_mcdb(sim_params,j_array, k_array,b_array, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled,0,0);
+		init_arrays_mcdb(sim_params, j_array, k_array, b_array);
 		evolve_mcdb(sim_params,j_temp, k_temp, b_temp, 0);
 		sim_params.best_mc_result = cost(sim_params.target_state, sim_params.N, sim_params.state, sim_params.ham_target);
         old_mc_result = sim_params.best_mc_result;
@@ -269,43 +266,25 @@ void scale_best_arrays_mcdb(Simulation_Parameters& sim_params, double* j_best,do
 
 double change_array_mcdb(Simulation_Parameters& sim_params, double *j_array, double *k_array, double *b_array, int i){
 	double *pointer, *pointer2;
-	int random_time_index, jumps;
+	int random_time_index;
 
 	random_time_index = (int)floor(get_random_double(0, sim_params.total_steps, sim_params.rng));
 
+
 	if(i%2 == 0) pointer = j_array, pointer2 = k_array;
 	if(i%2 == 1) pointer = k_array, pointer2 = j_array;
-
-    double m = pointer[random_time_index],l = pointer[random_time_index],r = pointer[random_time_index];
-    if(random_time_index > 0) l = pointer[random_time_index-1];
-    if(random_time_index < sim_params.total_steps-1) l = pointer[random_time_index+1];
-
+	//if(i%3 == 2) pointer = b_array;
 
 	//rerolling the index if our current index has similar neighbors
-	if(sim_params.total_steps == MAX_STEPS_MCDB and fmod(l+r+m, 3.0) <0.01) random_time_index = (int)floor(get_random_double(0, sim_params.total_steps, sim_params.rng));
+
+	if(sim_params.total_steps == MAX_STEPS_MCDB and random_time_index > 0 and random_time_index < sim_params.total_steps-1){
+		if(fmod(pointer[random_time_index] + pointer[random_time_index+1] + pointer[random_time_index-1], 3.0) <0.01){
+			random_time_index = (int)floor(get_random_double(0, sim_params.total_steps, sim_params.rng));
+		}
+	}
 
 
-    jumps = calc_num_jumps(sim_params,pointer);
-    if(jumps > sim_params.max_jumps) exit(0);
-        int c =0;
-    while(true){
-
-        pointer[random_time_index] =  fmod(pointer[random_time_index] + 1.0, 2.0);
-        jumps = calc_num_jumps(sim_params,pointer);
-        if(jumps > sim_params.max_jumps){
-            pointer[random_time_index] =  fmod(pointer[random_time_index] + 1.0, 2.0);
-            random_time_index = (random_time_index+1)%sim_params.total_steps;
-            c+=1;
-            if(c>500) printf("index: %i\n",random_time_index);
-            if(c == 1000) print_arrays_mcdb(pointer, pointer, pointer, sim_params.total_steps);
-            if(c == 1000) jumps = calc_num_jumps(sim_params,pointer);
-            if(c == 1000) printf("num jumps: %i max: %i\n",jumps, sim_params.max_jumps),exit(0); 
-        }
-        else break;
-
-    }
-
-
+	pointer[random_time_index] =  fmod(pointer[random_time_index] + 1.0, 2.0);
 	//if(pointer[random_time_index]<0.01 and pointer2[random_time_index] <0.01) pointer[random_time_index] = 1;
 
 	return random_time_index;
@@ -375,16 +354,4 @@ void get_sweeps_mcdb(Simulation_Parameters& sim_params){
 	sim_params.total_sweeps = (int) ceil(scalar*x + offset) *SWEEPS_MCDB ;
 
 }
-
-int calc_num_jumps(Simulation_Parameters& sim_params, double *a){
-
-    int count = 0;
-    int i;
-
-    for(i=0;i<sim_params.total_steps-1;i++) if(abs(a[i] -a[i+1]) > 0.01) count +=1;
-    return count;
-}
-
-
-
 

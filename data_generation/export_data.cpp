@@ -89,7 +89,7 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 		file << "START_PARAMETERS\n";
 		file << "MAX_CHANGE_FRACTION_MCBB =     " <<  MAX_CHANGE_FRACTION_MCBB << "\n";
 		file << "MIN_CHANGE_FRACTION_MCBB =     " <<  MIN_CHANGE_FRACTION_MCBB << "\n";
-		file << "NUMBER_OF_BANGS =              " <<  NUMBER_OF_BANGS << "\n";
+		file << "NUMBER_OF_BANGS_MCBB =              " <<  NUMBER_OF_BANGS_MCBB << "\n";
 		file << "SWEEPS_MCBB =                  " <<  SWEEPS_MCBB << "\n";
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
@@ -109,26 +109,26 @@ void save_mcbb_data_fixed_tau(Simulation_Parameters& sim_params){
 	file << "j_protocol =  [";
 	for(i=0;i<NUM_SEEDS;i++){
 		file << "[";
-		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.j_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		for(j=0;j<2*NUMBER_OF_BANGS_MCBB;j++) file << sim_params.j_best_fixed_tau[i*2*NUMBER_OF_BANGS_MCBB + j] << ", ";
 		file << "],";
 	}
 
 	file << "]\nk_protocol = [";
 	for(i=0;i<NUM_SEEDS;i++){
 		file << "[";
-		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.k_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		for(j=0;j<2*NUMBER_OF_BANGS_MCBB;j++) file << sim_params.k_best_fixed_tau[i*2*NUMBER_OF_BANGS_MCBB + j] << ", ";
 		file << "],";
 	}
 
 	file << "]\nb_protocol = [";
 	for(i=0;i<NUM_SEEDS;i++){
 		file << "[";
-		for(j=0;j<2*NUMBER_OF_BANGS;j++) file << sim_params.b_best_fixed_tau[i*2*NUMBER_OF_BANGS + j] << ", ";
+		for(j=0;j<2*NUMBER_OF_BANGS_MCBB;j++) file << sim_params.b_best_fixed_tau[i*2*NUMBER_OF_BANGS_MCBB + j] << ", ";
 		file << "],";
 	}
 
 	file << "]\nj/k/b =   [";
-	for(i=1;i<2*NUMBER_OF_BANGS+1;i++) file << i%2 << ", ";
+	for(i=1;i<2*NUMBER_OF_BANGS_MCBB+1;i++) file << i%2 << ", ";
 
 	file << "]\nbest_mc_result_fixed_tau =   [";
 	for(i=0;i<NUM_SEEDS;i++) file << sim_params.best_mc_result_fixed_tau[i] << ", ";

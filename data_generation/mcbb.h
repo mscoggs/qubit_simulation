@@ -119,7 +119,7 @@ void change_array_mcbb(double *j_array, double *k_array, double *b_array, double
 
     @return change the amount the protcol will be changed by
 */
-double get_change_mcbb(Simulation_Parameters& sim_params);
+double get_change_mcbb(Simulation_Parameters& sim_params, int temp_index);
 
 
 /**
