@@ -61,6 +61,8 @@ const int    SWEEPS_MCBB              = 90;
 /*MCDB METHOD PARAMETERS*/
 const bool   MCBB_SECONDARY = true;
 const int    SWEEPS_MCBB_SECONDARY = 50;
+const int    BINARY_SEARCH_ITERATIONS = 15;
+const bool BINARY_SEARCH = true;
 const int    MAX_STEPS_MCDB    = 32;
 const int    MIN_STEPS_MCDB    = 4; //MAKE SURE THIS IS LESS THAN OR EQUAL TO THE NUMBER OF BANGS
 const int    TOTAL_STEP_CHANGES= (int)round((log2(MAX_STEPS_MCDB))) + 1;
@@ -110,6 +112,7 @@ public:
 	std::clock_t start;
 	double *ham_target, *ham_initial, *init_state, *target_state, *state, *jkb_initial, *jkb_target, *best_mc_result_fixed_tau, *evolved_state_fixed_tau, *best_evolved_state, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10, *j_best_scaled, *k_best_scaled, *b_best_scaled, *saved_states, *P_11, *P_11_inv, *D_11, *P_10, *P_10_inv, *D_10, *P_01, *P_01_inv, *D_01;
 	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, time_step, temperature,initial_temperature, best_mc_result,initial_E, old_distance, new_distance, temp_distance, init_target_dot_squared, evolved_target_dot_squared, duration, best_mc_result_secondary, *best_evolved_state_secondary, *j_best_secondary, *k_best_secondary, *b_best_secondary;
+  double tau_lower, tau_upper, tau_old;
 	unsigned long long int *b;
 	int lattice[NX][NY], num_occupants,N,*table, *bonds, seed, total_steps, max_steps_mcdb, sweeps_multiplier, total_sweeps;
 	gsl_rng * rng;

@@ -158,11 +158,13 @@ void calc_tau(Simulation_Parameters& sim_params){
 		tau_scalar = 0.6/(1-sim_params.new_distance);
 		if(tau_scalar > 2*TAU_SCALAR_BIG) tau_scalar = 2*TAU_SCALAR_BIG;
 		if(tau_scalar < TAU_SCALAR) tau_scalar = TAU_SCALAR;
+		sim_params.tau_lower = TAU_INIT;
 	}
 	else if(sim_params.new_distance < 0.2) tau_scalar = TAU_SCALAR_TINY;
 	else if((abs(sim_params.old_distance - sim_params.new_distance) < .1) and (sim_params.new_distance > 0.2 )) tau_scalar = TAU_SCALAR_BIG;
 	else tau_scalar = TAU_SCALAR;
 
+	sim_params.tau_lower = sim_params.tau;
 	sim_params.tau = sim_params.tau*tau_scalar;
 }
 
