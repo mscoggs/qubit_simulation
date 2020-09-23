@@ -1,4 +1,5 @@
 #include <string>
+#include <math.h>
 #include <fstream>
 #include <iostream>
 
@@ -11,19 +12,14 @@
 main(int argc, char *argv[]){
 
 	int ji_i, ki_i, jt_i, kt_i, occ_i;
-	int num_occupants[1] = {2};
+	int num_occupants[1] = {3};
 	std::string ji, ki, jt, kt, num, identifier;
-	//double j_init[2] = {0.05, 0.95};
-	//double k_init[2] = {0.05, 0.95};
-	//double j_targ[13] = {0.05, 0.125, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
-	//double j_targ[2] = {0.05, 0.95};
-	//double k_targ[13] = {0.05, 0.125, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575,  0.65, 0.725, 0.8, 0.875, 0.95};
-	//
-	//double k_targ[19] = {0.05, 0.10, 0.15, 0.2, 0.25, 0.3,0.35, 0.4,0.45, 0.5, 0.55,0.6,  0.65, 0.7,0.75, 0.8, 0.85, 0.9,0.95};
+	double j_init, k_init, j_targ, k_targ;
 	double log_ri_min = -3, log_ri_max = 3;
 	double log_rt_min = -3, log_rt_max = 3;
-	int ri_points = 30;
-	int rt_points = 30;
+	int ri_points = 60;
+	int rt_points = 60;
+	double log_ri, log_rt;
 	std::ofstream submit_file;
 
 	submit_file.open("submit_file.txt");
@@ -31,26 +27,35 @@ main(int argc, char *argv[]){
 
 
 	for(occ_i=0;occ_i<(sizeof(num_occupants)/sizeof(int));occ_i++){
-		for(ji_i=0;ji_i<(sizeof(j_init)/sizeof(double));ji_i++){
-			for(ki_i=0;ki_i<(sizeof(k_init)/sizeof(double));ki_i++){
-				for(jt_i=0;jt_i<(sizeof(j_targ)/sizeof(double));jt_i++){
-					for(kt_i=0;kt_i<(sizeof(k_targ)/sizeof(double));kt_i++){
-						num = std::to_string(num_occupants[occ_i]);
-						ji = std::to_string(j_init[ji_i]).substr(0,5);
-						ki = std::to_string(k_init[ki_i]).substr(0,5);
-						jt = std::to_string(j_targ[jt_i]).substr(0,5);
-						kt = std::to_string(k_targ[kt_i]).substr(0,5);
+		for(log_ri = log_ri_min;log_ri<=log_ri_max;log_ri+=(log_ri_max-log_ri_min)/ri_points){
+			for(log_rt = log_rt_min;log_rt<=log_rt_max;log_rt+=(log_rt_max-log_rt_min)/rt_points){
+				double ri = exp(log_ri), rt = exp(log_rt);
+			       	k_init = 0.5;	
+				j_init = ri*k_init;
+				while(j_init >= 1){
+					j_init = j_init/2.0;
+					k_init = k_init/2.0;
+				}
+			       	k_targ = 0.5;	
+				j_targ = rt*k_targ;
+				while(j_targ >= 1){
+					j_targ = j_targ/2.0;
+					k_targ = k_targ/2.0;
+				}
 
-//						if(ji == ki) continue;
+				num = std::to_string(num_occupants[occ_i]);
+				ji = std::to_string(j_init).substr(0,5);
+				ki = std::to_string(k_init).substr(0,5);
+				jt = std::to_string(j_targ).substr(0,5);
+				kt = std::to_string(k_targ).substr(0,5);
 
-
-						identifier = "_num_"+num+"__ji_"+ji+"__ki_"+ki+"__jt_"+jt+"__kt_"+kt;
-						submit_file << "Executable        = main\n";
-						submit_file << "Arguments         = " << num << " " << ji << " " << ki << " " << jt << " " << kt << "\n";
-						//submit_file << "Log               = cluster/logs/_" << identifier  << ".log\n";
-						//submit_file << "Output            = cluster/outputs/_" << identifier << "\n";
-//						submit_file << "request_cpus      = 4\n";
-						//submit_file << "request_memory    = 20 GB\n";
-						submit_file << "queue\n";
-	}}}}}
-}
+				identifier = "_num_"+num+"__ji_"+ji+"__ki_"+ki+"__jt_"+jt+"__kt_"+kt;
+				submit_file << "Executable        = main\n";
+				submit_file << "Arguments         = " << num << " " << ji << " " << ki << " " << jt << " " << kt << "\n";
+				//submit_file << "Log               = cluster/logs/_" << identifier  << ".log\n";
+				//submit_file << "Output            = cluster/outputs/_" << identifier << "\n";
+	//						submit_file << "request_cpus      = 4\n";
+				//submit_file << "request_memory    = 20 GB\n";
+				submit_file << "queue\n";
+	}}}
+	}
