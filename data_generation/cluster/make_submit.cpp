@@ -12,7 +12,7 @@
 main(int argc, char *argv[]){
 
 	int ji_i, ki_i, jt_i, kt_i, occ_i;
-	int num_occupants[1] = {3};
+	int num_occupants[1] = {2};
 	std::string ji, ki, jt, kt, num, identifier;
 	double j_init, k_init, j_targ, k_targ;
 	double log_ri_min = -3, log_ri_max = 3;
@@ -50,7 +50,7 @@ main(int argc, char *argv[]){
 				kt = std::to_string(k_targ).substr(0,5);
 
 				identifier = "_num_"+num+"__ji_"+ji+"__ki_"+ki+"__jt_"+jt+"__kt_"+kt;
-				submit_file << "Executable        = main\n";
+				submit_file << "Executable        = main_big\n";
 				submit_file << "Arguments         = " << num << " " << ji << " " << ki << " " << jt << " " << kt << "\n";
 				//submit_file << "Log               = cluster/logs/_" << identifier  << ".log\n";
 				//submit_file << "Output            = cluster/outputs/_" << identifier << "\n";

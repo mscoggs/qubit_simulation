@@ -55,7 +55,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 			for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++) if(sim_params.best_mc_result_fixed_tau[sim_params.seed-1] <= sim_params.best_mc_result) copy_arrays_mcdb(sim_params,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.j_best_fixed_tau,sim_params.k_best_fixed_tau,sim_params.b_best_fixed_tau,  0,(sim_params.seed-1)*sim_params.total_steps);
 			if(sim_params.total_steps == MAX_STEPS_MCDB) break;
 
-			if(sim_params.new_distance > 0.3 and sim_params.total_steps >= MIN_STEPS_MCDB*4 and sim_params.total_steps <= MAX_STEPS_MCDB/2) break;
+//			if((sim_params.new_distance > 0.3 and sim_params.total_steps >= MIN_STEPS_MCDB*4 and sim_params.total_steps <= MAX_STEPS_MCDB/2) break;
 			sim_params.total_steps = sim_params.total_steps*2;
 			sim_params.time_step = sim_params.tau/sim_params.total_steps;
 			if(sim_params.total_steps <= MAX_STEPS_MCDB) scale_best_arrays_mcdb(sim_params, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled);
@@ -106,6 +106,8 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 		sim_params.evolved_target_dot_squared = complex_dot_squared(sim_params.N*2, sim_params.target_state, sim_params.best_evolved_state);
 		state_distance = 1- sim_params.evolved_target_dot_squared;
 		sim_params.tau_old = sim_params.tau;
+
+		sim_params.new_distance = calc_distance(sim_params);
 
 		if(abs(state_distance - DISTANCE_LIMIT)<difference){
 			if(SAVE_DATA) sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC, save_mcdb_data(sim_params);

@@ -36,18 +36,18 @@ const int    NUMBER_OF_SITES       = NX*NY;
 
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = true;
-const int    NUM_SEEDS             = 2;
-const double DISTANCE_LIMIT        = 0.03;
+const int    NUM_SEEDS             = 1;
+const double DISTANCE_LIMIT        = 0.02;
 const double TAU_INIT              = 0.05;
 const double MAX_TAU               = 5;
-const double TAU_SCALAR            = 1.15;
-const double TAU_SCALAR_TINY       = 1.05;
-const double TAU_SCALAR_BIG        = 1.3;
+const double TAU_SCALAR            = 1.2;
+const double TAU_SCALAR_TINY       = 1.1;
+const double TAU_SCALAR_BIG        = 1.4;
 const double ACCEPTANCE_PROB       = 0.65;
 const double TEMP_EXP_DECAY        = 0.80;
 const double MIN_TEMP_FRACTION     = 0.01;
 const int    TEMP_DECAY_ITERATIONS = ceil(log(MIN_TEMP_FRACTION)/log(TEMP_EXP_DECAY)); //30 for our given values
-const int    ZERO_TEMP_ITERATIONS  = 20;
+const int    ZERO_TEMP_ITERATIONS  = 25;
 const int    RANDOM_STATES         = 3;
 const double INIT_OVERLAP_LIMIT    = 0.99999;
 const int    NUMBER_OF_BANGS     = 6;
@@ -60,7 +60,7 @@ const int    SWEEPS_MCBB              = 90;
 
 /*MCDB METHOD PARAMETERS*/
 const bool   MCBB_SECONDARY = true;
-const int    SWEEPS_MCBB_SECONDARY = 50;
+const int    SWEEPS_MCBB_SECONDARY = 150;
 const int    BINARY_SEARCH_ITERATIONS = 15;
 const bool BINARY_SEARCH = true;
 const int    MAX_STEPS_MCDB    = 32;
