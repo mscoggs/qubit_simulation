@@ -14,7 +14,7 @@ void save_mcbf_data(Simulation_Parameters& sim_params){
 	std::string path = make_path(sim_params, type);
 
 
-	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
+	if(sim_params.tau <= TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "MAX_CHANGE_MCBF =       " <<  MAX_CHANGE_MCBF << "\n";
@@ -84,7 +84,7 @@ void save_mcbb_data(Simulation_Parameters& sim_params){
 	std::string type = "MCBB";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
+	if(sim_params.tau <= TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "MAX_CHANGE_FRACTION_MCBB =     " <<  MAX_CHANGE_FRACTION_MCBB << "\n";
@@ -153,7 +153,7 @@ void save_mcdb_data(Simulation_Parameters& sim_params){
 	std::string type = "MCDB";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
+	if(sim_params.tau <= TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "MAX_STEPS_MCDB =               " <<  MAX_STEPS_MCDB << "\n";
@@ -231,7 +231,7 @@ void save_adiabatic_data(Simulation_Parameters& sim_params){
 	std::string type = "ADIA";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau == TAU_INIT || sim_params.tau == 0.0){
+	if(sim_params.tau <= TAU_INIT || sim_params.tau == 0.0){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "MAX_TAU_ADIA =             " <<  MAX_TAU_ADIA << "\n";

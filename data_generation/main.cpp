@@ -43,10 +43,14 @@ main (int argc, char *argv[]){
 	ki = atof(argv[3]);
 	jt = atof(argv[4]);
 	kt = atof(argv[5]);
+	printf("TEST\n");
 
 	sim_params.initialize_lattice(num_occupants,sim_params);
+	printf("TEST\n");
+
 	sim_params.initialize_hamiltonians(ji,ki,jt,kt, sim_params);
-	
+	printf("TEST\n");
+
 	if(ADIA)  adiabatic_method(sim_params);
 	if(MCDB) mcdb_method(sim_params);
 	if(MCBB) mcbb_method(sim_params);

@@ -19,7 +19,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 
 	sim_params.init_mcdb_params(sim_params);
-
+	printf("TEST\n");
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || (1-sim_params.init_target_dot_squared < DISTANCE_LIMIT)){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
 		if(PRINT) print_mcdb_info(sim_params);
@@ -30,10 +30,12 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 
 	while(sim_params.tau<MAX_TAU){
+		printf("TEST\n");
 
 		sim_params.total_steps = MIN_STEPS_MCDB;
 		sim_params.time_step = sim_params.tau/sim_params.total_steps;
 		pre_exponentiate(sim_params);
+		printf("TEST\n");
 
 		while(sim_params.total_steps <= MAX_STEPS_MCDB){
 
@@ -63,6 +65,8 @@ void mcdb_method(Simulation_Parameters& sim_params){
 		}
 		if(MCBB_SECONDARY){
 			convert_mcdb_to_mcbb(sim_params,sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled);
+			print_arrays_mcdb(sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.total_steps);
+			print_arrays_mcbb(sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary);
 			mcbb_secondary_simulation(sim_params);
 		}
 		if(!update_distances(sim_params)) continue;
@@ -84,12 +88,12 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 
 void binary_search_mcdb(Simulation_Parameters& sim_params){
+	if(sim_params.tau == TAU_INIT) sim_params.tau_lower = 0;
 	sim_params.tau_upper = sim_params.tau;
 	sim_params.tau_old = sim_params.tau;
-	double o = sim_params.old_distance, n = sim_params.new_distance, d = DISTANCE_LIMIT, tu = sim_params.tau_upper, tl = sim_params.tau_lower;
 	double difference = DISTANCE_LIMIT/100;
 
-	sim_params.tau = ((o-d)/(o-n))*(tu-tl) + tl; // a rough linear interpolation of where tau might be
+	sim_params.tau = (sim_params.tau_upper+sim_params.tau_lower)/2;
 
 	double *j_array, *k_array,*b_array,*j_temp, *k_temp, *b_temp, old_mc_result, new_mc_result, change;
 	j_temp           = new double[2*NUMBER_OF_BANGS]();
@@ -116,6 +120,8 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 		else if(state_distance < DISTANCE_LIMIT){
 			sim_params.tau_upper = sim_params.tau;
 			sim_params.tau = (sim_params.tau_upper+sim_params.tau_lower)/2;
+			if(sim_params.tau_upper-sim_params.tau_lower <= 0.01) sim_params.tau_lower = sim_params.tau_lower-0.1;
+
 		}
 		else{
 			if(SAVE_DATA) sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC, save_mcdb_data(sim_params);
@@ -497,13 +503,13 @@ double change_array_mcdb(Simulation_Parameters& sim_params, double *j_array, dou
 
 
     jumps = calc_num_jumps(sim_params,pointer);
-    if(jumps > 2*NUMBER_OF_BANGS) exit(0);
+    if(jumps >= 2*NUMBER_OF_BANGS) exit(0);
 
     while(true){
 
         pointer[random_time_index] =  fmod(pointer[random_time_index] + 1.0, 2.0);
         jumps = calc_num_jumps(sim_params,pointer);
-        if(jumps > 2*NUMBER_OF_BANGS){
+        if(jumps >= 2*NUMBER_OF_BANGS){
             pointer[random_time_index] =  fmod(pointer[random_time_index] + 1.0, 2.0);
             random_time_index = (random_time_index+1)%sim_params.total_steps;
         }

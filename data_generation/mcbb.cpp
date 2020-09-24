@@ -13,7 +13,6 @@
 
 
 
-
 void mcbb_method(Simulation_Parameters& sim_params){
 	int i;
 

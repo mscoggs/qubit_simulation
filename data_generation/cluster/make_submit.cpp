@@ -17,8 +17,8 @@ main(int argc, char *argv[]){
 	double j_init, k_init, j_targ, k_targ;
 	double log_ri_min = -3, log_ri_max = 3;
 	double log_rt_min = -3, log_rt_max = 3;
-	int ri_points = 60;
-	int rt_points = 60;
+	int ri_points = 30;
+	int rt_points = 30;
 	double log_ri, log_rt;
 	std::ofstream submit_file;
 
@@ -30,13 +30,13 @@ main(int argc, char *argv[]){
 		for(log_ri = log_ri_min;log_ri<=log_ri_max;log_ri+=(log_ri_max-log_ri_min)/ri_points){
 			for(log_rt = log_rt_min;log_rt<=log_rt_max;log_rt+=(log_rt_max-log_rt_min)/rt_points){
 				double ri = exp(log_ri), rt = exp(log_rt);
-			       	k_init = 0.5;	
+			       	k_init = 0.5;
 				j_init = ri*k_init;
 				while(j_init >= 1){
 					j_init = j_init/2.0;
 					k_init = k_init/2.0;
 				}
-			       	k_targ = 0.5;	
+			       	k_targ = 0.5;
 				j_targ = rt*k_targ;
 				while(j_targ >= 1){
 					j_targ = j_targ/2.0;
