@@ -22,9 +22,8 @@
  const bool SAVE_DATA = true;
 
 
+
 /*LATTICE PARAMETERS*/
-const bool   STATE_CUTOFF_METRIC   = false;
-const bool   USE_ENERGY_DISTANCE   = false;
 const bool   PERIODIC              = false;
 const bool   UNIFORM_SITES         = true;
 const double MAX_PARAM             = 1.0;
@@ -34,10 +33,12 @@ const int    NX                    = 3;
 const int    NY                    = NX;
 const int    NUMBER_OF_SITES       = NX*NY;
 
+
+
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = true;
-const int    NUM_SEEDS             = 1;
 const double DISTANCE_LIMIT        = 0.02;
+const int    NUM_SEEDS             = 1;
 const double TAU_INIT              = 0.05;
 const double MAX_TAU               = 5;
 const double TAU_SCALAR            = 1.2;
@@ -49,14 +50,10 @@ const double MIN_TEMP_FRACTION     = 0.01;
 const int    TEMP_DECAY_ITERATIONS = ceil(log(MIN_TEMP_FRACTION)/log(TEMP_EXP_DECAY)); //30 for our given values
 const int    ZERO_TEMP_ITERATIONS  = 25;
 const int    RANDOM_STATES         = 3;
-const double INIT_OVERLAP_LIMIT    = 0.99999;
-const int    NUMBER_OF_BANGS     = 6;
+const int    NUMBER_OF_BANGS       = 6;
+const bool   USE_ENERGY_DISTANCE   = false;
 
 
-/*MCBB METHOD PARAMETERS*/
-const double MAX_CHANGE_FRACTION_MCBB = 0.9;
-const double MIN_CHANGE_FRACTION_MCBB = 0.02;
-const int    SWEEPS_MCBB              = 90;
 
 /*MCDB METHOD PARAMETERS*/
 const bool   MCBB_SECONDARY = true;
@@ -68,6 +65,14 @@ const int    MIN_STEPS_MCDB    = 4; //MAKE SURE THIS IS LESS THAN OR EQUAL TO TH
 const int    TOTAL_STEP_CHANGES= (int)round((log2(MAX_STEPS_MCDB))) + 1;
 const int    SWEEPS_MCDB       = 60;
 const double STEPS_CRUNCH_MCDB = 1.0;
+
+
+
+/*MCBB METHOD PARAMETERS*/
+const double MAX_CHANGE_FRACTION_MCBB = 0.9;
+const double MIN_CHANGE_FRACTION_MCBB = 0.02;
+const int    SWEEPS_MCBB              = 90;
+
 
 
 /*MCBF METHOD PARAMETERS*/
