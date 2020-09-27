@@ -138,6 +138,7 @@ void Simulation_Parameters::init_mcbb_params(Simulation_Parameters& sim_params){
 			P_10[2*N*N-(i+1)*2] = P_10[N*N-(i+1)];
 			P_10[2*N*N-(i+1)*2+1] = 0;
 		}
+		delete[] filler_ham, delete[] real_ham;
 
 	}
 }
@@ -154,6 +155,18 @@ void Simulation_Parameters::clear_mcbb_params(){
 	delete[] j_best;
 	delete[] k_best;
 	delete[] b_best;
+	if(DIAG){
+
+		delete[] P_11;
+		delete[] P_11_inv;
+		delete[] D_11;    
+		delete[] P_10; 	 
+		delete[] P_10_inv;
+		delete[] D_10;   
+		delete[] P_01; 	 
+		delete[] P_01_inv;
+		delete[] D_01;    
+	}
 }
 
 
@@ -243,6 +256,7 @@ void Simulation_Parameters::init_mcdb_params(Simulation_Parameters& sim_params){
 				P_10[2*N*N-(i+1)*2+1] = 0;
 			}
 
+			delete[] filler_ham, delete[] real_ham;
 		}
 	}
 }
@@ -264,6 +278,17 @@ void Simulation_Parameters::clear_mcdb_params(){
 	delete[] e10;
 	delete[] e01;
 	delete[] e11;
+	if(DIAG){
+		delete[] P_11;
+		delete[] P_11_inv;
+		delete[] D_11;    
+		delete[] P_10; 	 
+		delete[] P_10_inv;
+		delete[] D_10;   
+		delete[] P_01; 	 
+		delete[] P_01_inv;
+		delete[] D_01;    
+	}
 }
 
 
