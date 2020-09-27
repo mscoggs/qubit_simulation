@@ -38,17 +38,17 @@ const int    NUMBER_OF_SITES       = NX*NY;
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = true;
 const double DISTANCE_LIMIT        = 0.02;
-const int    NUM_SEEDS             = 1;
-const double TAU_INIT              = 0.05;
+const int    NUM_SEEDS             = 2;
+const double TAU_INIT              = 0.20;
 const double MAX_TAU               = 5;
 const double TAU_SCALAR            = 1.2;
 const double TAU_SCALAR_TINY       = 1.1;
 const double TAU_SCALAR_BIG        = 1.4;
-const double ACCEPTANCE_PROB       = 0.65;
+const double ACCEPTANCE_PROB       = 0.85;
 const double TEMP_EXP_DECAY        = 0.80;
 const double MIN_TEMP_FRACTION     = 0.01;
 const int    TEMP_DECAY_ITERATIONS = ceil(log(MIN_TEMP_FRACTION)/log(TEMP_EXP_DECAY)); //30 for our given values
-const int    ZERO_TEMP_ITERATIONS  = 5;
+const int    ZERO_TEMP_ITERATIONS  = 15;
 const int    RANDOM_STATES         = 3;
 const int    NUMBER_OF_BANGS       = 6;
 const bool   USE_ENERGY_DISTANCE   = false;
@@ -57,13 +57,13 @@ const bool   USE_ENERGY_DISTANCE   = false;
 
 /*MCDB METHOD PARAMETERS*/
 const bool   MCBB_SECONDARY = true;
-const int    SWEEPS_MCBB_SECONDARY = 100;
-const int    BINARY_SEARCH_ITERATIONS = 10;
-const bool BINARY_SEARCH = true;
+const int    SWEEPS_MCBB_SECONDARY = 150;
+const int    BINARY_SEARCH_ITERATIONS = 15;
+const bool   BINARY_SEARCH = true;
 const int    MAX_STEPS_MCDB    = 32;
 const int    MIN_STEPS_MCDB    = 4; //MAKE SURE THIS IS LESS THAN OR EQUAL TO THE NUMBER OF BANGS
 const int    TOTAL_STEP_CHANGES= (int)round((log2(MAX_STEPS_MCDB))) + 1;
-const int    SWEEPS_MCDB       = 60;
+const int    SWEEPS_MCDB       = 100;
 const double STEPS_CRUNCH_MCDB = 1.0;
 
 
