@@ -38,7 +38,7 @@ const int    NUMBER_OF_SITES       = NX*NY;
 /*SIMULATION PARAMETERS*/
 const bool   DIAG                  = true;
 const double DISTANCE_LIMIT        = 0.02;
-const int    NUM_SEEDS             = 2;
+const int    NUM_SEEDS             = 1;
 const double TAU_INIT              = 0.20;
 const double MAX_TAU               = 5;
 const double TAU_SCALAR            = 1.2;
