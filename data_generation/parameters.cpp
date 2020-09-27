@@ -196,6 +196,7 @@ void Simulation_Parameters::init_mcdb_params(Simulation_Parameters& sim_params){
 	old_distance      = 1;
 	new_distance      = 1;
 	sweeps_multiplier = 1;
+        best_mc_result_non_secondary = 0;
 
 	e10  = new double[2*N*N*(TOTAL_STEP_CHANGES+1)]();
 	e01  = new double[2*N*N*(TOTAL_STEP_CHANGES+1)]();

@@ -175,10 +175,8 @@ void save_mcdb_data(Simulation_Parameters& sim_params){
 	file << "total_steps =             " << sim_params.total_steps << "\n";
 	file << "time_step =               " << sim_params.time_step << "\n";
 	file << "best_mc_result =          " << sim_params.best_mc_result << "\n";
+	file << "best_mc_result_non_secondary =          " << sim_params.best_mc_result_non_secondary << "\n";
 	file << "evolved_target_dot_squared =  " << sim_params.evolved_target_dot_squared << "\n";
-	file << "best_evolved_state = [";
-	for(i=0;i<2*sim_params.N;i++) file << sim_params.best_evolved_state[i] << ", ";
-	file << "]\n";
 	file << "distance =          " << sim_params.new_distance << "\n";
 
 	file << "j_protocol =  [";
@@ -208,6 +206,8 @@ void save_mcdb_data(Simulation_Parameters& sim_params){
 	// 	for(j=0;j<sim_params.total_steps;j++) file << sim_params.b_best_fixed_tau[i*sim_params.total_steps + j] << ", ";
 	// 	file << "],";
 	// }
+	file << "]\nbest_evolved_state = [";
+	for(i=0;i<2*sim_params.N;i++) file << sim_params.best_evolved_state[i] << ", ";
 
 	file << "]\nbest_mc_result_fixed_tau =   [";
 	for(i=0;i<NUM_SEEDS;i++) file << sim_params.best_mc_result_fixed_tau[i] << ", ";

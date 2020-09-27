@@ -19,7 +19,7 @@
  const bool MCBB      = false;
  const bool MCBF      = false;
  const bool ADIA      = false;
- const bool SAVE_DATA = true;
+ const bool SAVE_DATA = false;
 
 
 
@@ -39,7 +39,7 @@ const int    NUMBER_OF_SITES       = NX*NY;
 const bool   DIAG                  = true;
 const double DISTANCE_LIMIT        = 0.02;
 const int    NUM_SEEDS             = 1;
-const double TAU_INIT              = 0.20;
+const double TAU_INIT              = 1.95;
 const double MAX_TAU               = 5;
 const double TAU_SCALAR            = 1.2;
 const double TAU_SCALAR_TINY       = 1.1;
@@ -50,14 +50,14 @@ const double MIN_TEMP_FRACTION     = 0.01;
 const int    TEMP_DECAY_ITERATIONS = ceil(log(MIN_TEMP_FRACTION)/log(TEMP_EXP_DECAY)); //30 for our given values
 const int    ZERO_TEMP_ITERATIONS  = 15;
 const int    RANDOM_STATES         = 3;
-const int    NUMBER_OF_BANGS       = 6;
+const int    NUMBER_OF_BANGS       = 8;
 const bool   USE_ENERGY_DISTANCE   = false;
 
 
 
 /*MCDB METHOD PARAMETERS*/
 const bool   MCBB_SECONDARY = true;
-const int    SWEEPS_MCBB_SECONDARY = 150;
+const int    SWEEPS_MCBB_SECONDARY = 250;
 const int    BINARY_SEARCH_ITERATIONS = 15;
 const bool   BINARY_SEARCH = true;
 const int    MAX_STEPS_MCDB    = 32;
@@ -117,10 +117,11 @@ public:
 	std::clock_t start;
 	double *ham_target, *ham_initial, *init_state, *target_state, *state, *jkb_initial, *jkb_target, *best_mc_result_fixed_tau, *evolved_state_fixed_tau, *best_evolved_state, *j_best_fixed_tau, *k_best_fixed_tau, *b_best_fixed_tau, *j_best, *k_best, *b_best, *e11, *e01, *e10, *j_best_scaled, *k_best_scaled, *b_best_scaled, *saved_states, *P_11, *P_11_inv, *D_11, *P_10, *P_10_inv, *D_10, *P_01, *P_01_inv, *D_01;
 	double ground_E, j_initial, k_initial, b_initial, j_target, k_target, b_target, tau, time_step, temperature,initial_temperature, best_mc_result,initial_E, old_distance, new_distance, temp_distance, init_target_dot_squared, evolved_target_dot_squared, duration, best_mc_result_secondary, *best_evolved_state_secondary, *j_best_secondary, *k_best_secondary, *b_best_secondary;
-  double tau_lower, tau_upper, tau_old;
+        double tau_lower, tau_upper, tau_old, best_mc_result_non_secondary;
 	unsigned long long int *b;
 	int lattice[NX][NY], num_occupants,N,*table, *bonds, seed, total_steps, max_steps_mcdb, sweeps_multiplier, total_sweeps;
 	gsl_rng * rng;
+  bool backwards = false;
 
 
 

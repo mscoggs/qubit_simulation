@@ -64,6 +64,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 		}
 		if(MCBB_SECONDARY){
+			sim_params.best_mc_result_non_secondary = sim_params.best_mc_result;
 			convert_mcdb_to_mcbb(sim_params,sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled);
 			print_arrays_mcdb(sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.total_steps);
 			print_arrays_mcbb(sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary);
@@ -72,7 +73,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 		if(!update_distances(sim_params)) continue;
 		if(PRINT) print_mc_results(sim_params);
 		if(exit_simulation(sim_params)){
-			if(BINARY_SEARCH) binary_search_mcdb(sim_params);
+			if(BINARY_SEARCH && !sim_params.backwards) binary_search_mcdb(sim_params);
 			else if(SAVE_DATA) sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC, save_mcdb_data(sim_params);
 			break;
 		}
@@ -518,7 +519,7 @@ double change_array_mcdb(Simulation_Parameters& sim_params, double *j_array, dou
     }
 
 
-	//if(pointer[random_time_index]<0.01 and pointer2[random_time_index] <0.01) pointer[random_time_index] = 1;
+	if(pointer[random_time_index]<0.01 and pointer2[random_time_index] <0.01) pointer[random_time_index] = 1;
 
 	return random_time_index;
 }
