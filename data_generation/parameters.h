@@ -19,7 +19,7 @@
  const bool MCBB      = false;
  const bool MCBF      = false;
  const bool ADIA      = false;
- const bool SAVE_DATA = false;
+ const bool SAVE_DATA = true;
 
 
 
@@ -105,8 +105,8 @@ const int TOTAL_STEPS_ADIA   = 50;
 
 
 //Tests and debugging help
-const bool CHECK            = true;
-const bool PRINT            = true;
+const bool CHECK            = false;
+const bool PRINT            = false;
 const bool PRINT_COMMUTATOR = false;
 
 

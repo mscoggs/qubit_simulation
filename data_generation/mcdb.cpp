@@ -100,6 +100,7 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 
 
 	sim_params.best_mc_result_non_secondary = 0;
+	int i;
 	for(i=0;i<sim_params.total_steps*NUM_SEEDS;i++){
 		sim_params.j_best_fixed_tau[i] = 0;
 		sim_params.k_best_fixed_tau[i] = 0;
