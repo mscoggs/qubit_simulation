@@ -11,6 +11,9 @@ submit:
 compile_bifurcations:
 	$(CC) -o mcdb_bifurcation mcdb_bifurcation.cpp check.cpp mcbb.cpp write_data.cpp mcdb.cpp hamiltonian.cpp linear_algebra.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 
+submit_bifurcations:
+	python cluster/make_submit_bifurcations.py
+	condor_submit submit_file_bifurcations.txt
 
 submit_unfinished:
 	python cluster/make_submit_unfinished.py

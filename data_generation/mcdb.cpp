@@ -62,8 +62,6 @@ void mcdb_method(Simulation_Parameters& sim_params){
 		if(MCBB_SECONDARY){
 			sim_params.best_mc_result_non_secondary = sim_params.best_mc_result;
 			convert_mcdb_to_mcbb(sim_params,sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled);
-			print_arrays_mcdb(sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled,sim_params.total_steps);
-			print_arrays_mcbb(sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary);
 			mcbb_secondary_simulation(sim_params);
 		}
 		if(!update_distances(sim_params)) continue;

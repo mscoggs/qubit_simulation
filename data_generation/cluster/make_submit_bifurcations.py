@@ -12,19 +12,19 @@ def get_j_k(r):
     return truncate(j,3),truncate(k,3)
 
 
-def truncate(number, digits) -> float:
+def truncate(number, digits):
     stepper = 10.0 ** digits
     return math.trunc(stepper * number) / stepper
 
 
-NX, num = 2,2
-num_ri, num_rt = 30,1
-ri_min, ri_max, rt_min, rt_max = -3,-1,2,2
-total_time = 1.0
+NX, num = 3,2
+num_ri, num_rt = 50,50
+ri_min, ri_max, rt_min, rt_max = -3,-1,-2,0
+total_time = 0.8
 ris, rts = np.linspace(ri_min, ri_max, num_ri),np.linspace(rt_min, rt_max, num_rt)
 
-end = str(NX)+"x"+str(NX)+"_"+str(num)
-filepath = '../submit_bifurcations_'+end+'.txt'
+filepath = 'submit_file_bifurcations.txt'
+
 if os.path.exists(filepath): os.remove(filepath)
 f = open(filepath, "a")
 
