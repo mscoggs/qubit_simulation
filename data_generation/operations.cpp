@@ -267,17 +267,19 @@ bool update_distances(Simulation_Parameters& sim_params){
 	sim_params.old_distance = sim_params.new_distance;
 	sim_params.new_distance  = calc_distance(sim_params);
 
-	if(sim_params.new_distance > sim_params.old_distance && sim_params.sweeps_multiplier <= 2){
-		if(PRINT){
-			print_mc_results(sim_params);
-			printf("############################################################################\n");
-			printf("POOR CONVERGENCE DURING THE LAST SIMULATION FOR TAU: %f\nRUNNING AGAIN WITH TWICE THE SWEEPS\n", sim_params.tau);
-			printf("############################################################################\n");
-		}
-		sim_params.new_distance  = 	sim_params.old_distance;
+	if(sim_params.new_distance > sim_params.old_distance){
+		sim_params.new_distance  =sim_params.old_distance;
 		sim_params.old_distance = sim_params.temp_distance;
-		sim_params.sweeps_multiplier = sim_params.sweeps_multiplier * 2;
-		return false;
+		if(sim_params.sweeps_multiplier <= 2) {
+			if(PRINT){
+				print_mc_results(sim_params);
+				printf("############################################################################\n");
+				printf("POOR CONVERGENCE DURING THE LAST SIMULATION FOR TAU: %f\nRUNNING AGAIN WITH TWICE THE SWEEPS\n", sim_params.tau);
+				printf("############################################################################\n");
+			}
+			sim_params.sweeps_multiplier = sim_params.sweeps_multiplier * 2;
+			return false;
+		}
 	}
 
 	sim_params.sweeps_multiplier = 1;

@@ -19,7 +19,6 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 
 	sim_params.init_mcdb_params(sim_params);
-	printf("TEST\n");
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || (1-sim_params.init_target_dot_squared < DISTANCE_LIMIT)){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
 		if(PRINT) print_mcdb_info(sim_params);
@@ -30,16 +29,13 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 
 	while(sim_params.tau<MAX_TAU){
-		printf("TEST\n");
 
 		sim_params.total_steps = MIN_STEPS_MCDB;
 		sim_params.time_step = sim_params.tau/sim_params.total_steps;
 		pre_exponentiate(sim_params);
-		printf("TEST\n");
 
 		while(sim_params.total_steps <= MAX_STEPS_MCDB){
 
-           // pre_exponentiate(sim_params);
 			gsl_rng_set(sim_params.rng, 0);
 			get_sweeps_mcdb(sim_params);
 			calc_initial_temp_mcdb(sim_params);
@@ -103,6 +99,12 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 	double state_distance;
 
 
+	sim_params.best_mc_result_non_secondary = 0;
+	for(i=0;i<sim_params.total_steps*NUM_SEEDS;i++){
+		sim_params.j_best_fixed_tau[i] = 0;
+		sim_params.k_best_fixed_tau[i] = 0;
+		sim_params.b_best_fixed_tau[i] = 0;
+	}
 
 
 
@@ -130,7 +132,6 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 			sim_params.tau_lower = sim_params.tau;
 			sim_params.tau = (sim_params.tau_upper+sim_params.tau_lower)/2;
 		}
-		if(iterations)
 
 	}
 }

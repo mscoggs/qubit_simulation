@@ -318,6 +318,7 @@ void save_hamiltonian_parameters(Simulation_Parameters sim_params,std::string pa
 	file << "MIN_PARAM =               " << MIN_PARAM << "\n";
 	file << "DIAG =                    " <<  std::boolalpha << DIAG << "\n";
 	file << "NUM_SEEDS =               " <<  NUM_SEEDS << "\n";
+	file << "NUMBER_OF_BANGS =               " <<  NUMBER_OF_BANGS << "\n";
 	file << "DISTANCE_LIMIT =          " <<  DISTANCE_LIMIT << "\n";
 	file << "TAU_INIT =                " <<  TAU_INIT << "\n";
 	file << "MAX_TAU =                 " <<  MAX_TAU << "\n";

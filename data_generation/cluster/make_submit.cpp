@@ -12,13 +12,13 @@
 main(int argc, char *argv[]){
 
 	int ji_i, ki_i, jt_i, kt_i, occ_i;
-	int num_occupants[1] = {4};
+	int num_occupants[1] = {2};
 	std::string ji, ki, jt, kt, num, identifier;
 	double j_init, k_init, j_targ, k_targ;
 	double log_ri_min = -3, log_ri_max = 3;
 	double log_rt_min = -3, log_rt_max = 3;
-	int ri_points = 30;
-	int rt_points = 30;
+	int ri_points = 60;
+	int rt_points = 60;
 	double log_ri, log_rt;
 	std::ofstream submit_file;
 
