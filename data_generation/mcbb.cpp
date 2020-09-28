@@ -273,9 +273,9 @@ void init_arrays_mcbb(Simulation_Parameters& sim_params, double *j_array,double 
 	j_array[0] = 0, k_array[0] = 0, b_array[0] = 0;
 	j_array[2*NUMBER_OF_BANGS-1] = sim_params.tau, k_array[2*NUMBER_OF_BANGS-1] = sim_params.tau, b_array[2*NUMBER_OF_BANGS-1] = sim_params.tau;
 	for (i=1; i<NUMBER_OF_BANGS*2-1;i++){
-		random_time1 = get_random_double(0,TAU_INIT,sim_params.rng);
-	       	random_time2 = get_random_double(0,TAU_INIT,sim_params.rng);
-	       	random_time3 = get_random_double(0,TAU_INIT,sim_params.rng);
+		random_time1 = get_random_double(0,sim_params.tau,sim_params.rng);
+	       	random_time2 = get_random_double(0,sim_params.tau,sim_params.rng);
+	       	random_time3 = get_random_double(0,sim_params.tau,sim_params.rng);
 		j_array[i] = random_time1, k_array[i] = random_time2, b_array[i] = random_time3;
 	}
 	std::sort(j_array, j_array + NUMBER_OF_BANGS*2), std::sort(k_array, k_array + NUMBER_OF_BANGS*2), std::sort(b_array, b_array + NUMBER_OF_BANGS*2);
