@@ -104,6 +104,9 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 
 
 
+
+
+
 	while(true){
 		scale_arrays_mcbb(sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary, sim_params.tau/sim_params.tau_old);
 
@@ -114,22 +117,20 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 
 		sim_params.new_distance = calc_distance(sim_params);
 
-		if(abs(state_distance - DISTANCE_LIMIT)<difference){
+		if(abs(state_distance - DISTANCE_LIMIT)<difference || (abs(sim_params.tau_upper - sim_params.tau_lower) < BINARY_SEARCH_TAU_LIMIT)){
 			if(SAVE_DATA) sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC, save_mcdb_data(sim_params);
 			break;
 		}
 		else if(state_distance < DISTANCE_LIMIT){
 			sim_params.tau_upper = sim_params.tau;
 			sim_params.tau = (sim_params.tau_upper+sim_params.tau_lower)/2;
-			if(sim_params.tau_upper-sim_params.tau_lower <= 0.01) sim_params.tau_lower = sim_params.tau_lower-0.1;
-
 		}
 		else{
 			if(SAVE_DATA) sim_params.duration = (std::clock() - sim_params.start)/(double) CLOCKS_PER_SEC, save_mcdb_data(sim_params);
 			sim_params.tau_lower = sim_params.tau;
 			sim_params.tau = (sim_params.tau_upper+sim_params.tau_lower)/2;
 		}
-
+		if(iterations)
 
 	}
 }
