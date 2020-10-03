@@ -29,7 +29,7 @@ const bool   UNIFORM_SITES         = true;
 const double MAX_PARAM             = 1.0;
 const double MIN_PARAM             = 0.0;
 const int    DEVICE_DIMENSION      = 2;
-const int    NX                    = 3;
+const int    NX                    = 5;
 const int    NY                    = NX;
 const int    NUMBER_OF_SITES       = NX*NY;
 
@@ -39,7 +39,7 @@ const int    NUMBER_OF_SITES       = NX*NY;
 const bool   DIAG                  = true;
 const double DISTANCE_LIMIT        = 0.02;
 const int    NUM_SEEDS             = 2;
-const double TAU_INIT              = 0.05;
+const double TAU_INIT              = 0.40;
 const double MAX_TAU               = 5;
 const double TAU_SCALAR            = 1.2;
 const double TAU_SCALAR_TINY       = 1.1;
@@ -56,7 +56,7 @@ const bool   USE_ENERGY_DISTANCE   = false;
 
 /*MCDB METHOD PARAMETERS*/
 const bool   MCBB_SECONDARY = true;
-const int    SWEEPS_MCBB_SECONDARY = 200;
+const int    SWEEPS_MCBB_SECONDARY = 250;
 const int    BINARY_SEARCH_ITERATIONS = 15;
 const double   BINARY_SEARCH_TAU_LIMIT   = 0.0001;
 const bool   BINARY_SEARCH = true;
@@ -106,7 +106,7 @@ const int TOTAL_STEPS_ADIA   = 50;
 
 //Tests and debugging help
 const bool CHECK            = false;
-const bool PRINT            = true;
+const bool PRINT            = false;
 const bool PRINT_COMMUTATOR = false;
 
 

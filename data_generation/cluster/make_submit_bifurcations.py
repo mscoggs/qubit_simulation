@@ -17,10 +17,10 @@ def truncate(number, digits):
     return math.trunc(stepper * number) / stepper
 
 
-NX, num = 3,2
+NX, num = 5,2
 num_ri, num_rt = 50,50
-ri_min, ri_max, rt_min, rt_max = -3,-1,-2,0
-total_time = 0.8
+ri_min, ri_max, rt_min, rt_max = 0.5,3,-3,1
+total_time = 1.0
 ris, rts = np.linspace(ri_min, ri_max, num_ri),np.linspace(rt_min, rt_max, num_rt)
 
 filepath = 'submit_file_bifurcations.txt'
@@ -32,7 +32,7 @@ for ri in ris:
     for rt in rts:
         ji,ki = get_j_k(ri)
         jt,kt = get_j_k(rt)
-        f.write("Executable       = mcdb_bifurcation\n")
+        f.write("Executable       = mcdb_bifurcation_"+str(NX)+"x"+str(NX)+"\n")
         f.write("Arguments        = "+str(num)+" "+str(ji)+" "+str(ki)+" "+str(jt)+" "+str(kt)+" "+str(total_time)+"\n")
         f.write("queue\n")
 f.close()
