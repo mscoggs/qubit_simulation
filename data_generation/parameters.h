@@ -29,7 +29,7 @@ const bool   UNIFORM_SITES         = true;
 const double MAX_PARAM             = 1.0;
 const double MIN_PARAM             = 0.0;
 const int    DEVICE_DIMENSION      = 2;
-const int    NX                    = 5;
+const int    NX                    = 4;
 const int    NY                    = NX;
 const int    NUMBER_OF_SITES       = NX*NY;
 
@@ -57,13 +57,13 @@ const bool   USE_ENERGY_DISTANCE   = false;
 /*MCDB METHOD PARAMETERS*/
 const bool   MCBB_SECONDARY = true;
 const int    SWEEPS_MCBB_SECONDARY = 250;
-const int    BINARY_SEARCH_ITERATIONS = 15;
+const int    BINARY_SEARCH_ITERATIONS = 25;
 const double   BINARY_SEARCH_TAU_LIMIT   = 0.0001;
 const bool   BINARY_SEARCH = true;
 const int    MAX_STEPS_MCDB    = 32;
 const int    MIN_STEPS_MCDB    = 4; //MAKE SURE THIS IS LESS THAN OR EQUAL TO THE NUMBER OF BANGS
 const int    TOTAL_STEP_CHANGES= (int)round((log2(MAX_STEPS_MCDB))) + 1;
-const int    SWEEPS_MCDB       = 100;
+const int    SWEEPS_MCDB       = 130;
 const double STEPS_CRUNCH_MCDB = 1.0;
 
 

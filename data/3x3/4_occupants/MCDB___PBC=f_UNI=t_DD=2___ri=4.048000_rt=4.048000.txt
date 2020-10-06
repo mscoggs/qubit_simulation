@@ -2,10 +2,10 @@ START_PARAMETERS
 MAX_STEPS_MCDB =               32
 MIN_STEPS_MCDB =               4
 STEPS_CRUNCH_MCDB =            1
-SWEEPS_MCDB =                  100
+SWEEPS_MCDB =                  130
 TOTAL_STEP_CHANGES =                  6
 MCBB_SECONDARY =                  1
-SWEEPS_MCBB_SECONDARY =                  200
+SWEEPS_MCBB_SECONDARY =                  250
 NUMBER_OF_BANGS =                  7
 GROUND_E =                -4.12347
 INITIAL_E =               -4.12347
@@ -42,7 +42,7 @@ ZERO_TEMP_ITREATIONS =    15
 RANDOM_STATES =           3
 END_PARAMETERS
 ##############################################################################
-clock_duration  =         1.12949e-310
+clock_duration  =         1.11428e-310
 tau =                     0
 total_steps =             4
 time_step =               0.1

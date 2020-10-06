@@ -2,10 +2,10 @@ START_PARAMETERS
 MAX_STEPS_MCDB =               32
 MIN_STEPS_MCDB =               4
 STEPS_CRUNCH_MCDB =            1
-SWEEPS_MCDB =                  100
+SWEEPS_MCDB =                  130
 TOTAL_STEP_CHANGES =                  6
 MCBB_SECONDARY =                  1
-SWEEPS_MCBB_SECONDARY =                  150
+SWEEPS_MCBB_SECONDARY =                  250
 NUMBER_OF_BANGS =                  7
 GROUND_E =                -6.00312
 INITIAL_E =               -6.00173
@@ -27,6 +27,7 @@ MIN_PARAM =               0
 MIN_PARAM =               0
 DIAG =                    true
 NUM_SEEDS =               2
+NUMBER_OF_BANGS =               7
 DISTANCE_LIMIT =          0.02
 TAU_INIT =                0.4
 MAX_TAU =                 5
@@ -41,7 +42,7 @@ ZERO_TEMP_ITREATIONS =    15
 RANDOM_STATES =           3
 END_PARAMETERS
 ##############################################################################
-clock_duration  =         1.12221e-310
+clock_duration  =         1.12708e-310
 tau =                     0
 total_steps =             4
 time_step =               0.1
