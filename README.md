@@ -1,6 +1,5 @@
 # qubit_simulation
-Modeling the evolution of a superconducting chip
+Simulating the evolution of a quantum system. Searching for patterns in the optimal protocols that evolve a variety of initial states into a variety of target states. 
 
-## Who
-
-A project advised by Dr. Armin Rahmani, executed by Matthew Scoggins (@mscoggs)
+# paper (in prep)
+https://mscoggs.github.io/Papers_In_Prep/Qubit_Sim.pdf
