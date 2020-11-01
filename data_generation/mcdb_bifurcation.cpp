@@ -48,8 +48,11 @@ void mcdb_method_bifurcation(Simulation_Parameters& sim_params, double time){
 
 
 	sim_params.init_mcdb_params(sim_params);
+	sim_params.tau = time;
+	printf("tau: %f\n", sim_params.tau);
 	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || (1-sim_params.init_target_dot_squared < DISTANCE_LIMIT)){
-		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
+		sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
+	printf("tau: %f\n", sim_params.tau);
 		if(SAVE_DATA) save_mcdb_data_bifurcation(sim_params);
 		sim_params.clear_mcdb_params();
 		return;
@@ -60,6 +63,7 @@ void mcdb_method_bifurcation(Simulation_Parameters& sim_params, double time){
 	sim_params.time_step = sim_params.tau/sim_params.total_steps;
 	pre_exponentiate(sim_params);
 
+	printf("tau: %f\n", sim_params.tau);
 	while(sim_params.total_steps <= MAX_STEPS_MCDB){
 
 		gsl_rng_set(sim_params.rng, 0);
@@ -101,8 +105,11 @@ void save_mcdb_data_bifurcation(Simulation_Parameters& sim_params){
 	int i, j;
 	std::ofstream file;
 	std::string type = "MCDB";
-	std::string uni, pbc, ji, ki, jt, kt, ri, rt;
+	std::string uni, pbc, ji, ki, jt, kt, ri, rt, t;
 
+	t = std::to_string(sim_params.tau);
+	printf("tau: %f\n", sim_params.tau);
+	//t.erase(t.find_last_not_of('0') + 2, std::string::npos);
 	ji = std::to_string(sim_params.j_initial);
 	ji.erase(ji.find_last_not_of('0') + 2, std::string::npos);
 	ki = std::to_string(sim_params.k_initial);
@@ -122,9 +129,9 @@ void save_mcdb_data_bifurcation(Simulation_Parameters& sim_params){
 
 	//std::string dir = "../data/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
 	//std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ji=" + ji + "_ki=" + ki +"_jt=" + jt +  "_kt="+ kt +".txt";
-	std::string dir = "../data_bifurcation/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
+	std::string dir = "../data_bifurcation2/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
 
-	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ri=" + ri +  "_rt="+ rt +".txt";
+	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ri=" + ri +  "_rt="+ rt +"_time="+t+".txt";
 	std::string path = dir+file_name;
 
 	file.open(path);

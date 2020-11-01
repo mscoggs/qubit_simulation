@@ -153,7 +153,7 @@ void save_mcdb_data(Simulation_Parameters& sim_params){
 	std::string type = "MCDB";
 	std::string path = make_path(sim_params, type);
 
-	if(sim_params.tau <= TAU_INIT || sim_params.tau == 0.0){
+	if(sim_params.first_save){
 		file.open(path);
 		file << "START_PARAMETERS\n";
 		file << "MAX_STEPS_MCDB =               " <<  MAX_STEPS_MCDB << "\n";
@@ -167,6 +167,7 @@ void save_mcdb_data(Simulation_Parameters& sim_params){
 		file.close();
 		save_hamiltonian_parameters(sim_params, path);
 	}
+	sim_params.first_save = false;
 	file.open(path, std::ios::app);
 
 	file << "##############################################################################\n";
@@ -277,7 +278,7 @@ std::string make_path(Simulation_Parameters sim_params, std::string type){
 	if (UNIFORM_SITES) uni = 't';
 	else uni = 'f';
 
-	std::string dir = "../data_paper2/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
+	std::string dir = "../data_paper_98/" + std::to_string(NX) + "x" +std::to_string(NY) + "/" + std::to_string(sim_params.num_occupants) ;
 	std::string file_name = "_occupants/" + type + "___PBC="+pbc+"_UNI="+uni+"_DD="+std::to_string(DEVICE_DIMENSION)+"___ri=" + ri +  "_rt="+ rt +".txt";
 	std::string path = dir+file_name;
 

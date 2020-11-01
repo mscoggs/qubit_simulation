@@ -19,7 +19,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 
 
 	sim_params.init_mcdb_params(sim_params);
-	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || (1-sim_params.init_target_dot_squared < DISTANCE_LIMIT)){
+	if(check_commutator(sim_params.N, sim_params.ham_initial, sim_params.ham_target) || (1-sim_params.init_target_dot_squared < INIT_OVERLAP_LIMIT)){
 		sim_params.tau = 0.0, sim_params.new_distance = 0.0, sim_params.best_mc_result = 0.0;
 		if(PRINT) print_mcdb_info(sim_params);
 		if(SAVE_DATA) save_mcdb_data(sim_params);
@@ -105,6 +105,7 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 		sim_params.b_best_fixed_tau[i] = 0;
 	}
 
+	if(!MCBB_SECONDARY) convert_mcdb_to_mcbb(sim_params,sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled);
 
 
 
@@ -113,7 +114,11 @@ void binary_search_mcdb(Simulation_Parameters& sim_params){
 
 		mcbb_binary_simulation(sim_params);
 		sim_params.evolved_target_dot_squared = complex_dot_squared(sim_params.N*2, sim_params.target_state, sim_params.best_evolved_state);
-		state_distance = 1- sim_params.evolved_target_dot_squared;
+		printf("init_target_dot_squared : %f\n\n", sim_params.init_target_dot_squared);
+		printf("evolved_target_dot_squared : %f\n\n", sim_params.evolved_target_dot_squared);
+		if(NORMALIZED_STATE_DISTANCE) state_distance = sim_params.best_mc_result/(1-sim_params.init_target_dot_squared);
+		else state_distance = 1- sim_params.evolved_target_dot_squared;
+		printf("Best Distance After Binary Search:   %3.6f\n\n\n", state_distance);
 		sim_params.tau_old = sim_params.tau;
 
 		sim_params.new_distance = calc_distance(sim_params);
@@ -177,7 +182,9 @@ void mcbb_binary_simulation(Simulation_Parameters& sim_params){
 			if (new_mc_result<=sim_params.best_mc_result) sim_params.best_mc_result=new_mc_result, old_mc_result=new_mc_result,  copy_arrays_mcbb(sim_params, sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary,j_array, k_array, b_array, 0, 0), std::memcpy(sim_params.best_evolved_state,sim_params.state, 2*sim_params.N*sizeof(double));
 			else copy_arrays_mcbb(sim_params, j_array, k_array, b_array,  j_temp, k_temp, b_temp, 0,0), proposal_count++;//undoing the
 		}
-		if(PRINT) printf("           Best Cost:   %3.6f\n",sim_params.best_mc_result);
+		double 	distance = (sim_params.best_mc_result)/(1-sim_params.init_target_dot_squared);
+
+		if(PRINT) printf("           Best Cost:   %3.6f,          Distance:    %3.6f\n",sim_params.best_mc_result, distance);
 	}
 	delete[] k_array, delete[] j_array, delete[] b_array, delete[] k_temp, delete[] j_temp, delete[] b_temp, delete[] sim_params.state;
 }

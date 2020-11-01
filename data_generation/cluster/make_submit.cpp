@@ -17,8 +17,8 @@ main(int argc, char *argv[]){
 	double j_init, k_init, j_targ, k_targ;
 	double log_ri_min = -3, log_ri_max = 3;
 	double log_rt_min = -3, log_rt_max = 3;
-	int ri_points = 50;
-	int rt_points = 50;
+	int ri_points = 30;
+	int rt_points = 30;
 	double log_ri, log_rt;
 	std::ofstream submit_file;
 
@@ -50,7 +50,7 @@ main(int argc, char *argv[]){
 				kt = std::to_string(k_targ).substr(0,5);
 
 				identifier = "_num_"+num+"__ji_"+ji+"__ki_"+ki+"__jt_"+jt+"__kt_"+kt;
-				submit_file << "Executable        = main_3x3_3\n";
+				submit_file << "Executable        = main_5x5_3\n";
 				submit_file << "Arguments         = " << num << " " << ji << " " << ki << " " << jt << " " << kt << "\n";
 				//submit_file << "Log               = cluster/logs/_" << identifier  << ".log\n";
 				//submit_file << "Output            = cluster/outputs/_" << identifier << "\n";

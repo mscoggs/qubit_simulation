@@ -175,6 +175,8 @@ void Simulation_Parameters::clear_mcbb_params(){
 
 
 void Simulation_Parameters::init_mcdb_params(Simulation_Parameters& sim_params){
+
+	first_save        = true;
 	max_steps_mcdb    = MAX_STEPS_MCDB;
     saved_states      = new double[2*N*(MAX_STEPS_MCDB+1)]();
 	best_mc_result_fixed_tau = new double[NUM_SEEDS]();
@@ -204,7 +206,7 @@ void Simulation_Parameters::init_mcdb_params(Simulation_Parameters& sim_params){
 
 	start = std::clock();
 	for(int k=0; k<2*N; k++) saved_states[k] = init_state[k];
-	if(MCBB_SECONDARY){
+	if(MCBB_SECONDARY || BINARY_SEARCH){
 		j_best_secondary      = new double[2*NUMBER_OF_BANGS]();
 		k_best_secondary      = new double[2*NUMBER_OF_BANGS]();
 		b_best_secondary      = new double[2*NUMBER_OF_BANGS]();

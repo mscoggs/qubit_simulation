@@ -326,11 +326,18 @@ void normalize_state(double *state, int N){
 
 
 bool exit_simulation(Simulation_Parameters& sim_params){
-	bool energy_distance, state_distance;
+	bool distance;
 
 	sim_params.backwards = (sim_params.old_distance < sim_params.new_distance);
-	energy_distance = ((sim_params.new_distance < DISTANCE_LIMIT) && USE_ENERGY_DISTANCE);
-	state_distance =  ((1-sim_params.evolved_target_dot_squared < DISTANCE_LIMIT) && !USE_ENERGY_DISTANCE);
-	if(sim_params.backwards || energy_distance || state_distance) return true;
+	if(USE_ENERGY_DISTANCE){
+		distance = sim_params.new_distance < DISTANCE_LIMIT;
+	}else{
+		if(NORMALIZED_STATE_DISTANCE){
+			distance =  ((1-sim_params.evolved_target_dot_squared)/(1-sim_params.init_target_dot_squared) < DISTANCE_LIMIT);
+		}else{
+			distance =  1-sim_params.evolved_target_dot_squared < DISTANCE_LIMIT;
+		}
+	}
+	if(sim_params.backwards || distance) return true;
 	else return false;
 }
