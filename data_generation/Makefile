@@ -31,3 +31,7 @@ fixed_protocol:
 
 compile_gap:
 	$(CC) -o gap gap.cpp hamiltonian.cpp check.cpp write_data.cpp operations.cpp parameters.cpp print.cpp linear_algebra.cpp -lgsl -llapack -lblas -std=gnu++11
+
+run_min_tests:
+	$(CC) -o min_tests minimum_principle_tests.cpp check.cpp hamiltonian.cpp linear_algebra.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
+	./min_tests

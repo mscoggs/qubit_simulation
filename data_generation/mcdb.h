@@ -21,11 +21,37 @@ void mcdb_method(Simulation_Parameters& sim_params);
     @param sim_params contains all of the variables for the simulation
 */
 void mcdb_simulation(Simulation_Parameters& sim_params);
+
+
+
+/**
+    A binary search applied to the mcdb after it reaches overlap limit, and tries to minimize the absolute value of the difference between the limit and the post-evolution overlap
+    @param sim_params contains all of the variables for the simulation
+*/
 void binary_search_mcdb(Simulation_Parameters& sim_params);
-void convert_mcdb_to_mcbb(Simulation_Parameters& sim_params, double *j_mcbb, double *k_mcbb, double *b_mcbb, double *j_mcdb, double *k_mcdb, double *b_mcdb);
-void mcbb_secondary_simulation(Simulation_Parameters& sim_params);
-void mcbb_binary_simulation(Simulation_Parameters& sim_params);
+
+
+
+/**
+    A binary search applied to the mcdb after it reaches overlap limit, and tries to minimize the absolute value of the difference between the limit and the post-evolution overlap
+    @param sim_params contains all of the variables for the simulation
+*/
 double get_change_mcbb_binary(Simulation_Parameters& sim_params, int iteration);
+
+
+
+void convert_mcdb_to_mcbb(Simulation_Parameters& sim_params, double *j_mcbb, double *k_mcbb, double *b_mcbb, double *j_mcdb, double *k_mcdb, double *b_mcdb);
+
+
+
+void mcbb_secondary_simulation(Simulation_Parameters& sim_params);
+
+
+
+void mcbb_binary_simulation(Simulation_Parameters& sim_params);
+
+
+
 double get_change_mcbb_secondary(Simulation_Parameters& sim_params, int iteration);
 /**
     Evolves the starting state (the ground state of our initial hamiltonian) according to exp^(iH) where H is the hamiltonian which is

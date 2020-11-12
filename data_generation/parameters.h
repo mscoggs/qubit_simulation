@@ -29,7 +29,7 @@ const bool   UNIFORM_SITES         = true;
 const double MAX_PARAM             = 1.0;
 const double MIN_PARAM             = 0.0;
 const int    DEVICE_DIMENSION      = 2;
-const int    NX                    = 4;
+const int    NX                    = 3;
 const int    NY                    = NX;
 const int    NUMBER_OF_SITES       = NX*NY;
 
