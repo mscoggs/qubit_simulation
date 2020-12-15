@@ -59,7 +59,7 @@ void mcdb_method(Simulation_Parameters& sim_params){
 			if(sim_params.total_steps <= MAX_STEPS_MCDB) scale_best_arrays_mcdb(sim_params, sim_params.j_best_scaled,sim_params.k_best_scaled,sim_params.b_best_scaled);
 
 		}
-		if(MCBB_SECONDARY){
+		if(MCBB_SECONDARY && sim_params.best_mc_result < 0.3){
 			sim_params.best_mc_result_non_secondary = sim_params.best_mc_result;
 			convert_mcdb_to_mcbb(sim_params,sim_params.j_best_secondary,  sim_params.k_best_secondary,  sim_params.b_best_secondary,sim_params.j_best_scaled,  sim_params.k_best_scaled,  sim_params.b_best_scaled);
 			mcbb_secondary_simulation(sim_params);

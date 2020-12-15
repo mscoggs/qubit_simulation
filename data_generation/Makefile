@@ -1,7 +1,7 @@
 CC=g++
 
 compile:
-	$(CC) -o main_4x4_4 main.cpp adiabatic.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp mcdb.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
+	$(CC) -o main_3x3_3 main.cpp adiabatic.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp mcdb.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
 
 submit:
 	$(CC) -o cluster/make_submit cluster/make_submit.cpp -std=gnu++11
