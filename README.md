@@ -4,12 +4,22 @@ Simulating the evolution on a superconducting chip, with the goal of finding pat
 Set up the simulation parameters in parameters.h. Here you specify which simulation(s) you want to run along with setting some of the simulation parameters. Run 'make compile', then ./main occupancy_number initial_j initial_k target_j target_k to generate the data.
 
 ## REQUIREMENTS FOR DATA GENERATION
-- c++ and g++ compiler
-- blas, lapack, gsl
+- c++
+- g++ compiler
+- blas
+- lapack
+- gsl
 
 
 ## REQUIREMENTS FOR DATA ANALYSIS
- - anaconda (jupyter notebook, glob, scipy, matplotlib, mplot3d, pandas)
+ - anaconda
+        -jupyter notebook
+        -python
+        -glob 
+        -scipy 
+        -matplotlib 
+        -mplot3d 
+        -pandas 
  
 ## PAPER, UNDER REVIEW
 [Topological and geometric patterns in optimal bang-bang protocols for variational quantum algorithms: application to the XXZ model on the square lattice](https://arxiv.org/abs/2012.05476)
