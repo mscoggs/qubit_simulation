@@ -40,14 +40,23 @@ double get_change_mcbb_binary(Simulation_Parameters& sim_params, int iteration);
 
 
 
+/**
+    getting ready for the mcbb secondary by converting mcdb protocols
+*/
 void convert_mcdb_to_mcbb(Simulation_Parameters& sim_params, double *j_mcbb, double *k_mcbb, double *b_mcbb, double *j_mcdb, double *k_mcdb, double *b_mcdb);
 
 
 
+/**
+    runs the post mcdb simulation, using bang bang time-dependent protocols
+*/
 void mcbb_secondary_simulation(Simulation_Parameters& sim_params);
 
 
 
+/**
+    runs the binary search using mcbb protocols 
+*/
 void mcbb_binary_simulation(Simulation_Parameters& sim_params);
 
 
@@ -131,5 +140,11 @@ void pre_exponentiate(Simulation_Parameters& sim_params);
     @param sim_params contains all of the variables for the simulation
 */
 void get_sweeps_mcdb(Simulation_Parameters& sim_params);
+
+
+
+/**
+    calculates the number of jumps in a mcdb protocol
+*/
 int calc_num_jumps(Simulation_Parameters& sim_params, double*a);
 #endif

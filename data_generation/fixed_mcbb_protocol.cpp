@@ -20,15 +20,10 @@
 #include "print.h"
 #include "linear_algebra.h"
 #include "operations.h"
-/*
-g++ -o main main.cpp adiabatic.cpp check.cpp write_data.cpp hamiltonian.cpp linear_algebra.cpp mcbb.cpp mcbf.cpp operations.cpp print.cpp parameters.cpp -lgsl -llapack -lblas -std=gnu++11
-./main j_initial(double) k_initial(double) j_target(double) k_target(double)
 
-OR
 
-make compile
-make run
-*/
+
+
 double find_next_time(double time, double tau,double* j_array, double* k_array,double*  b_array,int*  jkb_index, double*jkb);
 
 

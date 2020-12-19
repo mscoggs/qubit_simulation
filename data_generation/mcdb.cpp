@@ -190,7 +190,11 @@ void mcbb_binary_simulation(Simulation_Parameters& sim_params){
 }
 
 
+
+
 void mcbb_secondary_simulation(Simulation_Parameters& sim_params){
+
+
 	gsl_rng_set(sim_params.rng, 0);
 	int i,j, random_time_index, proposal_accepted,proposal_count;
 	double *j_array, *k_array,*b_array,*j_temp, *k_temp, *b_temp, old_mc_result, new_mc_result, change;
@@ -242,6 +246,8 @@ void mcbb_secondary_simulation(Simulation_Parameters& sim_params){
 	delete[] k_array, delete[] j_array, delete[] b_array, delete[] k_temp, delete[] j_temp, delete[] b_temp, delete[] sim_params.state, delete[] sim_params.best_evolved_state_secondary;
 }
 
+
+
 void convert_mcdb_to_mcbb(Simulation_Parameters& sim_params, double *j_mcbb, double *k_mcbb, double *b_mcbb, double *j_mcdb, double *k_mcdb, double *b_mcdb){
 	double ts = sim_params.time_step,time=sim_params.time_step, random_time;
 	int ji = 0, ki=0,bi=0,i=0;
@@ -277,6 +283,9 @@ void convert_mcdb_to_mcbb(Simulation_Parameters& sim_params, double *j_mcbb, dou
 	std::sort(j_mcbb, j_mcbb + NUMBER_OF_BANGS*2);
 }
 
+
+
+
 double get_change_mcbb_binary(Simulation_Parameters& sim_params, int iteration){
 	int sign;
 	double max_change, abs_change, temp_scalar;
@@ -291,6 +300,9 @@ double get_change_mcbb_binary(Simulation_Parameters& sim_params, int iteration){
 	return sign*abs_change;
 }
 
+
+
+
 double get_change_mcbb_secondary(Simulation_Parameters& sim_params, int iteration){
 	int sign;
 	double max_change, abs_change, temp_scalar;
@@ -304,9 +316,6 @@ double get_change_mcbb_secondary(Simulation_Parameters& sim_params, int iteratio
 
 	return sign*abs_change;
 }
-
-
-
 
 
 

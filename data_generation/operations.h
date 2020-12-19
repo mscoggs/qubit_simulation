@@ -162,15 +162,34 @@ bool update_distances(Simulation_Parameters& sim_params);
 
 
 /**
-    between all seeds, get the best energy, best evolved state, and best overlap squared between the evolved state and target state
+    for all seeds, get the best energy, best evolved state, and best overlap squared between the evolved state and target state
 
-		@param sim_params an object that contains all of the parameters for the simulation
+    @param sim_params an object that contains all of the parameters for the simulation
 */
 void get_best_seed(Simulation_Parameters& sim_params);
 
 
+/**
+    calculates the inner product between two states 
+
+    @param size total number of complex numbers in each state, half the indices
+    @param v1 the first state
+    @param v2 the second state
+
+    return total
+*/
 double complex_dot_squared(int size, double *v1, double *v2);
+
+
+/**
+    normlaizing the state by calculating its inner product and dividing each element by that
+*/
 void normalize_state(double *state, int N);
+
+
+/**
+    checking a few conditions, deciding if we should stop the MC simulation 
+*/
 bool exit_simulation(Simulation_Parameters& sim_params);
 
 #endif

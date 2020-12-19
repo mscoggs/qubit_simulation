@@ -23,6 +23,8 @@
 main (int argc, char *argv[]){
 	double k, j, *evals, *v_diag, *ham_real, gap, *k_array, *j_array, *gap_array;
 	int L, num_occupants, i, index =0;
+
+
 	L = atoi(argv[1]);
 	num_occupants = atoi(argv[2]);
 	Simulation_Parameters sim_params;

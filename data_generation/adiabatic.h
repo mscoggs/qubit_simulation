@@ -7,7 +7,7 @@
 
 
 /**
-		Runs the adiabatic method which iteratively increases total time (tau) until the ground state is reached after evolution.
+    Runs the adiabatic method which iteratively increases total time (tau) until the ground state is reached after evolution, using a linear parameterization
 
     @param sim_params contains all of the variables for the simulation
 */

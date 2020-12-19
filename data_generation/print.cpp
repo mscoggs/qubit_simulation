@@ -184,6 +184,6 @@ void print_mcdb_info(Simulation_Parameters& sim_params){
 		printf("|| J_INITIAL:     %4.4f || K_INITIAL:      %4.4f || B_INITIAL:   %4.4f ||\n", sim_params.j_initial,     sim_params.k_initial,   sim_params.b_initial);
 		printf("|| J_TARGET:      %4.4f || K_TARGET:       %4.4f || B_TARGET:    %4.4f ||\n", sim_params.j_target,      sim_params.k_target,    sim_params.b_target);
 		printf("|| TARGET:        %4.4f || INITIAL:        %4.4f || DISTANCE:    %4.4f ||\n", sim_params.ground_E,      sim_params.initial_E, sim_params.new_distance);
-		printf("\nINITIAL_STATE: "), print_state(sim_params.init_state, sim_params.N);
+//		printf("\nINITIAL_STATE: "), print_state(sim_params.init_state, sim_params.N);
 		printf("############################################################################\n");
 }

@@ -154,7 +154,7 @@ double get_random_double(double lower, double upper, gsl_rng * rng){
 
 void calc_tau(Simulation_Parameters& sim_params){
 	double tau_scalar;
-	printf("DISTANCE %f\n\n\n\n\n", sim_params.new_distance);
+
 
 	if(sim_params.tau == TAU_INIT){
 		tau_scalar = 0.6/(1-sim_params.new_distance);
@@ -175,6 +175,8 @@ void calc_tau(Simulation_Parameters& sim_params){
 double calc_new_temperature(Simulation_Parameters& sim_params, int temp_index){
 	double scalar = pow(TEMP_EXP_DECAY,(double)(1.0*temp_index));
 
+
+
 	if(temp_index < TEMP_DECAY_ITERATIONS) sim_params.temperature = scalar*sim_params.initial_temperature;
 	else sim_params.temperature = 0;
 }
@@ -182,6 +184,8 @@ double calc_new_temperature(Simulation_Parameters& sim_params, int temp_index){
 
 void construct_lattice(int lattice[NX][NY]){
 	int x,y;
+
+
 	for (x=0;x<NX;x++)
 	{
 		if (x%2 ==1) for (y=0;y<NY;y++) lattice[x][y] = (NX*x)+y+1;
@@ -193,6 +197,7 @@ void construct_lattice(int lattice[NX][NY]){
 
 void assign_bonds(int *bonds, int lattice[NX][NY]){
 	int bond_num=1, site,site2, i, neighbor_count, *neighbors;
+
 
 	neighbors = new int[4]();
 
@@ -214,6 +219,8 @@ void assign_bonds(int *bonds, int lattice[NX][NY]){
 
 int get_neighbors(int site, int *neighbors, int lattice[NX][NY]){
 	int x,y,i,count=0;
+
+
 	if (DEVICE_DIMENSION==2){
 		for (x=0;x<NX;x++) for (y=0;y<NY;y++) if(site == lattice[x][y]) goto end_loop;//Finding the coordinates x and y
 		end_loop: for(i=0;i<4;i++) neighbors[i]=0;
@@ -252,6 +259,7 @@ int get_neighbors(int site, int *neighbors, int lattice[NX][NY]){
 double calc_distance(Simulation_Parameters& sim_params){
 	double initial, target, current, distance;
 
+
 	if(USE_ENERGY_DISTANCE) initial = sim_params.initial_E, target = sim_params.ground_E;
 	else initial = 1-sim_params.init_target_dot_squared, target = 0;
 	current = sim_params.best_mc_result;
@@ -288,8 +296,9 @@ bool update_distances(Simulation_Parameters& sim_params){
 
 
 void get_best_seed(Simulation_Parameters& sim_params){
-	int INCX = 1,INCY = 1;
-	double result, result2;
+    int INCX = 1,INCY = 1;
+    double result, result2;
+
 
     sim_params.best_mc_result = sim_params.best_mc_result_fixed_tau[0];
 	for(sim_params.seed=1; sim_params.seed<NUM_SEEDS+1; sim_params.seed++){
@@ -306,6 +315,7 @@ double complex_dot_squared(int size, double *v1, double *v2){
 	int i;
 	double re =0, im = 0;
 
+        
 	for(i=0;i<size;i+=2){
 		re += v1[i]*v2[i] + v1[i+1]*v2[i+1];
 		im += v1[i]*v2[i+1] - v1[i+1]*v2[i];
@@ -317,6 +327,8 @@ double complex_dot_squared(int size, double *v1, double *v2){
 void normalize_state(double *state, int N){
     int i;
     double sum = 0;
+
+
     for(i = 0; i<2*N;i++) sum += state[i]*state[i];
     for(i = 0; i<2*N;i++) state[i] = state[i]/sqrt(sum);
     if(CHECK) check_norm(state, N);
@@ -327,6 +339,7 @@ void normalize_state(double *state, int N){
 
 bool exit_simulation(Simulation_Parameters& sim_params){
 	bool distance;
+
 
 	sim_params.backwards = (sim_params.old_distance < sim_params.new_distance);
 	if(USE_ENERGY_DISTANCE){
