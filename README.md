@@ -9,6 +9,15 @@ In data_generation there are 4 different types of simulation which all try to fi
 
 
 
+# data_generation
+
+## REQUIREMENTS
+- c++
+- g++ compiler
+- blas
+- lapack
+- gsl
+
 ## USAGE
 Set up the simulation parameters in parameters.h. Here you specify which simulation(s) you want to run along with setting some of the simulation parameters. After that:
 ```bash  
@@ -17,16 +26,11 @@ make compile
 ```
 generates the data for this initial-target combination with hamiltonian parameters j and k.
 
-## REQUIREMENTS FOR DATA GENERATION
-- c++
-- g++ compiler
-- blas
-- lapack
-- gsl
 
 
+# data_analysis
 
-## REQUIREMENTS FOR DATA ANALYSIS
+## REQUIREMENTS
  - anaconda
      - jupyter notebook
      - python
@@ -36,7 +40,13 @@ generates the data for this initial-target combination with hamiltonian paramete
      - mplot3d 
      - pandas 
  
- 
- 
-## PAPER, UNDER REVIEW
+ ## USAGE
+ ```bash  
+jupyter notebook analyze_data.ipynb
+```
+then follow the markdown in the notebook
+
+
+
+# paper, under review
 [Topological and geometric patterns in optimal bang-bang protocols for variational quantum algorithms: application to the XXZ model on the square lattice](https://arxiv.org/abs/2012.05476)
