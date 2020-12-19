@@ -13,13 +13,13 @@ Set up the simulation parameters in parameters.h. Here you specify which simulat
 
 ## REQUIREMENTS FOR DATA ANALYSIS
  - anaconda
-        -jupyter notebook
-        -python
-        -glob 
-        -scipy 
-        -matplotlib 
-        -mplot3d 
-        -pandas 
+     -jupyter notebook
+     -python
+     -glob 
+     -scipy 
+     -matplotlib 
+     -mplot3d 
+     -pandas 
  
 ## PAPER, UNDER REVIEW
 [Topological and geometric patterns in optimal bang-bang protocols for variational quantum algorithms: application to the XXZ model on the square lattice](https://arxiv.org/abs/2012.05476)
