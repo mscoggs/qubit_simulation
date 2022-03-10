@@ -48,5 +48,5 @@ then follow the markdown in the notebook
 
 
 
-# paper, under review
-[Topological and geometric patterns in optimal bang-bang protocols for variational quantum algorithms: application to the XXZ model on the square lattice](https://arxiv.org/abs/2012.05476)
+# Paper
+[Topological and geometric patterns in optimal bang-bang protocols for variational quantum algorithms: application to the XXZ model on the square lattice](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.3.043165)
